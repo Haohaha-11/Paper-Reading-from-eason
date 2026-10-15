@@ -1877,109 +1877,109 @@
       }
     ],
     "final": {
-      "verdict": "corrected",
       "checks": [
         {
-          "target": "readme",
+          "assessment": "摘要原文明确给出 \"TaH2 improves the accuracy–compute slope by 53% (2.74 vs. 1.79) over the non-looped baseline\" 以及 \"exceeding the baseline's peak accuracy by about 3.4 points at matched test-time compute\"，README 的核心贡献 3 与该片段数值、条件（matched test-time compute 对应『匹配算力』）一致。draft 中的「首次超越」为原文所无，已在最终稿删除，属纠正。",
+          "block_index": 1,
           "claim": "在 AIME 基准上准确率–计算斜率提升 53%（2.74 vs 1.79），匹配算力下超基线峰值约 3.4 分",
           "section_index": 1,
-          "block_index": 1,
+          "source_quote": "els indicating whether further iteration improves the prediction. TaH2 improves both the efficiency and attainable accuracy of test-time scaling. On challenging AIME benchmarks, TaH2 improves the accuracy–compute slope by 53% (2.74 vs. 1.79) over the non-looped baseline, exceeding the baseline’s peak accuracy by about 3.4 points at matched test-time compute. As the maximum iteration depth increases, existing looped models largely plateau, while TaH2’s gain over the non-looped baseline continues to grow from +2.8 points at depth 2 to +3.9 points at depth 8.\n\n",
           "source_quote_id": "s1:b1:p1",
-          "assessment": "摘要原文明确给出 \"TaH2 improves the accuracy–compute slope by 53% (2.74 vs. 1.79) over the non-looped baseline\" 以及 \"exceeding the baseline's peak accuracy by about 3.4 points at matched test-time compute\"，README 的核心贡献 3 与该片段数值、条件（matched test-time compute 对应『匹配算力』）一致。draft 中的「首次超越」为原文所无，已在最终稿删除，属纠正。",
-          "source_quote": "els indicating whether further iteration improves the prediction. TaH2 improves both the efficiency and attainable accuracy of test-time scaling. On challenging AIME benchmarks, TaH2 improves the accuracy–compute slope by 53% (2.74 vs. 1.79) over the non-looped baseline, exceeding the baseline’s peak accuracy by about 3.4 points at matched test-time compute. As the maximum iteration depth increases, existing looped models largely plateau, while TaH2’s gain over the non-looped baseline continues to grow from +2.8 points at depth 2 to +3.9 points at depth 8.\n\n"
+          "target": "readme"
         },
         {
-          "target": "readme",
+          "assessment": "原文贡献第三条写明 \"As the maximum iteration depth increases from 2 to 8, its gain over Standard grows from +2.8 points to +3.9 points\"，且限定在 AIME（Figure 1b）。README 保留该限定，未把该增幅外推到全部十个基准（后者是 +2.9 → +4.8），避免范围混淆。",
+          "block_index": 6,
           "claim": "增益随最大迭代深度 $M$ 从 2 增至 8 而持续扩大（+2.8 → +3.9）",
           "section_index": 3,
-          "block_index": 6,
+          "source_quote": "• Improved Test-Time and Depth Scaling. On challenging AIME benchmarks, TaH2 yields a steeper accuracy–compute slope than Standard and achieves about 3.4 points higher accuracy at matched compute when Standard plateaus. As the maximum iteration depth increases from 2 to 8, its gain over Standard grows from +2.8 points to +3.9 points.\n\n",
           "source_quote_id": "s3:b6:p0",
-          "assessment": "原文贡献第三条写明 \"As the maximum iteration depth increases from 2 to 8, its gain over Standard grows from +2.8 points to +3.9 points\"，且限定在 AIME（Figure 1b）。README 保留该限定，未把该增幅外推到全部十个基准（后者是 +2.9 → +4.8），避免范围混淆。",
-          "source_quote": "• Improved Test-Time and Depth Scaling. On challenging AIME benchmarks, TaH2 yields a steeper accuracy–compute slope than Standard and achieves about 3.4 points higher accuracy at matched compute when Standard plateaus. As the maximum iteration depth increases from 2 to 8, its gain over Standard grows from +2.8 points to +3.9 points.\n\n"
+          "target": "readme"
         },
         {
-          "target": "readme",
+          "assessment": "原文 Section 5.2 称 TaH2 增加 22% 每 token 解码 FLOPs 与 30–34% 端到端延迟，\"it still achieves better test-time scaling and higher attainable accuracy in actual serving (Figure 5)\"。README 同段落同时给出 Table 2 的 1.30–1.34× 延迟与 0.71–0.74× 吞吐，为原文表格数据，无夸大。",
+          "block_index": 17,
           "claim": "但作者指出实际服务中仍取得更好的测试时扩展与更高可达精度",
           "section_index": 7,
-          "block_index": 17,
+          "source_quote": "Runtime efficiency and real-world test-time scaling. We serve all models with an extended Mini-SGLang engine that batches requests at different iteration depths in a shared forward pass (Appendix A.3). Although TaH2 adds 22% decoding FLOPs per token and 30–34% end-to-end latency relative to Standard (Table 2), it still achieves better test-time scaling and higher attainable accuracy in actual serving (Figure 5).\n\n",
           "source_quote_id": "s7:b17:p0",
-          "assessment": "原文 Section 5.2 称 TaH2 增加 22% 每 token 解码 FLOPs 与 30–34% 端到端延迟，\"it still achieves better test-time scaling and higher attainable accuracy in actual serving (Figure 5)\"。README 同段落同时给出 Table 2 的 1.30–1.34× 延迟与 0.71–0.74× 吞吐，为原文表格数据，无夸大。",
-          "source_quote": "Runtime efficiency and real-world test-time scaling. We serve all models with an extended Mini-SGLang engine that batches requests at different iteration depths in a shared forward pass (Appendix A.3). Although TaH2 adds 22% decoding FLOPs per token and 30–34% end-to-end latency relative to Standard (Table 2), it still achieves better test-time scaling and higher attainable accuracy in actual serving (Figure 5).\n\n"
+          "target": "readme"
         },
         {
-          "target": "readme",
+          "assessment": "该片段为 Table 10 表尾，M=8 行给出 164.2 / 52.0 / 216.2 与 vs. Standard 5.17×，与正文 Appendix A.4.3 对同一表的解读一致；\"高于标准 SFT\" 对应 Conclusion 的 Limitations。label lookahead 占 20–24% 来自同节正文 s24:b12:p0，README 两处数字分别有据。",
+          "block_index": 13,
           "claim": "训练 FLOPs 高于标准 SFT（M=8 时为 Standard 的 5.17 倍）",
           "section_index": 24,
-          "block_index": 13,
+          "source_quote": "114.3</td><td>2.73×</td></tr><tr><td>8</td><td>164.2</td><td>52.0</td><td>216.2</td><td>5.17×</td></tr></table>\n\n",
           "source_quote_id": "s24:b13:p1",
-          "assessment": "该片段为 Table 10 表尾，M=8 行给出 164.2 / 52.0 / 216.2 与 vs. Standard 5.17×，与正文 Appendix A.4.3 对同一表的解读一致；\"高于标准 SFT\" 对应 Conclusion 的 Limitations。label lookahead 占 20–24% 来自同节正文 s24:b12:p0，README 两处数字分别有据。",
-          "source_quote": "114.3</td><td>2.73×</td></tr><tr><td>8</td><td>164.2</td><td>52.0</td><td>216.2</td><td>5.17×</td></tr></table>\n\n"
+          "target": "readme"
         },
         {
-          "target": "insight.method",
+          "assessment": "原文贡献第二条为 \"jointly post-trains the backbone and an iteration decider, directly supervising depth decisions with online labels indicating whether further iteration improves prediction\"，cost-sensitive 监督见 Section 4.2 与 Eq. 7。insight.method 的表述与原文一致，未把「与推理一致的 on-policy 深度选择」误写成「消除 train–inference mismatch」（后者在 README Q&A 中已标注为批读提醒）。",
+          "block_index": 5,
           "claim": "通过lookahead depth supervision在线生成深度标签（指示继续迭代是否降低预测损失），用cost-sensitive BCE监督每次深度决策",
           "section_index": 3,
-          "block_index": 5,
+          "source_quote": "• Adaptive Looped Post-training. We propose TaH2, which jointly post-trains the backbone and an iteration decider, directly supervising depth decisions with online labels indicating whether further iteration improves prediction.\n\n",
           "source_quote_id": "s3:b5:p0",
-          "assessment": "原文贡献第二条为 \"jointly post-trains the backbone and an iteration decider, directly supervising depth decisions with online labels indicating whether further iteration improves prediction\"，cost-sensitive 监督见 Section 4.2 与 Eq. 7。insight.method 的表述与原文一致，未把「与推理一致的 on-policy 深度选择」误写成「消除 train–inference mismatch」（后者在 README Q&A 中已标注为批读提醒）。",
-          "source_quote": "• Adaptive Looped Post-training. We propose TaH2, which jointly post-trains the backbone and an iteration decider, directly supervising depth decisions with online labels indicating whether further iteration improves prediction.\n\n"
+          "target": "insight.method"
         },
         {
-          "target": "insight.findings",
+          "assessment": "原文给出三个循环模型斜率 2.12 / 2.27 / 2.26 对 Standard 1.79，并明确 \"Yet all three remain less accurate than Standard over the overlapping compute range\"。insight 中的区间 2.12-2.27 覆盖固定深度 Ouro 的 2.12 到自适应 Ouro 的 2.27（Huginn 2.26 落在区间内），与原文一致。",
+          "block_index": 8,
           "claim": "现有循环模型斜率更陡(2.12-2.27 vs 1.79)但同算力下精度更低",
           "section_index": 5,
-          "block_index": 8,
+          "source_quote": "Results. Fixed-depth Ouro, adaptive Ouro and Huginn yield slopes of 2.12, 2.27 and 2.26 accuracy points per compute doubling, versus 1.79 for Standard (Figure 1a), suggesting larger accuracy gains from latent computation as test-time compute increases. Yet all three remain less accurate than Standard over the overlapping compute range; the exit gate lowers Ouro’s decoding cost but does not close the gap. Recurrence has proven effective in pretraining, as in Ouro and Huginn, but our results point to a gap when it is introduced only in post-training:\n\n",
           "source_quote_id": "s5:b8:p0",
-          "assessment": "原文给出三个循环模型斜率 2.12 / 2.27 / 2.26 对 Standard 1.79，并明确 \"Yet all three remain less accurate than Standard over the overlapping compute range\"。insight 中的区间 2.12-2.27 覆盖固定深度 Ouro 的 2.12 到自适应 Ouro 的 2.27（Huginn 2.26 落在区间内），与原文一致。",
-          "source_quote": "Results. Fixed-depth Ouro, adaptive Ouro and Huginn yield slopes of 2.12, 2.27 and 2.26 accuracy points per compute doubling, versus 1.79 for Standard (Figure 1a), suggesting larger accuracy gains from latent computation as test-time compute increases. Yet all three remain less accurate than Standard over the overlapping compute range; the exit gate lowers Ouro’s decoding cost but does not close the gap. Recurrence has proven effective in pretraining, as in Ouro and Huginn, but our results point to a gap when it is introduced only in post-training:\n\n"
+          "target": "insight.findings"
         },
         {
-          "target": "insight.findings",
+          "assessment": "原文 Section 3.2 写明 \"For Ouro and Huginn, respectively, 52.3% and 33.5% of tokens change by at most 10^-3 while 21.7% and 15.9% become worse\"。insight 的『变化极小』对应原文阈值 10^-3，未把两个模型的数字互调，也未添加原文没有的因果解释。",
+          "block_index": 10,
           "claim": "52.3%(Ouro)/33.5%(Huginn)的token额外迭代后变化极小",
           "section_index": 5,
-          "block_index": 10,
+          "source_quote": "Analysis and motivation. To examine how fixeddepth iteration affects individual tokens, we compare next-token losses after the first and final iterations on the validation set. Figure 3 shows the loss reduction from iterations 1 → 2 for Ouro and 1 → 3 for Huginn. Both distributions concentrate near zero, and a substantial fraction of tokens obtain worse prediction loss after the additional iterations. For Ouro and Huginn, respectively, 52.3% and 33.5% of tokens change by at most $1 0 ^ { - 3 }$ while 21.7% and 15.9% become worse by more than this threshold.\n\n",
           "source_quote_id": "s5:b10:p0",
-          "assessment": "原文 Section 3.2 写明 \"For Ouro and Huginn, respectively, 52.3% and 33.5% of tokens change by at most 10^-3 while 21.7% and 15.9% become worse\"。insight 的『变化极小』对应原文阈值 10^-3，未把两个模型的数字互调，也未添加原文没有的因果解释。",
-          "source_quote": "Analysis and motivation. To examine how fixeddepth iteration affects individual tokens, we compare next-token losses after the first and final iterations on the validation set. Figure 3 shows the loss reduction from iterations 1 → 2 for Ouro and 1 → 3 for Huginn. Both distributions concentrate near zero, and a substantial fraction of tokens obtain worse prediction loss after the additional iterations. For Ouro and Huginn, respectively, 52.3% and 33.5% of tokens change by at most $1 0 ^ { - 3 }$ while 21.7% and 15.9% become worse by more than this threshold.\n\n"
+          "target": "insight.findings"
         },
         {
-          "target": "insight.data",
+          "assessment": "Table 5.1 Training setup 原文：\"we use 273K prompts with responses regenerated by Qwen3-8B\"，教师选择理由指向 Appendix B.1 的下游学生准确率。insight.data 另述 4B/8B 用 Qwen3-235B-A22B 原始回复，对应 Appendix A.1.2 的 s16:b2:p0。",
+          "block_index": 4,
           "claim": "1.7B用Qwen3-8B重生成的273K prompts后训练",
           "section_index": 7,
-          "block_index": 4,
+          "source_quote": "Training setup. Training data combine math, code and QA prompts from AM-Qwen3-Distilled (am-team, 2025) with tool use samples from Nemotron-Agentic-v1 (NVIDIA, 2025). For the experiments in Section 5.2, we use 273K prompts with responses regenerated by Qwen3-8B, the bestperforming teacher in our comparison of downstream student accuracy (Appendix B.1). We train for three epochs with a 16,384-token context, totalling 3.4B training tokens. Section 5.3 uses the original responses generated by Qwen3-235B-A22B and fixes the training budget at TPP = 2 tokens per parameter for every model size. A validation set of 1,000 samples randomly drawn from the training mixture is used for loss and token-level analyses.\n\n",
           "source_quote_id": "s7:b4:p0",
-          "assessment": "Table 5.1 Training setup 原文：\"we use 273K prompts with responses regenerated by Qwen3-8B\"，教师选择理由指向 Appendix B.1 的下游学生准确率。insight.data 另述 4B/8B 用 Qwen3-235B-A22B 原始回复，对应 Appendix A.1.2 的 s16:b2:p0。",
-          "source_quote": "Training setup. Training data combine math, code and QA prompts from AM-Qwen3-Distilled (am-team, 2025) with tool use samples from Nemotron-Agentic-v1 (NVIDIA, 2025). For the experiments in Section 5.2, we use 273K prompts with responses regenerated by Qwen3-8B, the bestperforming teacher in our comparison of downstream student accuracy (Appendix B.1). We train for three epochs with a 16,384-token context, totalling 3.4B training tokens. Section 5.3 uses the original responses generated by Qwen3-235B-A22B and fixes the training budget at TPP = 2 tokens per parameter for every model size. A validation set of 1,000 samples randomly drawn from the training mixture is used for loss and token-level analyses.\n\n"
+          "target": "insight.data"
         },
         {
-          "target": "insight.limitations",
+          "assessment": "Conclusion 的 Limitations 原文：\"Our method is studied only under SFT; we leave its extension to on-policy distillation and reinforcement learning for future work.\" insight 忠实转述，并把它归入作者自述局限而非本批读的独立评测结论。",
+          "block_index": 2,
           "claim": "仅在SFT下研究，未扩展至RL或on-policy蒸馏",
           "section_index": 8,
-          "block_index": 2,
+          "source_quote": "Limitations. (1) TaH2 incurs more training FLOPs than standard SFT (Appendix A.4.3). But note that post-training requires substantially less compute than pretraining, making TaH2 a practical way to add adaptive depth to existing models. (2) Our method is studied only under SFT; we leave its extension to on-policy distillation and reinforcement learning for future work.\n\n",
           "source_quote_id": "s8:b2:p0",
-          "assessment": "Conclusion 的 Limitations 原文：\"Our method is studied only under SFT; we leave its extension to on-policy distillation and reinforcement learning for future work.\" insight 忠实转述，并把它归入作者自述局限而非本批读的独立评测结论。",
-          "source_quote": "Limitations. (1) TaH2 incurs more training FLOPs than standard SFT (Appendix A.4.3). But note that post-training requires substantially less compute than pretraining, making TaH2 a practical way to add adaptive depth to existing models. (2) Our method is studied only under SFT; we leave its extension to on-policy distillation and reinforcement learning for future work.\n\n"
+          "target": "insight.limitations"
         },
         {
-          "target": "insight.research_question",
+          "assessment": "Introduction 原文：\"These comparisons do not establish whether looping improves accuracy– compute scaling as output-token budgets increase.\" insight 的第一个研究问题即该句的中文转述；第二个问题来自同节 \"This motivates our central question\" 指向的中心问题标题（s3:b0:p0）。",
+          "block_index": 1,
           "claim": "循环Transformer在输出token预算增大时，能否改善准确率-计算量缩放规律？",
           "section_index": 2,
-          "block_index": 1,
+          "source_quote": "Test-time scaling improves language model reasoning by spending additional inference compute (Jaech et al., 2024; Guo et al., 2025; Snell et al., 2024). This computation can support longer chains of thought in token space (Muennighoff et al., 2025), or repeated applications of shared layers in latent space, as in looped transformers (Dehghani et al., 2019; Geiping et al., 2025a; Zhu et al., 2025). Parameter sharing makes additional depth possible without increasing model size, but each iteration still incurs decoding cost. Prior scaling studies compare looped and non-looped models at matched parameter counts or per-token FLOPs (Prairie et al., 2026; Schwethelm et al., 2026b; Wang et al., 2026b). These comparisons do not establish whether looping improves accuracy– compute scaling as output-token budgets increase. We study this question through post-training, a practical way to introduce recurrence into pretrained LLMs without training a looped model from scratch (McLeish et al., 2025; ",
           "source_quote_id": "s2:b1:p0",
-          "assessment": "Introduction 原文：\"These comparisons do not establish whether looping improves accuracy– compute scaling as output-token budgets increase.\" insight 的第一个研究问题即该句的中文转述；第二个问题来自同节 \"This motivates our central question\" 指向的中心问题标题（s3:b0:p0）。",
-          "source_quote": "Test-time scaling improves language model reasoning by spending additional inference compute (Jaech et al., 2024; Guo et al., 2025; Snell et al., 2024). This computation can support longer chains of thought in token space (Muennighoff et al., 2025), or repeated applications of shared layers in latent space, as in looped transformers (Dehghani et al., 2019; Geiping et al., 2025a; Zhu et al., 2025). Parameter sharing makes additional depth possible without increasing model size, but each iteration still incurs decoding cost. Prior scaling studies compare looped and non-looped models at matched parameter counts or per-token FLOPs (Prairie et al., 2026; Schwethelm et al., 2026b; Wang et al., 2026b). These comparisons do not establish whether looping improves accuracy– compute scaling as output-token budgets increase. We study this question through post-training, a practical way to introduce recurrence into pretrained LLMs without training a looped model from scratch (McLeish et al., 2025; "
+          "target": "insight.research_question"
         },
         {
-          "target": "insight.relevance",
+          "assessment": "该判定有原文依据：Section 4 指出固定深度迭代在每个 token 上浪费算力，TaH2 通过 token 级深度分配改进测试时扩展；Introduction 亦称 post-training 是把递归引入预训练 LLM 的实用方式。但 \"对推理期动态计算分配、latent space scaling 及高效推理部署有直接参考价值\" 属本批读的推断性评价，原文未做部署层面的外推，已在 README 的改进建议中标注为批读推断。",
+          "block_index": 1,
           "claim": "为循环Transformer的测试时自适应计算提供实用后训练方案",
           "section_index": 3,
-          "block_index": 1,
+          "source_quote": "Fixed-depth iteration spends extra compute on every token, although many tokens gain little or even get worse (Section 3.2). Ouro’s adaptive exit gate improves compute efficiency, but not enough to surpass Standard. We introduce TaH2 to improve test-time scaling by learning which tokens benefit from additional iterations and allocating depth accordingly. The backbone and an iteration decider are jointly post-trained through lookahead depth supervision: depth labels are derived online from changes in prediction loss, and a cost-sensitive loss supervises each depth decision (Figure 2). Unlike TaH’s staged training with offline mismatch labels (Fu et al., 2025b), TaH2 supervises depth decisions using actual iteration gains measured on the current backbone throughout training. In addition, an updater provides input injection between iterations (Geiping et al., 2025a), and stopping probabilities weight the predictions across executed depths (Zeng et al., 2026).\n\n",
           "source_quote_id": "s3:b1:p0",
-          "assessment": "该判定有原文依据：Section 4 指出固定深度迭代在每个 token 上浪费算力，TaH2 通过 token 级深度分配改进测试时扩展；Introduction 亦称 post-training 是把递归引入预训练 LLM 的实用方式。但 \"对推理期动态计算分配、latent space scaling 及高效推理部署有直接参考价值\" 属本批读的推断性评价，原文未做部署层面的外推，已在 README 的改进建议中标注为批读推断。",
-          "source_quote": "Fixed-depth iteration spends extra compute on every token, although many tokens gain little or even get worse (Section 3.2). Ouro’s adaptive exit gate improves compute efficiency, but not enough to surpass Standard. We introduce TaH2 to improve test-time scaling by learning which tokens benefit from additional iterations and allocating depth accordingly. The backbone and an iteration decider are jointly post-trained through lookahead depth supervision: depth labels are derived online from changes in prediction loss, and a cost-sensitive loss supervises each depth decision (Figure 2). Unlike TaH’s staged training with offline mismatch labels (Fu et al., 2025b), TaH2 supervises depth decisions using actual iteration gains measured on the current backbone throughout training. In addition, an updater provides input injection between iterations (Geiping et al., 2025a), and stopping probabilities weight the predictions across executed depths (Zeng et al., 2026).\n\n"
+          "target": "insight.relevance"
         }
       ],
-      "correction_attempts": 0
+      "correction_attempts": 0,
+      "verdict": "corrected"
     }
   },
   "source_sha256": "fe8f122c87ca8dfa6ccf540077f3b9ebd334368bd282138b789ebca8cf554919",
