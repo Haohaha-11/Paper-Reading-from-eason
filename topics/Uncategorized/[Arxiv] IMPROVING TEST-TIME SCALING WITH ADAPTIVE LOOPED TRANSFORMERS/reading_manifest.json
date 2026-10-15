@@ -1,0 +1,2147 @@
+{
+  "provider": "bailian",
+  "model": "qwen3.8-flash",
+  "kind": "paper",
+  "stage_models": {
+    "annotations": "qwen3.8-flash",
+    "synthesis": "qwen3.8-max",
+    "verifier": "deepseek-v4.1-flash"
+  },
+  "verification": {
+    "status": "reviewed",
+    "model": "deepseek-v4.1-flash",
+    "scope": "模型对照原文的独立复核；引文位置由程序校验，不代表外部事实得到独立证实",
+    "batches": [
+      {
+        "section_index": 0,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对作者人数与符号标记：引文确为 7 位作者，∗ 标记 3 人（Yichen You、Tianyu Fu、Aosong Feng），† 标记 3 人（Xuefei Ning、Ning Ding、Yu Wang），Xingtai Lv 无标记——初稿这两点数字正确，保留。修改项：初稿直接把 ∗ 断定为“共同第一作者”、† 断定为“通讯作者”，但原文仅给符号未给定义，已改为按惯例的推断并标注待证；初稿“三一作+三通讯配置暗示工作由多个子模块并行推进”无任何原文依据，属超出证据的推测，已删除。",
+            "block_index": 1,
+            "source_quote": "Yichen You<sup>∗1</sup>, Tianyu Fu<sup>∗1</sup>, Aosong Feng<sup>∗2</sup>, Xingtai Lv<sup>1</sup>, Xuefei Ning<sup>†1</sup>, Ning Ding<sup>†1</sup>, Yu Wang<sup>†1</sup>"
+          },
+          {
+            "assessment": "核对机构名称与编号：引文确为机构 1 清华大学、机构 2 耶鲁大学，初稿“清华 + 耶鲁”表述正确，保留。修改项：初稿“清华团队在系统优化与大模型推理效率方面常有积累”“耶鲁团队可能在算法理论或特定应用领域提供补充视角”属于未获本原文支持的背景断言，且声称的判断无法由提供的正文证据支撑，已删除；改为仅陈述可由上标编号推出的作者-机构对应关系（† 三人属机构 1，Aosong Feng 属机构 2），并说明具体分工待证。未涉及任何外部检索或论文元数据核验。",
+            "block_index": 2,
+            "source_quote": "<sup>1</sup>Tsinghua University <sup>2</sup>Yale University"
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 1,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对四项主张：(1) 指标定义「准确率增益 / test-time decoding FLOPs 翻倍」与原文一致，批注未篡改；(2) 原文限定词 often 与 at matched compute 被保留在修正后批注中，并明确说明初稿把 existing looped 等同于 fixed-depth 属推断；(3) 3.4 分的原文是 exceeding the baseline's **peak** accuracy，已把初稿「超越基线约 3.4 个点」修正为「超过基线峰值准确率约 3.4 分」；(4) 53%（2.74 vs 1.79）与 +2.8→+3.9 数字逐字核对无误。摘要未给方差/误差棒，已注明为证据边界而非改写。",
+            "block_index": 1,
+            "source_quote": "Through post-training looped transformers, we study the accuracy–compute slope, measured as the accuracy gain per doubling of test-time decoding FLOPs. We find that existing looped transformers often yield steeper slopes than their non-looped baseline, yet underperform it at matched compute."
+          },
+          {
+            "assessment": "抽查纠正（Codex 离线复审，非原模型自动核验结论）：本段仅有图片占位与子图标签，caption 在下一段。caption 说明输出 token 截断预算扫描 4K–16K，不能据此把横轴确定为输出长度；正文 3.2 明确以每次响应解码 FLOPs 的 log₂ 拟合准确率。本条原自动复核把扫描变量当成横轴的判断已纠正。初稿「图中应对比了 Non-looped / Existing Looped / Proposed TaH2」仍标为推断、待证；(a)(b) 共享同一 caption。未获得图像视觉信息，图中曲线构成仍无法从文本核验。",
+            "block_index": 2,
+            "source_quote": "![](images/a82f5e9c16ae035c585a2eede8a694f53b6aeb7069ed17ac83f80d6be7b4a393.jpg)  \n(a) Test-time scaling"
+          },
+          {
+            "assessment": "逐字核对 caption：(b) 的纵轴是 16K cutoff 下的**准确率**，横轴是深度上限 M。初稿「纵轴为相对基线的性能增益」与原文不符，已定为错误并修正；同时把摘要中的 +2.8→+3.9 明确区分于该图纵轴量。caption 中的实验设定（1.7B、同一 checkpoint、32 样本、AIME24–26）为原文逐字内容，已补入批注；caption 未给误差棒与具体基线曲线，判为无法判定并标为待证。",
+            "block_index": 3,
+            "source_quote": "(a) Output-token cutoffs sweep 4K–16K; lines are fitted trends. (b) Accuracy at a 16K cutoff as the depth ceiling M grows."
+          },
+          {
+            "assessment": "核对架构主张：原文只支持「跨迭代共享参数」「decider 每次迭代后接收在线深度监督」「no-gradient lookahead 在停止点提供目标、推理时省略」三条。初稿「梯度隔离——通过分离不同迭代的计算图来稳定训练」超出 caption 与摘要证据，已删除并说明其不成立的原因（no-gradient 的作用是提供停止点监督目标，推不出「稳定训练」）；初稿末句模板化表述已替换为 caption 中的具体机制（Left decider / Right updater 重注入 embedding / stopping probabilities 加权）。decider 结构、加权形式、lookahead 深度范围 caption 未提，标为待证，需查正文 Method。",
+            "block_index": 4,
+            "source_quote": "All modules share parameters across iterations. The decider receives online depth supervision after each iteration; the no-gradient lookahead supplies the target at the stopping point and is omitted at inference."
+          }
+        ],
+        "editorial_corrections": [
+          {
+            "changes": [
+              {
+                "after": "二是已有研究在匹配参数量或每 token FLOPs 下比较循环与非循环模型；据作者所知，输出变长时循环是否改善 test-time scaling 仍缺乏充分研究。",
+                "before": "二是当时已有工作只在 matched parameters 或 per-token FLOPs 下比较循环/非循环模型，**没有**考察输出变长时的 test-time scaling。",
+                "field": "annotations.block_1.comment"
+              },
+              {
+                "after": "caption 说明实验扫描了 4K–16K 的输出 token 截断预算，曲线为拟合趋势；它并未据此把横轴定义为输出长度。正文 3.2 明确说明，准确率对每次响应解码 FLOPs 的 log₂ 做线性拟合，因此应区分「用于改变计算量的输出预算」与「分析准确率—计算关系的计算量变量」。",
+                "before": "caption 明示的横轴信息是 \"Output-token cutoffs sweep 4K–16K; lines are fitted trends\"，即横轴为输出 token 截断扫描（4K 到 16K），曲线是**拟合趋势线**而非逐点连线。初稿写「横轴通常为解码 FLOPs（或时间步/长度）」属于猜测，应改为 caption 明示的 output-token cutoff。",
+                "field": "annotations.block_2.comment"
+              },
+              {
+                "after": "抽查纠正（Codex 离线复审，非原模型自动核验结论）：本段仅有图片占位与子图标签，caption 在下一段。caption 说明输出 token 截断预算扫描 4K–16K，不能据此把横轴确定为输出长度；正文 3.2 明确以每次响应解码 FLOPs 的 log₂ 拟合准确率。本条原自动复核把扫描变量当成横轴的判断已纠正。初稿「图中应对比了 Non-looped / Existing Looped / Proposed TaH2」仍标为推断、待证；(a)(b) 共享同一 caption。未获得图像视觉信息，图中曲线构成仍无法从文本核验。",
+                "before": "该段仅有图片占位与子图标签，caption 不在本段（在下一段）。据此判定初稿「横轴通常为解码 FLOPs（或时间步/长度）」缺乏本段证据，属猜测，已改为引用 caption 明示的 output-token cutoff；初稿「图中应对比了 Non-looped / Existing Looped / Proposed TaH2」标为推断、待证；同时指出 (a)(b) 共享同一 caption 应并列展示。未获得图像视觉信息，图中曲线构成无法核验，已在批注中如实说明。",
+                "field": "verification.checks.block_2.assessment"
+              }
+            ],
+            "id": "paper129-abstract-scaling-20261015-v1",
+            "notice": "Codex 离线抽查纠正，非原模型自动核验结论；仅涵盖列出的两处语义问题，不代表全文质量合格。",
+            "original_checkpoint_sha256": "2c9c3d69fe2c39070fcdbabfe0161b504e23cba714268df9a8ad9f5139c89b03",
+            "original_data_sha256": "d62ab181b034c509480d59cec2c44b9048b98a64074c4b549e700116370bf53b",
+            "review_type": "offline_editorial_review",
+            "reviewer": "Codex",
+            "source_evidence": [
+              {
+                "quote": "However, to the best of our knowledge, whether looping improves test-time scaling as outputs grow longer remains underexplored.",
+                "section": "ABSTRACT"
+              },
+              {
+                "quote": "We fit accuracy linearly against $\\log _ { 2 }$ of the decoding FLOPs per response (Appendix A.4.2).",
+                "section": "3.2 TEST-TIME SCALING BEHAVIOUR"
+              }
+            ],
+            "source_sha256": "fe8f122c87ca8dfa6ccf540077f3b9ebd334368bd282138b789ebca8cf554919"
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 2,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对初稿对研究缺口与因果的转述：原文明确说的是参数共享带来额外深度、代价为每次迭代的解码成本，且既有研究在匹配参数量或每 token FLOPs 下的比较无法回答「输出 token 预算增加时 looping 是否改善 accuracy–compute 缩放」。初稿这两点表述与原文一致，未发现夸大；但初稿未点出「本文的判别量是 accuracy–compute scaling slope 随 output-token 预算变化」这一限定，已在批注中补明。本段无数字、无公式，故不存在公式解释越界问题；初稿提到的两类计算路径（token 空间长 CoT / latent 空间循环）与原文一一对应，予以保留。",
+            "block_index": 1,
+            "source_quote": "Parameter sharing makes additional depth possible without increasing model size, but each iteration still incurs decoding cost. Prior scaling studies compare looped and non-looped models at matched parameter counts or per-token FLOPs (Prairie et al., 2026; Schwethelm et al., 2026b; Wang et al., 2026b). These comparisons do not establish whether looping improves accuracy– compute scaling as output-token budgets increase."
+          },
+          {
+            "assessment": "对数字、因果与方法条件逐项核对并作出修正：(1) 数字核对——初稿完全遗漏 2.12/2.27/2.26 与 1.79、M = 2/M = 3、output-token cutoff 至 16K、斜率定义为「解码 FLOPs 每翻一倍的准确率增量」，已补入。(2) 术语修正——初稿称 Huginn 为「混合架构」，原文为 middle-block recurrence，属事实性错误，已改正。(3) 因果方向修正——初稿写「在低预算下表现不佳，但在高预算下展现出更陡峭的缩放斜率」，原文是「斜率更陡，但在重叠计算区间内仍更不准确」，初稿隐含的「高预算下反超」无原文支持，已改为原文的斜率与精度双条件表述。(4) 越界推断标记——初稿的「超线性缩放能力」与「优势依赖于足够的推理步数来积累信息」均为原文未作的断言或机制解释，已明确标注为推断/待证。(5) 图表界限——Figure 1a 未提供图像视觉信息，批注仅依据正文文字描述，未对曲线形状作额外声称。",
+            "block_index": 2,
+            "source_quote": "In this post-training setting, fixed-depth and adaptive Ouro (maximum iteration depth M = 2) and Huginn (M = 3) yield steeper scaling slopes than Standard (2.12, 2.27 and 2.26 versus 1.79), yet remain less accurate over the overlapping compute range (Figure 1a)."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 3,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对方法主张：初稿称「联合后训练 + 在线前瞻监督」与「成本敏感损失」均被原文支持（depth labels are derived online from changes in prediction loss；a cost-sensitive loss supervises each depth decision）。保留。修正两点：(1) 动机表述补上原文的「many tokens gain little or even get worse」，因为原文并非只说「低收益」，也包括「变差」；(2) 删除或标注对 TaH2 缩写的猜测（该猜测出现在 block 5 批注）。updater 与 stopping probabilities 的对应引用（Geiping et al., 2025a；Zeng et al., 2026）与原文一致。TaH 对比部分原文明确限定为监督信号来源差异（offline mismatch labels vs. 当前 backbone 实测增益），批注未越界。",
+            "block_index": 1,
+            "source_quote": "We introduce TaH2 to improve test-time scaling by learning which tokens benefit from additional iterations and allocating depth accordingly."
+          },
+          {
+            "assessment": "逐数字核对：53%、2.74 vs. 1.79、1.7B、AIME24–26 均与原文一致，且度量口径为「每解码 FLOPs 翻倍的点数」，初稿未标出口径，已补充。修正：「约 3.4 点」在原文附有条件「With evaluation extended to 32K tokens」和「at matched decoding FLOPs」，比较对象是 Standard 的 peak accuracy（Figure 4b），初稿省略了 32K 条件，已在批注中补回。修正：+2.8→+3.9 的增益在原文中明确是 over the non-looped baseline，初稿表述可能被误读为相对其他 looped 模型，已明确比较基准。泛化范围（4B/8B、code/QA/tool use，Table 3）与原文一致。",
+            "block_index": 2,
+            "source_quote": "On AIME24–26 at 1.7B, TaH2 improves the accuracy– compute slope by 53% over the non-looped baseline (2.74 vs. 1.79 points per doubling of decoding FLOPs)."
+          },
+          {
+            "assessment": "该段为纯引导句，无技术主张。初稿批注「后续应列出具体技术或理论贡献」中「应」带有预测语气，但后文 block 4–6 确实为三条贡献列表，故不构成错误；仅将措辞改为事实性描述（其后三条贡献分别对应什么），不新增主张。",
+            "block_index": 3,
+            "source_quote": "We summarise our contributions as follows."
+          },
+          {
+            "assessment": "核对因果与条件：原文同时陈述「looped 模型斜率更陡」与「matched test-time compute 下不如 Standard」，初稿准确。修正：初稿追加的「单纯更多迭代不等于更高效，故需要智能停止机制」属原文未明写的因果推断，已显式标注为推断，并指向 Section 3.2 / Figure 1、4 需回正文验证，避免把推断当作原文结论。",
+            "block_index": 4,
+            "source_quote": "We study how looping changes accuracy–compute scaling and find that, although post-trained looped models often yield steeper slopes, they underperform Standard at matched test-time compute."
+          },
+          {
+            "assessment": "方法条件核对：jointly post-trains backbone + iteration decider、online labels 的语义（further iteration improves prediction）与原文一致，保留。修正：初稿将 TaH2 展开为「Test-time Adaptive Heuristic/Hub?」属无原文依据的猜测（本节及源块均未定义缩写），已删除并标注为待证。初稿「实现了动态的深度控制」为对方法效果的合理概括，保留但不再扩展为实验结论。",
+            "block_index": 5,
+            "source_quote": "We propose TaH2, which jointly post-trains the backbone and an iteration decider, directly supervising depth decisions with online labels indicating whether further iteration improves prediction."
+          },
+          {
+            "assessment": "数字一致性核对：+2.8→+3.9（深度 2→8，over Standard）与约 3.4 点均与原文一致，且这两组数字与 block 2 内部自洽（比较对象均为 Standard）。修正/标注：「about 3.4」保留「约」字，不得当作精确值；原文条件「when Standard plateaus」与 block 2 的「32K tokens」需合读，批注已提示两处口径差异。初稿未逐字核对 AIME 基准名称与「challenging」限定，已确认与原文一致。",
+            "block_index": 6,
+            "source_quote": "On challenging AIME benchmarks, TaH2 yields a steeper accuracy–compute slope than Standard and achieves about 3.4 points higher accuracy at matched compute when Standard plateaus."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 4,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对本文研究问题与实验条件的表述。原文逐字支持三点：研究对象是 looping 对 accuracy–compute scaling 的影响、自变量是 output budget 增大、比较对象是 post-trained looped 与 non-looped 且 matched decoding FLOPs。初稿\"严格匹配 decoding FLOPs\"与\"聚焦循环结构在解码预算增加时的缩放规律\"均可由原文支撑，予以保留。但对 matched decoding FLOPs 的动机解释（\"为公平比较、排除 token 数优势\"）原文未写，已改为推断并标注待证。另核对初稿对 token-based/latent-space 两路径的分类，与原文列举（CoT、budget forcing/RL、repeated sampling、tree search、latent optimization、looped transformers）一致。",
+            "block_index": 1,
+            "source_quote": "We study how looping changes accuracy–compute scaling as output budgets increase, comparing post-trained looped and non-looped models at matched decoding FLOPs (Section 3)."
+          },
+          {
+            "assessment": "核对循环架构归类与缩放研究匹配设定。初稿\"Huginn（中间块）、Ouro（全栈）、Loopies（单层）\"与原文逐一对应，正确。但初稿将缩放研究概括为\"参数匹配 vs FLOPs 匹配\"两档，遗漏原文的第三档\"or both, as in SMELT\"，已补出。核对 TaH2 定位句 \"TaH2 builds on this post-training setting to learn token-dependent iteration depths\"，初稿\"学习 token-dependent iteration depths\"正确；\"从预训练非循环模型出发引入循环能力\"是对 post-training setting 的解释性展开，原文此段未逐字展开，已标注为解释性表述；\"为后续埋下伏笔\"属结构观察，已标注非原文陈述。",
+            "block_index": 2,
+            "source_quote": "Recent scaling studies examine recurrence under matched parameter counts (Prairie et al., 2026), matched per-token FLOPs (Schwethelm et al., 2026b), or both, as in SMELT (Wang et al., 2026b)."
+          },
+          {
+            "assessment": "核对自适应计算分类与 TaH2 定位。width/depth 分类、MoR 容量约束 router、pondering 类损失+预算/置信度惩罚、Kuo 的 terminal reward、TaH 的 offline mismatch labels + separate stages、Ouro 的冻结 backbone + token-level loss improvements 监督 gate，均与原文一致。关键修正：初稿未写出 TaH2 标签的 online 来源与 \"measured iteration gains along decider-selected routes\"，这是与 TaH offline labels 的核心对照，已补出。同时 \"端到端联合优化\"、\"允许主干适应新的循环逻辑\" 原文未使用相应措辞，已标注为推断而非原文陈述。另补充原文末句关于 Appendix E（scaling、state design、serving）的说明。",
+            "block_index": 3,
+            "source_quote": "TaH2 jointly post-trains the backbone and decider through lookahead depth supervision, deriving online token-level labels from measured iteration gains along decider-selected routes."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 5,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对本节目标：原文是「形式化递归计算 + 实证展示已有循环模型的测试时扩展行为」，批注据此表述一致；删除了初稿中「揭示现有循环 Transformer 的局限」这一超出本节开头声明的措辞，因为「局限」是后文结果的产物而非本句的承诺。",
+            "block_index": 1,
+            "source_quote": "We formalise the recurrent computation of looped transformers and empirically show the test-time scaling behavior of existing looped transformers."
+          },
+          {
+            "assessment": "逐项核对符号定义：下标为 token 位置、上标为迭代轮次、$\\mathcal{F}_\\theta$ 为共享 Transformer 骨干、$\\mathbf{e}_t$ 为 token $t$ 的嵌入、$\\mathbf{h}_t^{(m)}$ 为第 $m$ 轮后的隐藏状态，以及起点 $\\mathbf{h}_t^{(0)}=\\mathbf{e}_t$，均与原文一致。修正了初稿「共享权重 $\\boldsymbol{\\theta}$ 的骨干网络 $\\boldsymbol{\\theta}$ 被反复应用」这一主语重复且有歧义的错误表述。",
+            "block_index": 3,
+            "source_quote": "We focus on models that repeat all L Transformer layers, denoting the shared Transformer backbone by $\\mathcal { F } _ { \\theta }$ and the embedding at token position t by $\\mathbf { e } _ { t }$ . Let $\\mathbf { h } _ { t } ^ { ( m ) }$ denote the hidden state at token position t after iteration m."
+          },
+          {
+            "assessment": "核对 Eq. (1) 的两段含义：上行用共享骨干 $\\mathcal{F}_{\\boldsymbol{\\theta}}$ 作用在上一轮隐藏状态上完成递归更新，下行用 $\\mathbf{W}_{\\mathrm{out}}$ 投影后经 softmax 得到 next-token 分布。修正初稿「$\\boldsymbol{\\theta}$ 表示参数矩阵」的错误——原文中 $\\boldsymbol{\\theta}$ 是骨干网络参数，输出投影是 $\\mathbf{W}_{\\mathrm{out}}$；同时删除初稿中关于 GitHub MathJax 渲染（\\tag、\\mathrm）的排版性内容，改为批读该公式在本文机制中的作用。",
+            "block_index": 4,
+            "source_quote": "$$\n{ \\bf h } _ { t } ^ { ( m ) } = \\mathcal { F } _ { \\boldsymbol { \\theta } } \\Big ( { \\bf h } _ { t } ^ { ( m - 1 ) } \\Big ) , \\qquad { \\bf q } _ { t } ^ { ( m ) } = \\mathrm { s o f t m a x } \\Big ( { \\bf W } _ { \\mathrm { o u t } } { \\bf h } _ { t } ^ { ( m ) } \\Big ) ,\\tag{1}\n$$"
+          },
+          {
+            "assessment": "核对三类模型设定及其深度记号：Ouro 沿用 Eq. (1) 的递归、Huginn 只重复中间 block 并做 input injection、$m_t\\in\\{1,\\ldots,M\\}$ 为 token $t$ 的实际执行深度、Fixed-depth 取 $m_t=M$、Standard 取 $m_t=1$、Adaptive 逐 token 选 $m_t$（Ouro 用学习到的 exit gate），均与原文一致，未发现数字或条件错误。批注另补充了「Standard 深度 1 与循环模型最大深度 $M$ 的算力口径需按 FLOPs 对齐」这一注解式提醒，未改变原文主张。",
+            "block_index": 5,
+            "source_quote": "Here $\\mathbf { W _ { \\mathrm { o u t } } }$ is the output projection. Ouro follows this recurrence (Zhu et al., 2025). Huginn repeats only a middle block, with input injection at each iteration (Geiping et al., 2025a)."
+          },
+          {
+            "assessment": "核对实验设置的数字与条件：基座 Qwen3-1.7B-Base、同一数据、16K 上下文、Ouro $M=2$、Huginn $M=3$、Huginn 固定深度、Ouro 在固定深度与 exit gate 两种方式下评估且 gate 在冻结骨干上事后训练（Appendix A.2）；AIME24–26 平均准确率、每题 32 样本、输出 cutoff 4K–16K 以 2K 递增、对每条响应解码 FLOPs 的 $\\log_2$ 做线性拟合（Appendix A.4.2），均与原文吻合。批注额外点明「斜率是拟合估计量而非定律」，属方法论边界说明而非新增事实。",
+            "block_index": 7,
+            "source_quote": "We post-train Standard, Ouro (M = 2) and Huginn (M = 3) from Qwen3-1.7B-Base on same data with a 16K context. Huginn runs at fixed depth; Ouro is evaluated both at fixed depth and with its exit gate, trained afterwards on the frozen backbone (Appendix A.2)."
+          },
+          {
+            "assessment": "核对斜率数字 2.12 / 2.27 / 2.26 与 Standard 1.79（Figure 1a），以及「重叠算力区间内三者仍低于 Standard、exit gate 降低解码成本但未缩小差距」的限定，均与原文一致。同时把初稿「仅在 post-training 阶段引入循环结构存在缺陷」的强表述收敛为原文的「存在 gap」，避免把对方法家族的评价升级为原文未声称的结论。",
+            "block_index": 8,
+            "source_quote": "Fixed-depth Ouro, adaptive Ouro and Huginn yield slopes of 2.12, 2.27 and 2.26 accuracy points per compute doubling, versus 1.79 for Standard (Figure 1a), suggesting larger accuracy gains from latent computation as test-time compute increases."
+          },
+          {
+            "assessment": "核对这句粗体结论：原文只做现象陈述（涨得更快 + 匹配算力下不如非循环基线），并未给出原因。因此把初稿「未能有效利用额外计算步数」「初始性能损失过大」两种解释明确标注为批注者推断，而非原文结论，避免因果外推。",
+            "block_index": 9,
+            "source_quote": "Post-trained looped models gain accuracy faster as test-time compute increases, yet underperform the non-looped baseline at matched compute."
+          },
+          {
+            "assessment": "核对数字：Ouro 52.3%、Huginn 33.5% 的 token 变化不超过 $10^{-3}$；Ouro 21.7%、Huginn 15.9% 变差超过该阈值；并核对 Ouro 比较 1→2、Huginn 比较 1→3 的迭代对照设定。纠正初稿把「变化小」与「变差」两个口径混用的问题，以及使用原文未出现的「over-thinking / noise accumulation」术语的问题，后者已降级为推测性措辞。",
+            "block_index": 10,
+            "source_quote": "For Ouro and Huginn, respectively, 52.3% and 33.5% of tokens change by at most $1 0 ^ { - 3 }$ while 21.7% and 15.9% become worse by more than this threshold."
+          },
+          {
+            "assessment": "核对归因链：骨干只按全深度训练 → early exit 下 train–inference mismatch → 促使 token 依赖深度与骨干联合学习、以实测 loss reduction 监督，均与原文一致。初稿猜测的具体方法名（如「Adaptive Depth Training」）在本节原文中并未出现，已标注为推断，需在方法章节确认。",
+            "block_index": 11,
+            "source_quote": "Its backbone is trained only at full depth, causing a train–inference mismatch under early exit. This motivates learning token-dependent depth jointly with the backbone, supervised by measured loss reductions."
+          },
+          {
+            "assessment": "核对 Figure 3 caption：展示 Ouro 与 Huginn 从首次到最终迭代的 token 级 loss reduction，三个区域分别对应「变差 / 几乎不变 / 改善」的 token 比例；批注据此把它与正文 52.3%/33.5%、21.7%/15.9% 的数字挂钩。同时如实声明本次核对未获得图片视觉信息，因此不对直方图形状、坐标范围与区域划分阈值作断言，符合「图表只能依据已提供的正文/caption 描述」的限制。",
+            "block_index": 12,
+            "source_quote": "Figure 3: Token-level loss reduction from the first to final iteration in Ouro and Huginn. The three regions report the fractions of tokens that become worse, change little, or improve."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 6,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对“联合后训练”的范围：原文只说 backbone 与 decider 的 joint post-training，未提 updater（updater 的联合训练在 block 14 才出现）；草稿“从推理时策略转化为训练时优化”在本句中没有依据，属对比性推断，已在批注中标为推断而非原文主张。",
+            "block_index": 1,
+            "source_quote": "TaH2 learns token-dependent depth through joint post-training of the backbone and decider."
+          },
+          {
+            "assessment": "数字核对：3% 的主体是 updater 与 decider 合计，而非整模型；已限定主语。原文未给 FLOPs/延迟，“轻量高效”仅有参数量证据，已在批注中划界。",
+            "block_index": 3,
+            "source_quote": "The updater and decider add fewer than $3 \\%$ parameters at every scale we study (Table 7)."
+          },
+          {
+            "assessment": "“无梯度迭代用于监督”属实；草稿“确保训练时的视野与推理一致”原文未支持，已标为推断。同时修正草稿把 depth 写成“层”，并补上所关注状态为 executed KV states 的限定。",
+            "block_index": 4,
+            "source_quote": "During training, stopped tokens take an additional no-gradient iteration for supervision."
+          },
+          {
+            "assessment": "核对输入约定：后续轮的 updater 输入含 e_t 与 h_t^(m)，草稿“不再直接复用上一轮输出”易误导，已改为“经 MLP 映射后重新注入”；“解决梯度消失/特征漂移”原文未提，已标为推断。",
+            "block_index": 5,
+            "source_quote": "Subsequent iterations use a learned input-injection updater (Geiping et al., 2025a), modifying Equation 1 to"
+          },
+          {
+            "assessment": "公式结构与 block 7 对 U_ψ 的描述一致；草稿“防止偏离太远”属推断，已标注，未把推断写成原文机制。",
+            "block_index": 6,
+            "source_quote": "\\mathbf { h } _ { t } ^ { ( m + 1 ) } = \\mathcal { F } _ { \\boldsymbol { \\theta } } \\left( \\mathcal { U } _ { \\psi } \\left( \\mathbf { e } _ { t } , \\mathbf { h } _ { t } ^ { ( m ) } \\right) \\right) ."
+          },
+          {
+            "assessment": "核对 U_ψ 的两个功能与 small 描述；“印证整体低参数开销”只能由 Table 7 的 updater+decider 合计 <3% 支撑，不能单独归因于 updater，已限定。",
+            "block_index": 7,
+            "source_quote": "Here $\\mathcal { U } _ { \\psi }$ is a small normalised MLP that reinjects the input embedding while mapping the previous final-layer state back to the backbone input space (Appendix A.2)."
+          },
+          {
+            "assessment": "原文只定义“预测继续概率”，未说二分类头或“软门控”实现；草稿的“二分类/回归”“软门控”已标为解释性表述。",
+            "block_index": 8,
+            "source_quote": "After iteration $m < M$ , a lightweight decider predicts a conditional continue probability"
+          },
+          {
+            "assessment": "公式三项输入与原文一致；草稿把 TopK 解释为“置信度”并据此“修正错误”，原文未定义 TopK 语义，已标为推断并指向 Appendix/后续证据。",
+            "block_index": 9,
+            "source_quote": "g _ { t } ^ { ( m ) } = \\mathcal { D } _ { \\phi } \\Big ( \\mathbf { e } _ { t } , \\mathbf { h } _ { t } ^ { ( m ) } , \\mathrm { T o p K } ( \\mathbf { q } _ { t } ^ { ( m ) } ) \\Big ) \\in ( 0 , 1 ) ."
+          },
+          {
+            "assessment": "停止规则核对无误：首个小于阈值处停止，否则到 M；stopping weights 与最后执行轮吸收剩余质量的表述由原文支持。",
+            "block_index": 10,
+            "source_quote": "With exit threshold $\\tau _ { \\mathrm { e x i t } }$ , token t stops at the first depth where $g _ { t } ^ { ( m ) } < \\tau _ { \\mathrm { e x i t } }$ and otherwise runs to M."
+          },
+          {
+            "assessment": "分段权重与聚合式引用原文一致；草稿“权重和为 1”“梯度可回传所有执行路径”是数学/实现推断，已标明为可验证推断而非原文陈述。",
+            "block_index": 11,
+            "source_quote": "\\quad \\quad \\mathbf { q } _ { t } = \\sum _ { m = 1 } ^ { m _ { t } } \\omega _ { t } ^ { ( m ) } \\mathbf { q } _ { t } ^ { ( m ) } ."
+          },
+          {
+            "assessment": "on-policy 定义与 Ouro/TaH 的对比逐项核对无误；“避免 train–inference mismatch”是解释性推断，已标注。",
+            "block_index": 12,
+            "source_quote": "Training is on-policy with respect to depth selection: tokens follow the current decider’s decisions under the same rule used at inference."
+          },
+          {
+            "assessment": "联合训练三方与在线学习深度在此确认（修正 block 1 未提 updater 的不完整）；“没有 ground-truth 最佳深度”属推断，已标注；“loss 显著下降即继续”过度简化，已按 block 18–21 的排序+覆盖率流程修正。",
+            "block_index": 14,
+            "source_quote": "TaH2 jointly trains the backbone, updater and decider, with the decider learning online how many iterations each token should execute."
+          },
+          {
+            "assessment": "指示变量定义与“对执行且 m<M 的 token 用逐轮预测测增益”核对一致；“loss 下降=更准确/自信”的隐含假设已标为未论证。",
+            "block_index": 15,
+            "source_quote": "For each supervised token t, let $a _ { t } ^ { ( m ) } = \\mathbf { 1 } [ m _ { t } \\geq m ]$ indicate whether it actually executes iteration m."
+          },
+          {
+            "assessment": "交叉熵与增益符号方向核对无误：δ>0 对应下一轮 loss 更低，与 block 17“正增益倾向继续”一致。",
+            "block_index": 16,
+            "source_quote": "\\ell _ { t } ^ { ( m ) } = - \\log \\mathbf { q } _ { t } ^ { ( m ) } [ y _ { t } ^ { \\ast } ] , \\qquad \\delta _ { t } ^ { ( m ) } = \\ell _ { t } ^ { ( m ) } - \\ell _ { t } ^ { ( m + 1 ) } ."
+          },
+          {
+            "assessment": "正/负增益语义核对无误；no-gradient lookahead 的用途（为停止 token 提供下一轮 loss）与 block 4 相互印证。",
+            "block_index": 17,
+            "source_quote": "Positive gains favour continuing; negative gains favour stopping."
+          },
+          {
+            "assessment": "c 的定义与 c^(0)=1 核对无误；修正草稿“前 ρ 比例的最大增益”——ρ 作用于增益总量占比，且草稿漏掉参与排序的两个前置条件（a=1 且 c^(m-1)=1），已在批注中补正。",
+            "block_index": 18,
+            "source_quote": "Let $c _ { t } ^ { ( m ) } \\in \\{ 0 , 1 \\}$ be the target continue label after iteration $m ,$ with $c _ { t } ^ { ( 0 ) } = 1$ for all supervised tokens."
+          },
+          {
+            "assessment": "ρ 的语义核对：累计增益达到总量的 ρ 比例；δ_cut 取被选集合最小增益，均已确认，并纠正草稿的“token 数量比例”表述。",
+            "block_index": 19,
+            "source_quote": "select the largest gains until they account for a fraction $\\rho$ of the total."
+          },
+          {
+            "assessment": "三个乘性条件与原文一致；“停止后标签恒 0”由 block 21 支持，已在批注中注明来源。",
+            "block_index": 20,
+            "source_quote": "c _ { t } ^ { ( m ) } = a _ { t } ^ { ( m ) } c _ { t } ^ { ( m - 1 ) } { \\bf 1 } \\Big [ \\delta _ { t } ^ { ( m ) } \\geq \\delta _ { \\mathrm { c u t } } ^ { ( m ) } \\Big ] ."
+          },
+          {
+            "assessment": "标签单调性核对无误；草稿提前引用 ρ=0.99 已注明来自 block 24；“保留 99% 正向收益”对应原文 retains most of the positive gain。",
+            "block_index": 21,
+            "source_quote": "Once a token receives a stop label, its later labels remain zero."
+          },
+          {
+            "assessment": "两项损失构成核对无误，未添加原文之外的损失项。",
+            "block_index": 22,
+            "source_quote": "We combine next-token prediction loss with cost-sensitive supervision of the decider."
+          },
+          {
+            "assessment": "第二项求和范围（m=1..M−1）与仅对 a=1 的 token 生效核对无误；w 的来源与“越远越强”由 block 24 支持，已补入批注。",
+            "block_index": 23,
+            "source_quote": "\\alpha _ { D } \\underbrace { \\frac { 1 } { N } \\sum _ { m = 1 } ^ { M - 1 } \\sum _ { t : a _ { t } ^ { ( m ) } = 1 } w _ { t } ^ { ( m ) } \\mathrm { B C E } \\Big ( g _ { t } ^ { ( m ) } , c _ { t } ^ { ( m ) } \\Big ) }"
+          },
+          {
+            "assessment": "ρ 与 α_D 数值逐字核对无误；“α_D 小说明主任务是 NTP、避免喧宾夺主”属解释性推断，原文只给数值并指向 Appendix D，已标为推断。",
+            "block_index": 24,
+            "source_quote": "We set coverage $\\rho = 0 . 9 9$ and the decider-loss coefficient $\\alpha _ { D } = 0 . 0 5 ;$ further details are provided in Appendix D."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 7,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对初稿“指明详细参数在附录”这一表述：与原文一致，未修改。补充说明该句意味着本节数字（273K prompts、3.4B tokens、TPP=2、$\\tau_{exit}=0.5$）不是完整配置，复现需回 Appendix A；这是对原文含义的延伸而非新事实。",
+            "block_index": 2,
+            "source_quote": "We summarise the key configuration here; full details are in Appendix A."
+          },
+          {
+            "assessment": "核对基线描述（Standard/TaH2-fixed/Ouro/Huginn 的机制）与公平性控制（同规模同初始化同后训练配方），初稿均正确。修改点：初稿旁注把 Huginn $M=3/7$ 换算为“≈1.5×/3.5× 次全模型 pass”，与原文“effective depths of 2 and 4 full-model passes”不符（14+3×14=56=2×28，14+7×14=112=4×28），已删除该换算并注明两种 $M$ 计量单位不同。另将初稿对 TaH2-fixed“作为上界参考”的定性标为解读而非原文表述。",
+            "block_index": 3,
+            "source_quote": "We train and evaluate TaH2-fixed and Ouro at M = 2, 4, and Huginn at M = 3, 7; looping 14 of the 28 layers gives Huginn the same effective depths of 2 and 4 full-model passes, respectively."
+          },
+          {
+            "assessment": "核对 5.2 的数据量、epoch、token 预算与 teacher 选择依据：初稿的 273K / 3 epochs / 3.4B tokens 正确，但漏了 16,384 context 并省略了“best-performing teacher”的判定口径（Appendix B.1 的下游学生准确率，属间接代理指标），已补正。初稿“5.3 用于探究不同规模下的表现”在本段（只讲数据与 TPP=2 预算）中无原文支持，已标为推断。验证集 1,000 条来自训练混合、用于 loss 与 token-level 分析，与初稿一致。",
+            "block_index": 4,
+            "source_quote": "For the experiments in Section 5.2, we use 273K prompts with responses regenerated by Qwen3-8B, the bestperforming teacher in our comparison of downstream student accuracy (Appendix B.1). We train for three epochs with a 16,384-token context, totalling 3.4B training tokens."
+          },
+          {
+            "assessment": "核对评测指标与采样策略：与初稿一致。补充两点核对结果：正文列出 12 项 benchmark，而 Table 1 只报 10 项（缺 IMO-AB、SGPQA、LCB v6），初稿未指出；$\\tau_{exit}=0.5$ 在原句只作为数值给出，初稿“自适应深度的核心开关”属机制性解释，已标注为需方法节支撑的推断。",
+            "block_index": 5,
+            "source_quote": "We report avg@32 on the primary math benchmarks and use fewer samples per problem on larger benchmarks (Appendix A.3)."
+          },
+          {
+            "assessment": "逐项核对表内数字：Avg 37.7 → TaH2 40.6/40.9/42.5（+2.9/+3.2/+4.8）、FLOPs/token 1.21×/1.47×/2.37×（TaH2-fixed 1.99×/3.97×）与初稿一致，未改。修改两处推断：(a)“M=8 仅 2.37× 说明 decider 跳过 token 实现稀疏化加速”超出本表证据（表内无退出率/平均深度），已标为推断；(b)“深度推理对复杂逻辑任务更有益”与 GPQA 仅 +0.5（31.5→32.0）、且低于 Huginn 33.7/Ouro 34.0 的事实相冲突，已删除该归因。另补充 caption 限定规模为 1.7B 且粗体/下划线语义。",
+            "block_index": 6,
+            "source_quote": "Table 1: Accuracy (%) of Qwen3-1.7B models across ten benchmarks. Olympiad: OlympiadBench; HE: HumanEval. Bold/underline indicate the best/second-best accuracy per row; subscripts show gains over Standard in points. FLOPs/token is total decoding FLOPs divided by total generated tokens across benchmarks, relative to Standard."
+          },
+          {
+            "assessment": "核对 Figure 4a 的 caption 内容并说明证据边界：caption 只给出“最终验证 loss vs 迭代深度”，完整说明在 block 8 的合并 caption（(a) 的 marker 表示以深度上限 $M$ 训练的模型，越低越好）。初稿该处为看图前的预期（“需观察是否更陡、是否过拟合或饱和”），属模板化占位，已替换为 block 11 正文所给的可核对结论（Ouro/Huginn 每个 ceiling ≥ Standard；TaH2 随 $M$ 降 loss；adaptive TaH2 在 $M=8$ 最低，较 Standard 低 0.0106）。明确声明未获得图像视觉信息，曲线形状与饱和点无法核对。",
+            "block_index": 7,
+            "source_quote": "(a) Final validation loss versus iteration depth."
+          },
+          {
+            "assessment": "核对 Figure 4 的共享 caption 与 (b) 的坐标含义：纵轴为 AIME24–26 平均准确率、横轴为解码 FLOPs，深/浅段对应 16K 与 32K 的输出截断。初稿“TaH2 应在同等 FLOPs 下提供更高精度”是读图前的预测，已改为对 caption 与 block 10 正文主张的转述；同时声明未获得图片视觉信息，斜率与交叉点无法核对。补充指出 MinerU 将 Figure 4 拆为两张 jpg 共享一个 caption，按规范应左右并列展示。",
+            "block_index": 8,
+            "source_quote": "Figure 4: Depth and test-time scaling at 1.7B. (a) Each marker denotes a model trained with the labelled depth ceiling M; lower is better. (b) Dark segments show output-token cutoffs within 16K; light segments extend beyond it to 32K."
+          },
+          {
+            "assessment": "逐条核对三个 claim：平均值提升成立（37.7→42.5），但“across domains”在 GPQA 上只 +0.5 且低于 Huginn/Ouro，故限定为平均意义；随深度提升在平均上单调（40.6→40.9→42.5），但 AIME26、GPQA 等单项不单调；test-time scaling 结论对应 Figure 4b 与 Table 1 的 FLOPs/token。修改点：初稿“通过聚焦难 token 提升整体效果”在本段无机制依据（本段与 5.1 均未说明 decider 如何分配深度），已标为推断；“控制平均计算成本”有 FLOPs 数据支撑，予以保留。",
+            "block_index": 10,
+            "source_quote": "At 1.7B, TaH2 improves accuracy across domains. Its performance continues to improve with iteration depth, while its test-time scaling yields a steeper slope and higher accuracy at matched compute than Standard."
+          },
+          {
+            "assessment": "核对数字与因果边界：+2.9（$M=2$）→ +4.8（$M=8$）、Ouro/Huginn 每个 ceiling 不低于 Standard、adaptive TaH2 在 $M=8$ 最低（较 Standard −0.0106）均与原文一致；补充原文提到的 Figure 1b 同趋势（未提供该图，无法核对曲线）。修改三处：删除初稿“证实更深潜在能力确实存在”的过度解读；把“引入噪声/优化困难”“缺乏有效 Exit 机制”标为无本段证据的机制性推测；纠正“Huginn/Ouro stay close to Standard”的措辞（Table 1 中 Ouro $M=4$ 平均 36.4 实际低于 Standard 37.7，应表述为未获深度收益、深层甚至退化）。",
+            "block_index": 11,
+            "source_quote": "On validation loss (Figure 4a), Ouro and Huginn remain at or above Standard at every ceiling, whereas both TaH2 variants lower the loss further as M grows, with adaptive TaH2 reaching the lowest loss"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 7,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "核对了初稿引用的 7.04→8.59（约 +22%）与延迟比值 1.34× / 1.30×、吞吐 0.71× / 0.74×，均与表内数字及正文\"22% decoding FLOPs\"一致。已修改：删除\"额外计算图构建或内存访问开销显著\"的原因归因，以及\"batch size=4 的并行化有效缓解瓶颈\"的结论，因为原文与 caption 均未涉及延迟来源，且两档 batch 的相对延迟比几乎持平（1.34× vs 1.30×），不支持该缓解说法，改标为推断。",
+            "block_index": 12,
+            "source_quote": "<tr><td>GFLOPs/tok</td><td>7.04</td><td>14.09</td><td>8.59</td><td>7.04</td><td>14.09</td><td>8.59</td></tr>"
+          },
+          {
+            "assessment": "核对了 caption 的口径表述（同 batch size 下相对 Std.、GFLOPs/token 为每 token 解码成本、细节见 Appendix A.4.1）与 Figure 5 的 \"Lighter segments extend beyond the 16K training length\"。已修改：把\"浅色段暗示模型具备外推能力\"标为由读图约定推出的推断；同时如实说明未获得 Figure 5 的图片视觉信息，图上\"同等延迟预算下准确率优势明显\"不可核验，只能由 block 17 文字间接支持，标为待证。",
+            "block_index": 13,
+            "source_quote": "Table 2: Runtime efficiency on AIME26. Ratios are to Std. at the same batch size; GFLOPs/token is the decode cost per generated token (Appendix A.4.1)."
+          },
+          {
+            "assessment": "逐项核对了 9 个 benchmark 的 Std.→TaH2 数值、Avg. 46.4→49.6 与 56.1→58.5，以及 Table 3 下标增益与正文 +3.2 / +2.4、AIME 最大 +6.9（4B）/ +4.4（8B）的对应关系，全部吻合。已修改：删除初稿关于\"规模增大后相对增益下降是因为大模型迭代修正能力更强\"的因果解释，原文无任何相应论述或实验，改标为推断；并补充 4B 与 8B 是两条规模曲线的口径说明。",
+            "block_index": 14,
+            "source_quote": "Table 3: Accuracy (%) at 4B and 8B. Subscripts give gains over Standard in points."
+          },
+          {
+            "assessment": "逐行复算了 7 个变体的三列均值与相对默认 TaH2（Avg. 15.5）的差值：14.4/-1.1、11.9/-3.6、13.6/-1.9、14.2/-1.3、13.4/-2.1、14.5/-1.0，与表中数值一致，初稿未出现数字错误。仅补充了口径说明（1.7B、M=2、32K，默认受控为 TaH2），未改动其实质性判断。",
+            "block_index": 15,
+            "source_quote": "Table 4: Design choices at 1.7B. Each row varies one aspect from TaH2 (default in gray )."
+          },
+          {
+            "assessment": "核对了 2.74 vs 2.12–2.42 vs 1.79、32K 下 Standard 12.0% / 191.7 TFLOPs 与 TaH2 15.4%（+3.4）、cons@32 27.3–29.3% vs 21.9%，均与原文逐字一致。已修改：初稿\"M=4, 8 边际效益递减\"在原文中无对应证据，原文只说 M=2 给出最佳 accuracy–compute trade-off，已改为推断并补上 Appendix C.2 的核验入口。",
+            "block_index": 16,
+            "source_quote": "Test-time scaling. As decoding FLOPs increase, TaH2 improves accuracy more efficiently than baselines and reaches a higher peak accuracy."
+          },
+          {
+            "assessment": "核对了 +22% 解码 FLOPs、+30–34% 延迟与 Mini-SGLang 批处理不同 iteration depth 请求这一前提，均与原文一致。已修改：删除\"工程优化是释放算法潜力的关键\"与\"更具竞争力\"等评价性外推，因为原文只把该引擎作为评测条件，未做调度策略的对照实验，已标注为推论。",
+            "block_index": 17,
+            "source_quote": "Although TaH2 adds 22% decoding FLOPs per token and 30–34% end-to-end latency relative to Standard (Table 2), it still achieves better test-time scaling and higher attainable accuracy in actual serving (Figure 5)."
+          },
+          {
+            "assessment": "核对了 3.2 / 2.4 的平均增益与\"每个 benchmark 均超过 Standard\"（与 block 14 的逐项数字一致）。已修改：删除初稿\"结构化迭代推理……提升中等规模模型能力上限\"的表述，原文无此措辞与解释，改标为批读者解读/推断。",
+            "block_index": 19,
+            "source_quote": "We further evaluate TaH2 (M = 2) on 4B and 8B backbones (Table 3). TaH2 outperforms Standard on every benchmark at both sizes, raising average accuracy by 3.2 points at 4B and 2.4 points at 8B."
+          },
+          {
+            "assessment": "核对了实验设定（1.7B、M=2、32K、AIME24–26）与 Table 4 的单变量控制方式。已修改：初稿\"旨在确定哪些设计必要、哪些可简化，是复现的关键指南\"属评价性与外推表述，已限定为\"只能说明各组件相对重要性、不能排除交互效应\"。",
+            "block_index": 21,
+            "source_quote": "We examine the training and architectural choices of TaH2 at 1.7B with M = 2. Table 4 reports AIME24–26 accuracy under the 32K evaluation setting."
+          },
+          {
+            "assessment": "核对了四项训练设置的降幅（-1.1、-3.6、-1.9、-1.3）、\"largest drop, 3.6 points\"的表述与 ρ=1 保留全部正增益的说法，均与原文一致。已修改：第 (4) 项按原文 \"suggests\" 的措辞限定为解释性推测，并说明其默认设置为 Table 4 中的 Deterministic，避免把相关当因果。",
+            "block_index": 22,
+            "source_quote": "Mismatch labels reduce average accuracy by 1.1 points, as they only reflect whether the current prediction is correct, not whether further iteration actually improves it."
+          },
+          {
+            "assessment": "核对了 updater 变体 -2.1、output 变体 -1.0 两项数字与\"supporting learned state updates\"\"supporting the stopping-weighted mixture\"的原话强度。已修改：删除\"捕捉复杂依赖关系\"\"利用中间高质量结果、避免末步退化\"两处原文没有的机制解释，改标为推断。",
+            "block_index": 23,
+            "source_quote": "We replace the learned updater with the probability-weighted sum of the top-100 token embeddings (Fu et al., 2025b). This alternative reduces average accuracy by 2.1 points, supporting learned state updates."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 7,
+        "part": 3,
+        "checks": [
+          {
+            "assessment": "核对数字与因果强度：原文确写 0.5 阈值处 loss reduction 接近零，且低概率 token 为 negative or negligible gains，与初稿“几乎不受益/负收益”“0.5 处接近零”一致，保留。修改两处：(a) 原文结论动词为 support，初稿改为“证实…精准分配”，属超出证据的因果推断，已降级；(b) 原文仅称 mean gain increases with continue probability overall，初稿“高概率 token 收益显著”引入未经检验的显著性判断，已改为整体上升趋势。",
+            "block_index": 25,
+            "source_quote": "At the decision threshold of 0.5, the corresponding loss reduction is near zero. These results support the decider’s ability to direct additional iterations towards tokens that benefit more from them."
+          },
+          {
+            "assessment": "核对图表描述与可用信息：caption 只说明横轴为 continue probability、纵轴为 mean loss reduction，实验对象为 TaH2 (M = 2) 验证集，初稿对该坐标描述与之一致，保留。修改“正相关关系”“表现符合预期”为“整体上升趋势且低概率端有负收益”，因原文限定 overall 且未给严格单调性证据；同时明确本次仅依据 caption/正文文字，未获得图片视觉信息，故不对曲线形状与噪声作判断。",
+            "block_index": 26,
+            "source_quote": "Figure 6: Mean loss reduction from a second iteration versus the decider’s continue probability for TaH2 (M = 2) on the validation set."
+          },
+          {
+            "assessment": "核对方法条件与结论方向：原文明确指出数学表达式与最终代码使用更少迭代，QA 样例全程更深；初稿写“模型能识别出哪些具体的 token 处于困难区域并自动加深处理”，方向相反，已纠正。附录定位从初稿的“附录 C”改为原文所指 Appendix C.4；“decider 偏好与表面难度不一致”的解读已明确标注为推断/待证。",
+            "block_index": 27,
+            "source_quote": "In the math and code examples, mathematical expressions and final code use fewer iterations than the preceding natural-language reasoning, whereas the QA example maintains greater depth throughout."
+          },
+          {
+            "assessment": "核对文本存在性与内容：该段含实质内容（验证序列上三个代表性头的跨迭代注意力，细节在 Appendix C.5），初稿称该块为空或排版残留，属误判，已重写批注。保留原文的三类偏好表述；对“representative heads”的选取标准、量化指标未在正文给出这一点，明确标为待证，未虚构附录内容。",
+            "block_index": 28,
+            "source_quote": "We find that different attention heads learn distinct iteration preferences: attending primarily to first-iteration states, later-iteration states, or both."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 8,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对数字：53%、约 3.4 点、2.8→3.9 点、迭代深度 2→8、模型 4B/8B、领域 code/QA/tool use 均与原文一致，未改动。修正点：初稿把 “extends to larger models and other domains” 表述为“验证了……的泛化能力”，这超出原文的范围扩展声明，批注已改为“扩展到”并标注推断界限；同时批注补充了原文的 matched-compute 条件，避免把 slope 提升与精度提升混为一谈。",
+            "block_index": 1,
+            "source_quote": "On AIME, TaH2 improves the slope by 53% and exceeds Standard’s peak accuracy by about 3.4 points at matched compute. Its gain over Standard grows from 2.8 to 3.9 points as the maximum iteration depth increases from 2 to 8, and extends to larger models (4B and 8B) and other domains (code, QA and tool use)."
+          },
+          {
+            "assessment": "核对主张：(1) TaH2 训练 FLOPs 高于标准 SFT，出处 Appendix A.4.3 正确；(2) post-training 计算量远低于 pretraining 正确，但原文结论是 “a practical way to add adaptive depth to existing models”，初稿泛化为“仍具可行性”，批注已收窄为作者基于计算量对比的实用性论证；(3) 仅 SFT、on-policy distillation 与 RL 留作未来工作，逐项核对一致。修订后不存在超出证据的因果表述。",
+            "block_index": 2,
+            "source_quote": "Limitations. (1) TaH2 incurs more training FLOPs than standard SFT (Appendix A.4.3). But note that post-training requires substantially less compute than pretraining, making TaH2 a practical way to add adaptive depth to existing models. (2) Our method is studied only under SFT; we leave its extension to on-policy distillation and reinforcement learning for future work."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 9,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐字核对原文后确认：初稿批注称作者「明确未使用生成式 AI 工具辅助撰写」，与原文直接矛盾——原文首句即为 \"we used generative AI tools for polishing the paper text\"（使用了，但限于文字润色）。初稿又概括为「未在研究、写作及实验设计中使用任何生成式 AI 工具」，其中「写作」一词同样错误。已改为三层结构：①确实使用=仅文字润色；②声明未用=研究构思/方法论与实验设计/方法实现/结果解读等；③其余披露项不适用。另核对句末 \"all AI-assisted text was checked by the authors against the experimental records and cited sources\"，已如实写入，并标注为作者自述、本批读未独立核验，避免超出证据。",
+            "block_index": 1,
+            "source_quote": "In this work, we used generative AI tools for polishing the paper text. We have not used generative AI tools for research ideation, methodology or experimental design, method implementation, result interpretation, etc.;"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 10,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐字核对后：初稿事实性转述基本成立——“公开推理数据/基准”“不涉及人类受试者或敏感个人数据”均有原文对应。但初稿将“未讨论偏见、毒性或误用风险”写成确定局限，并加上“纯技术型论文常见的伦理简略处理”的判断；本段原文既未提及这些风险，也无法证明全文未讨论，故已改为“本段未覆盖、需查全文/附录确认”的待证表述，并删去跨论文概括。已按此修正批注与摘要。",
+            "block_index": 1,
+            "source_quote": "This study trains and evaluates language models on publicly available reasoning data and benchmarks; it does not involve human subjects or sensitive personal data."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 11,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐项核对了初稿三项主张。(1) “公开资源（基座模型与数据）”: 与原文第一句一致，保留。(2) “附录 A/D 提供损失函数、架构、FLOPs 计算及超参细节”: 方向正确但**列举不完整且来源归属错位**——原文附录 A、D 的职责还包括 baseline definitions 与 evaluation protocol，而 model family 与 objective 由 Section 4 承担，初稿将两者混为“附录完备性”。此为归纳失误，已改写为分来源表述。(3) “代码承诺（发表后开源）”: 与时态相符，但原文是 will be released upon publication，属未来承诺；已补注“声明生效时尚未发布”，避免读者误判为当前可用。另：原文未提供数据规模、算力预算等信息，初稿未提及，本轮亦未引入，相关可复现成本明确标注为超出本段证据的推断/待证。",
+            "block_index": 1,
+            "source_quote": "All experiments use publicly available base models and data. Section 4 specifies the model family and objective; Appendices A and D give the full loss, architecture and baseline definitions, FLOPs accounting, training hyper-parameters and evaluation protocol. Training and evaluation code, configuration files, and checkpoints will be released upon publication."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 12,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对'表明本文实验或数据构建可能基于该蒸馏数据集'。该条目仅为数据集引用，未出现于正文使用说明中，'本文使用'无证据；已改为'仅能确认引用了该数据集，是否实际使用待正文核对'。",
+            "block_index": 1,
+            "source_quote": "a-m-team. Am-qwen3-distilled. https://huggingface.co/datasets/a-m-team/ AM-Qwen3-Distilled, 2025."
+          },
+          {
+            "assessment": "核对'通过 RL 控制推理长度'（标题支持）与'早期重要工作'（不支持，2025 年为同期，评价性推断）；已删除'早期/重要'，保留 RL 控制长度这一标题级事实。",
+            "block_index": 2,
+            "source_quote": "Pranjal Aggarwal and Sean Welleck. L1: Controlling How Long A Reasoning Model Thinks With Reinforcement Learning. arXiv preprint arXiv:2503.04697, 2025."
+          },
+          {
+            "assessment": "核对'递归潜在空间推理'与'证明能提升 OOD 泛化'。标题用 Unlocking 属作者声称，'被证明'是本文未出示的证据；已弱化为'标题声称'。",
+            "block_index": 3,
+            "source_quote": "Awni Altabaa, Siyu Chen, John Lafferty, and Zhuoran Yang. Unlocking Out-of-Distribution Generalization in Transformers via Recursive Latent Space Reasoning. arXiv preprint arXiv:2510.14095, 2025."
+          },
+          {
+            "assessment": "核对'常作为评估 LLM 复杂逻辑推理的标准任务'。该判断来自领域背景而非条目文本，本文亦未在此陈述；已标注为推断。",
+            "block_index": 4,
+            "source_quote": "Jacob Austin, Augustus Odena, Maxwell Nye, Maarten Bosma, Henryk Michalewski, David Dohan, Ellen Jiang, Carrie Cai, Michael Terry, Quoc Le, et al. Program synthesis with large language models. arXiv preprint arXiv:2108.07732, 2021."
+          },
+          {
+            "assessment": "核对'参数共享 + layer-wise LoRA'（标题支持）与'优化训练效率'（标题未提，属推断）；已保留前者、标注后者为推断。",
+            "block_index": 5,
+            "source_quote": "Sangmin Bae, Adam Fisch, Hrayr Harutyunyan, Ziwei Ji, Seungyeon Kim, and Tal Schuster. Relaxed Recursive Transformers: Effective Parameter Sharing with Layer-wise LoRA. arXiv preprint arXiv:2410.20672, 2024."
+          },
+          {
+            "assessment": "核对'Token 级自适应计算深度'（标题支持）与'与本文主题高度相关'（由引用集合反推本文主题，非条目内容）；已说明后者为推断。",
+            "block_index": 6,
+            "source_quote": "Sangmin Bae, Yujin Kim, Reza Bayat, Sungnyun Kim, Jiyoun Ha, Tal Schuster, Adam Fisch, Hrayr Harutyunyan, Ziwei Ji, Aaron Courville, and Se-Young Yun. Mixture-of-Recursions: Learning Dynamic Recursive Depths for Adaptive Token-Level Computation. arXiv preprint arXiv:2507.10524, 2025."
+          },
+          {
+            "assessment": "核对'生成式递归推理新范式'。条目仅有标题，'新范式'为推断；同时该 arXiv 编号/年份真实性本次未核验，已在批注中标明。",
+            "block_index": 7,
+            "source_quote": "Junyeob Baek, Mingyu Jo, Minsu Kim, Mengye Ren, Yoshua Bengio, and Sungjin Ahn. Generative Recursive Reasoning. arXiv preprint arXiv:2605.19376, 2026."
+          },
+          {
+            "assessment": "核对'学习何时停止/ponder'（标题支持）与'首个提出动态停止的经典论文'（强断言不成立，Adaptive Computation Time 2016 更早，且条目文本无此陈述）；已删除'首个/奠基'。",
+            "block_index": 8,
+            "source_quote": "Andrea Banino, Jan Balaguer, and Charles Blundell. PonderNet: Learning to Ponder. arXiv preprint arXiv:2107.05407, 2021."
+          },
+          {
+            "assessment": "核对'对循环推理语言模型做 mechanistic analysis'（标题支持）。同时发现作者串中 MinerU 解析残留 `<sup>´</sup>` 乱码，已在批注中提示不应照抄。",
+            "block_index": 9,
+            "source_quote": "Hugh Blayney, Alvaro Arroyo, Johan Obando-Ceron, Pablo Samuel Castro, Aaron Courville,"
+          },
+          {
+            "assessment": "核对'重复采样扩展推理算力'（标题支持）与'显著提升性能'（标题外结论，属推断）；已标注后者为推断。",
+            "block_index": 10,
+            "source_quote": "Bradley Brown, Jordan Juravsky, Ryan Ehrlich, Ronald Clark, Quoc V. Le, Christopher Re, and Aza-´ lia Mirhoseini. Large Language Monkeys: Scaling Inference Compute with Repeated Sampling. arXiv preprint arXiv:2407.21787, 2024."
+          },
+          {
+            "assessment": "核对'连接潜在表征空间与自然语言输出'。标题为问句，批注表述限于标题语义，未额外断言结论，判定为与标题一致。",
+            "block_index": 11,
+            "source_quote": "Guanxu Chen, Dongrui Liu, and Jing Shao. Loop as a Bridge: Can Looped Transformers Truly Link Representation Space and Natural Language Outputs? arXiv preprint arXiv:2601.10242, 2026a."
+          },
+          {
+            "assessment": "核对'质疑单纯增加 LLM 调用次数'。问句标题暗示质疑，属据标题推断而非条目陈述；已在批注中标注推断性质并保留缩放律这一标题级事实。",
+            "block_index": 12,
+            "source_quote": "Lingjiao Chen, Jared Quincy Davis, Boris Hanin, Peter Bailis, Ion Stoica, Matei Zaharia, and James Zou. Are More LLM Calls All You Need? Towards Scaling Laws of Compound Inference Systems. arXiv preprint arXiv:2403.02419, 2024."
+          },
+          {
+            "assessment": "核对'免训练'（标题支持）与'增强推理'（标题未陈述，属推断）；已保留前者并标注后者。",
+            "block_index": 13,
+            "source_quote": "Lizhang Chen, Jonathan Li, Chen Liang, Ni Lao, and Qiang Liu. Training-Free Looped Transformers. arXiv preprint arXiv:2605.23872, 2026b."
+          },
+          {
+            "assessment": "核对'Codex/Copilot 相关''评估编程与算法推理'。条目仅给标题与作者，未提 Codex/Copilot 之名，'算法推理'亦为外部推断；已改为外部推断并降低确定度。",
+            "block_index": 14,
+            "source_quote": "Mark Chen, Jerry Tworek, Heewoo Jun, Qiming Yuan, Henrique Ponde de Oliveira Pinto, Jared Kaplan, Harri Edwards, Yuri Burda, Nicholas Joseph, Greg Brockman, et al. Evaluating large language models trained on code. arXiv preprint arXiv:2107.03374, 2021."
+          },
+          {
+            "assessment": "核对'并行缩放律'（标题支持）与'不同于传统序列生成的并行计算视角'（解释性推断）；已标注后者为推断。",
+            "block_index": 15,
+            "source_quote": "Mouxiang Chen, Binyuan Hui, Zeyu Cui, Jiaxi Yang, Dayiheng Liu, Jianling Sun, Junyang Lin, and Zhongxin Liu. Parallel Scaling Law for Language Models. arXiv preprint arXiv:2505.10475, 2025a."
+          },
+          {
+            "assessment": "核对'动态嵌套深度增强大模型'，与标题一致，未发现超出条目的断言，保留原批注。",
+            "block_index": 16,
+            "source_quote": "Tieyuan Chen, Xiaodong Chen, Haoxing Chen, Zhenzhong Lan, Weiyao Lin, and Jianguo Li. DND: Boosting Large Language Models with Dynamic Nested Depth. arXiv preprint arXiv:2510.11001, 2025b."
+          },
+          {
+            "assessment": "核对'测量推理努力而非仅延长推理长度'，与标题语义一致，未发现超证据表述。",
+            "block_index": 17,
+            "source_quote": "Wei-Lin Chen, Liqian Peng, Tian Tan, Chao Zhao, Blake JianHang Chen, Ziqian Lin, Alec Go, and Yu Meng. Think Deep, Not Just Long: Measuring LLM Reasoning Effort via Deep-Thinking Tokens. arXiv preprint arXiv:2602.13517, 2026c."
+          },
+          {
+            "assessment": "核对'循环/迭代 Transformer 基础'（出处与标题支持）与'开创性'（评价性推断）；已将其标注为主观评价。",
+            "block_index": 18,
+            "source_quote": "Mostafa Dehghani, Stephan Gouws, Oriol Vinyals, Jakob Uszkoreit, and Łukasz Kaiser. Universal transformers. In International Conference on Learning Representations (ICLR), 2019."
+          },
+          {
+            "assessment": "核对'线性时间循环 Transformer'（标题支持）与'解决了高计算复杂度问题'（标题只给方案，未陈述解决效果，属推断）；已降为推断。",
+            "block_index": 19,
+            "source_quote": "Chunyuan Deng, Yizhe Zhang, Rui-Jie Zhu, Yuanyuan Xu, Jiarui Liu, T. S. Eugene Ng, and Hanjie Chen. LT2: Linear-Time Looped Transformers. arXiv preprint arXiv:2605.20670, 2026."
+          },
+          {
+            "assessment": "核对'早退推理与自投机解码'（标题支持）与'重要技术路线'（评价性推断）；已标注评价属性。",
+            "block_index": 20,
+            "source_quote": "Mostafa Elhoushi, Akshat Shrivastava, Diana Liskovich, Basil Hosmer, Bram Wasti, Liangzhen Lai, Anas Mahmoud, Bilge Acun, Saurabh Agarwal, Ahmed Roman, Ahmed A Aly, Beidi Chen, and Carole-Jean Wu. LayerSkip: Enabling Early Exit Inference and Self-Speculative Decoding. arXiv preprint arXiv:2404.16710, 2024."
+          },
+          {
+            "assessment": "核对'弥合潜在与显式推理'，与标题一致，未发现超证据表述，保留原批注。",
+            "block_index": 21,
+            "source_quote": "Ying Fan, Anej Svete, and Kangwook Lee. Bridging the Gap Between Latent and Explicit Reasoning with Looped Transformers. arXiv preprint arXiv:2606.31779, 2026."
+          },
+          {
+            "assessment": "核对'稀疏激活大规模模型'（标题/出处支持）与'常与动态计算结合使用'（条目未作此陈述，属推断）；已标注后者为推断。另注意出处中 'Journal ofMachine Learning Research' 存在解析缺空格，批注未引用该串。",
+            "block_index": 22,
+            "source_quote": "William Fedus, Barret Zoph, and Noam Shazeer. Switch transformers: Scaling to trillion parameter models with simple and efficient sparsity. Journal ofMachine Learning Research, 23(120):1–39, 2022."
+          },
+          {
+            "assessment": "核对'记忆 vs 思考权衡'。问句标题即对比'Think Harder or Know More'，批注表述与标题一致，未超证据。",
+            "block_index": 23,
+            "source_quote": "Markus Frey, Behzad Shomali, Ali Hamza Bashir, David Berghaus, Joachim Koehler, and Mehdi Ali. Adaptive Loops and Memory in Transformers: Think Harder or Know More? arXiv preprint arXiv:2603.08391, 2026."
+          },
+          {
+            "assessment": "核对'离散嵌入 + 连续隐状态用于多跳推理'，与标题一致，保留原批注。",
+            "block_index": 24,
+            "source_quote": "Hengyu Fu, Tianyu Guo, Zixuan Wang, Hanlin Zhu, Jason D. Lee, Jiantao Jiao, Stuart Russell, and Song Mei. DiscoLoop: Looping Discrete Embeddings and Continuous Hidden States for Multihop Reasoning. arXiv preprint arXiv:2607.00341, 2026a."
+          },
+          {
+            "assessment": "核对'稳定循环'（标题支持）与'训练过程中的数值稳定性'（标题未限定阶段，属推断）；已注明阶段为推断而非事实。",
+            "block_index": 25,
+            "source_quote": "Rao Fu, Zixuan Yang, Jiankun Zhang, Jing Ma, Hechang Chen, Yu Li, and Yi Chang. Simply Stabilizing the Loop via Fully Looped Transformer. arXiv preprint arXiv:2605.18797, 2026b."
+          },
+          {
+            "assessment": "核对'小-大模型 token 路由导航发散推理路径'，与标题一致，保留原批注。",
+            "block_index": 26,
+            "source_quote": "Tianyu Fu, Yi Ge, Yichen You, Enshu Liu, Zhihang Yuan, Guohao Dai, Shengen Yan, Huazhong Yang, and Yu Wang. R2r: Efficiently navigating divergent reasoning paths with small-large model token routing. arXiv preprint arXiv:2505.21600, 2025a."
+          },
+          {
+            "assessment": "核对'动态循环改进推理'（标题支持）与'按难度调整循环深度'（据题名 Think-at-Hard 的合理推断，非字面陈述）；已标注推理来源。",
+            "block_index": 27,
+            "source_quote": "Tianyu Fu, Yichen You, Zekai Chen, Guohao Dai, Huazhong Yang, and Yu Wang. Think-at-Hard: Dynamic Looped Transformers for Improved Reasoning. arXiv preprint arXiv:2511.08577, 2025b."
+          },
+          {
+            "assessment": "核对'嵌套/元循环、高阶抽象推理'。条目仅有标题 Loop the Loopies!，无摘要信息，初稿猜测无任何证据支撑；已改为'仅据标题无法判断，待证'。",
+            "block_index": 28,
+            "source_quote": "Zitian Gao, Yilong Chen, Yihao Xiao, Xinyu Yang, Ran Tao, Joey Zhou, and Bryan Dai. Loop the Loopies! arXiv preprint arXiv:2607.16051, 2026."
+          },
+          {
+            "assessment": "核对'视角与常见误解'（标题支持）与'提供理论视角'（据标题推测，程度不明确）；已弱化表述并标注推断。",
+            "block_index": 29,
+            "source_quote": "Renee Ge, Qianli Liao, and Tomaso Poggio. Hierarchical Reasoning Models: Perspectives and Misconceptions. arXiv preprint arXiv:2510.00355, 2025."
+          },
+          {
+            "assessment": "核对'用循环深度在测试时扩展潜在推理计算量'，与标题一致，保留原批注；未额外宣称其实验增益。",
+            "block_index": 30,
+            "source_quote": "Jonas Geiping, Sean McLeish, Neel Jain, John Kirchenbauer, Siddharth Singh, Brian R. Bartoldson, Bhavya Kailkhura, Abhinav Bhatele, and Tom Goldstein. Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach. arXiv preprint arXiv:2502.05171, 2025a."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 12,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "核对初稿称本文可能涉及高效推理或采样策略，并联系扩散语言模型。此处只能证明该文献题名主题为 Recurrent-Depth 模型并行采样器及其与扩散语言模型的联系；无法证明本文动机或引用位置。已改为推断待证，保留文献主题说明。",
+            "block_index": 31,
+            "source_quote": "Jonas Geiping, Xinyu Yang, and Guinan Su. Efficient Parallel Samplers for Recurrent-Depth Models and Their Connection to Diffusion Language Models."
+          },
+          {
+            "assessment": "核对初稿称本文核心动机之一是动态/自适应深度计算。题名只能证明 ACT 文献主题，不能证明本文动机。已改为：若正文讨论动态深度，则可能作为理论来源，但归属待证。",
+            "block_index": 32,
+            "source_quote": "Alex Graves. Adaptive computation time for recurrent neural networks. arXiv preprint arXiv:1603.08983, 2016."
+          },
+          {
+            "assessment": "核对初稿称其可能作为本文复杂推理任务的对比基准或灵感来源。题名只支持小 LLM 自演化深度思考与数学推理主题，未提供本文使用方式。已标为合理猜测但待证。",
+            "block_index": 33,
+            "source_quote": "Xinyu Guan, Li Lyna Zhang, Yifei Liu, Ning Shang, Youran Sun, Yi Zhu, Fan Yang, and Mao Yang. rStar-Math: Small LLMs Can Master Math Reasoning with Self-Evolved Deep Thinking."
+          },
+          {
+            "assessment": "核对初稿称本文关注通过架构改进增强类似 R1 的推理能力。DeepSeek-R1 条目本身只证明 RL 激励推理能力这一主题；本文研究目标无法由此推出。已改为待正文确认。",
+            "block_index": 34,
+            "source_quote": "Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Ruoyu Zhang, Runxin Xu, Qihao Zhu, Shirong Ma, Peiyi Wang, Xiao Bi, et al. Deepseek-r1: Incentivizing reasoning capability in llms via reinforcement learning."
+          },
+          {
+            "assessment": "核对初稿称其可能支撑本文中间状态表示的理论基础。题名支持连续潜空间推理主题，但不能证明本文依赖其理论。已改为推断待证。",
+            "block_index": 35,
+            "source_quote": "Shibo Hao, Sainbayar Sukhbaatar, DiJia Su, Xian Li, Zhiting Hu, Jason Weston, and Yuandong Tian. Training large language models to reason in a continuous latent space."
+          },
+          {
+            "assessment": "核对初稿暗示本文实验评估可能包含奥赛级多模态任务。条目只证明 OlympiadBench 的基准主题，不能证明本文实验采用该基准。已改为本文是否采用待证。",
+            "block_index": 36,
+            "source_quote": "Chaoqun He, Renjie Luo, Yuzhuo Bai, Shengding Hu, Zhen Leng Thai, Junhao Shen, Jinyi Hu, Xu Han, Yujie Huang, Yuxiang Zhang, et al. Olympiadbench: A challenging benchmark for promoting agi with olympiad-level bilingual multimodal scientific problems."
+          },
+          {
+            "assessment": "核对初稿称该文是本文直接相关架构变体并用于对比循环机制。题名只证明 Gated Recurrent Transformers 通过循环调制实现表达性深度；本文是否对比无证据。已改为待证。",
+            "block_index": 37,
+            "source_quote": "Amr Hegazy, Amr Alanwar, and Mostafa Elhoushi. Gated Recurrent Transformers: Expressive Depth through Recurrent Modulation."
+          },
+          {
+            "assessment": "核对初稿称本文在方法论上遵循该领域最新规范和建议。条目只表明该文讨论循环模型拓扑、输入注入和循环状态设计；本文是否遵循无正文证据。已改为待证。",
+            "block_index": 38,
+            "source_quote": "Benhao Huang, Chufan Shi, Junlin Chen, Shicheng Wen, Zhengzhong Liu, Eric Xing, and Xuezhe Ma. Towards Looped Models Done Right—Part I: Topology, Input Injection, Recurrent-State Design, 2026a."
+          },
+          {
+            "assessment": "核对初稿称其与本文动态资源分配或概念级抽象高度相关。题名支持 ConceptMoE 的自适应 token-to-concept 压缩和隐式计算分配主题，但本文关联无证据。已改为推断待证。",
+            "block_index": 39,
+            "source_quote": "Zihao Huang, Jundong Zhou, Xingwei Qu, Qiyang Min, and Ge Zhang. ConceptMoE: Adaptive Token-to-Concept Compression for Implicit Compute Allocation."
+          },
+          {
+            "assessment": "核对初稿称该文是本文循环架构的历史参照点。Block-Recurrent Transformers 条目题名可支持其递归使用 Transformer 块的主题；作为背景参照合理，但本文如何引用无正文证据。已保留为可能背景/待证。",
+            "block_index": 40,
+            "source_quote": "DeLesley Hutchins, Imanol Schlag, Yuhuai Wu, Ethan Dyer, and Behnam Neyshabur. Blockrecurrent transformers."
+          },
+          {
+            "assessment": "核对初稿称其确立本文性能比较的目标上限或行业基准。条目只证明 OpenAI o1 系统卡主题，不能证明本文以其为比较目标。已改为本文是否用作比较对象待证。",
+            "block_index": 41,
+            "source_quote": "Aaron Jaech, Adam Kalai, Adam Lerer, Adam Richardson, Ahmed El-Kishky, Aiden Low, Alec Helyar, Aleksander Madry, Alex Beutel, Alex Carney, et al. Openai o1 system card."
+          },
+          {
+            "assessment": "核对初稿暗示本文可能在代码生成任务上验证。条目只证明 LiveCodeBench 的无污染代码评估主题；本文是否采用无证据。已改为待正文实验章节证实。",
+            "block_index": 42,
+            "source_quote": "Naman Jain, King Han, Alex Gu, Wen-Ding Li, Fanjia Yan, Tianjun Zhang, Sida Wang, Armando Solar-Lezama, Koushik Sen, and Ion Stoica. Livecodebench: Holistic and contamination free evaluation of large language models for code."
+          },
+          {
+            "assessment": "核对初稿称该文可作为消融实验对比项。LoopFormer 条目只证明弹性深度循环 Transformer 与 shortcut modulation 主题；本文是否用于消融无证据。已改为待证。",
+            "block_index": 43,
+            "source_quote": "Ahmadreza Jeddi, Marco Ciccone, and Babak Taati. LoopFormer: Elastic-Depth Looped Transformers for Latent Reasoning via Shortcut Modulation."
+          },
+          {
+            "assessment": "核对初稿称其为理解本文方法理论定位提供框架。条目只证明从增长到循环的迭代计算统一视角主题；本文是否采用该框架无证据。已改为待证。",
+            "block_index": 44,
+            "source_quote": "Ferdinand Kapl, Emmanouil Angelis, Kaitlin Maile, Johannes von Oswald, and Stefan Bauer. From Growing to Looping: A Unified View of Iterative Computation in LLMs."
+          },
+          {
+            "assessment": "核对初稿称其可能支持本文不单纯依赖参数规模而优化推理过程的观点。条目题名支持采样推理主题，但不能推出本文持该观点。已改为推断待证。",
+            "block_index": 45,
+            "source_quote": "Aayush Karan and Yilun Du. Reasoning with Sampling: Your Base Model is Smarter Than You Think."
+          },
+          {
+            "assessment": "核对初稿称这是防止深层循环中信息稀释的关键机制。题名支持以源为中心的状态演化主题，但“本文机制关键”无正文证据。已改为文献主题说明，本文关系待证。",
+            "block_index": 46,
+            "source_quote": "Bum Jun Kim, Kohei Hayashi, Shunsuke Kamiya, Masanori Koyama, Yusuke Iwasawa, and Yutaka Matsuo. Looped Transformers with Source-Centered State Evolution."
+          },
+          {
+            "assessment": "核对初稿称该文与本文循环深度概念互补或竞争。SOLAR 10.7B 条目只证明深度上采样缩放 LLM 的主题，不等于循环深度；本文引用关系无证据。已改为待证。",
+            "block_index": 47,
+            "source_quote": "Dahyun Kim, Chanjun Park, Sanghoon Kim, Wonsung Lee, Wonho Song, Yunsu Kim, Hyeonwoo Kim, Yungi Kim, Hyeonju Lee, Jihoo Kim, Changbae Ahn, Seonghoon Yang, Sukyung Lee, Hyunbyung Park, Gyoungjin Gim, Mikyoung Cha, Hwalsuk Lee, and Sunghun Kim. SO-LAR 10.7B: Scaling Large Language Models with Simple yet Effective Depth Up-Scaling."
+          },
+          {
+            "assessment": "核对初稿称其引入物理/动力学视角解释循环深度有效性。题名支持动态相位选择控制循环 Transformer 计算扩展；动力学视角可确认，但本文是否采用待证。",
+            "block_index": 48,
+            "source_quote": "Gunn Kim. Dynamical phase selection controls compute scaling in looped transformers."
+          },
+          {
+            "assessment": "核对初稿称其可能与本文注意力模块设计对比。条目只证明深度递归注意力混合与潜在推理主题；本文是否对比无证据。已改为待证。",
+            "block_index": 49,
+            "source_quote": "Jonas Knupp, Jan Hendrik Metzen, Jeremias Bohn, Georg Groh, and Kristian Kersting. Depth-Recurrent Attention Mixtures: Giving Latent Reasoning the Attention it Deserves."
+          },
+          {
+            "assessment": "核对初稿称其可能间接关联本文效率分析。Sparse Upcycling 条目只证明从密集检查点训练 MoE 的稀疏化主题；本文效率论证是否引用无证据。已改为待证。",
+            "block_index": 50,
+            "source_quote": "Aran Komatsuzaki, Joan Puigcerver, James Lee-Thorp, Carlos Riquelme Ruiz, Basil Mustafa, Joshua Ainslie, Yi Tay, Mostafa Dehghani, and Neil Houlsby. Sparse Upcycling: Training Mixture-of-Experts from Dense Checkpoints."
+          },
+          {
+            "assessment": "核对初稿称其解决测试时超出训练深度范围的不稳定性问题。题名支持通过学习随机停止稳定循环 Transformer 外推，但本文是否依赖该机制无证据。已保留文献主题说明，本文关系待证。",
+            "block_index": 51,
+            "source_quote": "Hsun-Yu Kuo, El Mahdi Chayti, Patrik Reizinger, Wieland Brendel, and Martin Jaggi. Stabilizing Extrapolation in Looped Transformers via Learned Stochastic Stopping."
+          },
+          {
+            "assessment": "核对初稿称其理论支撑本文循环机制良定义。条目只证明循环 Transformer 稳定性和泛化主题；本文是否引用其理论无正文证据。已改为待证。",
+            "block_index": 52,
+            "source_quote": "Asher Labovich. Stability and Generalization in Looped Transformers."
+          },
+          {
+            "assessment": "核对初稿称其提示本文可能结合稀疏性提升循环效率。条目题名支持稀疏层对循环语言模型扩展关键；本文是否据此设计无证据。已改为待证。",
+            "block_index": 53,
+            "source_quote": "Ryan Lee, Jacob Biloki, Edward J. Hu, and Jonathan May. Sparse Layers are Critical to Scaling Looped Language Models."
+          },
+          {
+            "assessment": "核对初稿称其可能与本文宏观循环深度控制形成层次对比。条目只证明 PonderLM-3 的自适应逐 token 思考与可微掩码主题；本文是否对比无证据。已改为待证。",
+            "block_index": 54,
+            "source_quote": "He Li, Feichen Song, Boyi Zeng, Shixiang Song, Zhiqin John Xu, Ziwei He, and Zhouhan Lin. PonderLM-3: Adaptive Token-Wise Pondering with Differentiable Masking."
+          },
+          {
+            "assessment": "核对初稿称其确认隐式推理是独立研究方向并为本文提供背景分类。综述题名支持隐式推理方向的存在；但为本文提供背景分类仍属推断。已区分可支持部分与待证部分。",
+            "block_index": 55,
+            "source_quote": "Jindong Li, Yali Fu, Li Fan, Jiahong Liu, Yao Shu, Chengwei Qin, Menglin Yang, Irwin King, and Rex Ying. Implicit reasoning in large language models: A comprehensive survey."
+          },
+          {
+            "assessment": "核对初稿称 DeepLoop 是最直接相关工作之一，本文很可能同赛道性能对比。条目只证明循环 Transformer 深度缩放主题；本文关系与对比无证据。已改为待证。",
+            "block_index": 56,
+            "source_quote": "Shuzhen Li, Yifan Zhang, Jiacheng Guo, Quanquan Gu, and Mengdi Wang. DeepLoop: Depth Scaling for Looped Transformers."
+          },
+          {
+            "assessment": "核对初稿称其可能涉及浅层快速处理和深层精细推理的平衡，并作为本文效率优化参考。题名支持高效推理与平衡思考；具体机制和本文引用方式均属推断。已改为待证。",
+            "block_index": 57,
+            "source_quote": "Yulin Li, Tengyao Tu, Li Ding, Junjie Wang, Huiling Zhen, Yixin Chen, Yong Li, and Zhuotao Tian. Efficient Reasoning with Balanced Thinking."
+          },
+          {
+            "assessment": "核对初稿称若本文涉及强化学习或自我修正，此文献至关重要。该表述为条件式推断，未断言本文事实；条目题名支持逐步验证/过程奖励模型基础主题。本文是否涉及 RL 或自我修正仍需正文确认。",
+            "block_index": 58,
+            "source_quote": "Hunter Lightman, Vineet Kosaraju, Yura Burda, Harri Edwards, Bowen Baker, Teddy Lee, Jan Leike, John Schulman, Ilya Sutskever, and Karl Cobbe. Let’s verify step by step."
+          },
+          {
+            "assessment": "核对初稿称其为本文核心主题的直接竞品或协同工作。条目只证明循环语言模型中递归计算分配这一主题；本文是否直接相关、是否竞品无正文证据。已改为待证。",
+            "block_index": 59,
+            "source_quote": "Ruhai Lin, Yiyang Guo, Rui-Jie Zhu, Hao Ye, and Jason K. Eshraghian. Allocating Recurrent Compute in Looped Language Models."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 12,
+        "part": 3,
+        "checks": [
+          {
+            "assessment": "核对标题、年份与主题词「Latent Computation Scaling」是否逐字一致：一致。修改点：初稿「暗示本文方法参考了此类范式」由被引推出技术继承，无正文证据，已降级为推断；并补注 URL 中「arxiv. org」空格为解析产物。",
+            "block_index": 60,
+            "source_quote": "Hidden Decoding at Scale: Latent Computation Scaling for Large Language Models. arXiv preprint arXiv:2607.08186, 2026."
+          },
+          {
+            "assessment": "核对研究对象（depth-recurrent Transformer）与关注点（per-token fixed-point convergence）表述准确。修改点：初稿「为理解循环层如何收敛提供了理论支撑」把被引当作对本文的支撑，已标为推断/待证。",
+            "block_index": 61,
+            "source_quote": "Joe Logan. Per-Token Fixed-Point Convergence in Depth-Recurrent Transformers. arXiv preprint arXiv:2607.14427, 2026."
+          },
+          {
+            "assessment": "核对会议名、年份、页码（EMNLP 2025, pp. 35418–35442）与条目一致。修改点：初稿「引用此文献表明本文实验可能包含数学推理任务」属从被引反推实验设置，逻辑不成立，已改为待正文核对。",
+            "block_index": 62,
+            "source_quote": "Towards robust mathematical reasoning. In Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing, pp. 35418–35442."
+          },
+          {
+            "assessment": "核对机制描述（自蒸馏跳过一半专家）与标题一致，并明确其为宽度/稀疏维度的动态计算，与循环深度维度不同。修改点：初稿「本文可能将其作为基线」为推断，已标注。",
+            "block_index": 63,
+            "source_quote": "Post-trained MoE can skip half experts via self-distillation. arXiv preprint arXiv:2605.18643, 2026."
+          },
+          {
+            "assessment": "核对首作者署名：条目为 M-A-P Team，初稿写作「Du et al. (2025)」与原文不符，已更正。同时确认「285 个研究生学科」为标题自述可核事实；「本文使用该数据集」仍待证。",
+            "block_index": 64,
+            "source_quote": "M-A-P Team, Xinrun Du, Yifan Yao, Kaijing Ma, Bingli Wang, Tianyu Zheng, et al. SuperGPQA: Scaling LLM evaluation across 285 graduate disciplines."
+          },
+          {
+            "assessment": "核对标题自述机制（为预训练 LM 加装循环以加深推理）与年份一致。修改点：初稿「本文很可能在此基础上进行改进」为对本文技术路线的推断，无证据，已降级为待证。",
+            "block_index": 65,
+            "source_quote": "Teaching Pretrained Language Models to Think Deeper with Retrofitted Recurrence. arXiv preprint arXiv:2511.07384, 2025."
+          },
+          {
+            "assessment": "核对拼写：条目为 Cotformer、副标题作 chain-ofthought（缺连字符，属解析产物），初稿写作 CoTformer，已更正。机制「推理期预算自适应计算」与条目一致。",
+            "block_index": 66,
+            "source_quote": "Amirkeivan Mohtashami, Matteo Pagliardini, and Martin Jaggi. Cotformer: A chain-ofthought driven architecture with budget-adaptive computation cost at inference."
+          },
+          {
+            "assessment": "核对标题与主题（循环 Transformer 中动态计算分配的分析型工作）一致。修改点：初稿「该引用支持本文对…机理探讨」把引用等同论证支撑，已标为推断。",
+            "block_index": 67,
+            "source_quote": "Understanding Dynamic Compute Allocation in Recurrent Transformers. arXiv preprint arXiv:2602.08864, 2026."
+          },
+          {
+            "assessment": "核对标题关键词（Stable、Adaptive、Deep Looped）无误。重点纠正：初稿称其「与本文标题或核心贡献中提到的 Stable Looped 高度契合」，但本次元数据中本文标题为「(AI 精读中…)」、未提供贡献文本，该断言无据，已删除。",
+            "block_index": 68,
+            "source_quote": "Fixed-Point Reasoners: Stable and Adaptive Deep Looped Transformers. arXiv preprint arXiv:2606.18206, 2026."
+          },
+          {
+            "assessment": "核对作者顺序与标题前缀（s1: Simple test-time scaling）无误，并指出 test-time 后反引号为 PDF 解析残留。修改点：初稿「参考其评估协议」「对比 s1 的简单性」均无正文证据，已标为待证。",
+            "block_index": 69,
+            "source_quote": "Niklas Muennighoff, Zitong Yang, Weijia Shi, Xiang Lisa Li, Li Fei-Fei, Hannaneh Hajishirzi, Luke Zettlemoyer, Percy Liang, Emmanuel Candes, and Tatsunori Hashimoto. s1: Simple test-time"
+          },
+          {
+            "assessment": "核对发布方、数据集名与年份无误，并确认条目本身不含任何使用说明。修改点：初稿「若本文使用此数据…」保留为条件性推断，明确需正文数据节核对。",
+            "block_index": 70,
+            "source_quote": "NVIDIA. Nemotron-agentic-v1. https://huggingface.co/datasets/nvidia/ Nemotron-Agentic-v1, 2025."
+          },
+          {
+            "assessment": "核对题目确为 Looped Latent Attention 与跨循环 KV 压缩。重点纠正：条目中不存在「LoopKV」这一命名，初稿自造简称，已删除；「针对循环带来的 KV 开销」这一解读与标题一致，保留。",
+            "block_index": 71,
+            "source_quote": "Looped Latent Attention: Cross-Loop KV Compression for Looped Transformers. arXiv preprint arXiv:2607.15456, 2026."
+          },
+          {
+            "assessment": "核对框架名 Relit 与自述（递归潜在隐式 Transformer）一致。修改点：初稿「可能作为 SOTA 基线之一」为推断，已标注为待证。",
+            "block_index": 72,
+            "source_quote": "Think Deep, Speak Once: Relit, A Recursive Latent Implicit Transformer Framework. arXiv preprint arXiv:2608.08113, 2026."
+          },
+          {
+            "assessment": "核对编号与年份（2509.23314, 2025）一致，并指出条目作者名 Rodola 后的残留符号属解析产物。修改点：初稿「本文可能采用类似多尺度机制」无对应证据，已标为待证。",
+            "block_index": 73,
+            "source_quote": "arXiv preprint arXiv:2509.23314, 2025. URL https: //arxiv.org/abs/2509.23314."
+          },
+          {
+            "assessment": "核对方法名 LoopUS 与自述「把预训练 LLM 重铸为循环潜在精炼模型」一致，据此确认其与后训练改造路线同族。修改点：初稿「与本文思路一致」仍需正文佐证，已标为推断。",
+            "block_index": 74,
+            "source_quote": "LoopUS: Recasting Pretrained LLMs into Looped Latent Refinement Models. arXiv preprint arXiv:2605.11011, 2026."
+          },
+          {
+            "assessment": "核对基准名、会议（ICML 2025）与自述范围一致。重点纠正：初稿「再次印证本文评估包含 Agentic 能力」不能由单条参考文献证实，且「再次」依赖第 70、76 条同样未证的推断，已改为待核。",
+            "block_index": 75,
+            "source_quote": "The berkeley function calling leaderboard (bfcl): From tool use to agentic evaluation of large language models. In International Conference on Machine Learning (ICML), 2025."
+          },
+          {
+            "assessment": "核对标题结论方向（循环 LM 改善组合式工具调用）与作者年份后缀 2026a 一致。修改点：其在本文中充当应用场景支持还是对比方法，条目无法判定，已标为待证。",
+            "block_index": 76,
+            "source_quote": "Improve Compositional Tool Calling. arXiv preprint arXiv:2608.18171, 2026a."
+          },
+          {
+            "assessment": "核对副标题含两个可诊断对象（学习到的停止门控、轨迹读出）无误，且与「何时停止循环」问题直接对应。修改点：初稿「对理解本文自适应深度机制至关重要」属推断，已改为可对照文献。",
+            "block_index": 77,
+            "source_quote": "Diagnosing Learned Halting Gates and Trajectory Readouts. arXiv preprint arXiv:2607.20519, 2026b."
+          },
+          {
+            "assessment": "核对方法名 Parcae 与研究对象（稳定循环 LM 的缩放规律）一致。修改点：初稿「引用其发现指导超参数选择」为推断，已改写为需在正文实验节核对的追问。",
+            "block_index": 78,
+            "source_quote": "Parcae: Scaling Laws For Stable Looped Language Models. arXiv preprint arXiv:2604.12946, 2026."
+          },
+          {
+            "assessment": "核对标题与年份一致，并明确其为语义/概念粒度的潜在推理路线，可与 token 粒度循环推理形成对照轴。修改点：初稿「本文可能与之对比效率」为推断，已标为待证。",
+            "block_index": 79,
+            "source_quote": "Dynamic Large Concept Models: Latent Reasoning in an Adaptive Semantic Space. arXiv preprint arXiv:2512.24617, 2025."
+          },
+          {
+            "assessment": "核对方法名 Mixture-of-Depths、机制（动态分配计算）与年份 2024 无误。修改点：初稿「本文核心机制的重要先例/在其基础上改进」把被引升级为技术继承，已降级为推断。",
+            "block_index": 80,
+            "source_quote": "Mixture-of-Depths: Dynamically allocating compute in transformer-based language models. arXiv preprint arXiv:2404.02258, 2024."
+          },
+          {
+            "assessment": "核对基准名 GPQA 与定位（研究生级问答）一致。重点纠正：初稿「常与 SuperGPQA 一起使用」属外部使用习惯判断，本次未做外部检索，无数据支撑，已明确标为未验证。",
+            "block_index": 81,
+            "source_quote": "Gpqa: A graduate-level google-proof q&a benchmark. arXiv preprint arXiv:2311.12022, 2023."
+          },
+          {
+            "assessment": "核对标题所表明的分析属性（机制层「真推理 vs 猜测」诊断）无误。修改点：初稿「本文可能借此澄清其内在机理」为推断，已改写为阅读时的追问线索。",
+            "block_index": 82,
+            "source_quote": "Are Your Reasoning Models Reasoning or Guessing? A Mechanistic Analysis of Hierarchical Reasoning Models. arXiv preprint arXiv:2601.10679, 2026."
+          },
+          {
+            "assessment": "核对标题与年份一致，确认其论证循环 Transformer 在潜在思维上的表达力。重点纠正：初稿「本文理论基础的核心引用之一」把引用等同于理论依赖，已改为待正文确认。",
+            "block_index": 83,
+            "source_quote": "Reasoning with Latent Thoughts: On the Power of Looped Transformers. arXiv preprint arXiv:2502.17416, 2025."
+          },
+          {
+            "assessment": "核对出处（NeurIPS 卷 35、页码 17456–17472、2022）与条目一致，确认其按置信度提前退出的思想。修改点：初稿「本文的自适应停止机制可能源于此类思想」属同源推断，已标为待证。",
+            "block_index": 84,
+            "source_quote": "Confident adaptive language modeling. Advances in Neural Information Processing Systems, 35:17456–17472, 2022."
+          },
+          {
+            "assessment": "核对标题中的工程要点（连续深度批处理以实现深度自适应推理）与后缀 2026a 无误，并指出本段未出现同作者 2026b，可作文献表缺口提示。修改点：初稿「提供工程实现参考」为推断，已标注。",
+            "block_index": 85,
+            "source_quote": "Depth-adaptive Inference of Looped Language Models via Continuous Depth Batching. arXiv preprint arXiv:2608.09444, 2026a."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 12,
+        "part": 4,
+        "checks": [
+          {
+            "assessment": "核对作者、标题、arXiv 编号与年份：与原文一致，批注复述无误。修正项：初稿“在固定参数预算下增加递归次数”中的“固定参数预算”为标题未明示的推断，且“本文理解测试时计算扩展的关键依据”属跨文献关联，因无正文已标为待证推断。",
+            "block_index": 86,
+            "source_quote": "Kristian Schwethelm, Daniel Rueckert, and Georgios Kaissis. How Much Is One Recurrence Worth? Iso-Depth Scaling Laws for Looped Language Models. arXiv preprint arXiv:2604.21106, 2026b."
+          },
+          {
+            "assessment": "核对标题列的四个维度（安装/外推/迁移/保留）与“两个参数预算”：批注复述准确。修正项：将“与本文可能涉及的架构改进相关”明确标注为待证关联，而非既成事实。",
+            "block_index": 87,
+            "source_quote": "Mark Shapiro. Retrofitting Recurrent Depth into a Pretrained Language Model: Installation, Extrapolation, Transfer, and Retention at Two Parameter Budgets. arXiv preprint arXiv:2608.11233, 2026."
+          },
+          {
+            "assessment": "核对“密集监督不够”与“读出盲区”两个标题断言：批注转述正确。修正项：“盲区”具体指代标题未说明，初稿据此推出“本文需关注中间层状态利用效率”无正文证据，已降级为推断。",
+            "block_index": 88,
+            "source_quote": "Rituraj Sharma and Tu Vu. Dense Supervision Is Not Enough: The Readout Blind Spot in Looped Language Models. arXiv preprint arXiv:2606.24898, 2026."
+          },
+          {
+            "assessment": "核对作者、标题与编号一致。修正项：把“hidden thinking 等于缩短显式思维链”标为合理但非确证的解读，并保留“与本文方法论呼应”为待证关联。",
+            "block_index": 89,
+            "source_quote": "Xuan Shen, Yizhou Wang, Yufa Zhou, Xiangxi Shi, Pu Zhao, Yanzhi Wang, and Jiuxiang Gu. Efficient Reasoning with Hidden Thinking. arXiv preprint arXiv:2501.19201, 2025."
+          },
+          {
+            "assessment": "核对引导信号为“latent multi-token prediction”、被引导者为循环 Transformer：批注与标题一致。修正项：“多步预测信号可有效指导循环模块”是从标题推出的假设，本组无实验数据可核，已标明为待证。",
+            "block_index": 90,
+            "source_quote": "Behzad Shomali, Markus Frey, David Berghaus, Joachim Koehler, and Mehdi Ali. LoopMTP: A looped transformer guided by latent multi-token prediction. arXiv preprint arXiv:2608.03624, 2026."
+          },
+          {
+            "assessment": "核对标题的确切主张是“最优扩展测试时计算可能比扩展参数更有效”，属比较性结论。修正项：删除“经典论文/确立范式基础”的拔高评价，改为该文主张的准确复述，并声明其是否被本文用作核心动机需正文核实。",
+            "block_index": 91,
+            "source_quote": "Charlie Snell, Jaehoon Lee, Kelvin Xu, and Aviral Kumar. Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters. arXiv preprint arXiv:2408.03314, 2024."
+          },
+          {
+            "assessment": "核对两个设计要素：门控思考与逐 token 自适应深度，与标题一致。修正项：门控信号来源标题未说明，初稿“按输入复杂度实时调整”保留为推断；与本文的关系为条件式待证。",
+            "block_index": 92,
+            "source_quote": "Shixiang Song, He Li, Zitong Wang, Boyi Zeng, Feichen Song, Yixuan Wang, Zhiqin John Xu, Ziwei He, and Zhouhan Lin. AdaPonderLM: Gated Pondering Language Models with Token-Wise Adaptive Depth. arXiv preprint arXiv:2603.01914, 2026."
+          },
+          {
+            "assessment": "核对标题与编号一致；同时核出该条目作者名含 MinerU 上标残留标记，已提示清理。修正项：“连续状态空间/生成式视角”属对 flows 一词的推断，“为本文提供替代建模思路”为待证关联。",
+            "block_index": 93,
+            "source_quote": "Thinking with Looped Flows. arXiv preprint arXiv:2609.11801, 2026."
+          },
+          {
+            "assessment": "核对标题的核心是“计算与内存解耦”，批注复述正确。修正项：“高深度导致内存瓶颈”是问题设定推断，“对大规模部署至关重要”属评价；另指出作者名中的连字符/反引号残留为解析噪声。",
+            "block_index": 94,
+            "source_quote": "Memory-Efficient Looped Transformer: Decoupling Compute from Memory in Looped Language Models. arXiv preprint arXiv:2605.07721, 2026."
+          },
+          {
+            "assessment": "核对标题三要素（浅层思考、控制递归动力学、可靠测试时深度）。修正项：初稿“防止发散”是对“可靠/受控动力学”的具体化推断；“与本文目标一致”属主题相似判断，需正文核实。",
+            "block_index": 95,
+            "source_quote": "Think Shallow, Solve Deep: Controlling Recurrent Dynamics for Reliable Test-Time Depth. arXiv preprint arXiv:2608.18222, 2026."
+          },
+          {
+            "assessment": "核对研究对象为残差缩放、评价维度为稳定性与可迁移性，与标题一致。修正项：“残差缩放直接影响梯度流动与收敛”为通用常识外推，非该文献标题断言，已注明为推断。",
+            "block_index": 96,
+            "source_quote": "On the Residual Scaling of Looped Transformers: Stability and Transferability. arXiv preprint arXiv:2606.18524, 2026a."
+          },
+          {
+            "assessment": "核对关键词“缩放定律/算力匹配/MoE 循环 Transformer”，批注一致。修正项：补出 compute-matched 这一等算力对照设定；将“结合稀疏与循环优势”标为推断，删除效果性结论。",
+            "block_index": 97,
+            "source_quote": "SMELT: Scaling Laws for Compute-Matched MoE Looped Transformers. arXiv preprint arXiv:2609.01343, 2026b."
+          },
+          {
+            "assessment": "核对分析工具（雅可比）与研究问题（全局工作空间在递归下是否存续），批注一致。修正项：把“从认知科学角度”降级为推断，因标题未表明采用认知科学框架。",
+            "block_index": 98,
+            "source_quote": "Looped Transformers under the Jacobian Lens: Does the Global Workspace Survive Recurrence? arXiv preprint arXiv:2609.01924, 2026."
+          },
+          {
+            "assessment": "核对“自适应潜推理 + 循环时间记忆”两要素，批注一致。修正项：“有助于缓解遗忘”是对记忆机制目的的推断，标题未声明该结论。",
+            "block_index": 99,
+            "source_quote": "Recur-Trace: Adaptive Latent Reasoning with Loop-Time Memory. arXiv preprint arXiv:2609.03379, 2026c."
+          },
+          {
+            "assessment": "核对标题仅表明“并行循环 Transformer 用于高效测试时计算扩展”。修正项：删除初稿“并行化循环步骤打破串行瓶颈”的机制补写与“显著提升吞吐量”的未证性能主张，改为推断语气。",
+            "block_index": 100,
+            "source_quote": "Parallel Loop Transformer for Efficient Test-Time Computation Scaling. arXiv preprint arXiv:2510.24824, 2025a."
+          },
+          {
+            "assessment": "核对“块扩展”这一机制。修正项：初稿“增加网络深度/宽度”不准确——Block Expansion 属增加层数，标题未提宽度，已改为“通过块扩展增加有效深度”；“与循环模型异曲同工”标为跨范式类比推断。",
+            "block_index": 101,
+            "source_quote": "LLaMA Pro: Progressive LLaMA with Block Expansion. arXiv preprint arXiv:2401.02415, 2024a."
+          },
+          {
+            "assessment": "核对文献性质（实证分析）与研究对象（问题求解下的计算最优推理），批注一致。修正项：“为本文提供方法论基准”属关联推断，已标注需正文核实。",
+            "block_index": 102,
+            "source_quote": "Inference Scaling Laws: An Empirical Analysis of Compute-Optimal Inference for Problem-Solving with Language Models. arXiv preprint arXiv:2408.00724, 2024b."
+          },
+          {
+            "assessment": "核对标题反常现象“更多即更少”与思维链长度主题，批注一致。修正项：初稿给出的“噪声累积或注意力分散”归因标题未说明，属机制猜测；“警示本文”属外推。另核实该条目原文无 URL，体例与其余条目不同。",
+            "block_index": 103,
+            "source_quote": "Yuyang Wu, Yifei Wang, Ziyu Ye, Tianqi Du, Stefanie Jegelka, and Yisen Wang. When more is less: Understanding chain-of-thought length in llms. arXiv preprint arXiv:2502.07266, 2025b."
+          },
+          {
+            "assessment": "核对潜空间与离散空间之间的思维路由机制，批注一致。修正项：“可能启发本文设计中间状态表示或解码策略”为纯推测，已改为待证关联。",
+            "block_index": 104,
+            "source_quote": "ThinkRouter: Efficient Reasoning via Routing Thinking between Latent and Discrete Spaces. arXiv preprint arXiv:2602.11683, 2026."
+          },
+          {
+            "assessment": "核对文献类型为 LMSYS 博客（非论文）、发表时间 2025 年 12 月，批注一致。修正项：删除或弱化“间接支持循环模型实用化落地”这一跳跃关联，改为仅属推理系统工程背景。",
+            "block_index": 105,
+            "source_quote": "Ziyi Xu. Mini-SGLang: Efficient inference engine in a nutshell. LMSYS Org blog, December 2025."
+          },
+          {
+            "assessment": "核对作者列表以 et al. 截断、文献类型为技术报告，批注一致。修正项：“常作为对比基线或集成目标”属常见做法推断，非该文献声明，已标明；并提示该条目原文亦未附 URL。",
+            "block_index": 106,
+            "source_quote": "An Yang, Anfeng Li, Baosong Yang, Beichen Zhang, Binyuan Hui, Bo Zheng, Bowen Yu, Chang Gao, Chengen Huang, Chenxu Lv, et al. Qwen3 technical report. arXiv preprint arXiv:2505.09388, 2025."
+          },
+          {
+            "assessment": "核对“Only Loop Once”这一强主张与高效测试时计算主题，批注一致。修正项：“代表新趋势、挑战多次迭代必要性”属评价性推断，需该文消融支撑，本组无数据可核。",
+            "block_index": 107,
+            "source_quote": "LoopCoder-v2: Only Loop Once for Efficient Test-Time Computation Scaling. arXiv preprint arXiv:2606.18023, 2026a."
+          },
+          {
+            "assessment": "核对标题断言（循环 Transformer 更擅长学习学习算法）与本组最早年份 2023，批注一致。修正项：删除“理论基石”式拔高，保留“强调元学习能力”的对应表述。",
+            "block_index": 108,
+            "source_quote": "Liu Yang, Kangwook Lee, Robert Nowak, and Dimitris Papailiopoulos. Looped transformers are better at learning learning algorithms. arXiv preprint arXiv:2311.12424, 2023."
+          },
+          {
+            "assessment": "核对标题含稳定递归动力学与可扩展潜推理两要素，批注一致。修正项：将“与 Block 95 类似”的内部编号指代改为作者指代（Viakhirev et al., 2026）；“稳定性是核心障碍”降级为评价性推断。",
+            "block_index": 109,
+            "source_quote": "Stabilizing Recurrent Dynamics for Test-Time Scalable Latent Reasoning in Looped Language Models. arXiv preprint arXiv:2605.26733, 2026b."
+          },
+          {
+            "assessment": "核对“记忆即状态高速公路”这一机制命名与递归 Transformer 对象，批注一致。修正项：“高效存取长期信息”是对隐喻的功能性推断，不应视为已验证效果。",
+            "block_index": 110,
+            "source_quote": "MeSH: Memory-as-State-Highways for Recursive Transformers. arXiv preprint arXiv:2510.07739, 2025."
+          },
+          {
+            "assessment": "核对令牌级弹性深度与动态路由两要素，批注一致。修正项：初稿“从序列级深入到令牌级”的层级对比属推断，标题只声明令牌级；“提升计算分配精细度”属目的推断。",
+            "block_index": 111,
+            "source_quote": "T-LoopFormer: Token-Level Elastic-Depth Looped Transformers for Latent Reasoning With Dynamic Routing. arXiv preprint arXiv:2609.15160, 2026a."
+          },
+          {
+            "assessment": "核对针对循环状态空间模型的缓存孔适应式跳过退出机制，批注一致。修正项：“平衡计算节省与精度保持”为常规目的推断，标题未给精度结论，需其正文数据。",
+            "block_index": 112,
+            "source_quote": "CHASE: Cache-Hole-Adapted Skip Exit for Looped State-Space Language Models. arXiv preprint arXiv:2607.10110, 2026b."
+          },
+          {
+            "assessment": "核对“在连续空间中思考”且处于预训练阶段，批注一致。修正项：“降低推理成本”为标题未给出的效率推断，已标注；与块 114 的同作者线索属推断性串联。",
+            "block_index": 113,
+            "source_quote": "Pretraining language models to ponder in continuous space. arXiv preprint arXiv:2505.20674, 2025."
+          },
+          {
+            "assessment": "核对令牌级自适应与潜思维链、预训练阶段三要素，批注一致。修正项：“可能从根本上改变学习能力与泛化特性”为强推断，超出标题证据，已降级为待证猜测。",
+            "block_index": 114,
+            "source_quote": "Pretraining with Token-Level Adaptive Latent Chain-of-Thought. arXiv preprint arXiv:2602.08220, 2026."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 12,
+        "part": 5,
+        "checks": [
+          {
+            "assessment": "核对作者、标题、arXiv 编号与年份四项，初稿转写无误。修改点：初稿「对本文可能涉及的循环架构中的资源分配或记忆瓶颈分析具有参考价值，提示了 CoT 在受限内存下的表现特性」超出该条目证据——参考文献只给题名，未给被引位置与理由，已标注为推断/待证；「内存预算分离具体分离什么」缺少依据，已明确不展开。批注保留。",
+            "block_index": 115,
+            "source_quote": "Haozhou Zhang. Chain-of-Thought and Compressed Looped Transformers: A Memory-Budget Separation. arXiv preprint arXiv:2605.30757, 2026."
+          },
+          {
+            "assessment": "核对四位作者、标题、编号 arXiv:2607.20594 与年份 2026，初稿一致。修改点：初稿「与循环网络训练稳定性、深度扩展性及计算效率密切相关」「可能是本文方法论中关于循环次数或停止准则的理论支撑」属于题名外推，已降级为推断/待证；未发现可支持该文献出现在主论文方法节的证据。批注保留。",
+            "block_index": 116,
+            "source_quote": "Tong Zhang, Junhao Hu, Yun Peng, and Tao Xie. When Does Recurrence Become an Algorithm? Convergence Selection in Weight-Tied Looped Transformers. arXiv preprint arXiv:2607.20594, 2026."
+          },
+          {
+            "assessment": "核对到两处错误并纠正：初稿称该文为「（2026年）」，原文标注为 2025（编号 2510.25741），属数字错误；初稿未给出标题，实际标题为 Scaling Latent Reasoning via Looped Language Models。另删除「长名单论文通常涉及大型基准测试、综合框架或多模态/多任务大规模实验」这一按 33 位作者规模所作的猜测（原文仅列出作者与题名）。初稿「需结合正文确认其角色」的保留判断正确，保留为待证。",
+            "block_index": 117,
+            "source_quote": "Scaling Latent Reasoning via Looped Language Models. arXiv preprint arXiv:2510.25741, 2025."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 15,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对 caption 语义：初稿称“该表列出了所有变体在给定规模下共享的训练超参数”，与原文 caption 一致，未修改此项。同时据 caption 补充指出本表不含变体间差异参数（原文只声明 shared），这是初稿遗漏的限定条件。",
+            "block_index": 1,
+            "source_quote": "Table 5: Training hyper-parameters shared by all variants at a given scale."
+          },
+          {
+            "assessment": "逐项核对数字：batch 128、seq len 16384、lr 4e-5、max grad norm 1.0、epochs 3、warmup 0.03 全部与表格逐字一致，初稿数值部分无误；补上初稿未提及的 max gradient norm 与 epochs，避免复现信息缺失。此项为证据支持的事实，未作修改。",
+            "block_index": 1,
+            "source_quote": "<td>global batch (samples)</td><td>128</td></tr><tr><td>sequence length</td><td>16384</td></tr><tr><td>learning rate</td><td> $4 \\times 1 0 ^ { - 5 }$ </td></tr><tr><td>max gradient norm</td><td>1.0</td></tr><tr><td>epochs</td><td>3</td></tr><tr><td>warmup ratio</td><td>0.03</td></tr>"
+          },
+          {
+            "assessment": "核对三元组数值 0.99/0.05/0.5 与符号名一致，初稿引用正确。但初稿由该行推断“直接关联论文核心机制中的动态退出或稀疏化策略”，本块并无 TPP、$\\tau_{\\mathrm{exit}}$ 的定义或使用说明，故将该表述降级为推断/待证；TPP=2 的涵义同样未在本块给出，保留为待证。",
+            "block_index": 1,
+            "source_quote": "<td>coverage  $\\rho / \\alpha _ { D }$  / threshold  $\\tau _ { \\mathrm { e x i t } }$ </td><td>0.99 / 0.05 / 0.5</td></tr>"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 16,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对了教师选择依据与数据来源两项主张。原文明确：用 Qwen3-8B 重新生成两类提示的回答；理由是它给出 the most accurate student（对比见 Appendix B.1），初稿此处表述与原文一致。已纠正两处越界：一是初稿把“数学/代码/QA + 工具使用”的领域覆盖写进本段，但该信息实际出自 block 2，本段并未提及；二是初稿“旨在让 1.7B 模型具备多任务处理能力”属补出的动机，原文无此表述，已改为推断标注；“教师-学生蒸馏范式”一词也非原文用语，已注明为推断。",
+            "block_index": 1,
+            "source_quote": "Main experiments. For the 1.7B experiments (Section 5.2), we regenerate responses to the AM-Qwen3-Distilled and Nemotron-Agentic-v1 prompts (a-m-team, 2025; NVIDIA, 2025) with Qwen3-8B. We choose this teacher because it gives the most accurate student among the teachers we compare (Appendix B.1)."
+          },
+          {
+            "assessment": "逐项核对了数字与方法条件：阈值 16,384 tokens、4B 用 8B tokens、8B 用 16B tokens、$M := 2$、与 Standard 同配方，均与原文相符，未发现数字错误。已纠正三处超出证据的表述：初稿称 Qwen3-235B-A22B 为“更强的教师”并推断“复用最强模型数据更有效 / 为节省成本”，原文只说明数据来自该模型，未作教师强弱比较、也未给选择动机，已改标为推断/待证；“遵循 scaling law 趋势”与“表明方法具跨尺度通用性”同样非原文断言，属读者解读；长度过滤的目的（上下文窗口/效率）原文未给，已标为推断。可确证的仅为数据来源、领域覆盖、阈值、token 量与 $M := 2$ 同配方。",
+            "block_index": 2,
+            "source_quote": "For the experiments in Section 5.3, we train the 4B and 8B backbones on the original AM-Qwen3-Distilled responses from Qwen3-235B-A22B (a-m-team, 2025), covering math, code and QA, together with tool use samples from Nemotron-Agentic-v1 (NVIDIA, 2025). We exclude samples whose combined prompt and response exceed 16,384 tokens. The 4B and 8B models are trained on 8B and 16B tokens, respectively. At each size, TaH2 uses $M \\ : = \\ : 2$ and the same training recipe as Standard."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 17,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对 draft 对导言的两点主张：一是本节详述 Section 4.1 的 updater 与 decider，二是随后给出 Table 6 的 baseline 实现，二者均与原文一致，保留。修改的是 draft summary 中“补充正文中省略的模型结构超参数”等扩展表述：原文只提 updater/decider 与 baseline implementations，未限定为“超参数”，也未说明“正文省略”，故降级为“方法模块细节/基线配置”的导航性描述，并注明具体架构参数与基线名称需由后续子小节和 Table 6 验证。",
+            "block_index": 1,
+            "source_quote": "We detail the updater and decider introduced in Section 4.1, followed by the baseline implementations summarised in Table 6."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 18,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对了 KV cache 独立、位置/深度约束、拼接后并行、无梯度前瞻四条机制描述，全部与原文一致；修改了两处：(1) 把『保持推理时序列依赖』标为推断（原文只写训练与 prefill 并行）；(2) 补上原文明确写出的 self-attention 保留与其余注意力同样受限。",
+            "block_index": 1,
+            "source_quote": "Extended duo-causal attention. Following TaH (Fu et al., 2025b), each iteration keeps its own KV cache, and a query at token t and depth m attends to executed states at positions $s \\leq t$ and depths $j \\le m ( \\mathrm { F i g u r e } 7 )$ ."
+          },
+          {
+            "assessment": "核对『updater 与 decider 各用 Qwen3 SwiGLU MLP』成立；原文该句被 MinerU 截断，故在批注中注明抽取截断，并纠正初稿把式 (8) 说成『基础模块』的含混表述。",
+            "block_index": 2,
+            "source_quote": "Qwen3 MLP. The updater and decider each use a Qwen3 SwiGLU MLP, written as $B { \\mathrm { : } }$"
+          },
+          {
+            "assessment": "核对了 SwiGLU 结构与 gate/up/down 三个投影，与式 (8) 一致；纠正初稿把『无 bias』（实为 block 12 内容）与『⊙ 定义』（实为 block 4 内容）算进本式的归属错误。",
+            "block_index": 3,
+            "source_quote": "\\mathcal { B } ( \\mathbf { x } ) = \\mathbf { W } _ { \\mathrm { d o w n } } \\big [ \\mathrm { S i L U } ( \\mathbf { W } _ { \\mathrm { g a t e } } \\mathbf { x } ) \\odot \\left( \\mathbf { W } _ { \\mathrm { u p } } \\mathbf { x } \\right) \\big ]"
+          },
+          {
+            "assessment": "核对符号定义、两个 MLP 权重独立、RN 各有学习缩放均正确；把『功能解耦、分别负责融合与停止决策』明确标为需由 block 8/10 支撑的推断，避免把推断写成原文陈述。",
+            "block_index": 4,
+            "source_quote": "where ⊙ denotes elementwise multiplication. We write RN for RMSNorm and $[ \\cdot ; \\cdot ]$ for concatenation. The two MLPs, $\\scriptstyle B _ { \\mathrm { u } }$ and $ { { \\mathcal { B } } } _ { \\mathrm { d } }$ , have separate weights"
+          },
+          {
+            "assessment": "该块无文字，无法核对任何数值或机制主张；把初稿『Figure 7 的一部分（或相关示意图）』改为明确的推断表述，并声明未获得图片视觉内容、不对图中元素作断言。",
+            "block_index": 5,
+            "source_quote": "![](images/78b9eac4b9c251ed3930d850978f835605764f39572cc1ca594857aa1747ede1.jpg)"
+          },
+          {
+            "assessment": "同为图片块，无文本可核；删去初稿『展示不同迭代深度下的可见键值对分布』这类对画面内容的断言（该描述只能由 block 7 的 caption 间接支持），并标明未获视觉信息。",
+            "block_index": 6,
+            "source_quote": "![](images/6cdfc6baee735828e7324e2620abebe1ba031f50ca11bb06fd6abdfad1664269.jpg)"
+          },
+          {
+            "assessment": "逐句核对了 (a,b)/(c,d) 含义、绿箭头含义、虚线为仅用于深度监督的无梯度前瞻、前瞻互不可见等；纠正初稿『此图验证了并行化可行性』的过强措辞（caption 未声称验证），并注明只依据 caption 核对。",
+            "block_index": 7,
+            "source_quote": "Figure 7: Extended duo-causal attention in TaH2. Each cell denotes a (token id, iteration depth) pair; green arrows and cells show the keys visible to token 3. (a, b) Executed depths at inference and training; dashed cells are no-gradient lookahead iterations used only for depth supervision."
+          },
+          {
+            "assessment": "核对了 updater 融合 $e_t$ 与 $h_t^{(m)}$、产下一次迭代输入；纠正初稿『实现动态深度的关键步骤』——动态深度由 Decider 负责，block 14 的 TaH2-fixed 保留 updater 却固定 $M$ 次迭代，原文不支持该因果绑定。",
+            "block_index": 8,
+            "source_quote": "Updater. The updater fuses the original token embedding with the current hidden state and produces the next iteration’s input:"
+          },
+          {
+            "assessment": "逐步核对了式 (9) 的计算顺序（拼接→$W_u$→RN→$B_u$→RN）；关键纠正：式中没有残差连接，初稿『残差+归一化+MLP+归一化』属误读；『提升数值稳定性』标注为通用推断。",
+            "block_index": 9,
+            "source_quote": "\\mathbf { x } _ { \\mathrm { u } , t } ^ { ( m ) } = \\mathbf { W } _ { \\mathrm { u } } [ \\mathrm { R N } ( \\mathbf { e } _ { t } ) ; \\mathrm { R N } ( \\mathbf { h } _ { t } ^ { ( m ) } ) ] ,"
+          },
+          {
+            "assessment": "核对 decider 输入含 embedding、隐状态与预测概率；纠正初稿『预测概率的最大值 TopK』——按 block 12，TopK 返回降序的 2048 个值，不是单一最大值；并把『旨在更准确判断收敛』标为原文未给的动机推断。",
+            "block_index": 10,
+            "source_quote": "Decider. The decider combines the same embedding and hidden state with the largest prediction probabilities to predict whether to continue:"
+          },
+          {
+            "assessment": "核对了式 (10) 三路输入、$W_d$→$B_d$→RN→$W_{score}$→sigmoid 的顺序与 $g$ 的含义，初稿描述正确；TopK 取 2048 个值的出处标注为 block 12。",
+            "block_index": 11,
+            "source_quote": "\\mathbf { x } _ { \\mathrm { d } , t } ^ { ( m ) } = \\mathbf { W } _ { \\mathrm { d } } [ \\mathrm { R N } ( \\mathbf { e } _ { t } ) ; \\mathrm { R N } ( \\mathbf { h } _ { t } ^ { ( m ) } ) ; \\mathrm { R N } ( \\mathrm { T o p K } ( \\mathbf { q } _ { t } ^ { ( m ) } ) ) ] ,"
+          },
+          {
+            "assessment": "核对数字 2,048 与『无 bias、跨迭代共享参数』三项均与原文一致；把初稿的『共享减少显存占用』『假设各深度转换逻辑一致』标为原文未陈述的推断。",
+            "block_index": 12,
+            "source_quote": "Here $\\sigma$ is the sigmoid function, and $\\mathrm { T o p K }$ returns probability values in descending order (2,048 values for the 1.7B model). All projections are bias-free, and both modules share their parameters across iterations."
+          },
+          {
+            "assessment": "核对同 checkpoint、同数据、同样本顺序、同训练配方、同评测协议，初稿漏列『样本顺序』与『评测协议』已补；并确认 Ouro/Huginn 为适配实现、不使用 TaH2 的 updater/decider/online supervision，其『突出 TaH2 独特贡献』改为评价性推断。",
+            "block_index": 13,
+            "source_quote": "Baseline implementations. All baselines are post-trained from the same Qwen3-1.7B-Base checkpoint using the same data, sample order, training recipe and evaluation protocol as TaH2."
+          },
+          {
+            "assessment": "核对变体配置（保留 updater、改因果注意力、去 decider、全 token 执行 $M$ 次）与均匀平均分布上的 NTP 损失均正确；把『用于评估动态退出与特殊注意力机制的贡献』标为推断出的实验意图。",
+            "block_index": 14,
+            "source_quote": "TaH2-fixed. This variant retains TaH2’s updater, replaces extended duo-causal attention with causal attention and removes the decider. Every token executes all M iterations."
+          },
+          {
+            "assessment": "核对了 Ouro 的循环 backbone、隐状态原样传递、去 gate、均匀平均损失、所有 token 执行 $M$ 次均正确；同时修正上一轮引文错误（原文为 'gate col lapse' 而非 'collapse'）。纠正两处表述：(1) 原文明确『除非另有说明，Ouro 结果使用该固定深度模型』，『可能基于』偏弱；(2) 『因为动态 gate 不稳定』属把规避坍缩的动机外推为结论。",
+            "block_index": 15,
+            "source_quote": "To avoid gate col lapse in post-training, where every token exits after the first iteration, we simplify Stage I by removing the exit gate and uniformly averaging the per-iteration losses,"
+          },
+          {
+            "assessment": "关键纠正：Stage II 是沿用 Zhu et al. (2025) 的原始 gate 训练，初稿『关键创新在于』的归因错误；同时核对软目标方向（损失改善越大 $\\tilde c$ 越接近 1、越倾向继续）、补上 $M=2$ 起点，并修正 $sg$ 作用（截断梯度进入 $h_t$，backbone 已冻结）。",
+            "block_index": 16,
+            "source_quote": "Stage II follows the original gate training (Zhu et al., 2025, Section 3.4). From the Stage I checkpoint at $M = 2$ , we freeze the backbone and train a linear exit gate"
+          },
+          {
+            "assessment": "核对求和上限 $M-1$ 与外层 $1/M$ 归一、BCE 的预测项 $1-\\lambda$ 与目标 $\\tilde c$；纠正初稿把 $k=50$、$\\gamma=0.005$（实为 block 18 内容）写进本式批注，并删去『sigmoid 接近 1 表示高置信度』这一与本文语义无对应的泛化解释。",
+            "block_index": 17,
+            "source_quote": "\\mathcal { L } _ { \\mathrm { g a t e } } = \\frac { 1 } { M } \\sum _ { m = 1 } ^ { M - 1 } \\frac { 1 } { N } \\sum _ { t } \\mathrm { B C E } \\Big ( 1 - \\lambda _ { t } ^ { ( m ) } , \\tilde { c } _ { t } ^ { ( m ) } \\Big ) ,"
+          },
+          {
+            "assessment": "核对数字 $k=50$、$\\gamma=0.005$、学习率 $10^{-4}$、1 epoch、累积退出概率阈值 $q=0.5$、prefill 全量、解码提前退出复用 KV 均与原文一致；补充说明这些超参属于 Ouro Stage II（初稿未标明归属），并把『平衡训练稳定性与推理效率』标为评述性推断。",
+            "block_index": 18,
+            "source_quote": "using the original $k = 5 0$ and $\\gamma = 0 . 0 0 5$ . Training settings follow our main post-training setup (Appendix A.1.1), except for a learning rate of $1 0 ^ { - 4 }$ and a single epoch."
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 18,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "核对层级结构与归属主张：原文确认 28 层 backbone 重复 Layers 8–21（14 层），Layers 1–7 仅执行一次，adapter 融合 $\\mathbf{z}_t$ 与 $\\mathbf{r}_t^{(m)}$ 形成下一输入——初稿这部分与原文一致，保留。已修改：(a) 补上原文首句 'Following the middle-block recurrence of Geiping et al. (2025a)' 的归属，明确该递归方案来自既有工作而非本文新模块；(b) 删除/降级初稿'静态编码器''换取空间参数的高效利用''避免梯度消失或计算冗余'等本段无据的动机推断，明确标为批注者推断与待证。",
+            "block_index": 19,
+            "source_quote": "Following the middle-block recurrence of Geiping et al. (2025a), our 28-layer backbone repeats layers 8–21 (14 layers). Layers 1–7 are evaluated once to produce"
+          },
+          {
+            "assessment": "逐符号核对 Eq. (12) 的更新式：$\\mathbf{u}_t^{(m+1)} = \\mathbf{a}\\odot\\mathbf{r}_t^{(m)} + \\mathbf{v}\\odot\\mathbf{W}_{\\mathrm{in}}\\mathbf{z}_t$，与初稿转写一致；$\\mathbf{v}=\\mathrm{softplus}(\\mathbf{b}_{\\mathrm{in}})$、$\\mathbf{a}=\\exp(-\\mathbf{v}\\odot\\exp(\\mathbf{b}_{\\mathrm{ret}}))$ 亦与本块公式逐字一致。初稿'a 控制状态保留、v 控制输入注入'由紧随的原文直接支撑，保留。已修改：把'$\\mathbf{a}\\in(0,1)$ 衰减'明确定位为批注者由公式推出的性质（softplus 非负、exp 为正），而非原文断言；把'防止信号爆炸/消失、保证数值稳定性'降级为未获原文支持的推断。",
+            "block_index": 20,
+            "source_quote": "\\mathbf { u } _ { t } ^ { ( m + 1 ) } = \\mathbf { a } \\odot \\mathbf { r } _ { t } ^ { ( m ) } + \\mathbf { v } \\odot \\mathbf { W } _ { \\mathrm { i n } } \\mathbf { z } _ { t }"
+          },
+          {
+            "assessment": "核对符号语义与归属：原文明确 $\\mathbf{b}_{\\mathrm{in}}$、$\\mathbf{b}_{\\mathrm{ret}}$ 为可学习 bias 向量，并写明 'a and v control state retention and input injection'，故批注中'a 控制状态保留、$\\mathbf{v}$ 控制输入注入'为原文直述而非推断；据此把初稿基于'GRU/LSTM 类似衰减逻辑'的类比与'防止爆炸/消失'表述列为批注者推断。此前一次校验失败源于该块引文与原文空格不一致（原文为 '$...\\% )$ ).'），本次已改为逐字短引，确保与原文段落一致。",
+            "block_index": 21,
+            "source_quote": "where $\\mathbf { b } _ { \\mathrm { i n } }$ and $\\mathbf { b } _ { \\mathrm { r e t } }$ are learned bias vectors, a and v control state retention and input injection."
+          },
+          {
+            "assessment": "核对数字与推断边界：(1) 有效深度 $14+14M$、$M=3\\to56$、$M=7\\to112$，以及与 Ouro 在 $M=2,4$ 时执行的 56/112 层对应，均与原文逐项吻合，保留；(2) 原文 $d^2+2d=4.20\\mathbf{M}$（$d=2048$）实算为 4,198,400，一致；占比原文为 $0.2\\hat{4}\\%$（解析异常），批注按 0.24% 书写并注明'相对何种总量'为推断；(3) 已删除初稿'复现或超越现有动态深度模型的性能基准'——原文仅称 'matches the ... layers'（执行层数匹配），未作性能等价或超越的声明，该表述超出证据。",
+            "block_index": 21,
+            "source_quote": "This gives an effective depth of $1 4 + 1 4 M$ layers: Huginn at $M = 3 .$ , 7 matches the 56 and 112 layers executed by Ouro at $M = 2 , 4$ , respectively."
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 19,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对本段的数字主张：原文称两表合计占 \"less than 3% of total parameters\"，对应 Table 7 三档占比 2.61%、1.76%、2.20%，全部小于 3%，主张在表内成立，予以保留。修正的是初稿附加的因果推断——初稿称本段\"为论证性能提升并非来自参数堆砌提供了基础数据支撑\"，但本段原文只有参数计数与占比、无任何性能对照，故在批注中明确标为批注者推断、需正文实验表支撑。另外补充两表数字一致性：Table 6 的 46.2M (2.6%) 与 Table 7 的 46.16M / 2.61% 是同一量四舍五入，互不矛盾；并补上本段未交代方法归属这一待证点。",
+            "block_index": 1,
+            "source_quote": "Table 6 summarises the architectures; Table 7 separates the updater and decider parameters at each scale. Together, they account for less than 3% of total parameters."
+          },
+          {
+            "assessment": "逐项核对 Table 6 的数值与配置：TaH2 \"46.2M (2.6%)\"、TaH2-fixed \"21.0M (1.2%)\"、Ouro (adaptive) \"2.0K (<0.001%)\"、Huginn \"4.2M (0.24%)\" 与原文一致，并补全初稿漏列的 Standard 与 Ouro (fixed-depth) 两个 0 参数行以完整呈现对比。修改三处：(a) 初稿称 Ouro \"实现了动态深度控制\"，原文只在 Depth allocation 列写 per-token adaptive，未给任何门控效果证据，已收敛为配置描述；(b) 初稿称 Ouro \"几乎零成本\"，但表中只有参数计数、无 FLOPs 或延迟数据，已限定为\"新增参数极少\"；(c) 初稿暗示 TaH2 是论文方法（\"完整自适应版本\"），本块未标明方法归属，已标为待证。另保留并核实自洽换算 20.98M + 25.18M = 46.16M 与 TaH2-fixed 对应 1.7B updater 的对齐关系。",
+            "block_index": 2,
+            "source_quote": "Table 6: Architectures used in the 1.7B comparison. Added parameters are reported as counts and fractions of total model parameters."
+          },
+          {
+            "assessment": "纠正初稿的事实性错误：初稿称此表\"未直接显示数值（依赖图片视觉信息或前文上下文）\"，但 Table 7 的三档数据在原文文字表格中逐项给出，故改为直接列出并作答。核对结果：1.7B 为 1720.57M / 20.98M / 25.18M / 46.16M / 2.61%，4B 为 4022.47M / 32.78M / 39.33M / 72.11M / 1.76%，8B 为 8190.74M / 83.90M / 100.68M / 184.59M / 2.20%，与原文逐字一致；用 backbone + added 复算百分比（2.61%、1.76%、2.20%）与表内吻合，验证 caption 的分母口径含新增参数，且三行均满足 updater + decider = total added。初稿提出的\"占比是否随规模保持恒定\"，按表内数据回答为非单调、先降后升、落在 1.8%–2.6%，并明确该倍率比较（updater/decider 约 4.0 倍 vs backbone 约 4.76 倍）属批注推断而非原文结论；caption 的 \"rounded independently\" 据实保留，避免对小数位过度解读。",
+            "block_index": 3,
+            "source_quote": "Table 7: Updater and decider parameters across backbone scales. Counts include projections, MLPs and RMSNorm scales and are rounded independently. Percentages are relative to total model parameters."
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 20,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐字核对：1,000 样本、从训练混合随机抽取、排除训练、teacher forcing 评分均吻合。修改项：① 初稿把 accuracy vs log FLOPs 的线性拟合说成“幂律增长”，原文只给线性拟合与 $R^2$，幂律需 log-log 检验，已改为“对数线性”；② 补全被初稿省略的 Huginn 0.994、Standard 0.955 与 4K–16K 区间；③ 初稿“验证损失用于监控训练”原文未言，已标为推断；④ 补上 FLOPs 由 serving engine depth/token 记录估计、细节在 Appendix A.4。",
+            "block_index": 1,
+            "source_quote": "Validation loss and the token-level analyses of Section 5.5 use a fixed validation set of 1,000 samples randomly drawn from the training mixture and excluded from training, scored under teacher forcing."
+          },
+          {
+            "assessment": "核对 32K 默认输出上限与表中 11 行/13 个基准的题量及 avg@N：AIME 30/30/30 avg@32、AMC23 40 avg@32、MATH500 500 avg@4、OlympiadBench 675 avg@4、IMO-AnswerBench 400 avg@4、GPQA 198 avg@8（Diamond）、SuperGPQA 7,050 avg@4（Hard）、HumanEval 164 avg@8、MBPP 378 avg@8、LiveCodeBench v6 175 avg@4、BFCL v3 800 avg@1(greedy)（Multi-turn），均与原文一致。初稿的“支持长 CoT”“消除随机性噪声”“更全面评估泛化能力、非单一狭窄任务优化”属于动机性推断，原文未给，已明确标注为推断并保留其位置。",
+            "block_index": 2,
+            "source_quote": "Table 8: Benchmarks used in this paper. The default output-token limit is 32K."
+          },
+          {
+            "assessment": "核对硬件与运行条件：30 道 AIME26、32K 输出上限、单张 A800-80GB、bfloat16、temperature 0.6、batch size 1/4 对应每问题 1/4 样本，均逐字吻合；Table 2 的三项指标（每 token 解码 GFLOPs、平均端到端延迟、聚合输出 token 吞吐）与“同一评估种子”亦据原文保留。纠正项：初稿摘要称“未提及具体硬件延迟指标”，与原文冲突——延迟和吞吐均由 Table 2 报告；批注中“更真实模拟部署”“早期退出/自适应计算加速比”已标为推断而非原文主张。",
+            "block_index": 3,
+            "source_quote": "We evaluate the 30 AIME26 problems with a 32K output-token limit on a single A800-80GB GPU, using bfloat16 and temperature 0.6; batch sizes 1 and 4 use one and four samples per problem, respectively."
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 21,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐字核对该段后确认：(1) 初稿“该段落仅包含标题 'A.4 COMPUTE ACCOUNTING'，无实质正文内容”为事实性错误——block 1 明确声明本节定义 decoding FLOPs 与 training cost，并给出 A.4.1/A.4.2/A.4.3 的分工（A.4.1 固定 conventions 与 per-call costs；A.4.2、A.4.3 先给 compact forms 再展开），已据此重写批注与摘要。(2) 初稿“通常此类章节会定义 FLOPs 计算公式、训练/推理步数计数方式以及硬件利用率假设”超出原文证据：原文未提及步数计数、硬件利用率或吞吐，已改为标注为推断/待证。(3) 保留的实质批注内容为：本段只界定结构，不含公式与数值；per-call 的粒度原文未定义，属待证，需由 A.4.1 支撑。(4) 摘要中“无实际公式与数字”“三级分工”两项均可由上述引文直接支撑，无额外推断。",
+            "block_index": 1,
+            "source_quote": "This section defines the decoding FLOPs reported throughout the paper and the corresponding training cost. Section A.4.1 fixes the conventions and per-call costs, and Sections A.4.2 and A.4.3 give compact forms of decoding and training FLOPs before expanding each term."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 22,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对成本口径：原文为「multiply-add as two operations」且线性层为 $2ab$/token，初稿该点无误。但初稿列举排除项时漏掉 softmax、top-k selection、stopping-weighted mixture 与 serving overhead，已在批注中补全；同时把初稿「避免不同论文比较偏差」的动因标记为推断（原文未提跨论文可比性）。",
+            "block_index": 1,
+            "source_quote": "A linear map from a to b features therefore costs 2ab FLOPs per token."
+          },
+          {
+            "assessment": "核对符号定义：$d$、$d_{\\mathrm{kv}}$、$d_{\\mathrm{ff}}$、$V$、$d_{\\mathrm{u}}$、$d_{\\mathrm{d}}$、$k$ 及 Qwen3 查询宽度等于 $d$ 均与原文一致，初稿未夸大。补充标注：本节只给迭代上限 $M$ 而未给其数值，且 $m_t \\le M$ 是上界而非平均值，初稿未区分，已在批注中点明，避免被误用于总量估算。",
+            "block_index": 2,
+            "source_quote": "Token t executes $m _ { t } \\le M$ iterations."
+          },
+          {
+            "assessment": "核对「单次调用」这一限定词，原文明确为 per-call（one pass / one call），初稿描述方向正确但未强调该限定。已在批注中明确：这些是单次调用成本，总成本还需乘 token 数、迭代数 $m_t$ 与可见 key 数 $S$。",
+            "block_index": 3,
+            "source_quote": "Per-call costs. One backbone pass, one LM-head call, and one call of each TaH2 module cost"
+          },
+          {
+            "assessment": "逐项核对 Eq. 13 四个表达式与原文一致。纠正两处：(1) 原文左端为 $\\mathrm{FLOPs}_{\\mathrm{bead}}$（OCR 噪声），据 Table 9 的 LM head 行判定应读作 head，已在批注中说明；(2) 删除初稿对 $4d(d+d_{\\mathrm{kv}})$ 是否「合并 Q 和 KV」的猜测以及对 $d_{\\mathrm{k}}$/$d_{\\mathrm{kv}}$ 的疑问——第 5 段与第 2 段已给出答案，猜测属超出证据的推断。",
+            "block_index": 4,
+            "source_quote": "\\mathrm { F L O P s } _ { \\mathrm { b b } } = L \\big [ 4 d ( d + d _ { \\mathrm { k v } } ) + 6 d d _ { \\mathrm { f f } } \\big ] ,"
+          },
+          {
+            "assessment": "核对归因与量级主张：原文说 $4d(d+d_{\\mathrm{kv}})$ 覆盖 query/key/value/output 投影、$6dd_{\\mathrm{ff}}$ 覆盖三个 SwiGLU 矩阵、注意力单独为 $4LdS$，初稿转述正确。末句「each cost less than 2%」经 Table 9 数值复核成立（0.042/2.819≈1.5%，0.050/2.819≈1.8%）；已补充说明注意力项随 $S$ 增长、长上下文下相对量级可能改变，属基于原文公式的推断而非原文断言。",
+            "block_index": 5,
+            "source_quote": "the backbone pass dominates, and the updater and decider each cost less than 2% of it."
+          },
+          {
+            "assessment": "核对表内数值转述（2.819 / 0.622 / 0.042 / 0.050 / 0.008 GFLOPs 与 $2.29\\times10^{-4}$）均与原文一致，超参 $L=28,d=2048,d_{\\mathrm{kv}}=1024,d_{\\mathrm{ff}}=6144,V=151936,k=d_{\\mathrm{u}}=d_{\\mathrm{d}}=2048$ 亦一致。纠正初稿「TaH2 模块成本不足 Backbone 的 2%」为「updater 与 decider 各自不到 2%（合计约 3.3%）」；并标注该表为单次调用 FLOPs、不含被排除项，不能等同于端到端延迟。",
+            "block_index": 6,
+            "source_quote": "Table 9: Per-call matrix-multiplication FLOPs for Qwen3-1.7B"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 23,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对初稿对块 1 的定位（本节推导 TaH2 解码 FLOPs，依赖每 token 实际迭代次数 $m_t$）：与原文 “For TaH2, summing over token positions processed during decoding” 一致，无数字或因果偏差。未修改，保留该批注。",
+            "block_index": 1,
+            "source_quote": "Compact form. For TaH2, summing over token positions processed during decoding gives"
+          },
+          {
+            "assessment": "逐项核对三项系数：pass 的 $\\sum_{m=1}^{m_t}$、Updater 的 $(m_t-1)$、Decider 的 $\\min(m_t,M-1)$ 均与公式逐字一致。初稿对 Decider 的解释“达到最大深度或提前停止时最后一次迭代后不再调用”在提前停止情形不成立（提前停止正是最后一次迭代后的 Decider 调用得出的），已按块 3 原文“the decider is not called after the final permitted iteration”修正。另将初稿中损坏的 LaTeX 宏（\\pass、\\upd、\\decider）改为可渲染写法。",
+            "block_index": 2,
+            "source_quote": "\\mathrm { F L O P s } _ { \\mathrm { d e c } } = \\displaystyle \\sum _ { t } \\Big [ \\displaystyle \\sum _ { m = 1 } ^ { m _ { t } } \\mathrm { F L O P s } _ { \\mathrm { p a s s } } ( t , m ) + ( m _ { t } - 1 ) \\mathrm { F L O P s } _ { \\mathrm { u p d } } } & { } & \\\\ { + \\displaystyle \\operatorname* { m i n } ( m _ { t } , M - 1 ) \\mathrm { F L O P s } _ { \\mathrm { d e c i d e r } } \\Big ] , } \\end{array}\\tag{14}"
+          },
+          {
+            "assessment": "核对了本条的两个因果表述：Updater 只在第一次之后的迭代执行（支撑 $m_t-1$）；Decider 不在最后一次被允许的迭代之后调用（支撑 $\\min(m_t,M-1)$）。初稿把 $m_t-1$ 与 Decider 系数混述为“这解释了为什么系数是 $m_t-1$ 或类似逻辑”，已拆分为 Updater 与 Decider 两个独立逻辑。",
+            "block_index": 3,
+            "source_quote": "where $\\mathrm { F L O P s } _ { \\mathrm { p a s s } } ( t , m )$ includes the backbone, attention and LM head. The updater prepares each iteration after the first, and the decider is not called after the final permitted iteration."
+          },
+          {
+            "assessment": "核对 $P$、$N$、解码位置范围与 KV 可见性规则：$P$ 为 prompt 长度、排除 prefill、$t=1,\\ldots,N$ 均与原文一致；$N = $ 输出 token 数 $-1$ 是原文明写，初稿遗漏，已补上。三条可见性（更早位置深度不超过 $m$ 的 KV + 自身深度 $1\\sim m$ 的 KV）为原文直述（“every KV entry from earlier positions at depths up to m, together with its own entries from depths 1 to m”），非推断。",
+            "block_index": 4,
+            "source_quote": "Positions and visible keys. Consider one response with a P-token prompt. Its first output token is sampled from the prefill, which we exclude, so decoding processes positions $t = 1 , \\ldots , N$ , where N is the number of output tokens minus one."
+          },
+          {
+            "assessment": "逐项核对 Eq. 15 的三部分：prompt 端 $\\sum_j\\min(r_j,m)$、历史生成端 $\\sum_{u \\lt t}\\min(m_u,m)$、自身 $+m$（对应原文“its own entries from depths 1 to m”）。初稿解释正确，予以保留；仅在注释文本中把 $u<t$ 按 GitHub MathJax 规范写作 $u \\lt t$（公式引文保持原样，未改写公式本体）。",
+            "block_index": 5,
+            "source_quote": "S _ { t } ^ { ( m ) } = \\sum _ { j = 1 } ^ { P } \\operatorname* { m i n } ( r _ { j } , m ) + \\sum _ { u < t } \\operatorname* { m i n } ( m _ { u } , m ) + m .\\tag{15}"
+          },
+          {
+            "assessment": "核对 pass 的三项分解与“每次 pass 都过 LM head”的因果：均为原文直述，且该句后来解答了初稿在块 11 留下的疑问（TaH2 的 head 成本为何带 $m_t$）；原文下标 $\\hat{m_t}$ 明显为解析残迹，已注明应读作依赖 $S_t^{(m)}$ 的 $m$。初稿在本块新增的 $\\text{FLOPs}_\\text{attn} \\approx 4Ld\\,S_t^{(m)}$ 在本段无出处，已标注为据 Eq. 16 反推的推断。",
+            "block_index": 6,
+            "source_quote": "Expanded form. Each pass applies the LM head, whose per-depth predictions feed the decider and the stopping-weighted mixture, so $\\mathrm { F L O P s } _ { \\mathrm { p a s s } } ( t , \\hat { m _ { \\it } } ) = \\mathrm { \\dot { F L O P s } _ { \\mathrm { b b } } + \\mathrm { F L O P s } _ { \\mathrm { h e a d } } + }$ $\\mathrm { F L O P s } _ { \\mathrm { a t t n } } ( S _ { t } ^ { ( m ) } )$ ."
+          },
+          {
+            "assessment": "核对 $m_t(\\text{bb}+\\text{head})$ 的化简来源（内层求和只作用于常量项）、$4Ld\\sum_m S_t^{(m)}$ 保留内层求和（因 $S_t^{(m)}$ 随深度变化）、以及 upd/decider 系数的沿用，均与公式一致。初稿“每一层的注意力都要重新计算一次”对 $L$ 与 $S_t^{(m)}$ 的关系表述含糊，已收紧为“每个深度按当时可见 KV 数各自累加”。",
+            "block_index": 7,
+            "source_quote": "\\mathrm { F L O P s } _ { \\mathrm { d e c } } ^ { \\mathrm { T a H 2 } } = \\displaystyle \\sum _ { t = 1 } ^ { N } \\left[ m _ { t } \\big ( \\mathrm { F L O P s } _ { \\mathrm { b b } } + \\mathrm { F L O P s } _ { \\mathrm { h e a d } } \\big ) + 4 L d \\sum _ { m = 1 } ^ { m _ { t } } S _ { t } ^ { ( m ) } \\qquad } \\\\ { \\qquad + ( m _ { t } - 1 ) \\mathrm { F L O P s } _ { \\mathrm { u p d } } + \\operatorname* { m i n } ( m _ { t } , M - 1 ) \\mathrm { F L O P s } _ { \\mathrm { d e c i d e r } } \\right] . } \\end{array}\\tag{16}"
+          },
+          {
+            "assessment": "核对两种可见 key 数与公式的对应：因果注意力 + 更早位置只暴露 base stream ⇒ $P+t-1+m$（对应 TaH2-fixed，Eq. 18 内层 $\\sum_{m=1}^{M}(P+t-1+m)$）；每次迭代各留 KV stream ⇒ $P+t$（对应 Ouro/Huginn，Eq. 19 的 $M(P+t)$）。初稿称此处“略有歧义”不成立，已改为明确分解；初稿“Huginn 层跳过（layer skipping）或适配器复用”的笼统说法，按同块的原文“Huginn executes $7 + 1 4 M + 7$ of the 28 layers and its input adapter once per core iteration”修正为具体层数比例。原文 $\\dot{P}$ 为解析残迹，已注明应读作 $P$。",
+            "block_index": 8,
+            "source_quote": "Under causal attention, earlier positions expose only their base stream, so a query at depth m attends to $P + t - 1 + m \\mathrm { k e y s } ;$ when every iteration keeps its own KV stream, it attends to $\\dot { P } + t$ keys."
+          },
+          {
+            "assessment": "该块全部内容仅为公式编号“(17)”，公式本体缺失。初稿判定为“排版残留、编号错位、忽略”，属于对成因的确定性猜测而无依据，已改为“解析缺失、内容待证”，并明确不补写公式内容——这一推断界限也无法进一步证实。",
+            "block_index": 9,
+            "source_quote": "(17)"
+          },
+          {
+            "assessment": "核对 TaH2-fixed 项的 $M(\\text{bb}+\\text{head})$、$(M-1)\\text{upd}$ 与 $4Ld\\sum_{m=1}^{M}(P+t-1+m)$，并与块 8 的因果注意力说明互相印证，故将初稿的不确定表述改为确定分解。Standard 项无 $M$ 因子，把“单深度标准解码”标注为推断——原文只写“Fixed-depth models execute all M iterations at every position”，并未逐字界定 Standard。",
+            "block_index": 10,
+            "source_quote": "\\mathrm { F L O P s } _ { \\mathrm { d e c } } ^ { \\mathrm { T a H 2 - f i x e d } } = \\sum _ { t = 1 } ^ { N } \\Big [ M \\big ( \\mathrm { F L O P s } _ { \\mathrm { b b } } + \\mathrm { F L O P s } _ { \\mathrm { h e a d } } \\big ) + ( M - 1 ) \\mathrm { F L O P s } _ { \\mathrm { u p d } } } \\\\ & { \\qquad + 4 L d \\sum _ { m = 1 } ^ { M } ( P + t - 1 + m ) \\Big ] , }"
+          },
+          {
+            "assessment": "核对三项：backbone × $M$、head 只一次（与块 8 原文“apply the LM head only after the final iteration”一致）、注意力 $4LdM(P+t)$ 的来源为“每次迭代各保留 KV stream ⇒ 可见 $P+t$ 个 key”。初稿“每层都看完整上下文、层间独立”混淆了 $M$ 与 $L$，已修正；初稿遗留的“TaH2 是否每次 pass 都算 head”疑问由块 6 原文直述解答，已写入批注。",
+            "block_index": 11,
+            "source_quote": "\\mathrm { F L O P s _ { d e c } ^ { O u r o } } = \\sum _ { t = 1 } ^ { N } \\left[ M \\mathrm { F L O P s _ { b b } } + \\mathrm { F L O P s _ { h e a d } } + 4 L d M ( P + t ) \\right] ,\\tag{19}"
+          },
+          {
+            "assessment": "核对缩放因子：块 8 原文明写 Huginn “executes $7 + 1 4 M + 7$ of the 28 layers”，$7+14M+7=14+14M$，故 $\\frac{14+14M}{28}$ 有原文支撑，28 为明写的总层数（初稿“7+14M+7 中的某些层”“层稀疏化或共享”不准确，已修正）。$+2Md^2$ 与“input adapter once per core iteration”在次数上对应，但单次 adapter 为 $2d^2$ 原文未定义，已明确标为推断；head 只出现一次与块 8 的 LM head 设定一致。",
+            "block_index": 12,
+            "source_quote": "\\mathrm { F L O P s } _ { \\mathrm { d e c } } ^ { \\mathrm { H u g i n n } } = \\displaystyle \\sum _ { t = 1 } ^ { N } \\Big [ \\frac { 1 4 + 1 4 M } { 2 8 } \\big ( \\mathrm { F L O P s } _ { \\mathrm { b b } } + 4 L d ( P + t ) \\big ) } & { } & \\\\ { + \\mathrm { F L O P s } _ { \\mathrm { h e a d } } + 2 M d ^ { 2 } \\Big ] . }"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 24,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对初稿对 block 1 的定位：原文此句只引出反向成本按前向两倍计，尚未给出完整公式。初稿“本节旨在量化训练 FLOPs……证明算法层面效率优势”是对后文（尤其 block 3“same training implementation……algorithmic differences”）的综合推断；已保留批注但明确标为推断性定位。",
+            "block_index": 1,
+            "source_quote": "Compact form. Approximating backward cost as twice the corresponding forward cost,"
+          },
+          {
+            "assessment": "核对 Eq. 21 与初稿：原文给出总成本约等于 3 倍 forward 加 label，初稿正确。修正点是强调 $\\mathrm{FLOPs}_{\\mathrm{forward}}$ 为带梯度前向、标签项单独无梯度；未改动公式结构和数字。",
+            "block_index": 2,
+            "source_quote": "\\mathrm { F L O P s } _ { \\mathrm { t r a i n } } \\approx 3 \\mathrm { F L O P s } _ { \\mathrm { f o r w a r d } } + \\mathrm { F L O P s } _ { \\mathrm { l a b e l } } ,"
+          },
+          {
+            "assessment": "核对边界定义：原文列举 forward 含 LM head、updater、decider，label 含 context reconstruction、auxiliary-module calls；初稿额外写入 Backbone，已注明由 Eq. 22 的 $\\mathrm{FLOPs}_{\\mathrm{bb}}$ 支持。“排除 activation checkpointing”在原文后句确有对应，未超出证据。",
+            "block_index": 3,
+            "source_quote": "includes all gradient-tracked forward computation, including the LM head, updater and decider,"
+          },
+          {
+            "assessment": "核对变量定义：$N_m$ 的含义、$N_1=T$、$A_m$ 为深度 m 的 query–key 对数均正确。初稿“与推理阶段的关键区别”不是原文直述，已改为由“without the prompt term, because training attends over the whole sequence”支持的推断。",
+            "block_index": 4,
+            "source_quote": "Let $N _ { m } = | \\{ t : m _ { t } \\geq m \\} |$ be the number of tokens that execute iteration $m ,$"
+          },
+          {
+            "assessment": "核对梯度跟踪范围：原文明确 backbone、LM head、updater（第 2 至 M 次）、decider（第 1 至 M−1 次后）。初稿“这解释 baseline 随 M 线性增长”非本句直接结论，已标为结合 Table 10 的推断。",
+            "block_index": 5,
+            "source_quote": "Every executed iteration runs the backbone and LM head with gradients, the updater prepares iterations 2 to M, and the decider runs after iterations 1 to"
+          },
+          {
+            "assessment": "核对 Eq. 22：三项分别对应 backbone+head+attention、updater、decider，求和上下限与原文一致。初稿“前头”为笔误，已改为 LM head；公式含义未改。",
+            "block_index": 6,
+            "source_quote": "\\mathrm { F L O P s } _ { \\mathrm { f o r w a r d } } = \\displaystyle \\sum _ { m = 1 } ^ { M } \\Big [ N _ { m } \\big ( \\mathrm { F L O P s } _ { \\mathrm { b b } } + \\mathrm { F L O P s } _ { \\mathrm { h e a d } } \\big ) + 4 L d A _ { m } \\Big ]"
+          },
+          {
+            "assessment": "核对补充说明：原文说 decider loss 复用本次 pass 输出、不增加调用，初稿正确，无需实质修改；已补充说明其作用是避免重复计费。",
+            "block_index": 7,
+            "source_quote": "The decider loss reuses the decider outputs of this pass and adds no further calls."
+          },
+          {
+            "assessment": "核对标签机制：原文说停止 token 需下一迭代 loss、无梯度 lookahead 在深度 m+1 应用 updater/backbone/LM head；初稿正确。“导致 Label FLOPs 显著增加”由后文重跑所有 $N_m$ 个 token 支撑，未超出证据。",
+            "block_index": 8,
+            "source_quote": "Online labels require the next-iteration loss of every token that stops."
+          },
+          {
+            "assessment": "核对 Eq. 23：求和 m=1 至 M−1、无梯度、含 updater/backbone/LM head 与 lookahead 注意力项，初稿准确；未发现数字或条件错误。",
+            "block_index": 9,
+            "source_quote": "\\mathrm { F L O P s } _ { \\mathrm { l a b e l } } = \\sum _ { m = 1 } ^ { M - 1 } \\Big [ N _ { m } \\big ( \\mathrm { F L O P s } _ { \\mathrm { u p d } } + \\mathrm { F L O P s } _ { \\mathrm { b b } } + \\mathrm { F L O P s } _ { \\mathrm { h e a d } } \\big ) + 4 L d \\tilde { A } _ { m + 1 } \\Big ] ,"
+          },
+          {
+            "assessment": "核对符号定义：原文说 $\\tilde{A}_{m+1}$ 按 lookahead query 的 token 继续执行来计数，初稿释义正确；已补充它与 $A_m$ 的区别（后者只统计实际执行第 m+1 次迭代的 token），属于由定义直接推出的补充。",
+            "block_index": 10,
+            "source_quote": "where $\\tilde { A } _ { m + 1 }$ counts each lookahead query as if its token continued."
+          },
+          {
+            "assessment": "核对 baseline 条件：$\\mathrm{FLOPs}_{\\mathrm{label}}=0$、$N_m=T$、各模型 LM head 调用频率（Ouro 每次迭代、Huginn 仅 coda 后一次、TaH2-fixed 每次迭代加 M−1 次 updater）与原文一致。初稿“每层调 LM Head”已修正为“每次迭代”，“相同 M”改为“相同 ceiling”；固定深度更贵一句标为推断。",
+            "block_index": 11,
+            "source_quote": "Standard has one backbone pass and one LM head per token."
+          },
+          {
+            "assessment": "核对数字：6,402 步、128 序列、三个 epoch、20–24%、1.87 倍、2.01 倍、2.00 倍均与原文一致。初稿“实测数据”不准确，原文是 evaluate these expressions，已改为公式评估；并注明按表格反算 $M=2$ 的标签占比约 19.5%，接近原文 20% 下界。归因“自适应深度”标为推断。",
+            "block_index": 12,
+            "source_quote": "Table 10 evaluates these expressions for all 1.7B models, each trained for 6,402 steps of 128 sequences (three epochs)."
+          },
+          {
+            "assessment": "核对 Table 10：单位 $10^{18}$、Fwd.+bwd. 报告 3 倍 forward、Label 列仅 TaH2 有值，均正确；逐行核对 Total 与倍数（62.8+15.2≈78.1→1.87 倍等）自洽。初稿“随 M 增大优势扩大”与 M=4 的 2.73 倍 vs 4.03 倍一致，但已注明是公式评估而非 wall-clock 实测，并补充 TaH2 在 M=8 时总成本已高于固定深度基线这一原文未强调的事实。",
+            "block_index": 13,
+            "source_quote": "Table 10: Training FLOPs $( 1 0 ^ { 1 8 } )$ of the 1.7B post-training runs, split into the terms of Equation 21."
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 26,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐项核对：(1) 教师候选、同 prompt、学生为 Qwen3-1.7B-Base (Standard)、identical training recipe、32K/temperature 0.6/top-p 0.95 均与原文一致；(2) 初稿漏写 topk 20，已在批注中补全，属事实完整性修正；(3) 原文为 “by 1.63 and 1.80 points”，初稿写作 “高 1.63% / 高 1.80%”，单位口径不准确，已改为“个百分点 (points)”；(4) 初稿“统计显著性意义”与“输出分布过于复杂/与学生容量不匹配”在原文中无对应表述，原文亦未报告显著性检验或方差，已标注为推断/待证；(5) “挑战更大教师更好的直觉”为外部解读，保留但标注为推断。结论方向（8B 教师最优、故采用 8B）与原文完全一致。",
+            "block_index": 1,
+            "source_quote": "We compare Qwen3-8B, Qwen3-32B and Qwen3-235B-A22B as teachers, using responses generated from the same prompts. We fine-tune Qwen3-1.7B-Base (Standard) on each response set with an identical training recipe and evaluate with a 32K output limit, temperature 0.6, top-p 0.95 and topk 20. The 8B teacher yields the highest mean student accuracy on AIME24–26 (Table 11), exceeding the 32B and 235B teachers by 1.63 and 1.80 points, respectively. We therefore use Qwen3-8B as the teacher for all main experiments."
+          },
+          {
+            "assessment": "逐数字核对：三行 Mean 的算术平均正确（(11.04+13.02+11.87)/3=11.98；(9.69+11.98+9.38)/3=10.35；(10.42+9.90+10.21)/3=10.18），与正文差值 1.63（11.98−10.35）和 1.80（11.98−10.18）自洽；avg@32 与 32K output-token limit 有 caption 原文支撑，初稿引用正确。修正项：初稿“确保长思维链推理不被截断”与“具有统计显著性意义”均无原文依据（未报告截断率、方差或显著性检验），已改为推断并写明证据边界；同时补充“该表仅支撑 8B 教师在本设置下最优，不支持更大教师普遍更差”的范围限定。",
+            "block_index": 2,
+            "source_quote": "Table 11: AIME accuracy (%) for Qwen3-1.7B-Base students trained on responses from different teachers. All evaluations use avg@32 and a 32K output-token limit.\n<table><tr><td>Teacher</td><td>AIME24</td><td>AIME25</td><td>AIME26</td><td>Mean</td></tr><tr><td>Qwen3-8B</td><td>11.04</td><td>13.02</td><td>11.87</td><td>11.98</td></tr><tr><td>Qwen3-32B</td><td>9.69</td><td>11.98</td><td>9.38</td><td>10.35</td></tr><tr><td>Qwen3-235B-A22B</td><td>10.42</td><td>9.90</td><td>10.21</td><td>10.18</td></tr></table>"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 27,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐项核对：(1) 实验条件「$M=8$ checkpoint、推理上限 4 或 12、不重训练」与原文一致；(2) 「下降 2.7–3.1 点」「深度增加 20–27%」逐字对应原文，批注未改写数字，且批注另用表内 16.3/17.9/14.5 → 13.6/15.1/11.4 与 2.22 → 2.72 做了交叉验算，与该范围自洽；(3) 结论措辞核对为「neither breaks the model nor improves it beyond the trained ceiling」，即不崩也不涨。已相对初稿修正两处超出证据的表述：把「甚至可能引入噪声或冗余」降级为待证推断（原文未分析额外步数的内容），把「这证实了……被封顶」改为「可被本表直接支撑的是堆深度无法带来超出训练上限的收益」，因果机制标为未证；并补充原文未报告方差这一缺失，说明「essentially unchanged」是原文定性陈述而非等价性检验结论。",
+            "block_index": 1,
+            "source_quote": "We evaluate the M = 8 checkpoint with the inference ceiling lowered to 4 or raised to 12, without retraining. Table 12 reports AIME24–26 accuracy and mean realized depth. Lowering the ceiling to 4 reduces accuracy by 2.7–3.1 points across AIME24–26. Raising it to 12 leaves accuracy essentially unchanged while increasing mean depth by 20–27%. Additional depth at inference therefore neither breaks the model nor improves it beyond the trained ceiling."
+          },
+          {
+            "assessment": "核对表头与统计口径：批注中「avg@32」「Avg. 为 AIME24–26 均值」「上半组为各训练上限下的参照模型」均与 caption 逐字一致，属原文可支撑的事实性描述；批注据此标注表格未报告方差或置信区间，这一缺失可由 caption 与表体可核实（表中无方差/CI 列），作为统计稳健性的待证提醒，未虚构任何数值。",
+            "block_index": 2,
+            "source_quote": "Table 12: Effects of changing the inference depth ceiling. M denotes the training ceiling; the upper group provides reference models evaluated at their training ceilings. Accuracy (%) uses avg@32; Avg. is the mean across AIME24–26."
+          },
+          {
+            "assessment": "核对表内全部数字并修正初稿的实质性错误：初稿称 $M=8$ 配推理上限 4 的 Avg. 13.4「接近 $M=2$ 的水平」，但表中 $M=2$ 的 Avg. 为 15.5，两者相差 2.1 点，该表述不成立；已改为「低于 $M=4$ 的 15.8、也低于 $M=2$ 的 15.5，仅高于 Standard 的 12.0」。Standard 12.0 → $M=8$ 上限 8 的 16.2（差 4.2 点）、Mean depth 2.22→2.72、$M=2/4/8$ 的 15.5/15.8/16.2 与 1.23/1.49/2.22 等引用数字与表中一致，保留。第 2 条把「$M$ 增大导致性能提升」降级为趋势观察（三行来自分别训练的模型，无单变量控制与显著性检验）；第 4 条「表征失配」与该行 Mean depth 1.55 的解释均已标为推断，非表中证据。",
+            "block_index": 2,
+            "source_quote": "<table><tr><td>Model</td><td>Inference ceiling</td><td>AIME24</td><td>AIME25</td><td>AIME26</td><td>Avg.</td><td>Mean depth</td></tr><tr><td>Standard</td><td>1</td><td>11.0</td><td>13.0</td><td>11.9</td><td>12.0</td><td>1.00</td></tr><tr><td>TaH2 (M = 2)</td><td>2</td><td>15.7</td><td>16.5</td><td>14.3</td><td>15.5</td><td>1.23</td></tr><tr><td>TaH2 (M = 4)</td><td>4</td><td>16.3</td><td>16.9</td><td>14.2</td><td>15.8</td><td>1.49</td></tr><tr><td>TaH2 (M = 8)</td><td>4</td><td>13.6</td><td>15.1</td><td>11.4</td><td>13.4</td><td>1.55</td></tr><tr><td>TaH2 (M = 8)</td><td>8</td><td>16.3</td><td>17.9</td><td>14.5</td><td>16.2</td><td>2.22</td></tr><tr><td>TaH2 (M = 8)</td><td>12</td><td>16.9</td><td>17.2</td><td>14.5</td><td>16.2</td><td>2.72</td></tr></table>"
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 29,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐字核对该段的三项主张：(1) TaH2 两个变体损失低于 Standard——\"Both TaH2 variants maintain lower loss than Standard\"，支持；(2) 迭代深度增加带来进一步下降——\"with greater iteration depth yielding further reductions\"，支持；(3) 自适应 TaH2 最终损失最低——\"adaptive TaH2 attaining the lowest final loss\"，支持。修正项：初稿附加的\"模型容量或优化路径对训练稳定性的影响\"在该段中无任何对应文字，属超出证据的推断，已改为推断/待证标记。另确认该段不含数值、误差或显著性，故初稿未声称有具体数字是正确的，但也因此不能得出改进幅度结论。",
+            "block_index": 1,
+            "source_quote": "Figure 8 shows validation loss throughout post-training at 1.7B. Both TaH2 variants maintain lower loss than Standard, with greater iteration depth yielding further reductions and adaptive TaH2 attaining the lowest final loss."
+          },
+          {
+            "assessment": "核对该图 block 的 caption 字面：图题确为后训练期间 1.7B 的验证损失；插图给出相对 Standard 的最终损失差值，负值表示改进——初稿两处表述均与 caption 一致，予以保留。修正/限定项：初稿\"该图展示了验证损失曲线\"的\"曲线\"形态无法由已提供信息核验（未获得图片视觉信息），已在批注中明确写成未验证；caption 未提供差值数值，故\"改进幅度\"不可判定，也已在批注中标为待证。初稿原有的“仅依据 caption 描述，未获取图像视觉细节”的免责声明属实，保留。",
+            "block_index": 2,
+            "source_quote": "![](images/371a4cb806ef34e14c73b2738dbc2ee27acda2d90e688ef035c62ce7f810c969.jpg)  \nFigure 8: Validation loss during post-training at 1.7B. Insets show final loss differences from Standard; negative values indicate improvements."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 30,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对数字与条件：六个数学基准、9 个输出 token 截断档位（4K/6K/8K/12K/16K/20K/24K/28K/32K）、与 Figure 4b 采样网格一致，均逐字来自原文，保留。修正点：初稿把“控制变量一致性”和“旨在探究性能边界”写成实验目的；原文只声明采样网格匹配，未说明目的或结论，已改为推断/待证表述。",
+            "block_index": 1,
+            "source_quote": "Figure 9 shows test-time scaling on each of the six math benchmarks. We use output-token cutoffs of 4K, 6K, 8K, 12K, 16K, 20K, 24K, 28K and 32K, matching the sampling grid of Figure 4b."
+          },
+          {
+            "assessment": "核对图注主张：1.7B、六个数学基准、每 panel 比较 Standard 与 TaH2、TaH2 写作 M∈{2,4,8}、同样 9 个截断档位、深色至 16K 浅色至 32K，均来自 caption。修正点：初稿将 M 解释为并行采样数/聚合规模且下结论称 TaH2 有鲁棒性或增益，caption 未定义 M、未给结果趋势，且未提供图片视觉信息；已删去这些断言并标注为待证。",
+            "block_index": 2,
+            "source_quote": "Figure 9: Per-benchmark test-time scaling on the six math benchmarks at 1.7B. Each panel compares Standard with TaH2 at $M \\in \\{ 2 , 4 , 8 \\}$ using the same nine output-token cutoffs as Figure 4b. Dark segments extend through 16K and light segments through 32K."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 31,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对了 draft 对 block_index 1 的性质判断。draft 称“本段（虽仅标题，但结合上下文推断）”，与原文不符：该块是含完整方法协议与结果的实质段落（标题实为 block_index 0）。据此重写批注，改为具体拆解并行采样 + majority voting 的机制，并删去 draft 中未在原文出现的“置信度加权”“验证器筛选”“结果同步延迟”等无依据猜测。机制描述（采样多条 response、多数投票聚合）有逐字原文支撑。",
+            "block_index": 1,
+            "source_quote": "Test-time compute can also scale in parallel, by sampling several responses and aggregating them with majority voting."
+          },
+          {
+            "assessment": "逐字核对了两个准确率数字与比较条件：TaH2（$M = 2$）在 $n = 32$ 为 27.3%，Standard 为 21.9%，比较发生在 matched FLOPs 下；draft 完全未提及这些数字，属实质遗漏，已补齐并给出差值约 5.4 个百分点的算术结果。原文引文中“$n = 3 2$”含 MinerU 抽取造成的空格，批注按 $n = 32$ 理解并已注明该排版现象；27.3% / 21.9% 的具体数值未作改动。",
+            "block_index": 1,
+            "source_quote": "TaH2 at $M = 2$ reaches 27.3% at $n = 3 2$ compared with 21.9% for Standard, and its curve stays above every fixed-depth baseline at matched FLOPs."
+          },
+          {
+            "assessment": "核对协议与成本记账：不放回抽取 n 条、对随机抽取取平均、FLOPs = n × 单条平均成本，均有逐字原文支撑，批注据此明确“等 FLOPs 而非等样本数”的比较前提。由 32 条记录、不放回抽 n=32 推出“n=32 等于用尽全部记录、无抽样方差”已在批注中标为推断而非原文陈述；$M=2$ 的含义与并行同步开销亦标为待证/未讨论，避免超出证据。",
+            "block_index": 1,
+            "source_quote": "we vote over n of the 32 recorded full-length responses, drawn without replacement and averaged over random draws, and count decoding FLOPs as n times the mean per-response cost."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 32,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐项核对数字与范围：2.46→1.29（OlympiadBench）、3.31→1.04（HumanEval）与原文一致，且原文限定为 across the displayed spans，初稿与修正稿均保留了该限定。核对因果强度：原文为 These cases suggest（基于三条被采样正确响应的提示性推断），初稿的“证实了”属过度断言，已改为提示性表述。核对方法条件：原文结论仅来自 three sampled correct responses，未含错误样本或统计检验，已在批注中明确。修正超出证据的机制推断：初稿将“自然语言阶段”等同于“抽象规划/高层规划”并称其“消耗更多计算资源”、符号操作“更轻量”，原文只描述 iteration depth 的深浅，未建立深度与规划层级或计算开销的对应，已标注为待证推断。保留每个实质段落的批注，未因修正而删除批注内容。",
+            "block_index": 1,
+            "source_quote": "Figure 11 shows iteration depths in three sampled correct responses. The math and code examples show a clear shift from deeper natural-language reasoning to shallower mathematical expressions and final code. Mean depth falls from 2.46 to 1.29 in OlympiadBench and from 3.31 to 1.04 in HumanEval across the displayed spans."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 33,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对“数字/条件/研究性质”三项。数字与条件：确认原文为“三个代表性头”“$M = 8$”“100 条随机验证序列”“teacher forcing”，且额外含一个初稿遗漏的关键条件“retaining the decider’s actual routes”。研究性质：原文动词是 “examine”，整段是对既有模型 TaH2 的注意力行为做检查，初稿却称本段介绍“Cross-Iteration Attention 模块的设计动机与基本机制”，并补充“允许当前迭代 Query 关注历史迭代 Key/Value”“解决迭代间信息丢失或不一致”，这些模块设计与动机表述在原文中不存在，已在本批注中删除并标注为超出证据；同时补入“保留实际路由”这一控制条件，并明确该段无任何定量统计。",
+            "block_index": 1,
+            "source_quote": "We examine three representative heads of TaH2 (M = 8) on 100 randomly sampled validation sequences under teacher forcing, retaining the decider’s actual routes."
+          },
+          {
+            "assessment": "核对“因果/结论强度/推断边界”。原文只给出定性描述 “distinct preferences”，对应三种偏好类型（第一迭代状态、后续迭代状态、两者兼有），Figure 13 的范围限定为“前 128 个 response 位置”并“保留原始上下文”，初稿未提及该范围限定，已补入。原文未做任何因果归因或性能效果断言，故已将初稿“预期能提升生成结果的一致性和质量”“稳定生成过程”等表述判为不支持并移除。此外，decider、routes 的具体含义以及“三个头”的代表性选取标准本段均未交代，已在批注中标为推断待证，未替原文补写机制细节；本核对仅基于所给原文文本，未做任何外部检索或元数据核验。",
+            "block_index": 1,
+            "source_quote": "For queries at iteration 8, Figure 12 shows distinct preferences for first-iteration states, later-iteration states, or both. Figure 13 visualises these patterns over the first 128 response positions with the original context preserved."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 34,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对了 $c_t^{(m)}$、$m_t$、$a_t^{(m)}$、$c_t^{(0)}=1$ 与 $\\delta_t^{(m)} = \\ell_t^{(\\bar{m})} - \\ell_t^{(m+1)}$ 的逐项表述，并核对“标签每 batch 重算、不决定该次前向 routes”与“no-gradient lookahead 提供停止 token 的 next-iteration loss”。修改：初稿将 $\\bar{m}$ 释为“最大深度”并写成 $\\bar{\\ell}_t^{(m+1)}$，原文为 $\\ell_t^{(\\bar{m})}$ 且本节未定义 $\\bar{m}$，已改为待证；“第 $m+1$ 次”已标为推断。",
+            "block_index": 1,
+            "source_quote": "Continuation labels and gain coverage. The continue target $c _ { t } ^ { ( m ) }$ indicates whether token t should execute another iteration, whereas $m _ { t }$ records how many iterations token t executes under the current decider. As in Section 4.2, $a _ { t } ^ { ( m ) } = \\mathbf { 1 } [ m _ { t } \\geq m ]$ records whether supervised token t executes iteration m. These labels are recomputed from the current backbone on every training batch and do not determine the routes used in that forward pass. We initialise $c _ { t } ^ { ( 0 ) } = 1$ for every supervised token and compute the loss reduction $\\delta _ { t } ^ { ( m ) } = \\ell _ { t } ^ { ( \\bar { m } ) } - \\ell _ { t } ^ { ( m + 1 ) }$ as in Equation 5. For a token that stops, a no-gradient lookahead supplies its next-iteration loss.\n\n",
+            "source_quote_id": "s34:b1:p0"
+          },
+          {
+            "assessment": "核对 Figure 10 caption 的坐标、$n=1,\\ldots,32$、one model family per panel、Standard 参考等要素，与初稿描述一致。界限说明：未获得图片视觉信息，caption 未给具体家族名与数值，初稿“验证了提升及成本效益”的结论性表述已改为推断。",
+            "block_index": 2,
+            "source_quote": "![](images/9abe8dfd1dcf54a43c588ecaa6a9497a727dfe04912f427187ebba1b35a5588a.jpg)  \nFigure 10: Parallel test-time scaling: mean AIME24–26 cons@n versus decoding FLOPs per problem for $n = 1 , \\ldots , 3 2$ , one model family per panel with Standard for reference.\n\n",
+            "source_quote_id": "s34:b2:p0"
+          },
+          {
+            "assessment": "核对三个数据集名、Darker shading 含义、mean depths refer to the displayed spans，以及 sampled correct responses 的限定。修改：删去/标注初稿“揭示不同任务或 token 位置需求差异”这一 caption 未陈述的推断，并保留“span 限定”这一原文条件。",
+            "block_index": 3,
+            "source_quote": "![](images/83b4877716bcfa8406b2a9afc480c4b46e5ea5f605e84b77a6d3e8df15862de7.jpg)  \nFigure 11: Token-level iteration depth in sampled correct responses from OlympiadBench, HumanEval and GPQA. Darker shading indicates more iterations; mean depths refer to the displayed spans.\n\n",
+            "source_quote_id": "s34:b3:p0"
+          },
+          {
+            "assessment": "核对 query iteration 8、三个 head、100 sequences 均值、sample-level 一个标准差、序列内先对 query 平均。修改：初稿“说明深层迭代可能更关注早期或特定阶段的中间表示”超出 caption 证据，已标为待证并提示删除。",
+            "block_index": 4,
+            "source_quote": "![](images/e31384108a81bc08005d2f2ef98bd2c96655f994cbf37620999b0d5708f810a5.jpg)  \nFigure 12: Attention mass by key iteration for three representative heads at query iteration 8. Bars show means over 100 sequences; error bars indicate one sample-level standard deviation. Queries are averaged within each sequence first.\n\n",
+            "source_quote_id": "s34:b4:p0"
+          },
+          {
+            "assessment": "核对聚合条件 $a_t^{(m)}=1$ 与 $c_t^{(m-1)}=1$、跨 data-parallel ranks、排序式 $\\delta_{[1]}^{(m)} \\geq \\cdots \\geq \\delta_{[n]}^{(m)} \\gt 0$、$[i]$ 与 $n$ 的定义。修改：把初稿“计划继续”修正为“上一轮迭代被标记为继续”，并补出“仅取正增益”与“跨 rank 聚合”。",
+            "block_index": 5,
+            "source_quote": "At iteration $m ,$ collect the positive gains of tokens with $a _ { t } ^ { ( m ) } = 1$ and $c _ { t } ^ { ( m - 1 ) } = 1$ across dataparallel ranks and sort them as $\\delta _ { [ 1 ] } ^ { ( m ) } \\geq \\cdots \\geq \\delta _ { [ n ] } ^ { ( m ) } > 0$ , where [i] denotes gain rank and n is the number of positive gains. The coverage cutoff is\n\n",
+            "source_quote_id": "s34:b5:p0"
+          },
+          {
+            "assessment": "逐符号核对 Eq. 24 的 $i_{\\mathrm{cov}}$ 取最小 $i$、累积和达 $\\rho$ 倍总正增益、$\\delta_{\\mathrm{cut}}^{(m)} = \\delta_{[i_{\\mathrm{cov}}]}^{(m)}$。初稿“自适应阈值、非固定阈值”属合理推断，已按原文 $\\rho$ 定义保留并注明其统计范围为跨 rank 全局集合。",
+            "block_index": 6,
+            "source_quote": "$$\ni _ { \\mathrm { c o v } } = \\operatorname* { m i n } \\Big \\{ i : \\sum _ { i ^ { \\prime } = 1 } ^ { i } \\delta _ { [ i ^ { \\prime } ] } ^ { ( m ) } \\geq \\rho \\sum _ { i ^ { \\prime } = 1 } ^ { n } \\delta _ { [ i ^ { \\prime } ] } ^ { ( m ) } \\Big \\} , \\qquad \\delta _ { \\mathrm { c u t } } ^ { ( m ) } = \\delta _ { [ i _ { \\mathrm { c o v } } ] } ^ { ( m ) } .\\tag{24}\n$$\n\n",
+            "source_quote_id": "s34:b6:p0"
+          },
+          {
+            "assessment": "核对“含并列”“$\\rho$ 是总正增益比例而非 token 比例”，以及例外分支原文为 set $\\delta_{\\mathrm{cut}}^{(m)} = 0$ only for weight computation 且该轮及之后所有迭代赋零 continue 标签。修改：纠正初稿“权重设为极小值并标记停止”，指出 $\\delta_{\\mathrm{cut}}=0$ 代入 Eq. 25 后权重为 $\\mathrm{clip}(|\\delta_t^{(m)}|,10^{-6},1)$，并保留 only for weight computation 限定。",
+            "block_index": 7,
+            "source_quote": "Equation 6 assigns continue labels to gains at or above this cutoff, including ties. Thus $\\rho$ specifies a fraction of total positive gain, not a fraction of tokens. As an exception to Equation $^ { 6 , }$ if there are no positive gains, we set $\\delta _ { \\mathrm { c u t } } ^ { ( m ) } = 0$ only for weight computation and assign zero continue labels at this and all later iterations.\n\n",
+            "source_quote_id": "s34:b7:p0"
+          },
+          {
+            "assessment": "核对原文明确的范围限定“For tokens with $a_t^{(m)}=1$”对应 per-token 权重定义。修改：初稿只标“标题/过渡”，已补充该适用范围这一复现必要条件。",
+            "block_index": 8,
+            "source_quote": "Cost-sensitive weights. For tokens with $a _ { t } ^ { ( m ) } = 1$ , the per-token weights are\n\n",
+            "source_quote_id": "s34:b8:p0"
+          },
+          {
+            "assessment": "逐项核对 Eq. 25 的两分支：$c_t^{(m-1)}=1$ 时 $\\mathrm{clip}(|\\delta_t^{(m)}-\\delta_{\\mathrm{cut}}^{(m)}|,10^{-6},1)$，否则 $10^{-6}$。修改（关键）：初稿“显著高于截断值权重更大”只对一半，绝对差意味着越远离截断值（两侧）权重越大，已纠正。",
+            "block_index": 9,
+            "source_quote": "$$\nw _ { t } ^ { ( m ) } = \\left\\{ \\begin{array} { l l } { \\mathrm { c l i p } \\Big ( | \\delta _ { t } ^ { ( m ) } - \\delta _ { \\mathrm { c u t } } ^ { ( m ) } | , 1 0 ^ { - 6 } , 1 \\Big ) , } & { c _ { t } ^ { ( m - 1 ) } = 1 , } \\\\ { 1 0 ^ { - 6 } , } & { c _ { t } ^ { ( m - 1 ) } = 0 . } \\end{array} \\right.\\tag{25}\n$$\n\n",
+            "source_quote_id": "s34:b9:p0"
+          },
+          {
+            "assessment": "核对下界作用为保留 cutoff 附近与已停 token 的小监督权重、上界限制大 loss changes 影响、以及标签/cutoff/权重反传视为常数。修改：初稿“限制极端大增益”应改为 loss changes；对“防止梯度消失/数值问题”“避免循环依赖或二阶导数”标注为推断。",
+            "block_index": 10,
+            "source_quote": "The fixed lower bound preserves a small supervision weight near the cutoff and for tokens already labelled to stop; the upper bound limits the influence of large loss changes. Labels, cutoffs and weights are treated as constants during backpropagation.\n\n",
+            "source_quote_id": "s34:b10:p0"
+          },
+          {
+            "assessment": "核对统计范围 $a_t^{(m)}=1$、跨 data-parallel ranks 汇总、$\\beta^{(m)}$ 为 stop-to-continue 计数比、任一类缺失置 1。修改：初稿“数量比”方向不明，已明确为 stop 数除以 continue 数；“通常 Stop 远多于 Continue”原文未陈述，已标为待证；并纠正“最终 BCE”为 Eq. 7 中 BCE 的显式形式。",
+            "block_index": 11,
+            "source_quote": "Class balancing and joint loss. At each iteration, we count stop and continue labels among tokens with $a _ { t } ^ { ( m ) } = 1$ , pooling counts across data-parallel ranks. The positive-class balancing weight $\\beta ^ { ( m ) }$ is their stop-to-continue count ratio; it is set to one if either class is absent. The BCE in Equation 7 is therefore\n\n",
+            "source_quote_id": "s34:b11:p0"
+          },
+          {
+            "assessment": "逐项核对 Eq. 26：$\\beta^{(m)}$ 只乘在 $c_t^{(m)}=1$ 的 continue 项上，另一项为 $(1-c_t^{(m)})\\log(1-g_t^{(m)})$。初稿加权位置与公式一致；其“防止模型总预测停止”的动机说明原文未陈述，已标为推断。",
+            "block_index": 12,
+            "source_quote": "$$\n\\mathrm { B C E } \\Big ( g _ { t } ^ { ( m ) } , c _ { t } ^ { ( m ) } \\Big ) = - \\beta ^ { ( m ) } c _ { t } ^ { ( m ) } \\log g _ { t } ^ { ( m ) } - ( 1 - c _ { t } ^ { ( m ) } ) \\log ( 1 - g _ { t } ^ { ( m ) } ) .\\tag{26}\n$$\n\n",
+            "source_quote_id": "s34:b12:p0"
+          },
+          {
+            "assessment": "核对“coverage cutoff 与 class-balancing weights 每 batch 计算”与“clipping bounds 在实验中固定”。与初稿一致；补充说明 cutoff 的 batch 级口径需与 Block 5 的跨 rank 聚合一致理解，动态/静态超参划分已写明。",
+            "block_index": 13,
+            "source_quote": "The coverage cutoff and class-balancing weights are calculated from each batch, with the clipping bounds above fixed throughout the experiments.\n\n",
+            "source_quote_id": "s34:b13:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 35,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对该句声称的分组与实际小标题是否一致。原文确实声明四类，但附录正文实际出现六个小标题，且没有独立 serving 小节，'adaptive depth' 也未成为独立小节。初稿直接复述四维度而不指出这一落差，已改为：以实际小标题为准，首句分类是作者的粗略归并。",
+            "block_index": 1,
+            "source_quote": "This section extends Section 2, grouped by test-time compute, recurrent design, adaptive depth and serving."
+          },
+          {
+            "assessment": "核对初稿把“候选间搜索（如过程奖励模型）”写入本段。原文本段只有序列内控制与 overthinking 两点，候选间内容在下一段（block 4），属跨段并入，已删除；同时把“为自适应停止或并行流提供动机”明确标为阅读者推断，而非原文声明。",
+            "block_index": 2,
+            "source_quote": "Test-time scaling. Token-based scaling further differs in how it controls reasoning length and selects candidates. Within a sequence, online confidence adjusts reasoning budgets (Li et al., 2026c), while analyses of overthinking show that longer chains are not uniformly better (Wu et al., 2025b)."
+          },
+          {
+            "assessment": "逐项核对初稿对图注的转述：列=heads、行=key iterations、对数色标、灰色=无执行 query 的位置，均与 caption 一致。但初稿的“冗余计算或收敛行为”“随迭代深入模型内部状态演变”超出 caption 与已提供材料，且本次未获得图像视觉信息，已删除并写明界限；另补记该图在附录中的位置疑似排版错位（标为推断）。",
+            "block_index": 3,
+            "source_quote": "Figure 13: Attention maps for the same heads, with columns indexing heads and rows indexing key iterations. Each query position is averaged over sequences that reach iteration 8. All panels share a logarithmic colour scale; grey marks positions with no executed queries. Prompt keys are omitted without renormalising attention."
+          },
+          {
+            "assessment": "核对方法名与遗漏项。原文为 process-reward search，初稿写成“过程奖励模型”，已更正；初稿漏记 call-count 研究关于额外 LLM 调用回报非单调的结论，已补。另核对 ParScale 的 'instead' 指向前述潜在空间方法，原文未声明本文为串行递归，初稿的串行/并行对立已改为标注为推断。",
+            "block_index": 4,
+            "source_quote": "Across candidates, process-reward search (Guan et al., 2025), likelihood-based sampling (Karan & Du, 2025) and effort-aware sample scheduling (Chen et al., 2026c) guide exploration; call-count studies examine the non-monotone returns of additional LLM calls (Chen et al., 2024)."
+          },
+          {
+            "assessment": "核对循环架构三组对比是否与原文一致：共享变换、跨块携带状态、Loopies 重复单层（而非中间块或全栈）、Pondering 嵌入回喂、CoT Former 额外 token，均逐字对应。初稿关于“理论探讨表达力与内存需求”的转述与原文相符，未作修改，仅补全 recursive reasoner 的多条引用。",
+            "block_index": 5,
+            "source_quote": "Universal Transformers share transformations across depth (Dehghani et al., 2019), whereas block-recurrent Transformers carry recurrent state across sequence blocks (Hutchins et al., 2022)."
+          },
+          {
+            "assessment": "核对 SMELT 的匹配条件：原文含三项（per-token FLOPs、total non-embedding parameters、KV cache），初稿只写“FLOPs 和 KV cache”，已补全；并补上“为 looped 与 non-looped MoE 分别拟合”这一关键限定。同时核对 Parcae 固定 unique parameter count 而允许 effective depth 与 per-token computation 增长，初稿漏后半项，已补。",
+            "block_index": 6,
+            "source_quote": "SMELT matches per-token FLOPs, total non-embedding parameters and KV cache, then fits separate pretraining scaling laws for looped and non-looped MoE models (Wang et al., 2026b)."
+          },
+          {
+            "assessment": "核对该句是原文的设定区分，初稿表述为“区分训练深度和推理深度”方向正确但略含糊，已改写为“训练时增大深度”与“执行超出训练所见的迭代”。另核对 readout 分析一条（per-loop supervision 只约束暴露给 readout 的状态变量）在初稿中缺失，已补；本文实验设定（增大训练最大迭代深度、Appendix B.2 考察超出该深度的推理）与原文末句一致，保留。",
+            "block_index": 7,
+            "source_quote": "Increasing the depth used during training and executing more iterations than were seen during training are distinct settings."
+          },
+          {
+            "assessment": "核对输出聚合部分的方法归属：原文列的是 PonderLM-3、Adaptive Latent CoT、Adaptive Loops and Memory 三者，初稿把后两者压缩成“Adaptive Loops”，已恢复原引用。TaH2 的 input injection、跨已执行深度混合输出分布、最终深度吸收剩余停止质量三点与原文一致；本段未给实现细节与数值，批注中已注明需回方法正文核实。",
+            "block_index": 8,
+            "source_quote": "PonderLM-3 weights hidden states by predicted depth probabilities (Li et al., 2026a); Adaptive Latent CoT and Adaptive Loops and Memory use halting probabilities to combine intermediate states (Zeng et al., 2026; Frey et al., 2026)."
+          },
+          {
+            "assessment": "核对该句与 TaH 的对照（TaH 用离线 mismatch 标签在单独阶段训练 decider）是否被初稿准确转述，结论为一致；但初稿漏记 DND 的 routing regularisation 与 target selection ratios，已补；也漏记 upcycling into MoE/更深模型的类比，已补。初稿把 TaH2 称为“本文的 TaH2”，本段未显式声明，已降级为推断并说明依据来自附录上下文。",
+            "block_index": 9,
+            "source_quote": "TaH2 instead jointly adapts the backbone and decider using online supervision of iteration gains."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 35,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "核对初稿对 Block 10 的方法归属与因果强度。初稿把 ZEDA 描述为\"通过零专家注入和自蒸馏改变激活模式\"，与原文 zero-expert injection and self-distillation 一致；\"其可视化显示数学/代码比自然语言消耗更少计算，揭示了内容类型与算力分配的关联\"与原文 reduced computation for mathematical expressions and code fragments relative to natural-language reasoning 及 relating compute allocation to response content 一致，未越界为因果。初稿\"层内专家选择\"对应原文 selects experts for each token。改动很小：明确指出宽度/深度分类源自原文自身措辞（Along width / Along depth），并把\"是否互补\"明确定性为原文未讨论的开放问题（推断）。未发现数字或引用对象错误。",
+            "block_index": 10,
+            "source_quote": "Along width, sparse MoE routing selects experts for each token (Fedus et al., 2022); ZEDA further varies expert activation through zero-expert injection and self-distillation (Lv et al., 2026). Its token-level visualisations show reduced computation for mathematical expressions and code fragments relative to natural-language reasoning, relating compute allocation to response content."
+          },
+          {
+            "assessment": "核对初稿关于 gate collapse 的两项表述并作纠正。初稿称\"尤其在联合训练或特定目标下\"：原文条件仅为 under particular objectives and training settings，未提 joint training，joint training 在原文中只用于描述 TaH2 的在线目标推导，故删除\"联合训练\"这一条件。初稿称其为\"普遍风险\"：原文为 has been reported，被报告对象为 Ouro、Recur-Trace、retrofitted 模型，且作者仅在 post-training 下自述观察到 Ouro Stage I（Appendix A.2.1），证据范围有限，改为\"已在若干模型与设置下被报告\"。另将\"TaH2……旨在解决上述静态预测或分离训练的局限性\"标为推断，因原文只陈述 TaH2 的在线推导与联合训练做法，未声明该动机。同时补入初稿遗漏的受控诊断工作（Popescu et al., 2026b），并保留\"固定最大深度优于自适应停止\"的原文限定语（hierarchical recurrent models 的特定 settings）。",
+            "block_index": 11,
+            "source_quote": "Gate collapse has been reported for Ouro, Recur-Trace and retrofitted models (Zhu et al., 2025; Wang et al., 2026c; Shapiro, 2026) under particular objectives and training settings, and we observe it for Ouro’s Stage I in our post-training setting (Appendix A.2.1)."
+          },
+          {
+            "assessment": "核对初稿关于评估设定与 CHASE 定位的主张。初稿写\"本文后续实验需验证其方法在实际部署中的墙钟时间收益\"，与原文相反：本文声明以 decoding FLOPs 为 primary metric，并已用 depth-batched engine 验证 throughput（Section 5.2），已改为\"主指标是 decoding FLOPs，吞吐量另用 depth-batched engine 验证\"。CHASE 定位亦纠正：原文为 adapts training to the missing states left by skipped iterations under early exit，属训练侧适配缺失状态，初稿将其当作\"高效调度算法\"的例子属误读。初稿\"内存碎片化或同步开销\"在原文无对应文字，属外部推断，已删除。另将\"核心手段\"改为\"原文列出的手段\"，因原文未对 continuous depth batching、cross-loop parallelism、KV 共享或压缩做重要性排序。",
+            "block_index": 12,
+            "source_quote": "We report decoding FLOPs as the primary metric and verify throughput with a depth-batched engine (Section 5.2)."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      }
+    ],
+    "final": {
+      "verdict": "corrected",
+      "checks": [
+        {
+          "target": "readme",
+          "claim": "在 AIME 基准上准确率–计算斜率提升 53%（2.74 vs 1.79），匹配算力下超基线峰值约 3.4 分",
+          "section_index": 1,
+          "block_index": 1,
+          "source_quote_id": "s1:b1:p1",
+          "assessment": "摘要原文明确给出 \"TaH2 improves the accuracy–compute slope by 53% (2.74 vs. 1.79) over the non-looped baseline\" 以及 \"exceeding the baseline's peak accuracy by about 3.4 points at matched test-time compute\"，README 的核心贡献 3 与该片段数值、条件（matched test-time compute 对应『匹配算力』）一致。draft 中的「首次超越」为原文所无，已在最终稿删除，属纠正。",
+          "source_quote": "els indicating whether further iteration improves the prediction. TaH2 improves both the efficiency and attainable accuracy of test-time scaling. On challenging AIME benchmarks, TaH2 improves the accuracy–compute slope by 53% (2.74 vs. 1.79) over the non-looped baseline, exceeding the baseline’s peak accuracy by about 3.4 points at matched test-time compute. As the maximum iteration depth increases, existing looped models largely plateau, while TaH2’s gain over the non-looped baseline continues to grow from +2.8 points at depth 2 to +3.9 points at depth 8.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "增益随最大迭代深度 $M$ 从 2 增至 8 而持续扩大（+2.8 → +3.9）",
+          "section_index": 3,
+          "block_index": 6,
+          "source_quote_id": "s3:b6:p0",
+          "assessment": "原文贡献第三条写明 \"As the maximum iteration depth increases from 2 to 8, its gain over Standard grows from +2.8 points to +3.9 points\"，且限定在 AIME（Figure 1b）。README 保留该限定，未把该增幅外推到全部十个基准（后者是 +2.9 → +4.8），避免范围混淆。",
+          "source_quote": "• Improved Test-Time and Depth Scaling. On challenging AIME benchmarks, TaH2 yields a steeper accuracy–compute slope than Standard and achieves about 3.4 points higher accuracy at matched compute when Standard plateaus. As the maximum iteration depth increases from 2 to 8, its gain over Standard grows from +2.8 points to +3.9 points.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "但作者指出实际服务中仍取得更好的测试时扩展与更高可达精度",
+          "section_index": 7,
+          "block_index": 17,
+          "source_quote_id": "s7:b17:p0",
+          "assessment": "原文 Section 5.2 称 TaH2 增加 22% 每 token 解码 FLOPs 与 30–34% 端到端延迟，\"it still achieves better test-time scaling and higher attainable accuracy in actual serving (Figure 5)\"。README 同段落同时给出 Table 2 的 1.30–1.34× 延迟与 0.71–0.74× 吞吐，为原文表格数据，无夸大。",
+          "source_quote": "Runtime efficiency and real-world test-time scaling. We serve all models with an extended Mini-SGLang engine that batches requests at different iteration depths in a shared forward pass (Appendix A.3). Although TaH2 adds 22% decoding FLOPs per token and 30–34% end-to-end latency relative to Standard (Table 2), it still achieves better test-time scaling and higher attainable accuracy in actual serving (Figure 5).\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "训练 FLOPs 高于标准 SFT（M=8 时为 Standard 的 5.17 倍）",
+          "section_index": 24,
+          "block_index": 13,
+          "source_quote_id": "s24:b13:p1",
+          "assessment": "该片段为 Table 10 表尾，M=8 行给出 164.2 / 52.0 / 216.2 与 vs. Standard 5.17×，与正文 Appendix A.4.3 对同一表的解读一致；\"高于标准 SFT\" 对应 Conclusion 的 Limitations。label lookahead 占 20–24% 来自同节正文 s24:b12:p0，README 两处数字分别有据。",
+          "source_quote": "114.3</td><td>2.73×</td></tr><tr><td>8</td><td>164.2</td><td>52.0</td><td>216.2</td><td>5.17×</td></tr></table>\n\n"
+        },
+        {
+          "target": "insight.method",
+          "claim": "通过lookahead depth supervision在线生成深度标签（指示继续迭代是否降低预测损失），用cost-sensitive BCE监督每次深度决策",
+          "section_index": 3,
+          "block_index": 5,
+          "source_quote_id": "s3:b5:p0",
+          "assessment": "原文贡献第二条为 \"jointly post-trains the backbone and an iteration decider, directly supervising depth decisions with online labels indicating whether further iteration improves prediction\"，cost-sensitive 监督见 Section 4.2 与 Eq. 7。insight.method 的表述与原文一致，未把「与推理一致的 on-policy 深度选择」误写成「消除 train–inference mismatch」（后者在 README Q&A 中已标注为批读提醒）。",
+          "source_quote": "• Adaptive Looped Post-training. We propose TaH2, which jointly post-trains the backbone and an iteration decider, directly supervising depth decisions with online labels indicating whether further iteration improves prediction.\n\n"
+        },
+        {
+          "target": "insight.findings",
+          "claim": "现有循环模型斜率更陡(2.12-2.27 vs 1.79)但同算力下精度更低",
+          "section_index": 5,
+          "block_index": 8,
+          "source_quote_id": "s5:b8:p0",
+          "assessment": "原文给出三个循环模型斜率 2.12 / 2.27 / 2.26 对 Standard 1.79，并明确 \"Yet all three remain less accurate than Standard over the overlapping compute range\"。insight 中的区间 2.12-2.27 覆盖固定深度 Ouro 的 2.12 到自适应 Ouro 的 2.27（Huginn 2.26 落在区间内），与原文一致。",
+          "source_quote": "Results. Fixed-depth Ouro, adaptive Ouro and Huginn yield slopes of 2.12, 2.27 and 2.26 accuracy points per compute doubling, versus 1.79 for Standard (Figure 1a), suggesting larger accuracy gains from latent computation as test-time compute increases. Yet all three remain less accurate than Standard over the overlapping compute range; the exit gate lowers Ouro’s decoding cost but does not close the gap. Recurrence has proven effective in pretraining, as in Ouro and Huginn, but our results point to a gap when it is introduced only in post-training:\n\n"
+        },
+        {
+          "target": "insight.findings",
+          "claim": "52.3%(Ouro)/33.5%(Huginn)的token额外迭代后变化极小",
+          "section_index": 5,
+          "block_index": 10,
+          "source_quote_id": "s5:b10:p0",
+          "assessment": "原文 Section 3.2 写明 \"For Ouro and Huginn, respectively, 52.3% and 33.5% of tokens change by at most 10^-3 while 21.7% and 15.9% become worse\"。insight 的『变化极小』对应原文阈值 10^-3，未把两个模型的数字互调，也未添加原文没有的因果解释。",
+          "source_quote": "Analysis and motivation. To examine how fixeddepth iteration affects individual tokens, we compare next-token losses after the first and final iterations on the validation set. Figure 3 shows the loss reduction from iterations 1 → 2 for Ouro and 1 → 3 for Huginn. Both distributions concentrate near zero, and a substantial fraction of tokens obtain worse prediction loss after the additional iterations. For Ouro and Huginn, respectively, 52.3% and 33.5% of tokens change by at most $1 0 ^ { - 3 }$ while 21.7% and 15.9% become worse by more than this threshold.\n\n"
+        },
+        {
+          "target": "insight.data",
+          "claim": "1.7B用Qwen3-8B重生成的273K prompts后训练",
+          "section_index": 7,
+          "block_index": 4,
+          "source_quote_id": "s7:b4:p0",
+          "assessment": "Table 5.1 Training setup 原文：\"we use 273K prompts with responses regenerated by Qwen3-8B\"，教师选择理由指向 Appendix B.1 的下游学生准确率。insight.data 另述 4B/8B 用 Qwen3-235B-A22B 原始回复，对应 Appendix A.1.2 的 s16:b2:p0。",
+          "source_quote": "Training setup. Training data combine math, code and QA prompts from AM-Qwen3-Distilled (am-team, 2025) with tool use samples from Nemotron-Agentic-v1 (NVIDIA, 2025). For the experiments in Section 5.2, we use 273K prompts with responses regenerated by Qwen3-8B, the bestperforming teacher in our comparison of downstream student accuracy (Appendix B.1). We train for three epochs with a 16,384-token context, totalling 3.4B training tokens. Section 5.3 uses the original responses generated by Qwen3-235B-A22B and fixes the training budget at TPP = 2 tokens per parameter for every model size. A validation set of 1,000 samples randomly drawn from the training mixture is used for loss and token-level analyses.\n\n"
+        },
+        {
+          "target": "insight.limitations",
+          "claim": "仅在SFT下研究，未扩展至RL或on-policy蒸馏",
+          "section_index": 8,
+          "block_index": 2,
+          "source_quote_id": "s8:b2:p0",
+          "assessment": "Conclusion 的 Limitations 原文：\"Our method is studied only under SFT; we leave its extension to on-policy distillation and reinforcement learning for future work.\" insight 忠实转述，并把它归入作者自述局限而非本批读的独立评测结论。",
+          "source_quote": "Limitations. (1) TaH2 incurs more training FLOPs than standard SFT (Appendix A.4.3). But note that post-training requires substantially less compute than pretraining, making TaH2 a practical way to add adaptive depth to existing models. (2) Our method is studied only under SFT; we leave its extension to on-policy distillation and reinforcement learning for future work.\n\n"
+        },
+        {
+          "target": "insight.research_question",
+          "claim": "循环Transformer在输出token预算增大时，能否改善准确率-计算量缩放规律？",
+          "section_index": 2,
+          "block_index": 1,
+          "source_quote_id": "s2:b1:p0",
+          "assessment": "Introduction 原文：\"These comparisons do not establish whether looping improves accuracy– compute scaling as output-token budgets increase.\" insight 的第一个研究问题即该句的中文转述；第二个问题来自同节 \"This motivates our central question\" 指向的中心问题标题（s3:b0:p0）。",
+          "source_quote": "Test-time scaling improves language model reasoning by spending additional inference compute (Jaech et al., 2024; Guo et al., 2025; Snell et al., 2024). This computation can support longer chains of thought in token space (Muennighoff et al., 2025), or repeated applications of shared layers in latent space, as in looped transformers (Dehghani et al., 2019; Geiping et al., 2025a; Zhu et al., 2025). Parameter sharing makes additional depth possible without increasing model size, but each iteration still incurs decoding cost. Prior scaling studies compare looped and non-looped models at matched parameter counts or per-token FLOPs (Prairie et al., 2026; Schwethelm et al., 2026b; Wang et al., 2026b). These comparisons do not establish whether looping improves accuracy– compute scaling as output-token budgets increase. We study this question through post-training, a practical way to introduce recurrence into pretrained LLMs without training a looped model from scratch (McLeish et al., 2025; "
+        },
+        {
+          "target": "insight.relevance",
+          "claim": "为循环Transformer的测试时自适应计算提供实用后训练方案",
+          "section_index": 3,
+          "block_index": 1,
+          "source_quote_id": "s3:b1:p0",
+          "assessment": "该判定有原文依据：Section 4 指出固定深度迭代在每个 token 上浪费算力，TaH2 通过 token 级深度分配改进测试时扩展；Introduction 亦称 post-training 是把递归引入预训练 LLM 的实用方式。但 \"对推理期动态计算分配、latent space scaling 及高效推理部署有直接参考价值\" 属本批读的推断性评价，原文未做部署层面的外推，已在 README 的改进建议中标注为批读推断。",
+          "source_quote": "Fixed-depth iteration spends extra compute on every token, although many tokens gain little or even get worse (Section 3.2). Ouro’s adaptive exit gate improves compute efficiency, but not enough to surpass Standard. We introduce TaH2 to improve test-time scaling by learning which tokens benefit from additional iterations and allocating depth accordingly. The backbone and an iteration decider are jointly post-trained through lookahead depth supervision: depth labels are derived online from changes in prediction loss, and a cost-sensitive loss supervises each depth decision (Figure 2). Unlike TaH’s staged training with offline mismatch labels (Fu et al., 2025b), TaH2 supervises depth decisions using actual iteration gains measured on the current backbone throughout training. In addition, an updater provides input injection between iterations (Geiping et al., 2025a), and stopping probabilities weight the predictions across executed depths (Zeng et al., 2026).\n\n"
+        }
+      ],
+      "correction_attempts": 0
+    }
+  },
+  "source_sha256": "fe8f122c87ca8dfa6ccf540077f3b9ebd334368bd282138b789ebca8cf554919",
+  "source_chars": 112217,
+  "read_chars": 112217,
+  "sections": [
+    {
+      "title": "IMPROVING TEST-TIME SCALING WITH ADAPTIVE LOOPED TRANSFORMERS",
+      "path": "sections/00-section.md"
+    },
+    {
+      "title": "ABSTRACT",
+      "path": "sections/01-section.md"
+    },
+    {
+      "title": "1 INTRODUCTION",
+      "path": "sections/02-section.md"
+    },
+    {
+      "title": "How to post-train looped LLMs to outperform non-looped LLMs at the same test-time compute?",
+      "path": "sections/03-section.md"
+    },
+    {
+      "title": "2 RELATED WORK",
+      "path": "sections/04-section.md"
+    },
+    {
+      "title": "3 TEST-TIME SCALING OF CURRENT LOOPED TRANSFORMERS",
+      "path": "sections/05-section.md"
+    },
+    {
+      "title": "4 TAH2: POST-TRAINING ADAPTIVE LOOPED MODELS",
+      "path": "sections/06-section.md"
+    },
+    {
+      "title": "5 EXPERIMENTS",
+      "path": "sections/07-section.md"
+    },
+    {
+      "title": "6 CONCLUSION",
+      "path": "sections/08-section.md"
+    },
+    {
+      "title": "AI USE STATEMENT",
+      "path": "sections/09-section.md"
+    },
+    {
+      "title": "ETHICS STATEMENT",
+      "path": "sections/10-section.md"
+    },
+    {
+      "title": "REPRODUCIBILITY STATEMENT",
+      "path": "sections/11-section.md"
+    },
+    {
+      "title": "REFERENCES",
+      "path": "sections/12-section.md"
+    },
+    {
+      "title": "A ADDITIONAL EXPERIMENT SETUPS",
+      "path": "sections/13-section.md"
+    },
+    {
+      "title": "A.1 TRAINING RECIPE",
+      "path": "sections/14-section.md"
+    },
+    {
+      "title": "A.1.1 HYPER-PARAMETERS",
+      "path": "sections/15-section.md"
+    },
+    {
+      "title": "A.1.2 TRAINING DATA",
+      "path": "sections/16-section.md"
+    },
+    {
+      "title": "A.2 ARCHITECTURE AND BASELINE DETAILS",
+      "path": "sections/17-section.md"
+    },
+    {
+      "title": "A.2.1 ARCHITECTURE DEFINITIONS",
+      "path": "sections/18-section.md"
+    },
+    {
+      "title": "A.2.2 ARCHITECTURE SUMMARY AND PARAMETER COUNTS",
+      "path": "sections/19-section.md"
+    },
+    {
+      "title": "A.3 EVALUATION PROTOCOL",
+      "path": "sections/20-section.md"
+    },
+    {
+      "title": "A.4 COMPUTE ACCOUNTING",
+      "path": "sections/21-section.md"
+    },
+    {
+      "title": "A.4.1 PRELIMINARIES",
+      "path": "sections/22-section.md"
+    },
+    {
+      "title": "A.4.2 DECODING FLOPS",
+      "path": "sections/23-section.md"
+    },
+    {
+      "title": "A.4.3 TRAINING FLOPS",
+      "path": "sections/24-section.md"
+    },
+    {
+      "title": "B ADDITIONAL EXPERIMENTAL RESULTS",
+      "path": "sections/25-section.md"
+    },
+    {
+      "title": "B.1 TEACHER SELECTION",
+      "path": "sections/26-section.md"
+    },
+    {
+      "title": "B.2 INFERENCE DEPTH OUTSIDE THE TRAINING CEILING",
+      "path": "sections/27-section.md"
+    },
+    {
+      "title": "C ADDITIONAL ANALYSIS",
+      "path": "sections/28-section.md"
+    },
+    {
+      "title": "C.1 VALIDATION LOSS DURING POST-TRAINING",
+      "path": "sections/29-section.md"
+    },
+    {
+      "title": "C.2 PER-BENCHMARK TEST-TIME SCALING",
+      "path": "sections/30-section.md"
+    },
+    {
+      "title": "C.3 PARALLEL TEST-TIME SCALING",
+      "path": "sections/31-section.md"
+    },
+    {
+      "title": "C.4 TOKEN-LEVEL DEPTH ALLOCATION",
+      "path": "sections/32-section.md"
+    },
+    {
+      "title": "C.5 CROSS-ITERATION ATTENTION",
+      "path": "sections/33-section.md"
+    },
+    {
+      "title": "D FULL FORMULATION OF LOOKAHEAD DEPTH SUPERVISION",
+      "path": "sections/34-section.md"
+    },
+    {
+      "title": "E ADDITIONAL RELATED WORK",
+      "path": "sections/35-section.md"
+    }
+  ],
+  "skill_sha256": "ee7f8825c3ad31536f83796acedb40bce9e574a3de951ec7161608b24d211c77",
+  "extracted_metadata": {
+    "title": "IMPROVING TEST-TIME SCALING WITH ADAPTIVE LOOPED TRANSFORMERS"
+  },
+  "input_metadata": {
+    "arxiv_id": "2609.35748",
+    "authors": "",
+    "source_url": "https://arxiv.org/abs/2609.35748",
+    "title": "(AI 精读中…)",
+    "year": ""
+  },
+  "pipeline_version": 3,
+  "reading_fingerprint": "6582c9da1a6606dfe854d847c970866a723a5fa3a615be2d04464d2f4b8fce78"
+}
