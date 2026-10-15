@@ -1998,7 +1998,7 @@
               "field": "insight.limitations"
             }
           ],
-          "id": "paper129-final-depth-token-release-20261015-v1",
+          "id": "paper130-final-depth-token-release-20261015-v1",
           "notice": "Codex 离线抽查纠正，非原模型自动核验结论；仅纠正深度上限与停止权重、token比例概括、资源发布状态三项，不代表全文质量合格。",
           "original_checkpoint_sha256": "3f75208defcc6c8b52c3de0766df3387778cab8c59c25e5970b0d5c692fe1458",
           "original_data_sha256": "db5f716faa822089905f46ca3ec62ff74aa9215e17da7d7b21716cb7e33ae226",
