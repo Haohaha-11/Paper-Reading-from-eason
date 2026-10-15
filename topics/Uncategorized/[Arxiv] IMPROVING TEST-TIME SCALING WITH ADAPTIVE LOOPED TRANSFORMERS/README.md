@@ -13,7 +13,7 @@
 2. **TaH2 方法**：把 lookahead depth supervision 用于骨干与 iteration decider 的联合后训练，深度标签在线由当前骨干的预测损失变化导出；训练时的深度选择规则与推理一致（on-policy），而不是全深度训练后再推理早退。
 3. **量化收益**：在 AIME 基准上准确率–计算斜率提升 53%（2.74 vs 1.79），匹配算力下超基线峰值约 3.4 分；增益随最大迭代深度 $M$ 从 2 增至 8 而持续扩大（+2.8 → +3.9）。
 4. **跨规模与跨领域**：4B / 8B 上平均 +3.2 / +2.4 分，AIME 单点最高 +6.9 / +4.4 分；代码、QA、工具使用基准亦有正增益（Table 3）。
-5. **token 级证据**：额外迭代对多数 token 无益——Ouro 52.3%、Huginn 33.5% 的 token 损失变化不超过 $10^{-3}$，21.7% / 15.9% 反而变差（Section 3.2, Figure 3）。
+5. **token 级证据**：大量 token 在额外迭代后收益很小或变差——Ouro 52.3%、Huginn 33.5% 的 token 损失变化不超过 $10^{-3}$，21.7% / 15.9% 反而变差（Section 3.2, Figure 3）。
 
 ## 📖 批读导航
 
@@ -76,13 +76,16 @@
 
 ```mermaid
 flowchart TD
-    A["输入: Prompt + 已生成 token"] --> B["首轮 backbone: 用 token embedding"]
-    B --> C{"decider 输出继续概率 g"}
-    C -->|"g 小于 0.5: 停止"| D["记录该深度停止权重"]
-    C -->|"g 不小于 0.5: 继续"| E["updater 重注入 embedding"]
-    E --> F["下一轮 backbone 迭代"]
-    F --> C
-    D --> G["停止权重对各深度预测加权求和"]
+    A["输入: Prompt + 已生成 token"] --> B["首轮 backbone: 用 token embedding；m=1"]
+    B --> L{"当前深度 m 达到上限 M？"}
+    L -->|"是：强制停止"| D["停止；最后已执行迭代吸收剩余概率质量"]
+    L -->|"否"| C{"decider 输出继续概率 g"}
+    C -->|"g 小于 0.5: 停止"| D
+    C -->|"g 不小于 0.5: 继续"| W["本轮停止权重为 (1-g) 乘此前各轮继续概率之积"]
+    W --> E["updater 重注入 embedding"]
+    E --> F["m 加 1，执行下一轮 backbone"]
+    F --> L
+    D --> G["停止权重对全部已执行深度的预测加权求和"]
     G --> H["输出: next-token 概率分布"]
     style C fill:#f9f,stroke:#333
     style H fill:#9f9,stroke:#333

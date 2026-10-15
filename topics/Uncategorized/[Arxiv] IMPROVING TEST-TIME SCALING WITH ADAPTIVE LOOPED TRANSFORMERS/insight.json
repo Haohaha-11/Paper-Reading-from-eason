@@ -15,7 +15,7 @@
   "data": "基座模型Qwen3-{1.7B,4B,8B}-Base；1.7B用Qwen3-8B重生成的273K prompts后训练；4B/8B用Qwen3-235B-A22B原始回复；评测覆盖AIME24-26、AMC23、MATH500、OlympiadBench、GPQA、SuperGPQA、HumanEval、MBPP、LiveCodeBench v6、BFCL v3等。",
   "evidence_level": "full_text",
   "findings": "现有循环模型斜率更陡(2.12-2.27 vs 1.79)但同算力下精度更低。TaH2将AIME斜率提升53%(2.74 vs 1.79)，匹配算力下超Standard峰值约3.4分；增益随深度M=2→8从+2.8增至+3.9分；4B/8B及代码、QA、工具使用上均有效。52.3%(Ouro)/33.5%(Huginn)的token额外迭代后变化极小。",
-  "limitations": "训练FLOPs高于标准SFT(M=8时为Standard的5.17倍)；仅在SFT下研究，未扩展至RL或on-policy蒸馏；端到端延迟增加(batch=1为1.34×)，吞吐降至0.71×；未报告方差或显著性检验；代码/checkpoint承诺发表后发布但尚未实际公布。",
+  "limitations": "训练FLOPs高于标准SFT(M=8时为Standard的5.17倍)；仅在SFT下研究，未扩展至RL或on-policy蒸馏；端到端延迟增加(batch=1为1.34×)，吞吐降至0.71×；未报告方差或显著性检验；文中承诺发表时发布训练/评测代码、配置和checkpoint；当前发布状态本次未外部核验。",
   "method": "提出TaH2：在post-training设定下联合训练Transformer骨干与iteration decider。通过lookahead depth supervision在线生成深度标签（指示继续迭代是否降低预测损失），用cost-sensitive BCE监督每次深度决策；updater在迭代间做input injection，stopping probabilities对各深度预测加权。",
   "method_type": "自适应计算 / 循环Transformer后训练",
   "relevance": "为循环Transformer的测试时自适应计算提供实用后训练方案，解决固定深度迭代浪费算力的问题。对推理期动态计算分配、latent space scaling及高效推理部署有直接参考价值。",
