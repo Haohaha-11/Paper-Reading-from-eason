@@ -6,9 +6,9 @@
 > 从论文原文出发，沉淀机制理解、实验证据、研究边界与可复用问题。
 
 [![Topics](https://img.shields.io/badge/Topics-20-2563eb?style=flat-square)](./topics/)
-[![Paper Notes](https://img.shields.io/badge/Paper%20Notes-131-0f766e?style=flat-square)](./topics/)
-[![Annotated Sections](https://img.shields.io/badge/Annotated%20Sections-889-7c3aed?style=flat-square)](./topics/)
-[![Source PDFs](https://img.shields.io/badge/Source%20PDFs-130-d97706?style=flat-square)](./topics/)
+[![Paper Notes](https://img.shields.io/badge/Paper%20Notes-132-0f766e?style=flat-square)](./topics/)
+[![Annotated Sections](https://img.shields.io/badge/Annotated%20Sections-917-7c3aed?style=flat-square)](./topics/)
+[![Source PDFs](https://img.shields.io/badge/Source%20PDFs-131-d97706?style=flat-square)](./topics/)
 ![Language](https://img.shields.io/badge/Notes-中文旁批-e11d48?style=flat-square)
 
 这是我的个人文献阅读与研究积累仓库。它不是简单的 paper list，也不是把摘要重新改写一遍；目标是把每篇论文转化为可追溯、可比较、可继续追问的研究材料：
@@ -57,12 +57,13 @@ flowchart LR
 
 ### 2026-10-15 · 阅读管线升级与新批读
 
-HaOceanLab 的 AI 精读改为 Qwen3.8-Flash 逐段批注 → DeepSeek-V4.1-Flash 对照原文复核 → Qwen3.8-Max 全文综合，批注改为写给读者的短注（标题 + 1–3 句）。本轮新增 4 篇全文批读，暂放在 Uncategorized，归入研究主线后移动目录即可。
+HaOceanLab 的 AI 精读改为 Qwen3.8-Flash 逐段批注 → DeepSeek-V4.1-Flash 对照原文复核 → Qwen3.8-Max 全文综合，批注改为写给读者的短注（标题 + 1–3 句）。读完的论文现在会按已有研究主题自动归档：本轮 5 篇中 4 篇已归入对应 topic，RSI-Anything 暂留 Uncategorized 等人工确认。
 
-- [SpatialASM: Internalizing Active Mentalization for Spatial Reasoning](./topics/Uncategorized/%5BArxiv%202026%5D%20SpatialASM-%20Internalizing%20Active%20Mentalization%20for%20Spatial%20Reasoning/README.md)（[arXiv 2610.13832](https://arxiv.org/abs/2610.13832)）
-- [HLA-WM: Hybrid Linear Attention for Long-Horizon Video World Models](./topics/Uncategorized/%5BArxiv%202026%5D%20HLA-WM-%20Hybrid%20Linear%20Attention%20for%20Long-Horizon%20Video%20World%20Models/README.md)（[arXiv 2610.05739](https://arxiv.org/abs/2610.05739)）
-- [IMPROVING TEST-TIME SCALING WITH ADAPTIVE LOOPED TRANSFORMERS](./topics/Uncategorized/%5BArxiv%5D%20IMPROVING%20TEST-TIME%20SCALING%20WITH%20ADAPTIVE%20LOOPED%20TRANSFORMERS/README.md)（[arXiv 2609.35748](https://arxiv.org/abs/2609.35748)）
-- [RSI-Anything: Unlocking Recursive Self-Improvement with World Models](./topics/Uncategorized/%5BArxiv%5D%20RSI-Anything-%20Unlocking%20Recursive%20Self-Improvement%20with%20World%20Models/README.md)（[arXiv 2610.13912](https://arxiv.org/abs/2610.13912)）
+- [OPENWAM: An Open Framework for Composable World-Action Models](./topics/VLA/%5BArxiv%202026%5D%20OPENWAM-%20An%20Open%20Framework%20for%20Composable%20World-Action%20Models/README.md)（[arXiv 2610.07922](https://arxiv.org/abs/2610.07922)，归入 VLA）
+- [SpatialASM: Internalizing Active Mentalization for Spatial Reasoning](./topics/VLM-Bottleneck-Analysis-and-Method-Design/long-reasoning/%5BArxiv%202026%5D%20SpatialASM-%20Internalizing%20Active%20Mentalization%20for%20Spatial%20Reasoning/README.md)（[arXiv 2610.13832](https://arxiv.org/abs/2610.13832)，归入 VLM-Bottleneck-Analysis-and-Method-Design / long-reasoning）
+- [HLA-WM: Hybrid Linear Attention for Long-Horizon Video World Models](./topics/attention/%5BArxiv%202026%5D%20HLA-WM-%20Hybrid%20Linear%20Attention%20for%20Long-Horizon%20Video%20World%20Models/README.md)（[arXiv 2610.05739](https://arxiv.org/abs/2610.05739)，归入 attention）
+- [IMPROVING TEST-TIME SCALING WITH ADAPTIVE LOOPED TRANSFORMERS](./topics/TTT%20in%20LLM/%5BArxiv%5D%20IMPROVING%20TEST-TIME%20SCALING%20WITH%20ADAPTIVE%20LOOPED%20TRANSFORMERS/README.md)（[arXiv 2609.35748](https://arxiv.org/abs/2609.35748)，归入 TTT in LLM）
+- [RSI-Anything: Unlocking Recursive Self-Improvement with World Models](./topics/Uncategorized/%5BArxiv%5D%20RSI-Anything-%20Unlocking%20Recursive%20Self-Improvement%20with%20World%20Models/README.md)（[arXiv 2610.13912](https://arxiv.org/abs/2610.13912)，待归类）
 
 ### 2026-08-28 · VLA
 
@@ -113,13 +114,13 @@ HaOceanLab 的 AI 精读改为 Qwen3.8-Flash 逐段批注 → DeepSeek-V4.1-Flas
 
 | Topic | 论文 | 研究重点 |
 |---|---:|---|
-| [VLM Bottleneck Analysis and Method Design](./topics/VLM-Bottleneck-Analysis-and-Method-Design/README.md) | 17 | encoding、grounding、visual invocation、reward 与 multi-image bottleneck |
-| [TTT in LLM](./topics/TTT%20in%20LLM/README.md) | 13 | test-time training、memory、context adaptation 与在线更新 |
+| [VLM Bottleneck Analysis and Method Design](./topics/VLM-Bottleneck-Analysis-and-Method-Design/README.md) | 18 | encoding、grounding、visual invocation、reward 与 multi-image bottleneck |
+| [TTT in LLM](./topics/TTT%20in%20LLM/README.md) | 14 | test-time training、memory、context adaptation 与在线更新 |
 | [Latent-Space Processing](./topics/Latent-Space-Processing/README.md) | 4 | latent reasoning、cache augmentation 与 CoT compression |
 | [Continuous Latent Language Modeling](./topics/Continuous-Latent-Language-Modeling/README.md) | 2 | 连续潜空间语言建模与非离散推理 |
 | [Video VLM](./topics/video-VLM/README.md) | 1 | 流式视频理解与边看边推理 |
-| [Attention](./topics/attention/%5BArxiv%5D%201706.03762/README.md) | 1 | Attention 机制的基础原理与可复用直觉 |
-| [VLA](./topics/VLA/README.md) | 2 | 双臂生成数据与 sim-to-real、VLA backbone–action-head 模块化、generalist 训练与统一评测 |
+| [Attention](./topics/attention/%5BArxiv%5D%201706.03762/README.md) | 2 | Attention 机制的基础原理与可复用直觉 |
+| [VLA](./topics/VLA/README.md) | 3 | 双臂生成数据与 sim-to-real、VLA backbone–action-head 模块化、generalist 训练与统一评测 |
 
 ### Agent、优化与研究实践
 
@@ -129,9 +130,9 @@ HaOceanLab 的 AI 精读改为 Qwen3.8-Flash 逐段批注 → DeepSeek-V4.1-Flas
 | [GRPO](./topics/GRPO/README.md) | 1 | Group Relative Policy Optimization 与 Agentic RL |
 | [Tech Reports](./topics/Tech-repoorts/README.md) | 5 | 前沿模型技术报告、训练配方与系统能力 |
 | [Rebuttal](./topics/Rebuttal/README.md) | 2 | 论文论证、审稿回应与研究主张边界 |
-| [Uncategorized](./topics/Uncategorized/README.md) | 4 | 阅读完成、尚未归入研究主线的论文；归类后移入对应 topic |
+| [Uncategorized](./topics/Uncategorized/README.md) | 1 | 阅读完成、尚未归入研究主线的论文；归类后移入对应 topic |
 
-**合计：20 个 topic，131 份论文笔记，889 个批读 section。**
+**合计：20 个 topic，132 份论文笔记，917 个批读 section。**
 
 ## 一篇完整批读包含什么
 
