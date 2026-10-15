@@ -1,0 +1,31 @@
+{
+  "citation_refs": [
+    "[6] World Models（Ha & Schmidhuber）",
+    "[7] Dreamer: Mastering diverse control tasks through world models",
+    "[8] MuZero: planning with a learned model",
+    "[9] JEPA-Anything",
+    "[10-12] JEPA 系列（I-JEPA / V-JEPA / V-JEPA 2）",
+    "[13] 免疫世界模型与免疫科学应用",
+    "[21] RLAnything",
+    "[22] LabHorizon",
+    "[47] ReactionT5"
+  ],
+  "core_rank": 0,
+  "data": "CodeContests、APPS、LiveCodeBench v6（代码修复）；MiniWoB++ click-checkboxes、OSWorld（GUI 交互）；LabHorizon F200（实验室规划）；Suzuki–Miyaura 反应筛选（化学优化）；端到端免疫科学应用。",
+  "evidence_level": "full_text",
+  "findings": "代码修复（coder 固定）成功率从静态验证器 26.3% 升至预测选择 29.2% 及适配后 31.2%，在线测试用量相当；GUI 任务完成率提升且平均动作数降 39.4%；实验室规划跨 5 个策略版本从 21.80% 增至 46.01%；化学优化同预算下平均最佳产率 96.15% 优于贝叶斯优化的 82.16%。",
+  "limitations": "缺乏单一任务内策略与世界模型持续互促的联合多轮评估；实验室结果仅覆盖协议对齐规划，物理执行可靠性未验证；化学结果限于两个 Suzuki–Miyaura 筛选；免疫学治疗假设待实验测试；跨域指标口径不统一，部分结果为点估计、缺少方差与显著性报告。",
+  "method": "提出 RSI-Anything 框架：基于 JEPA-Anything 预测性世界模型指导动作与学习数据选择；外部反馈驱动策略/工作流改进并条件触发世界模型适配；通过组件检查与兼容性检查决定更新的策略-模型配对能否被保留，形成递归闭环。",
+  "method_type": "框架设计 / 系统架构（领域通用递归自我改进框架，含形式化机制与门控保留协议）",
+  "relevance": "为智能体递归自我改进提供领域通用框架，把预测性世界模型显式纳入更新-保留闭环；适用于代码生成、GUI 自动化、科学实验规划与发现等需高效利用有限反馈的场景（该应用场景推广为推断）。",
+  "research_question": "如何在外部反馈昂贵且策略与世界模型双向耦合的条件下，实现递归自我改进（RSI），使单轮经验产生的更新被保留并塑造后续交互与学习？",
+  "themes": [
+    "递归自我改进",
+    "预测性世界模型",
+    "JEPA",
+    "策略-模型协同演化",
+    "组件兼容性检查",
+    "智能体",
+    "科学发现"
+  ]
+}

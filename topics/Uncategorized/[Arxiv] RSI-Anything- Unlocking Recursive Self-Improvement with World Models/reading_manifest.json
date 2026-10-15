@@ -1,0 +1,1489 @@
+{
+  "provider": "bailian",
+  "model": "qwen3.8-flash",
+  "kind": "paper",
+  "stage_models": {
+    "annotations": "qwen3.8-flash",
+    "synthesis": "qwen3.8-max",
+    "verifier": "deepseek-v4.1-flash"
+  },
+  "verification": {
+    "status": "reviewed",
+    "model": "deepseek-v4.1-flash",
+    "scope": "模型对照原文的独立复核；引文位置由程序校验，不代表外部事实得到独立证实",
+    "batches": [
+      {
+        "section_index": 0,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对对象：初稿在 block 1 的批注内容。原文该块实为作者名单，而初稿批注写的是“标题明确点出核心贡献”“传统 LLM 在缺乏环境反馈闭环时的局限”“构建内部模拟环境来弥补缺口”，既与块内容错配，也在原文中找不到任何依据，属超出证据的推断。已改为仅陈述可见事实：11 位作者、1–8 机构上标、4 位带 `*` 的通讯作者；机构与贡献留待 Appendix A，明确标注为未提供、不可推断。",
+            "block_index": 1,
+            "source_quote": "Taoyong Cui<sup>1,2</sup> Pinxian Zeng<sup>3</sup> Wanghan Xu<sup>4</sup> Hao Xiao<sup>5</sup> Shuhan Xue<sup>1</sup> Qiang Gao<sup>5</sup> Wanli Ouyang<sup>2</sup> Pheng Ann Heng<sup>2,\\*</sup> Zhenfei Yin<sup>1,6,\\*</sup> Yingcheng Wu<sup>1,7,\\*</sup> Ling Yang<sup>1,8,\\*</sup>"
+          },
+          {
+            "assessment": "核对对象：初稿在 block 2 的批注“作者字段为空可能意味着元数据缺失或匿名评审阶段”。原文该块是代码与模型的资源标识，不含作者字段，该因果推断建立在不存在的文本上，不能成立。已改为说明两点事实：代码/模型统一命名为 RSI-Anything；本段未给实际 URL 与平台，链接有效性与模型规模不可由本段确认（待核）。",
+            "block_index": 2,
+            "source_quote": "Code: RSI-Anything | Models: RSI-Anything"
+          },
+          {
+            "assessment": "核对对象：初稿在 block 3 的批注“状态标记为‘AI 精读中’，表明该条目处于动态更新过程”。原文该块是通讯作者与机构归属指引，“AI 精读中”来自应用侧元数据 title 字段，并非论文正文，属于把外部状态当作论文内容。已改为对应 block 1 的 `*` 标记，说明通讯作者与机构信息统一置于 Appendix A；并声明本段不含方法/实验信息。",
+            "block_index": 3,
+            "source_quote": "Corresponding authors. Author affiliations and correspondence are listed in Appendix A."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 1,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对问题动机表述。初稿写“无需昂贵人工反馈的持续、可控的自我进化”，把 external feedback 直接解释为“人工反馈”并引申出“无需人工反馈”的结论，超出摘要证据：原文只称外部反馈昂贵，未指明反馈来源是人还是环境/模拟器。已改为“外部反馈昂贵”，并标注该引申为推断。另核对框架定位：摘要明确 RSI-Anything 是 ‘a domain-general framework built on JEPA-Anything’，初稿表述与原文一致，保留。",
+            "block_index": 1,
+            "source_quote": "Recursive self-improvement (RSI) aims to transform interaction experience into persistent improvements, yet external feedback is costly and world-model predictions may become unreliable as policies evolve."
+          },
+          {
+            "assessment": "逐项核对数字与条件：26.3%/29.2%/31.2% 与 “with the coder fixed”“at comparable test usage” 均与原文一致，初稿未篡改数值或遗漏前置条件。GUI 部分初稿只写“完成率提升，动作减少 39.4%”，与原文 ‘higher task completion’ + ‘average actions decrease by 39.4%’ 相符；原文未给出 GUI 具体完成率，故在批注中明确提示不得补造百分比。",
+            "block_index": 1,
+            "source_quote": "In code repair, with the coder fixed, success increases from 26.3% with a static verifier to 29.2% through predictive selection and 31.2% after world-model adaptation, at comparable test usage. Graphical user interface (GUI) evaluations showed higher task completion, while average actions decrease by 39.4%."
+          },
+          {
+            "assessment": "核对数值与程度词。21.80%→46.01%、5 个连续策略版本、96.15% vs 82.16%、相同 40 次实验预算，均与原文一致。唯一偏差在程度表述：原文为 ‘more than double’（增长超过一倍），初稿“翻倍至”略弱，已更正为“增长超过一倍”。",
+            "block_index": 1,
+            "source_quote": "Across five successive policy versions, laboratory-planning scores more than double from 21.80% to 46.01%. In reaction optimization, RSI-Anything achieves 96.15% mean best observed yield versus 82.16% for Bayesian optimization under the same 40- experiment budget."
+          },
+          {
+            "assessment": "核对遗漏内容。初稿注释与摘要均未提及免疫科学端到端应用，而该句是摘要中明示的第 5 类证据（工作流演化 + 预测建模 → 治疗假设生成），已补入批注，避免低估论文应用范围。同时注明：摘要对“diverse environments”只有笼统表述，兼容性检查判据与域通用边界未交代，属于需回正文/附录核实的待证项，不作断言。",
+            "block_index": 1,
+            "source_quote": "An end-to-end immune-science application further connects workflow evolution and predictive modeling with therapeutic hypothesis generation. These results demonstrate how predictive world models and retained system updates enable recursive improvement across diverse environments."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 2,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对了 RSI 定义与“保留并塑造后续”的递归性条件，以及 [1,2]/[3–5] 两路既有工作，初稿表述与原文一致。修改项：初稿“为引入世界模型做铺垫”在本段无文本支持（本段完全未提世界模型），已标注为结构推断而非本段主张。",
+            "block_index": 1,
+            "source_quote": "Recursive self-improvement (RSI) turns interaction experience into lasting improvements in a system’s ability to act and learn."
+          },
+          {
+            "assessment": "核对 caption 中的“understanding/planning/action selection”“interaction feedback drives policy or workflow updates and conditional world-model adaptation”“component and compatibility checks determine which policy–model pair is retained”，初稿复述准确。边界说明：未获得图片视觉信息，所有描述限定为 caption 可支持的范围，不声称核验了图中连线或子图结构。",
+            "block_index": 2,
+            "source_quote": "Figure 1 | RSI-Anything overview. Building on the cross-domain predictive foundation of JEPA-Anything, RSI-Anything uses world-model predictions to support understanding, planning, and action selection across diverse tasks."
+          },
+          {
+            "assessment": "核实“外部反馈需先执行/评估”这一因果链与“受交互预算限制”的前提，并确认世界模型的三项用途（前瞻评估与规划、排定反馈收集优先级、选择/构造学习数据）与原文一致。补充限定：原文将世界模型定位为“limited external feedback 下的预测基础”，不替代外部监督，初稿未夸大其作用。",
+            "block_index": 3,
+            "source_quote": "Learning from external feedback requires executing or evaluating candidates before their consequences can guide improvement, limiting exploration under constrained interaction budgets."
+          },
+          {
+            "assessment": "逐项核对 OPF 三步骤（分解互补因子—训练专用预测器—重组完整 latent 状态）与跨域预测基础 [9][10–12]，初稿无误。同时核对了关键转折句“prediction alone does not establish recursive improvement”的两个附加条件（预测指导交互、反馈产生持久更新），初稿解读方向正确。",
+            "block_index": 4,
+            "source_quote": "Its orthogonal predictive factorization (OPF) decomposes latent targets into complementary factors, learns dedicated predictors, and recombines their outputs into a complete latent state [9]."
+          },
+          {
+            "assessment": "核对双向耦合的两条因果链是否被准确复述：策略更新→经验分布变化→预测可靠性可能下降；世界模型更新→候选排序/想象轨迹/学习信号变化。修改项：原文要求的动作是“评估变化策略下的预测可靠性并确保保留对能改进后续”，初稿写成“验证兼容性”，把 block 6 的 compatibility checks 提前，已改回原文表述。",
+            "block_index": 5,
+            "source_quote": "Policy updates change the candidate actions and experience distributions on which the world model operates, potentially undermining prediction reliability."
+          },
+          {
+            "assessment": "核对三处机制细节：预测的三个用途、条件式（conditional）而非每轮必做的世界模型适应、以及组件级检查与兼容性检查的分工；初稿的“异步演化 + 双重检查 + 保留对塑造下一轮”概括与原文一致，无夸大。",
+            "block_index": 6,
+            "source_quote": "The policy and world model can evolve asynchronously, with component-level checks evaluating individual updates and compatibility checks determining which policy–model pair is retained."
+          },
+          {
+            "assessment": "核对三个评估问题（候选选择是否改进、保留的更新是否带来进一步增益、是否可在有限反馈下取得）及四个领域名称（代码修复、GUI 交互、物理域规划、实验科学）与免疫科学端到端应用的四个环节，均与原文相符。修改项：删除初稿“暗示了从抽象理论到具体垂直领域的落地能力”这一评价性推断，改为客观转述应用环节。",
+            "block_index": 7,
+            "source_quote": "We investigate these questions across general computational tasks (code repair and GUI interaction), physical-domain planning, and experimental science."
+          },
+          {
+            "assessment": "核对该引导句与后文贡献条目的一一对应关系，确认 block 9/10/11 恰为三条，无遗漏或多余贡献项；初稿批注仅作结构提示，未加入原文没有的主张。",
+            "block_index": 8,
+            "source_quote": "Our contributions are threefold:"
+          },
+          {
+            "assessment": "核对贡献 1 的两个层次：将世界模型集成进 RSI 以预期结果并指导经验收集（工程层），以及把持久改进表述在策略-世界模型系统层级、使演变策略下的预测可靠性成为核心设计要求（概念层）。初稿表述准确，未越出原文。",
+            "block_index": 9,
+            "source_quote": "We formulate persistent improvement at the level of the policy–world-model system, making prediction reliability under evolving policies a central design requirement."
+          },
+          {
+            "assessment": "核对更新-保留链条（预测指导动作/数据选择 → 反馈驱动策略学习或工作流修订 → 条件式世界模型适应 → 双检查决定保留对 → 异步更新）与原文一致。修改项：原文是“linking each accepted system revision to the next round of improvement”，初稿“确保递归循环的有效性”属效果性断言，已回退为“被接受的系统修订承接下一轮”的结构性陈述。",
+            "block_index": 10,
+            "source_quote": "Component and compatibility checks determine which policy–model pair is retained, allowing asynchronous updates."
+          },
+          {
+            "assessment": "核对四项数字/条件主张：coder 固定、相近在线测试用量下的逐次增益、GUI 完成度更高、连续 5 个实验室规划策略版本改进、匹配实验次数下产率高于贝叶斯优化——均与原文一致，且 BO 对比的“matched experiment counts”被保留为效率限定。修改项：初稿“固定 coder 以隔离变量、确保归因于世界模型机制”为推断（原文未说明目的），已明确标注为推断；同时说明“similar usage”是相近而非严格相等。",
+            "block_index": 11,
+            "source_quote": "With the coder fixed, we demonstrate successive gains from introducing world-model-guided selection and adapting the predictor at similar online test usage."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 3,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "三段式回路表述与原文一致，未修改。核对因果链条：预测用于指导选择与反馈收集，经验用于提出并保留更新。修正点：初稿把「只有被执行的候选（B）才产生配对反馈」置于本段，该信息出自 block 3 的 caption，已在批注中标为后文衔接而非本段主张。",
+            "block_index": 1,
+            "claim": "三段式回路表述与原文一致，未修改。",
+            "source_quote": "RSI-Anything uses world-model predictions to guide action selection and feedback collection, then uses the resulting experience to propose and retain system updates (Figure 2)."
+          },
+          {
+            "assessment": "图题块无正文，批注仅依据 caption 描述，未代原文断言图像细节。逐字核对确认本块只有子图题与图片引用；初稿「图中强调了组件检查作为门槛」实为 caption 转述，已标明来源，图像内的箭头与候选 B 画法未获视觉信息、不作断言。",
+            "block_index": 2,
+            "claim": "图题块无正文，批注仅依据 caption 描述，未代原文断言图像细节。",
+            "source_quote": "a. Recursive self-improvement with world models  \n![](images/35a0406ce0f148e8685bc0a5f0ebd5ae5d0bfd5604e2a39d38e12e9d621910fd.jpg)"
+          },
+          {
+            "assessment": "caption 四项机制均有原文依据，未修改。逐句核对：只有被执行候选产生配对反馈、世界模型适应依赖预测可靠性/数据/预算、保留 policy–model 对由组件与兼容性检查决定，均逐字有据；同时明确 2b 的四个领域实例与免疫科学应用未附量化结果，避免把领域覆盖读成性能证据。",
+            "block_index": 3,
+            "claim": "caption 四项机制均有原文依据，未修改。",
+            "source_quote": "Figure 2 | RSI-Anything couples prediction-guided action with retained system updates. a, Building on JEPA-Anything, world-model predictions guide candidate selection for external evaluation. Only the executed candidate (B) yields paired prediction–observation feedback."
+          },
+          {
+            "assessment": "删除了错置于本段的「反馈历史扩展 ≠ 系统修订」，并修正符号。核对本段三条主张（保留对决定后续候选与经验、共享机制三环节、领域实现指定模型/动作编码/读出/通路）均有原文支撑，并保留 Table 4 指向 update scope 的说明；初稿的 θ/φ 区分实际出自 block 10，β 系符号应改回 φ 系。",
+            "block_index": 4,
+            "claim": "删除了错置于本段的「反馈历史扩展 ≠ 系统修订」，并修正符号。",
+            "source_quote": "The retained policy–model pair determines subsequent candidates and the experience available for further improvement. The shared mechanism connects prediction-guided selection, feedback-driven updates, and component and pair acceptance."
+          },
+          {
+            "assessment": "POMDP 类比不属原文主张，已降级；仅保留有据的 adapter 与 verifier 特征。本块领域下标在解析文本中为乱码，可确定的是对单领域任务规范做元组化引出；初稿「典型 POMDP 变体」属外部类比，原文未使用该术语。",
+            "block_index": 6,
+            "claim": "POMDP 类比不属原文主张，已降级；仅保留有据的 adapter 与 verifier 特征。",
+            "source_quote": "the task specification is"
+          },
+          {
+            "assessment": "按 LaTeX 源改正初稿的 β 系误写，并记录 λ_d 与 χ_d 的不一致为待证。逐项核对公式 (1) 符号为 λ_d、S_d、A_d、W_d、V_d、M_d、C_d、B_d；初稿既误写又反过来指责原文渲染有误，已纠正；Eq. (1) 首项 λ_d 与 block 8 正文 χ_d 的对应关系原文未说明，标为待证而非自行统一。",
+            "block_index": 7,
+            "claim": "按 LaTeX 源改正初稿的 β 系误写，并记录 λ_d 与 χ_d 的不一致为待证。",
+            "source_quote": "$$\n\\mathcal { T } _ { d } = ( \\lambda _ { d } , S _ { d } , \\mathcal { A } _ { d } , \\mathcal { W } _ { d } , \\mathcal { V } _ { d } , M _ { d } , C _ { d } , \\mathcal { B } _ { d } ) ,\\tag{1}\n$$"
+          },
+          {
+            "assessment": "改正初稿把 χ_d、A_d、W_d、V_d 写成 β 系符号的错误。逐项核对变量语义与 adapter 的绑定职责（把反馈关联到存储预测、产生预测的动作与上下文、证据来源）均有原文依据；对 M_d/C_d/B_d 与度量/约束/预算的逐一对应标为推断，因原文未按序点名。",
+            "block_index": 8,
+            "claim": "改正初稿把 χ_d、A_d、W_d、V_d 写成 β 系符号的错误。",
+            "source_quote": "where $\\chi _ { d }$ describes observations and context, $S _ { d }$ the task state, $\\mathcal { A } _ { d }$ available actions or interventions, $\\mathcal { W } _ { d }$ the world-model adapter, and $\\mathcal { V } _ { d }$ the verifier for candidate validity and predicted utility."
+          },
+          {
+            "assessment": "周期 k 的计数含义与原文一致，改正 (θ_k, φ_{d,k}) 的符号错误。核对：被接受系统为 (θ_k, φ_{d,k})，θ 可为可训练参数或持久化工作流，φ 为当前 predictor；周期在更新决策与接受检查后结束，即使版本未变，故 k 计尝试次数。动作步与周期计数符号在源文本中为乱码，其还原（t 与 k）标为推断。",
+            "block_index": 9,
+            "claim": "周期 k 的计数含义与原文一致，改正 (θ_k, φ_{d,k}) 的符号错误。",
+            "source_quote": "the accepted system is $( \\theta _ { k } , \\phi _ { d , k } )$ ."
+          },
+          {
+            "assessment": "固定项清单逐项有据；「防改规则提分」标注为推断。逐项核对固定项与可变项（任务状态、候选池、反馈记录、已接受版本）及两条边界：动作/观测只改变状态或信息，单纯扩展反馈历史不构成策略或模型修订，均有原文依据；初稿的设计意图解读原文未陈述。",
+            "block_index": 10,
+            "claim": "固定项清单逐项有据；「防改规则提分」标注为推断。",
+            "source_quote": "Within a run, the task objective, state and action definitions, interfaces, scoring criteria, constraints, acceptance and stopping rules, and total budget limits remain fixed."
+          },
+          {
+            "assessment": "Table 1 世界模型一列应为 φ_d，且其触发条件为三重条件。核对表格四行变化规则与携带内容，世界模型一列触发条件「预测不可靠 + 数据充分 + 预算允许」与仍需组件与配对检查把关均与表格文字一致；初稿写作 β_d 已纠正；并指出 HTML 表格单元格跨行错位，提示按语义拼接。",
+            "block_index": 11,
+            "claim": "Table 1 世界模型一列应为 φ_d，且其触发条件为三重条件。",
+            "source_quote": "Table 1 | Fixed settings, update rules, and retained state in a recursive run."
+          },
+          {
+            "assessment": "OPF 属继承而非本文新方法，引用 [9] 未作外部检索。核对 OPF 的因子组织—预测—合成流程与「因子预测 + 正交性 + 表示正则」学习目标，以及 RSI 只新增自身目标与可训练参数子集；[9] 的具体出处本次未做外部检索，不作断言；初稿的「静态到动态」对照措辞标为解释性推断。",
+            "block_index": 13,
+            "claim": "OPF 属继承而非本文新方法，引用 [9] 未作外部检索。",
+            "source_quote": "JEPA-Anything supplies a context–target predictive design in which orthogonal predictive factorization (OPF) organizes latent targets into complementary factors, predicts them from context, and synthesizes a complete latent state [9]."
+          },
+          {
+            "assessment": "两函数共享 φ_{d,k} 下标，初稿 β 下标系误写。本块为两式引出句：编码与动作条件 latent 预测属于同一周期 k，共享当前 predictor 参数下标，这是「世界模型随周期变化」的实现入口；初稿写作 β_{d,k} 已纠正。",
+            "block_index": 14,
+            "claim": "两函数共享 φ_{d,k} 下标，初稿 β 下标系误写。",
+            "source_quote": "At cycle $k ,$ encoding and action-conditioned latent prediction are written as"
+          },
+          {
+            "assessment": "公式 (2) 符号按 LaTeX 核对，编码器下标为 φ_{d,k}。输入为 s_t 与 c_d、输出为 z_t，编码器参数随周期变动；初稿的 E_{β_{d,k}} 已纠正；c_d 与 block 8 的 χ_d 是否同一实体原文未说明，列为待证点。",
+            "block_index": 15,
+            "claim": "公式 (2) 符号按 LaTeX 核对，编码器下标为 φ_{d,k}。",
+            "source_quote": "$$\nz _ { t } = E _ { \\phi _ { d , k } } ( s _ { t } , c _ { d } ) ,\\tag{2}\n$$"
+          },
+          {
+            "assessment": "公式 (3) 左侧为 ẑ_{t+1}，并降级因果推理的强断言。按 LaTeX 核对左侧为带 hat 的预测 latent，输入为 z_t、a_t、c_d，函数下标 φ_{d,k}；初稿的 β_{t+1} = F_{β_{d,k}} 已纠正，其「F 体现因果推理能力」降级为「结构上支持动作条件化前向预测」并标为推断；a_t 是否显式输入与 block 17 的接口柔性构成两种实现，原文未强制其一。",
+            "block_index": 16,
+            "claim": "公式 (3) 左侧为 ẑ_{t+1}，并降级因果推理的强断言。",
+            "source_quote": "$$\n\\widehat { z } _ { t + 1 } = F _ { \\phi _ { d , k } } ( z _ { t } , a _ { t } , c _ { d } ) .\\tag{3}\n$$"
+          },
+          {
+            "assessment": "符号角色约定有原文依据；乱码符号还原标为推断。核对符号释义、读出 R 把预测 latent target 转成 outcome prediction 的职责、以及「符号只表示功能角色、适配器可自定动作编码并并入 predictor 输入或上下文」的柔性声明；初稿把待转换对象写成 β_{t+1} 已纠正为 ẑ_{t+1}；文中两处乱码符号的最可能还原 F、R 标为推断。",
+            "block_index": 17,
+            "claim": "符号角色约定有原文依据；乱码符号还原标为推断。",
+            "source_quote": "Here $s _ { t }$ is the task state, $a _ { t }$ a candidate action, and $c _ { d }$ the domain context."
+          },
+          {
+            "assessment": "两种读出为接口二选一，非损失组合。核对原文定义：确定性返回点预测、概率性返回分布，二者是 outcome 接口的并列领域实例化；初稿此处无符号错误；其把分布读出与 uncertainty-aware selection 的关联标为推断，依据 block 4 的通路列表，未越出证据。",
+            "block_index": 18,
+            "claim": "两种读出为接口二选一，非损失组合。",
+            "source_quote": "A deterministic readout returns a point prediction, whereas a probabilistic readout returns a distribution. These are alternative domain instantiations of the outcome interface:"
+          },
+          {
+            "assessment": "公式 (4) 按 LaTeX 核对，初稿 β 替换系草稿自身错误。核对 ô_{t+1} = R_{φ_{d,k}}(ẑ_{t+1}, c_d) 且标注为 point readout，读出层参数随周期变化；初稿的 β 替换已纠正，并指出「符号混淆」来自草稿自身而非原文；读出层是否可训练原文未说明，标为待证；概率读出对应的另一式未出现在本次提供文本中，未做补写。",
+            "block_index": 19,
+            "claim": "公式 (4) 按 LaTeX 核对，初稿 β 替换系草稿自身错误。",
+            "source_quote": "$$\n\\widehat { o } _ { t + 1 } = R _ { \\phi _ { d , k } } ( \\widehat { z } _ { t + 1 } , c _ { d } ) \\quad ( \\mathrm { p o i n t ~ r e a d o u t } ) ,\\tag{4}\n$$"
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 3,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "核对 Eq.5 的批注：原文支持概率读出是 $o_{t+1}$ 在 $s_t,a_t,c_d$ 下由 $R_{\\phi_{d,k}}(\\widehat{z}_{t+1},c_d)$ 给出的条件分布；初稿“关键接口”保留，但把内部潜在表示的具体构造标为待证，避免超出公式信息。",
+            "block_index": 20,
+            "source_quote": "p _ { \\phi _ { d , k } } ( o _ { t + 1 } \\mid s _ { t } , a _ { t } , c _ { d } ) = R _ { \\phi _ { d , k } } ( \\widehat { z } _ { t + 1 } , c _ { d } ) \\quad \\mathrm { ( p r o b a b i l i s t i c ~ r e a d o u t ) } ."
+          },
+          {
+            "assessment": "核对效用/可靠性表述：原文对概率预测是 can additionally use（可额外使用），初稿“需引入”被改为“可额外使用”；不确定性估计器 separate 与可靠性定义均按原文保留。",
+            "block_index": 21,
+            "source_quote": "The domain specification states how the readout is converted into task utility and compared with observed feedback."
+          },
+          {
+            "assessment": "核对单步与多步条件：原文支持单步只需结果读出、多步还需状态传播适配器；初稿“框架同时存在两种模式”被标为推断，horizon 乱码处不补具体数字。",
+            "block_index": 22,
+            "source_quote": "One-step selection requires only an outcome readout. Multistep planning additionally requires an adapter that propagates a planning state."
+          },
+          {
+            "assessment": "核对 Eq.6 分解：原文是策略动作分布与联合转移读出 $(s_{t+1},o_{t+1})$ 的乘积；初稿“$s_{t+1}$ 是观测一部分”被纠正为区分预测状态与观测 $o_{t+1}$。",
+            "block_index": 23,
+            "source_quote": "p _ { \\theta _ { k } , \\phi _ { d , k } } ( \\widehat { \\tau } \\mid s _ { 0 } , g , c _ { d } ) = \\prod _ { t = 0 } ^ { H - 1 } \\pi _ { \\theta _ { k } } ( a _ { t } \\mid s _ { t } , g ) p _ { \\phi _ { d , k } } ( s _ { t + 1 } , o _ { t + 1 } \\mid s _ { t } , a _ { t } , c _ { d } ) ."
+          },
+          {
+            "assessment": "核对预测状态表述：原文支持“外部检查前仍是预测规划状态”；初稿由“联合读出仅用于多步”推出效率导向，被标为推断，原文无此因果。",
+            "block_index": 24,
+            "source_quote": "The propagated $s _ { t + 1 }$ remains a predicted planning state until externally checked."
+          },
+          {
+            "assessment": "核对候选生成与验证记录：候选、结果预测/bounded rollout、验证器记录有效性/效用分量/证据来源/不确定性基本准确；“数据标准化格式”被标为解读而非原文术语。",
+            "block_index": 26,
+            "source_quote": "Each candidate receives an outcome prediction or, when supported, a bounded rollout"
+          },
+          {
+            "assessment": "核对过渡句：原文仅引出基于效用的排序，初稿未额外主张，判断为准确。",
+            "block_index": 27,
+            "source_quote": "For utility-based ranking, the candidate score is"
+          },
+          {
+            "assessment": "核对 Eq.7：原文是加权效用和减 $\\Delta_d$；初稿“决策论经典形式”被标为外部解释，不作为本文证据。",
+            "block_index": 28,
+            "source_quote": "R _ { d } ( \\widehat \\tau ) = \\sum _ { j } w _ { d , j } r _ { \\tau , j } - \\Delta _ { d } ( \\widehat \\tau ) ,"
+          },
+          {
+            "assessment": "核对 Eq.7 各项与代码修复实例：初稿“最大化信息增益”被纠正；原文此处是效用排序，信息获取规则在下一段单独说明，代码修复实例保留四个修订排序后执行一个。",
+            "block_index": 29,
+            "source_quote": "Invalid candidates are excluded before ranking."
+          },
+          {
+            "assessment": "核对信息获取规则：原文支持显式启用时优先评估不确定候选，并与效用排序分开报告；初稿“探索-利用权衡”标为合理解读但非原文术语。",
+            "block_index": 30,
+            "source_quote": "An explicitly enabled information-seeking acquisition rule can instead prioritize uncertain candidates for evaluation."
+          },
+          {
+            "assessment": "核对 E0-E3 分级：原文支持四级证据、来源与预期保真度记录，且训练充分性由后续准入标准决定；初稿“可信度和成本不同”被标为推断，原文未明确排序。",
+            "block_index": 31,
+            "source_quote": "Evidence category records origin and intended fidelity; suficiency for training is determined by the admission criteria below."
+          },
+          {
+            "assessment": "核对想象轨迹准入：原文只说与外部评估选择分开治理；初稿“自我改进闭环”被标为推断，非原文断言。",
+            "block_index": 32,
+            "source_quote": "For applications using imagined trajectories for learning, admission is governed separately from external-evaluation selection:"
+          },
+          {
+            "assessment": "核对 Eq.8：原文的乘积条件对应有效性（$\\nu_\\tau=1$）、最小效用阈值、$C_d^U$、证据源白名单；初稿“同时满足所有条件”准确，Curate 保留 $e_\\tau=1$ 轨迹也与原文一致。",
+            "block_index": 33,
+            "source_quote": "{ e } _ { \\tau } = \\mathbf { 1 } \\{ \\nu _ { \\tau } = 1 \\} \\mathbf { 1 } \\{ R _ { d } ( \\widehat { \\tau } ) \\geq r _ { d } ^ { \\operatorname* { m i n } } \\} C _ { d } ^ { U } ( \\widehat { \\tau } ) \\mathbf { 1 } \\{ \\ell _ { \\tau } \\in \\mathcal { E } _ { d } ^ { \\operatorname { t r a i n } } \\} ,"
+          },
+          {
+            "assessment": "核对训练过滤器：原文支持 $C_d^U$ 检验/省略返回 1、禁用想象学习时集合为空、训练过滤不阻止外部评估；“保留探索空间”被标为解读。",
+            "block_index": 34,
+            "source_quote": "This training filter does not prevent external evaluation of uncertain candidates."
+          },
+          {
+            "assessment": "核对策略改进集与预测器适应集：原文支持二者目标不同且不必相同；初稿“解决传统 RL 耦合不稳定性”无原文证据，已标为过度推断。",
+            "block_index": 36,
+            "source_quote": "The two sets serve diferent objectives and need not contain the same records."
+          },
+          {
+            "assessment": "核对更新路线：原文支持示范、偏好、工作流搜索三类路线；初稿“通用框架”被标为总结性推断，未当作原文直接结论。",
+            "block_index": 37,
+            "source_quote": "Demonstration-based learning uses selected actions or trajectories as targets; preference learning compares alternatives using their evaluated outcomes; workflow search uses evaluation feedback to rank persistent agent-workflow configurations."
+          },
+          {
+            "assessment": "核对 $u_k^\\pi$：原文明确固定策略设为 0，并说更新尝试需学习证据和足够预算；初稿“预算不足或无需更新时设为 0”标为合理推断，而非原文明确枚举。",
+            "block_index": 38,
+            "source_quote": "A fixed-policy setting has $u _ { k } ^ { \\pi } = 0$"
+          },
+          {
+            "assessment": "核对 Eq.9：原文分段规则为 $u_k^\\pi=1$ 时调用 Update，否则保持 $\\theta_k$；初稿“伪代码”不是原文称呼，函数含义与输入集合一致。",
+            "block_index": 39,
+            "source_quote": "\\mathrm { U p d a t e } ( \\theta _ { k } , \\mathcal { D } _ { \\mathrm { p o l i c y } , k } , \\mathcal { D } _ { \\mathrm { s i m } , k } ) ,"
+          },
+          {
+            "assessment": "核对实例化规范：原文要求指定反馈如何构造目标/分数、可改哪些参数或配置字段、何时尝试更新；“确保可复现性”被标为推断性目标，原文只说需指定这些内容。",
+            "block_index": 40,
+            "source_quote": "The instantiated route specifies how feedback constructs training targets or workflow scores, which parameters or configuration fields can change, and when updates are attempted."
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 3,
+        "part": 3,
+        "checks": [
+          {
+            "assessment": "核对三类目标表述：原文为 outcome labels 监督 outcome readout；latent 目标需域目标编码器可表示的观测；标量结果提供的是 outcome target 而非完整观测目标状态，且其损失在参数可训练时（when trainable）可更新上游参数。初稿写作“标量结果（仅更新上游参数）”，把条件性表述改成绝对性，且遗漏 latent 目标的编码器前提，已改为条件化并补足前提；并明确原文未给出各目标的实现细节。",
+            "block_index": 41,
+            "source_quote": "Conditional world-model adaptation. Adaptation uses observed targets to improve the corresponding predictions. Outcome labels can supervise an outcome readout; latent prediction targets require an observation that the domain target encoder can represent. A scalar outcome supplies an outcome target rather than a fully observed target state, although its loss can update upstream parameters when they are trainable. The adaptation specification identifies the available target, its predictive loss, and the trainable parameter subset. These choices can difer from those used in initial model construction.\n\n",
+            "source_quote_id": "s3:b41:p0"
+          },
+          {
+            "assessment": "核对版本规则：原文为“stored prediction generated by that version 或对记录输入施加当前模型得到的新预测”，且 early-version predictions 不直接并入当前误差估计，仅保留作历史决策分析。初稿表述与原文一致，予以保留；确认“记录选择、版本处理、是否曾用于训练”三件实现声明均在原文中。",
+            "block_index": 42,
+            "source_quote": "The reliability protocol requires predictions attributable to the current model version. For each historical observation included in the assessment, it uses either a stored prediction generated by that version or a new prediction obtained by applying the current model to the recorded input. Earlier-version predictions remain available for analysis of past decisions but are not pooled directly into the current error estimate. The implementation specifies record selection, version handling, and whether evaluation records have also been used for training.\n\n",
+            "source_quote_id": "s3:b42:p0"
+          },
+          {
+            "assessment": "核对符号：$\\mathcal{H}_k$ 为反馈历史、$\\mathcal{K}_k$ 为第 $k$ 轮候选范围、$B_{\\mathrm{update},k}$ 为剩余更新预算、$\\hat{c}_{\\mathrm{adapt},k}$ 为同单位估计成本，均与原文一致。初稿称这些是 Eq. 10–12 的基础输入，原文紧接着有“For an enabled adaptation pathway, the assessment and trigger are”，属文本支持，非过度推断。未修改。",
+            "block_index": 43,
+            "source_quote": "Reliability is assessed from feedback history $\\mathcal { H } _ { k }$ using this version rule and the candidate range considered in cycle $k ,$ denoted $\\mathcal { K } _ { k }$ . Let $B _ { \\mathrm { u p d a t e } , k }$ denote the remaining budget available for the proposed adaptation and $\\widehat { c } _ { \\mathrm { a d a p t } , k }$ its estimated cost in the same units. For an enabled adaptation pathway, the assessment and trigger are\n\n",
+            "source_quote_id": "s3:b43:p0"
+          },
+          {
+            "assessment": "核对 Eq. 10：$\\rho_k^W = \\mathrm{Reliability}(W_{\\phi_{d,k}}; \\mathcal{H}_k, \\mathcal{K}_k)$，取值 {reliable, unreliable, insufficient}，与原文逐字一致。初稿输出三态描述正确；补充说明该函数为抽象接口、具体判据由实现决定，并保留关于 \\tag 在 GitHub 不渲染的提醒（属格式说明，非篡改公式）。",
+            "block_index": 44,
+            "source_quote": "$$\n\\boldsymbol \\rho _ { k } ^ { W } = \\mathrm { R e l i a b i l i t y } ( W _ { \\boldsymbol \\phi _ { d , k } } ; \\mathcal { H } _ { k } , \\mathcal { K } _ { k } ) \\in \\{ \\mathrm { r e l i a b l e , u n r e l i a b l e , i n s u f f i c i e n t } \\} ,\\tag{10}\n$$\n\n",
+            "source_quote_id": "s3:b44:p0"
+          },
+          {
+            "assessment": "核对 Eq. 11 三个指示函数：unreliable、$\\mathcal{D}_{\\mathrm{adapt},k}$ 充分、$B_{\\mathrm{update},k} \\geq \\hat{c}_{\\mathrm{adapt},k}$，初稿解读正确。补充指出 reliable/insufficient 均不触发，并把“保守取向”的评价明确标注为批注推断而非原文陈述。",
+            "block_index": 45,
+            "source_quote": "$$\nu _ { k } ^ { W } = \\mathbf { 1 } \\{ \\rho _ { k } ^ { W } = \\mathrm { u n r e l i a b l e } \\} \\mathbf { 1 } \\{ \\mathcal { D } _ { \\mathrm { a d a p t } , k } \\mathrm { ~ i s ~ s u f f i c i e n t } \\} \\mathbf { 1 } \\{ B _ { \\mathrm { u p d a t e } , k } \\geq \\widehat { c } _ { \\mathrm { a d a p t } , k } \\} .\\tag{11}\n$$\n\n",
+            "source_quote_id": "s3:b45:p0"
+          },
+          {
+            "assessment": "核对评估判据（error、calibration、drift、coverage）与覆盖度边界：原文明确 insufficient coverage 产生 insufficient 判定、不构成可靠证据、不激活触发器。初稿“防止过拟合未探索区域”在原文无直接依据，已标注为推断；其余表述与原文一致。",
+            "block_index": 46,
+            "source_quote": "The assessment applies the specified error, calibration, drift, and coverage criteria supported by the implementation. Because feedback comes from selected candidates, its conclusions are limited to the observed and covered candidate range. Insuficient coverage yields an insuficient assessment rather than evidence of reliability and does not activate the adaptation trigger. Subsequent selection follows the declared evaluation rule and remaining feedback budget.\n\n",
+            "source_quote_id": "s3:b46:p0"
+          },
+          {
+            "assessment": "核对 Eq. 12 分支：$u_k^W=1$ 时 $\\phi'_{d,k+1}=\\mathrm{Adapt}(\\phi_{d,k}, \\mathcal{D}_{\\mathrm{adapt},k})$，否则为 $\\phi_{d,k}$，一致。补充强调输出是“候选参数”（带撇号），是否采纳须经 2.5 节的组件与配对检查，避免与最终更新混淆。",
+            "block_index": 47,
+            "source_quote": "$$\n\\begin{array} { r } { \\boldsymbol { \\phi } _ { d , k + 1 } ^ { \\prime } = \\left\\{ \\begin{array} { l l } { \\mathrm { A d a p t } ( \\phi _ { d , k } , \\mathcal { D } _ { \\mathrm { a d a p t } , k } ) , } & { \\boldsymbol { u } _ { k } ^ { W } = 1 , } \\\\ { \\phi _ { d , k } , } & { \\boldsymbol { u } _ { k } ^ { W } = 0 . } \\end{array} \\right. } \\end{array}\\tag{12}\n$$\n\n",
+            "source_quote_id": "s3:b47:p0"
+          },
+          {
+            "assessment": "核对四点：禁用路径 $u_k^W=0$；预算需计入适应、历史重评估、验收检查；共享预算时每次用剩余额度；外部反馈使用与更新/评估计算分开报告。均与原文一致。补充“候选组件通过验收后才进入保留系统”一句，与原文末句对应。未修改实质内容。",
+            "block_index": 48,
+            "source_quote": "This trigger governs adaptation after initial model construction; a disabled pathway sets $u _ { k } ^ { W } = 0$ . The budget specification identifies the constrained resource and accounts for adaptation, historical re-evaluation, and acceptance checks. When policy and model updates share a budget, each attempt uses the amount remaining after prior allocations. External feedback use is reported separately from update and evaluation computation. Either component can remain unchanged while the other is updated; proposed candidates enter the retained system only after acceptance.\n\n",
+            "source_quote_id": "s3:b48:p0"
+          },
+          {
+            "assessment": "核对保留协议：组装对与当前版本在预声明标准下比较；组件检查针对策略任务效用/约束或预测器在相关目标上的质量；配对检查针对依赖关系（策略候选可使改进的预测器不可靠，预测器会改变候选选择）。初稿概述与原文一致，未发现夸大。",
+            "block_index": 50,
+            "source_quote": "The full retention protocol compares proposed components and their assembled pair with the current versions under predeclared acceptance criteria. Component checks address policy task utility and constraints, or predictor quality on relevant targets. The pair check addresses the dependency between them: a policy can generate candidates for which an otherwise improved predictor is unreliable, and a predictor can change which candidates are selected. Pair acceptance therefore concerns the decision behavior of the assembled system and predictor suitability on candidates proposed by the selected policy, beyond isolated component quality.\n\n",
+            "source_quote_id": "s3:b50:p0"
+          },
+          {
+            "assessment": "核对过渡句仅为引出紧凑定义；补充其指涉 Eq. 13–16 的具体符号顺序，均为原文后续公式可支撑的对应关系，未引入新主张。",
+            "block_index": 51,
+            "source_quote": "For compactness, define the component decisions as\n\n",
+            "source_quote_id": "s3:b51:p0"
+          },
+          {
+            "assessment": "核对 Eq. 13：$G_k^\\pi = Q_\\pi(\\theta'_{k+1}; \\theta_k, \\mathcal{D}^\\pi_{\\mathrm{gate},k})$，候选与比较基准的位置正确。补充指出使用的是门控数据而非更新数据，符合原文 2.5 节与最后一段的数据分工。",
+            "block_index": 52,
+            "source_quote": "$$\n\\begin{array} { r } { G _ { k } ^ { \\pi } = Q _ { \\pi } ( \\theta _ { k + 1 } ^ { \\prime } ; \\theta _ { k } , \\mathcal { D } _ { \\mathrm { g a t e } , k } ^ { \\pi } ) , } \\end{array}\\tag{13}\n$$\n\n",
+            "source_quote_id": "s3:b52:p0"
+          },
+          {
+            "assessment": "核对 Eq. 14：$G_k^W = Q_W(\\phi'_{d,k+1}; \\phi_{d,k}, \\mathcal{D}^W_{\\mathrm{gate},k})$，与原文一致；“与 Eq. 13 同构”为结构性对照，两式确有相同形式。未修改。",
+            "block_index": 53,
+            "source_quote": "$$\nG _ { k } ^ { W } = Q _ { W } ( \\phi _ { d , k + 1 } ^ { \\prime } ; \\phi _ { d , k } , \\mathcal { D } _ { \\mathrm { g a t e } , k } ^ { W } ) .\\tag{14}\n$$\n\n",
+            "source_quote_id": "s3:b53:p0"
+          },
+          {
+            "assessment": "核对三点：参数显式标明当前版本为比较对象；检查仅在满足判据时返回 1；随后给出进入配对评估的版本。均与原文一致。初稿“及格线、进入配对前提”为对原文的转述性总结，未超出文本。",
+            "block_index": 54,
+            "source_quote": "The arguments explicitly identify the current version as the comparator. Each check returns one only when its specified criteria are met. The policy and model versions passed to pair evaluation are\n\n",
+            "source_quote_id": "s3:b54:p0"
+          },
+          {
+            "assessment": "核对 Eq. 15：$\\bar{\\theta}_{k+1}$ 取 $\\theta'_{k+1}$ 当 $u_k^\\pi=1 \\wedge G_k^\\pi=1$，否则取 $\\theta_k$，一致。补充说明输出是中间版本而非最终采纳，与 Eq. 18 的最终选择对应。",
+            "block_index": 55,
+            "source_quote": "$$\n\\bar { \\theta } _ { k + 1 } = \\left\\{ \\begin{array} { l l } { \\theta _ { k + 1 } ^ { \\prime } , } & { u _ { k } ^ { \\pi } = 1 \\ \\wedge \\ G _ { k } ^ { \\pi } = 1 , } \\\\ { \\theta _ { k } , } & { \\mathrm { o t h e r w i s e } , } \\end{array} \\right.\\tag{15}\n$$\n\n",
+            "source_quote_id": "s3:b55:p0"
+          },
+          {
+            "assessment": "核对 Eq. 16：条件为 $u_k^W=1 \\land G_k^W=1$，否则取 $\\phi_{d,k}$，一致。补充说明 Eq. 15/16 中 $\\wedge$ 与 $\\land$ 同为逻辑与（OCR/排版差异），未改变语义。",
+            "block_index": 56,
+            "source_quote": "$$\n\\bar { \\phi } _ { d , k + 1 } = \\left\\{ \\begin{array} { l l } { \\phi _ { d , k + 1 } ^ { \\prime } , } & { u _ { k } ^ { W } = 1 \\land G _ { k } ^ { W } = 1 , } \\\\ { \\phi _ { d , k } , } & { \\mathrm { o t h e r w i s e } . } \\end{array} \\right.\\tag{16}\n$$\n\n",
+            "source_quote_id": "s3:b56:p0"
+          },
+          {
+            "assessment": "核对配对决策触发条件：至少一个组件变化才比较，否则 $G_k^{\\mathrm{pair}}=1$ 且不做新评估，与原文一致。初稿“优化计算效率、避免无意义评估”在原文无明示依据，已标注为批注推断。",
+            "block_index": 57,
+            "source_quote": "When at least one component changes, the pair decision compares the assembled candidate with the current pair under the same prescribed evaluation conditions; otherwise $G _ { k } ^ { \\mathrm { p a i r } } = 1$ without a new evaluation:\n\n",
+            "source_quote_id": "s3:b57:p0"
+          },
+          {
+            "assessment": "核对 Eq. 17：$G_k^{\\mathrm{pair}} = Q_{\\mathrm{pair}}((\\bar{\\theta}_{k+1}, \\bar{\\phi}_{d,k+1}); (\\theta_k, \\phi_{d,k}), \\mathcal{D}_{\\mathrm{compat},k})$，候选对与当前对位置正确，数据为 compat。初稿“系统级验收关卡”是对配对检查作用的合理转述，未超出原文“pair acceptance concerns decision behavior of assembled system”的表述。",
+            "block_index": 58,
+            "source_quote": "$$\nG _ { k } ^ { \\mathrm { p a i r } } = Q _ { \\mathrm { p a i r } } \\big ( ( \\bar { \\theta } _ { k + 1 } , \\bar { \\phi } _ { d , k + 1 } ) ; ( \\theta _ { k } , \\phi _ { d , k } ) , \\mathcal { D } _ { \\mathrm { c o m p a t } , k } \\big ) .\\tag{17}\n$$\n\n",
+            "source_quote_id": "s3:b58:p0"
+          },
+          {
+            "assessment": "核对 Eq. 18：$G_k^{\\mathrm{pair}}=1$ 时采纳中间对，否则回退到 $(\\theta_k, \\phi_{d,k})$。初稿“双重验证后保留”与 Eq. 15–18 的链式语义一致；并确认配对失败时整对回退，与下一段“failure of the pair check retains the entire current pair”相符。",
+            "block_index": 59,
+            "source_quote": "$$\n( \\theta _ { k + 1 } , \\phi _ { d , k + 1 } ) = \\left\\{ \\begin{array} { l l } { ( \\bar { \\theta } _ { k + 1 } , \\bar { \\phi } _ { d , k + 1 } ) , } & { G _ { k } ^ { \\mathrm { p a i r } } = 1 , } \\\\ { ( \\theta _ { k } , \\phi _ { d , k } ) , } & { \\mathrm { o t h e r w i s e . } } \\end{array} \\right.\\tag{18}\n$$\n\n",
+            "source_quote_id": "s3:b59:p0"
+          },
+          {
+            "assessment": "核对评估规范五项固定内容（任务指标、预测检查、约束、反馈额度、接受阈值）、匹配任务条件下可比较不同策略候选、两级失败回退、无变化则结转、满足预声明标准才保留。初稿各点均与原文对应，未修改。",
+            "block_index": 60,
+            "source_quote": "The evaluation specification fixes the task metrics, prediction checks, constraints, feedback allowance, and acceptance thresholds. Corresponding task conditions can be matched even when the two policies generate diferent candidates. Failure of a component check retains its current version; failure of the pair check retains the entire current pair. If neither component changes, the current pair carries forward without a new pair comparison. Updates are retained when the candidate pair meets the prespecified acceptance criteria under matched evaluation conditions.\n\n",
+            "source_quote_id": "s3:b60:p0"
+          },
+          {
+            "assessment": "核对数据分工：update data 构造候选、gate data 决定保留、指定留出审计集仅用于最终报告，与原文一致。初稿“防止数据泄露导致的评估偏差”原文未明说，已标注为推断；保留原文可支撑的三类划分。",
+            "block_index": 61,
+            "source_quote": "Update data construct candidate versions, gate data select which versions are retained, and any designated held-out audit set is reserved for final reporting.\n\n",
+            "source_quote_id": "s3:b61:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 3,
+        "part": 4,
+        "checks": [
+          {
+            "assessment": "核对初稿的因果归属：原文把“候选提出（which candidates are proposed）”的变化归于 policy，把“排序与学习信号（rankings and learning signals）”的变化归于 predictor。初稿“策略变更导致后续交互结果变化，进而改变可用的训练信号”混淆了两条链，已修正为两条独立因果链。该项依据原文逐字表述，不是外部推断。",
+            "block_index": 62,
+            "source_quote": "The retained pair and accumulated feedback history enter the next cycle. A changed policy can alter which candidates are proposed; a changed predictor can alter rankings and learning signals."
+          },
+          {
+            "assessment": "核对“递归机制”的定义与效力边界：原文只声明“后续交互与学习依赖被保留的修订”即构成 recursive mechanism，未声称自增强/自修正或方向性收益。初稿“形成自增强或自修正的数据流”超出证据，已在批注中改标为推断/待证。source_quote 保留原文拼写 “afect”。",
+            "block_index": 62,
+            "source_quote": "Together, these changes afect which actions receive feedback and what experience is available for subsequent updates. This dependence of later interaction and learning on retained revisions defines the recursive mechanism."
+          },
+          {
+            "assessment": "核对 Figure 2 的覆盖：原文列出六个操作贯通 candidate proposal、prediction、external selection、observation、update construction 与 system retention；初稿完全未提及，已补入批注。同时确认本段未定义 retained pair 字段、历史截断与终止条件，相关追问标为待证，未作为事实写入。",
+            "block_index": 62,
+            "source_quote": "The six operations in Figure 2 therefore connect candidate proposal and prediction to external selection, observation, update construction, and system retention."
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 4,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对三问式研究目标与'有限交互预算'这一前提，逐字一致。初稿'三个维度'表述成立，但漏列本段后半句的五项评测内容（预测性选择、模型适应、任务完成、连续策略版本、等实验次数搜索）与任务域（代码修复、GUI、物理域实验室规划与反应优化、免疫科学端到端应用），已补入；并加限定：物理域与免疫科学不在可见结果块中，不能据本段推断其结论。修改属补充与边界限定，未改动任何数字。",
+            "block_index": 1,
+            "source_quote": "We examined how world-model predictions improve action selection, how retained updates support further improvement, and how prediction and feedback guide decisions under limited interaction budgets."
+          },
+          {
+            "assessment": "逐项核对策略固定（ReasonFlux-Coder-7B [14]）、对比对象（CURE-WM-Lite 固定世界模型、自适应世界模型）、候选预算（每轮 4 修订选 1 执行），均与原文一致。数据规模 200 题 CodeContests、3 种子、最多 3 轮、在线测试给反馈/隐藏测试测最终成功率在后句，初稿数值正确，未修改；补充'策略冻结+预算固定是全节归因前提'的解读，属推断性批注而非原文主张。",
+            "block_index": 3,
+            "source_quote": "The ReasonFlux-Coder-7B policy was held fixed [14]. We compared RSI-Anything with a fixed world model (CURE-WM-Lite) and RSI-Anything with world-model adaptation. All selection methods used the same coder and candidate budget: four revisions were proposed before one was selected for execution."
+          },
+          {
+            "assessment": "核对 29.2%（175/600）、26.3%、26.0%、+2.83 个百分点、95% 区间 [+0.17, +5.50]，逐字一致。随后句的排序准确率 66.5%→72.8%、Brier 0.488→0.358、调用 3.71 vs 3.72 亦与原文相符。两处纠正：初稿'统计显著'改为'区间下界大于 0，按常规解读可区分，属推断'（原文未用 significant）；初稿'证明提升源于预测质量'改为原文 'connect improved prediction and ranking with higher repair success' 的相关性措辞，避免超出证据的因果断言。",
+            "block_index": 4,
+            "source_quote": "Introducing world-model-guided selection increased final hidden-test success to 29.2% (175/600), compared with 26.3% for a capacity-matched static verifier and 26.0% for random selection (Figure 3; Table 2). The paired gain over the static verifier was +2.83 percentage points (95% interval [+0.17, +5.50])."
+          },
+          {
+            "assessment": "核对 31.2%、相对固定模型 +2.0 个百分点、在线调用 3.72 次/题，逐字一致（注意原文拼写为 worldmodel，未改）。'反馈既用于程序修复也修正后续选择所用预测器'对应后句原文，概括合理；补充限定：本节未对 2.0 个百分点做显著性检验，只能作描述性增量，且未给出自适应配置相对基线的绝对百分点。属证据边界补充，未改动数值。",
+            "block_index": 5,
+            "source_quote": "With the coder and candidate budget retained, RSI-Anything with worldmodel adaptation reached 31.2% hidden-test success, exceeding the fixed-world-model configuration by 2.0 percentage points. Online test-suite usage was 3.72 calls per task."
+          },
+          {
+            "assessment": "核对 46.37%、33.05%、两个基准名与文献编号 [17][18]，逐字一致（原文以逗号结尾并被图片块切断，引文保留该逗号）。删去初稿'证明了该方法在不同难度和分布的代码基准上的有效性'的强断言，改为事实陈述；新增待证点：本段用 JEPA-Anything，Table 2 的固定世界模型名为 CURE-WM-Lite，两者关系原文未交代，不得默认等同——此为推断界限声明。",
+            "block_index": 6,
+            "source_quote": "On APPS Introductory [17] and LiveCodeBench v6 [18], JEPA-Anything-guided candidate selection achieved final full-test success rates of 46.37% and 33.05%, respectively,"
+          },
+          {
+            "assessment": "该块为图内分组标题，非正文论点，引文逐字一致。初稿'部分标题或图注起始'方向正确但含糊，已明确为 Figure 3 的分组标题，并说明其功能是把 a–f 归入'代码修复：预测性选择 + 世界模型自适应'实验组。属表述精确化，无数字主张。",
+            "block_index": 7,
+            "source_quote": "Code repair: predictive selection and world-model adaptation"
+          },
+          {
+            "assessment": "核对块内仅含标签 'a' 与图片引用，无任何文字内容（引文保留原块的双空格与换行）。保留 Figure 3a 批注，但明确标注'未获得视觉信息'；其内容（非收敛循环示例修复、A–C 示例补丁、固定 coder、每轮 4 候选、反馈支持预测器更新）全部转述自 block 15 的 caption，非对图像的观察。",
+            "block_index": 8,
+            "source_quote": "a  \n![](images/f8f77f2050d3cdea705d90a9d1d5168beab119ab9eabd9daf6b05d0657e37df5.jpg)"
+          },
+          {
+            "assessment": "块内为标签 'b' 与图片引用，引文逐字一致。caption 中 'b, Final hidden-test all-pass rate' 支持'该面板为隐藏测试 all-pass 率'的定性描述；但初稿'柱状图…绿色…灰色'属对画法的推断，文本无此信息，已改写为'柱形状/误差条/显著性标注不可从文本确认'。属去除无据推断。",
+            "block_index": 9,
+            "source_quote": "b  \n![](images/ede0a8648414f2954b1e35351776b15467020348b652d968ea542336bf0f002a.jpg)"
+          },
+          {
+            "assessment": "块内为标签 'c' 与图片引用，引文逐字一致。caption 中 'c, Candidate-ranking accuracy and five-class Brier score for the static verifier and the fixed-world-model configuration' 支持该面板内容判定，与正文 66.5%→72.8%、0.488→0.358 相符。初稿'双轴或并列图表'为不确定推断，已改为'排版形式不可从文本确认，不作断言'。",
+            "block_index": 10,
+            "source_quote": "c  \n![](images/87c3d325b8b3d6dea785213a92a91a86690102f945604f6649246b756b47e28f.jpg)"
+          },
+          {
+            "assessment": "关键纠正：此块无 a–f 标签（引文只有图片引用，逐字一致），初稿却写成 'Figure 3d 批读'。按块序标签为 8→a、9→b、10→c、12→d、13→e，故 11 不能确定为 3d。已改为'无标签图片，身份未知，按块序可能接近 d 但属推断'。",
+            "block_index": 11,
+            "source_quote": "![](images/c911a769be6442dd954fb611a0418b26abb1b7c0dddac8cf00934729a3da157b.jpg)"
+          },
+          {
+            "assessment": "块内为标签 'd' 与图片引用，逐字一致；caption 中 'd, Mean online test-suite calls per task' 支持子图判定。初稿把此块写成 3e（APPS）属块-图错位，已纠正为 3d；数值只引用正文 3.71/3.72 与 Table 2 的 3.71–3.72，并声明图内刻度未获取。",
+            "block_index": 12,
+            "source_quote": "d  \n![](images/3c52fde30dcdcb80c08197f8a88a2ce5d58b79d27b1d2d26ed1e9aa8dad0cc2f.jpg)"
+          },
+          {
+            "assessment": "块内为标签 'e' 与图片引用，逐字一致；caption 中 'e,f, Final full-test success averaged over three seeds on APPS Introductory (1,000 problems) and LiveCodeBench v6 (1,055 problems)' 指明 e 为 APPS。初稿把此块写成 3f（LiveCodeBench）属错位，已纠正为 3e 并对应正文 46.37%；同时注明原文该处未给百分点差，属待证。",
+            "block_index": 13,
+            "source_quote": "e  \n![](images/258de9c60ab970edccad8a6dff3db195996e1e427f91a763d02316f588707652.jpg)"
+          },
+          {
+            "assessment": "此块无标签，引文逐字一致。初稿写成'Figure 3 整体视觉补充，可能包含更多子图细节或图例说明'，缺乏文本依据；已改为'身份未知，按顺序可能为 f（LiveCodeBench，33.05%），仅为推断'，并声明未获视觉信息。属去除无据断言。",
+            "block_index": 14,
+            "source_quote": "![](images/286c3d93a64acf81712a1d688732c4cef5e0fd2228eed3ec166bc4eaa901c6b3.jpg)"
+          },
+          {
+            "assessment": "本条即上一轮校验失败处（引文跨过了 'A–C depict example patches…' 一句，非连续）。现已改为对应块内的连续逐字段落，标签、破折号与标点保持原样。核对结论不变：caption 规定 a 为示例修复流程（候选补丁 A–C、预测结果、执行与测试反馈；固定 coder、每轮 4 候选），b–d 为 200 道 CodeContests × 3 种子 × 最多 3 轮反馈（b=all-pass、c=ranking/Brier、d=online calls），e=APPS 1,000 题、f=LiveCodeBench 1,055 题，Fixed WM=CURE-WM-Lite、Adaptive WM=自适应，绿=世界模型方法、灰=基线。并声明未获得图像视觉信息，配色以外排版不作描述。",
+            "block_index": 15,
+            "source_quote": "Figure 3 | Prediction-guided selection and world-model adaptation in code repair. a, Illustrative repair of a non-convergent loop, from candidate patches and predicted outcomes to execution and test feedback. A–C depict example patches; the benchmark uses a fixed coder and four candidates per round."
+          },
+          {
+            "assessment": "核对比较对象（随机选择、静态验证器）与受控条件（同一 coder、每轮 4 候选、最多 3 轮修复），逐字一致，与初稿'严格受控'判断相符。补充证据边界：原文用 'exceeding'，本段未给百分点或置信区间，不能自行外推差距大小。属证据强度限定。",
+            "block_index": 16,
+            "source_quote": "exceeding random selection and the static verifier (Figure 3e,f). These comparisons used the same coder, with four repair candidates per round and at most three repair rounds."
+          },
+          {
+            "assessment": "逐行核对四组数值（26.0/3.72、26.3/3.72、29.2/3.71、31.2/3.72）与表标题所述共享 coder 与候选预算，逐字一致。纠正初稿'表格精确列出了三种方法'——表内实为四行（Random-K、容量匹配静态验证器、固定世界模型、自适应世界模型）。补充：四者调用 3.71–3.72 说明成功率阶梯不来自更多交互；表内仅点估计，无方差/显著性。",
+            "block_index": 17,
+            "source_quote": "Table 2 | Three-round repair on CodeContests [15] under a shared coder and candidate budget. Both RSI-Anything configurations use world-model-guided candidate selection: one keeps the world model fixed (CURE-WM-Lite), and the other additionally adapts it using feedback.\n<table><tr><td>Selection method</td><td>Hidden all-pass</td><td>Online calls/task</td></tr><tr><td>Random-K</td><td>26.0%</td><td>3.72</td></tr><tr><td>Capacity-matched static verifier</td><td>26.3%</td><td>3.72</td></tr><tr><td>RSI-Anything with a fixed world model (CURE-WM-Lite)</td><td>29.2%</td><td>3.71</td></tr><tr><td>RSI-Anything with world-model adaptation</td><td>31.2%</td><td>3.72</td></tr></table>"
+          },
+          {
+            "assessment": "核对任务定义（MiniWoB++ click-checkboxes 需勾选指定复选框并提交 [19]）与 OSWorld [20]，逐字一致。后句'RSI-Anything 用交互反馈同时更新策略与世界模型并保留更新'亦与原文相符。补充关键对照：3.1 中策略被显式固定，本节策略也更新，两节自适应对象不同，不能把 3.1 结论直接迁移——此为跨节推断界限。",
+            "block_index": 19,
+            "source_quote": "We evaluated graphical user interface (GUI) task completion on MiniWoB++ click-checkboxes, which requires selecting specified checkboxes and submitting the selection [19], and on OSWorld [20]."
+          },
+          {
+            "assessment": "核对 51%→79%→99%、每回合动作 5.30→3.21、−39.4%、重复点击 237→0、错误提交回合 9→1，逐字一致；后句自适应配置 2.93 动作但 21 个错误提交回合、World-based 对照 49%/96%/98%（Figure 4c）亦与原文相符。初稿仅保留成功率三档，遗漏效率与错误指标及对照数字，已补全；并把'证明巨大潜力'降级为待证（最终 99% 比对照 98% 仅高 1 个百分点，且未给种子或方差）。",
+            "block_index": 20,
+            "source_quote": "On click-checkboxes, success increased from 51% at baseline to 79% in the adapted configuration and 99% in the final RSI-Anything configuration (Figure 4c). Mean actions per episode decreased from 5.30 to 3.21, a 39.4% reduction from baseline; recorded repeated clicks fell from 237 to 0, and episodes with incorrect submissions fell from 9 to 1 (Figure 4e–g)."
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 4,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "逐项核对本段三个数字及其参照对象：5.5% 相对 RLAnything [21]、18.4% 相对初始 agent、12.3% 为 RLAnything 相对初始 agent（Figure 4d）。初稿仅保留 5.5% 且把 RLAnything 称为“强化学习（RL）方法/传统 RL”，改变了参照对象且遗漏两组增益，已改为区分参照对象的表述。原文未给绝对成功率与方差，故“实际增益幅度”“为何选 OSWorld”标为待证/推断；原初稿中把 OSWorld 选择理由写成答案并附推断说明，已移入 Q&A 并明确为待证。",
+            "block_index": 21,
+            "source_quote": "On OSWorld, RSI-Anything improved task success rate by 5.5% relative to RLAnything [21] and by 18.4% relative to the initial agent (Figure 4d). RLAnything improved success by 12.3% relative to the initial agent.\n\n",
+            "source_quote_id": "s4:b21:p0"
+          },
+          {
+            "assessment": "核对确认块 23 为实质实验设置段落：LabHorizon [22] 的 Level-1 visually grounded next-action selection、Level-2 protocol-aligned sequence generation、试剂/仪器/顺序约束、同一自改进过程中 4B 策略五个连续版本、按开发顺序、同一 200-task F200 Level-2 基准、Final Score 组合序列相似度与参数准确率。初稿称该块“仅包含标题 3. Results，无实质内容”，与原文直接冲突，已改写为设置批读。原文未给具体分数、逐版本趋势与子分数权重，均明确标为未明示/需图表核实；对“连续版本=同一轨迹检查点”的解读已标注为对措辞的解读而非外部证据。",
+            "block_index": 23,
+            "source_quote": "We next examined whether successive policy updates with RSI-Anything improved physical-domain planning. LabHorizon evaluates laboratory actions subject to reagent, instrument, and ordering constraints through Level-1 visually grounded next-action selection and Level-2 protocol-aligned sequence generation [22]. We followed five consecutive versions of a 4B policy from one self-improvement process and evaluated them in development order on the same 200-task F200 Level-2 benchmark. The Final Score combines action-sequence similarity and parameter accuracy.\n\n",
+            "source_quote_id": "s4:b23:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 5,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对：该块仅为一张图片占位（images/4d263f…jpg），无文字说明，仅能由 Figure 4 的 caption 推知 a/b 对应 MiniWoB++ 复选框选择与 OSWorld 电子表格任务、并展示初始态与目标态。初稿称其为“定义成功的视觉基准”属 caption 之外的推断，且未声明无图像视觉信息。已改为：以 caption 为依据，并明确未获得图像视觉信息、子图与图块的对应关系为推断。",
+            "block_index": 1,
+            "source_quote": "![](images/4d263f763df44ddec549b59738c19d1b00e8217680b6fc09143a4ccd8a0d904d.jpg)\n\n",
+            "source_quote_id": "s5:b1:p0"
+          },
+          {
+            "assessment": "核对：该块文本为一张图片加残留标签“d”，MinerU 打乱了子图与标签的顺序，无法从文本断定该图块就是 c 或 d。初稿直接断言“c 图显示成功率显著提升”，超出可证实范围；caption 只说明 c 报告三条配置（baseline/adapted/final）的成功率并含 World-based 对照，d 报告 OSWorld 相对初始 agent 的增益及 RSI-Anything 相对 RLAnything 的额外相对增益，且所有增益为相对百分比。已改为按 caption 陈述并把图块归属标注为推断。",
+            "block_index": 2,
+            "source_quote": "![](images/99adf258c59562f7d0d9e81c2a413b20229cf31866d7eb12f9a8e11ff77dc21d.jpg)  \nd\n\n",
+            "source_quote_id": "s5:b2:p0"
+          },
+          {
+            "assessment": "核对：该块文本为残留标签“c”加一张图片，同样无法确定对应子图。初稿在此块下写 e/f/g 的行为指标，与残留标签“c”不一致，属错配，已删除。现按 caption 完整列举 e–g 三项指标（平均每 episode 动作数、重复点击计数、错误提交 episode 数）并注明其只针对 c 中 RSI-Anything 的配置。",
+            "block_index": 3,
+            "source_quote": "c  \n![](images/2621b3bba24ff8a58711238cb6d1c7b640663b0b70a879ae1c7c164a5962da43.jpg)\n\n",
+            "source_quote_id": "s5:b3:p0"
+          },
+          {
+            "assessment": "核对：该块为无文字图片块。初稿称该组图“构成完整证据链”，属概括性推断且未说明依据。已保留分层读法但明确其依据仅是 caption 的结构（a/b 示例、c/d 成功率、e–g 行为统计），并补充原文文本未给出具体数值与显著性。",
+            "block_index": 4,
+            "source_quote": "![](images/ef5533711283ec8506d5d38f24ce12f91165864a71ee042b4c94d1e199380d60.jpg)\n\n",
+            "source_quote_id": "s5:b4:p0"
+          },
+          {
+            "assessment": "核对：初稿在此块提出“更少的错误提交是否由减少重复点击驱动”的因果问题，但 caption 只并列三个指标，原文全文亦无该因果断言，属超出证据的推断。已改写为：caption 未建立三指标间因果链，该因果读法标注为推断、待图内数值核实；同时补出“曲线连接被评估的各配置”这一 caption 事实。",
+            "block_index": 5,
+            "source_quote": "e  \nf  \n![](images/d1258256ca0bffb37f36769df4d4fe6df43d25728d100833803d676b8c8952d7.jpg)\n\n",
+            "source_quote_id": "s5:b5:p0"
+          },
+          {
+            "assessment": "核对：初稿称“错误提交率的下降趋势”“作为策略鲁棒性提升的直接证据”，两处均无原文支持：caption 用的是 number of episodes with incorrect submissions（计数而非“率”），且未出现“鲁棒性”论断。已改为按 caption 表述为错误提交 episode 数，并注明因果/鲁棒性解释为推断。",
+            "block_index": 6,
+            "source_quote": "![](images/6401d1da76b4ec5660e5c92a2d764b6de9f0bebe66d76c34f0dd23e4a8ac4bb0.jpg)\n\n",
+            "source_quote_id": "s5:b6:p0"
+          },
+          {
+            "assessment": "核对：逐句核对 caption 原文与初稿。确认 c 为 MiniWoB++ click-checkboxes 在 baseline/adapted/final 配置及 World-based 对照下的成功率、d 为 OSWorld 相对初始 agent 的增益、annotation 为 RSI-Anything 相对 RLAnything 的额外相对增益、e–g 三项行为指标、所有增益为相对百分比、Lines connect evaluated configurations。初稿漏掉“World-based 对照”和“曲线连接配置”两点，已补入。",
+            "block_index": 7,
+            "source_quote": "g  \n![](images/09c9e372686a71de45d6816285032d6cfc99a03df9dea719646b7489219a4f01.jpg)  \nFigure 4 | Task completion and action behavior in GUI environments. $\\mathsf { a } , \\mathsf { b } ,$ , Illustrative MiniWoB++ checkbox selection and OSWorld spreadsheet completion tasks, showing initial and target states. c, MiniWoB++ click-checkboxes success across baseline, adapted, and final configurations for RSI-Anything and the World-based control. d, OSWorld success-rate gains relative to the initial agent. The annotation gives the additional relative gain of RSI-Anything over RLAnything; all gains are relative percentages. e–g, Mean actions per episode, repeated-click count, and number of episodes with incorrect submissions, respectively, for the RSI-Anything configurations in c. Lines connect evaluated configurations.\n\n",
+            "source_quote_id": "s5:b7:p0"
+          },
+          {
+            "assessment": "核对数字：21.80%、38.03%、41.99%、44.56%、46.01% 与原文字符级一致；46.01−21.80=24.21，与“24.21 percentage points”一致。纠正一处：初稿称“线性增长”，实际相邻增量约为 16.23、3.96、2.57、1.45 个百分点，为递减而非线性；已改为“单调递增但增量递减”。另原文归因为 successive policy versions retained 带来的 protocol-aligned planning 持续改进，“累积效应”仅作措辞性推断标注。",
+            "block_index": 8,
+            "source_quote": "The Final Score increased across all five evaluated versions: 21.80%, 38.03%, 41.99%, 44.56%, and 46.01% (Figure 5). The final version improved on the initial version by 24.21 percentage points. This progression shows continued improvement in protocolaligned planning as successive policy versions were retained within the RSI-Anything process.\n\n",
+            "source_quote_id": "s5:b8:p0"
+          },
+          {
+            "assessment": "核对数字：46.01% vs 45.32%，差 0.69 pp，与原文一致；L1 0.700 vs 0.665 一致。纠正一处：初稿“匹敌或超越特定基线”可支持（原文仅与 Actor–Simulator–Selector reference 比较），但其后隐含的“超越多个大型模型”不属本段证据，应留给 Table 3；已加界限说明。",
+            "block_index": 9,
+            "source_quote": "For comparison with reference systems, the final 4B version achieved a Level-2 score of 46.01%, compared with 45.32% for the Actor–Simulator–Selector reference [22], a diference of 0.69 percentage points. On Level-1 next-action selection, RSI-Anything achieved an accuracy of 0.700, compared with 0.665 for the reference (Table 3).\n\n",
+            "source_quote_id": "s5:b9:p0"
+          },
+          {
+            "assessment": "核对：该块为标题行“Laboratory planning across successive policy versions”加一张图片。初稿标为“Figure 5a”属依据 caption 的推断（未获图像信息）。caption 中 a 为连接协议上下文、4B 策略、动作序列与参数的预测性评估、执行计划与评估的规划工作流，虚线为框架内的更新路径——与初稿描述一致。已补注图块归属为推断、并说明本块并非 GUI 内容而属实验室规划。",
+            "block_index": 10,
+            "source_quote": "Laboratory planning across successive policy versions  \n![](images/3b08d463767b010ee8339fc846d2b694afc9a21a598d51d1caf509412ded112c.jpg)\n\n",
+            "source_quote_id": "s5:b10:p0"
+          },
+          {
+            "assessment": "核对：无文字图片块。caption 中 b 为同一 4B 策略在一次自改进过程中的五个连续版本。纠正：初稿“直观展示自我改进过程的非离散性”为原文没有的判定（“非离散”未出现），已改为按 caption 表述为五个连续版本的开发顺序。",
+            "block_index": 11,
+            "source_quote": "![](images/665c9d29b152f58398d0cc90908f98aa2a0e01643c1be1317db0193f602e34d2.jpg)\n\n",
+            "source_quote_id": "s5:b11:p0"
+          },
+          {
+            "assessment": "核对 caption：Figure 5 为 200-task LabHorizon F200 Level-2 上的逐版本改进，c 的 Final Score 结合动作序列相似度与参数准确度，虚线标 Actor–Simulator–Selector 参考 45.32%，版本按开发顺序排列且间距为示意。纠正：初稿“后期版本突破此上限”不准确——仅最终版本 46.01% 超过 45.32%，前四版 21.80/38.03/41.99/44.56 均低于该线；已改为“仅最终版本超过”。并补入“间距为示意”。",
+            "block_index": 12,
+            "source_quote": "![](images/49b1733ef86c2e74ad1161ab6febb95d3c3b9390f51ca463fde471085c0d04a0.jpg)  \nFigure 5 | Successive policy improvement with RSI-Anything on the 200-task LabHorizon F200 Level-2 benchmark [22]. a, Illustrative planning workflow connecting protocol context, a 4B policy, predictive evaluation of action sequences and parameters, an execution plan, and assessment. Dashed feedback paths depict update routes in the framework; the quantitative comparison below follows retained policy versions. b, Five consecutive versions of the same 4B policy from one self-improvement process. c, Final Score for each version, combining action-sequence similarity and parameter accuracy. The dashed line marks the Actor–Simulator–Selector reference at 45.32%. Versions are ordered by development sequence; spacing is schematic.\n\n",
+            "source_quote_id": "s5:b12:p0"
+          },
+          {
+            "assessment": "逐行核对 Table 3：Grok 4.3 0.555/0.3244、Gemini 3.1 Pro 0.465/0.3263、GPT-5.5 0.535/0.2276、Kimi K2.6 0.550/0.3150、Qwen3.6-35B-A3B direct 0.475/0.2534、trained 0.635/0.4100、Actor-Simulator-Selector 0.665/0.4532、RSI-Anything (4B) 0.700/0.4601，均与初稿引用一致，RSI-Anything 两列确为表内最高。纠正：“更大模型”不可由本表支持（表中未给参数量，闭源模型规模未知），已改为“表中列出的各系统”，并注明评测口径由 [22] 定义、原文未描述细节。",
+            "block_index": 13,
+            "source_quote": "Table 3 | LabHorizon benchmark scores for reference systems [22] and RSI-Anything.\n<table><tr><td>System</td><td>L1 Acc.</td><td>L2 Final</td></tr><tr><td>Grok 4.3 [23]</td><td>0.555</td><td>0.3244</td></tr><tr><td>Gemini 3.1 Pro [24]</td><td>0.465</td><td>0.3263</td></tr><tr><td>GPT-5.5 [25]</td><td>0.535</td><td>0.2276</td></tr><tr><td>Kimi K2.6 [26]</td><td>0.550</td><td>0.3150</td></tr><tr><td>Qwen3.6-35B-A3B [27], direct</td><td>0.475</td><td>0.2534</td></tr><tr><td>Qwen3.6-35B-A3B, trained</td><td>0.635</td><td>0.4100</td></tr><tr><td>Actor-Simulator-Selector reference</td><td>0.665</td><td>0.4532</td></tr><tr><td>RSI-Anything (4B)</td><td>0.700</td><td>0.4601</td></tr></table>\n\n",
+            "source_quote_id": "s5:b13:p0"
+          },
+          {
+            "assessment": "核对方法条件：RSI-Anything 用 world-model yield predictions 对候选条件排序后交实验评估；每个实测产率扩充用于指导后续选点的观测历史；在两个 Suzuki–Miyaura 筛选内分别与 Bayesian optimization [28] 在 match experiment counts 下比较。初稿描述与之一致，未发现超证据表述；仅补充“matched experiment counts 是受控条件”的明确措辞。",
+            "block_index": 15,
+            "source_quote": "We examined the use of limited external feedback in experimental science by comparing reaction-condition search at matched experiment counts. RSI-Anything used worldmodel yield predictions to rank candidate conditions for experimental evaluation. Each measured yield extended the observation history used to guide subsequent condition choices, linking prediction, experiment, and the next selection. We evaluated this process in two Suzuki–Miyaura screens, comparing RSI-Anything with Bayesian optimization [28] within each screening protocol.\n\n",
+            "source_quote_id": "s5:b15:p0"
+          },
+          {
+            "assessment": "核对数字：GC 分析的 Pd–NHC–DMS 屏 20 次实验后最佳观测产率 93.0% vs 87.5%，差 5.5 pp；flow LC–MS 屏（Pd(OAc)2）40 次实验后 mean best observed yield 96.15% vs 82.16%，差 13.99 pp，均与原文一致。纠正两点：(1) 第一屏原文为单次“best observed yield”，非“均值最佳”，第二屏才是 mean，初稿未区分；(2) 两屏反应体系与分析方法不同，把差异归因于“高预算下优势扩大”是混淆变量，已标注为推断/待证。",
+            "block_index": 16,
+            "source_quote": "Figure 6 shows yield progression with cumulative experiments $( \\mathtt { b } , \\mathtt { e } )$ and endpoint comparisons at matched experiment counts (c, f). After 20 experiments in the GC-analyzed Pd–NHC–DMS screen, the best observed yield reached 93.0% with RSI-Anything and 87.5% with Bayesian optimization, a gain of 5.5 percentage points. In the flow LC–MS screen using $\\mathrm { P d } ( \\mathrm { O A c } ) _ { 2 }$ , the mean best observed yield after 40 experiments was 96.15%, compared with 82.16% for Bayesian optimization, a gain of 13.99 percentage points.\n\n",
+            "source_quote_id": "s5:b16:p0"
+          },
+          {
+            "assessment": "核对：原文结论限于“在各自筛选的匹配端点上，预测与反馈引导的搜索在相同实验次数下取得更高 best-yield 指标”，并称这些结果支持在有限实验预算下用世界模型预测结合实测结果指导条件选择。纠正：初稿“优于纯贝叶斯方法”“支持世界模型在科学发现中的实用价值”属范围外泛化（证据仅两处 Suzuki–Miyaura 筛选），已限定为“在本实验范围内支持”。",
+            "block_index": 17,
+            "source_quote": "At the matched endpoints within each screen, prediction- and feedback-guided search achieved higher best-yield metrics from the same number of experiments. These results support using world-model forecasts together with measured outcomes to guide condition selection under a limited experimental budget.\n\n",
+            "source_quote_id": "s5:b17:p0"
+          },
+          {
+            "assessment": "核对流程描述：Agent Genesis 搜索 scientific-agent workflows 与 model configurations，选定 model-building agent workflow [13]；保留的 workflow 产出 action-conditioned immune world model；下游分析中 analysis agent 以固定参数使用该模型协调 simulation、evaluation、tool use、analysis revision、hypothesis prioritization。初稿两阶段划分与“固定参数”均与原文一致，已补出 analysis revision 与 hypothesis prioritization 两项。",
+            "block_index": 19,
+            "source_quote": "We applied RSI-Anything to an end-to-end immune-science workflow that connects persistent workflow development, predictive world-model construction, and evidenceguided scientific analysis. During construction, Agent Genesis searched scientific-agent workflows and model configurations and selected a model-building agent workflow [13]. The retained workflow produced an action-conditioned immune world model. During downstream analysis, an analysis agent used this model with fixed parameters to coordinate simulation, evaluation, tool use, analysis revision, and hypothesis prioritization.\n\n",
+            "source_quote_id": "s5:b19:p0"
+          },
+          {
+            "assessment": "核对：模型表示 cellular、tissue、individual 免疫状态并预测显式干预的后果（Figure 7）；实测扰动证据支持模型开发，held-out 的干预与生物情境用于评估 forecasting 与 action composition；分析阶段模型预测与实验证据共同影响 intervention ranking 与 self-correction；构建阶段保留 workflow 与 predictor，后续分析用该 predictor 修正候选干预与假设。纠正：初稿“利用实测扰动证据进行自我修正”把 self-correction 归于证据；原文是 model forecasts 与 experimental evidence 共同 inform，self-correction 发生在分析阶段。本段无定量结果，故“证明可行性”不可支持，已标注为描述性证据。",
+            "block_index": 20,
+            "source_quote": "The model represents cellular, tissue, and individual immune states and predicts the consequences of explicit interventions (Figure 7). Measured perturbation evidence supports model development, and withheld interventions and biological contexts assess forecasting and action composition. In the analysis stage, model forecasts and experimental evidence inform intervention ranking and self-correction. The construction stage retains the selected model-building workflow and resulting predictor; subsequent analysis uses the constructed predictor to revise candidate interventions and hypotheses.\n\n",
+            "source_quote_id": "s5:b20:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 5,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "核对了本段的核心主张与措辞。原文为 “self-correction removed the screened cytokine-pair candidates, and the integrated evidence led to a prospective nomination combining SIRP inhibition with IL-36-axis modulation [13]”，并结句为 “culminating in a concrete hypothesis for experimental testing”。初稿称其为“科学发现案例”并暗示闭环，超出了原文的 prospective nomination / 待验证假设定位，已改为前瞻性提名并标注待实验验证。原文两处符号 OCR 损坏（SIRP、IL-36），初稿径写 SIRPα/IL-36γ 属推断修复，已在批注中明确标为推断、需回 PDF 确认。",
+            "block_index": 21,
+            "source_quote": "In therapeutic hypothesis generation, self-correction removed the screened cytokine-pair candidates, and the integrated evidence led to a prospective nomination combining SIRP� inhibition with IL-36�-axis modulation [13]. This case connects a retained scientific-agent workflow, a predictive world model, and evidence-guided analysis within one scientific workflow, culminating in a concrete hypothesis for experimental testing.\n\n",
+            "source_quote_id": "s5:b21:p0"
+          },
+          {
+            "assessment": "核对了本块可用证据。块 22 仅含 “GC screen / a / 20 experiments” 与一条图片路径，不含任何 caption，无法据此读出试剂与条件空间。初稿写入了“4-氯茴香醚、4-(三氟甲基)苯硼酸、Pd–NHC–DMS 预催化剂、催化剂/碱/溶剂选项”等细节，这些实际来自块 27 的 Figure 6 caption，属跨块移植，已改为注明证据来源并保留面板 a 的定位。同时如实说明未获得图像视觉信息。",
+            "block_index": 22,
+            "source_quote": "GC screen  \na  \n20 experiments  \n![](images/fe6e0b2e6394da247aeaede9184d072022752cf065491dbd428ee1a95d6399e7.jpg)  \nb\n\n",
+            "source_quote_id": "s5:b22:p0"
+          },
+          {
+            "assessment": "核对了面板归属。本块文字为 “Flow LC–MS screen”，初稿将其判为 Figure 6b（Best observed GC yield versus cumulative experiment count），二者不一致——6b 描述的是 GC 产率曲线，而本块指向流动 LC–MS。原判断不成立，已纠正为归属不确定、标为待证，并说明未获图像视觉信息。",
+            "block_index": 23,
+            "source_quote": "![](images/baf8b5fbb8e31cddea776242e4e9b0fa4c952fca11022272c487d97090ef8bc3.jpg)  \nFlow LC–MS screen\n\n",
+            "source_quote_id": "s5:b23:p0"
+          },
+          {
+            "assessment": "核对了标签与数字归属。本块为 “c” 标签 + 图片 + “40 experiments”；而 Figure 6 caption 中 c 指 20 次实验的 GC 产率（93.0% vs 87.5%），40 次实验对应 f（96.15% vs 82.16%），标签与文字存在错位。初稿将本块定为 6c 并把 “+5.5 个百分点” 挂在此处，缺乏本块证据支撑，已改为标注错位、归属待证，并将 5.5 个百分点回归到 caption（块 27）层面陈述。",
+            "block_index": 24,
+            "source_quote": "c  \n![](images/5e340bd4e19d1a97e316c5495305e8fb90b166ea560c0a63646069f6ffc3f5c0.jpg)  \n40 experiments\n\n",
+            "source_quote_id": "s5:b24:p0"
+          },
+          {
+            "assessment": "核对了本块内容量。块 25 仅有面板标签 “d” 与一条图片路径，无说明文字。初稿据 caption 推断其为流动筛选工作流（Pd(OAc)₂、配体、碱、溶剂 + LC–MS），该推断本身与 caption 的 d 描述相符，但不由本块证据支持，已在批注中标为“依据 caption 的推断”并保留待证标记。未获图像视觉信息，不对示意内容作断言。",
+            "block_index": 25,
+            "source_quote": "d  \n![](images/26e46474bf62f270ac7db10365dfe91d39d28a64bd9f661d3029f8f4f04e06a3.jpg)\n\n",
+            "source_quote_id": "s5:b25:p0"
+          },
+          {
+            "assessment": "核对了本块内容量。块 26 仅有面板标签 “e” 与图片路径。初稿称其“通常用于展示收敛速度或最终性能上限”，属模板化泛述；按 caption，e 应指流动 LC–MS 筛选中平均最佳产率对累积实验次数的曲线，但本块无文字支撑，已改为标注推测并说明无法确认曲线趋势。",
+            "block_index": 26,
+            "source_quote": "e  \n![](images/a1a85817c825ad867ced70d8045a818f826bfee38ee3e1d6a32cb92bc4261455.jpg)\n\n",
+            "source_quote_id": "s5:b26:p0"
+          },
+          {
+            "assessment": "核对了 Figure 6 caption 的全部关键数字与限定。数字一致：GC 20 次实验 93.0%（RSI-Anything）对 87.5%（贝叶斯优化）；流动 40 次实验 96.15% 对 82.16%；括号增益 5.5 与 13.99 个百分点对应两个 screen。已据原文末句区分“示意图说明流程”与“曲线/柱状图报告两个独立 screen 的实测值”。纠正了初稿倾向把 13.99 > 5.5 归因于“实验预算增加使优势扩大”的因果解读——两 screen 底物与体系不同，原文未作该因果声明，已改标为跨体系推断/待验证假设。",
+            "block_index": 27,
+            "source_quote": "cate gains of 5.5 and 13.99 percentage points within the corresponding screen. Condition examples and feedback arrows illustrate the framework; curves and bars report the two separate screens.\n\n",
+            "source_quote_id": "s5:b27:p1"
+          },
+          {
+            "assessment": "核对了 Figure 7 caption 的 A/B 面板描述与来源限定。A、B 面板内容描述与原文一致。初稿遗漏了 “Panels A and B adapted from Figure 1 of [13]” 这一关键限定，且“展示了模型在多尺度生物系统中的应用潜力”暗示本文实验验证，已补正为改编自 [13] 的示意框架图、非本文新实验结果，并与块 21 的待验证提名相呼应。",
+            "block_index": 28,
+            "source_quote": "![](images/c3bd7c60ab24f1748c9067a0106af2cb2875b62ff9cf1f0ac7610a372e825422.jpg)  \nFigure 7 | An end-to-end application of RSI-Anything in immune science. A, evolution of scientific-agent workflows, construction of the immune world model, and model-guided analysis. B, action-conditioned transitions over structured cellular, tissue, and individual immune states, with readouts for interpretation, ranking, and hypothesis generation. Panels A and B adapted from Figure 1 of [13].\n\n",
+            "source_quote_id": "s5:b28:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 6,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对 RSI 谱系与本文定位。原文对既有工作的改进对象枚举为 code、policies、memories、harnesses、training environments，初稿只保留前三类，已补全为修改；CURE[14] 的执行反馈共演化、Self-Improving Coding Agent/Darwin Godel Machine 的“保留经验证有效的改进”[29,30]、AIDE²[31]、Voyager[32]、GenEnv/Agent0[33,34]、RLAnything[21]、OpenClaw-RL[35] 的配对与初稿一致。检查 s6:b2:p1：Recuris 的 validation-gated memory evolution[36] 与 ScienceBuddy 的 harness refinement + model RL[37] 描述准确。RSI-Anything 三要素（预测指导候选选择、观测评估可靠性、策略–模型兼容性决定保留组件）逐句对应原文。初稿“解决了长程持久化”未获原文支持，原文仅表述为该方向的要求，已改为待证推断。",
+            "block_index": 2,
+            "source_quote": "Recursive self-improvement (RSI) has evolved from improving reasoning and code to adapting interactive agents and their underlying systems. In coding, CURE co-evolves code generation and unit testing through execution feedback [14], while Self-Improving Coding Agent and Darwin Godel Machine iteratively modify agent implementations and retain empirically validated improvements [29, 30]. AIDE<sup>2</sup> extends this approach to self-improving AI research agents [31]. Beyond code, Voyager accumulates reusable executable skills [32], while GenEnv and Agent0 adapt task curricula to evolving agent capabilities [33, 34]. RLAnything jointly optimizes the policy, reward model, and environment [21], and OpenClaw-RL enables online policy improvement from user interactions and tool feedback [35]. Long-horizon RSI further requires improvements to persist across extended interactions. Recuris couples Experiential and Working Memory with validation-gated memory evolution [36], while ScienceBuddy int",
+            "source_quote_id": "s6:b2:p0"
+          },
+          {
+            "assessment": "核对 feedback→policy 谱系与本文差异。初稿遗漏原文明确事实：CURE[14] 共演化 coder 与 unit tester 并提供本文代码评测所用的 ReasonFlux-Coder policy，已补入并标为策略来源级复用而非仅“启发”。RLAnything 联合优化 policy/reward model/environment[21] 与原文一致。本文显式化 world-model reliability 与 policy–model compatibility 于 update acceptance、理由是换策略即换候选分布，均逐句可对上；初稿“必须同时验证两者一致性”超出原文直述，已标注为合理外推/推断，未当作原文断言保留。",
+            "block_index": 4,
+            "source_quote": "Verifiers, self-training, preference optimization, and verbal feedback turn evaluated trajectories into signals for selection and learning [1–5]. CURE [14] co-evolves a coder and unit tester, providing the ReasonFlux-Coder policy used in our code evaluation. RLAnything jointly optimizes the policy, reward model, and environment through feedback [21]. These approaches motivate the feedback-to-policy part of RSI-Anything. Our framework additionally makes world-model reliability and policy–model compatibility explicit in update acceptance: changing the policy changes the candidate distribution on which its predictor must be evaluated.\n\n",
+            "source_quote_id": "s6:b4:p0"
+          },
+          {
+            "assessment": "核对预测世界模型基座与组织层。原文列举 World Models[6]、MuZero[8]、Dreamer[7]、Genie[38]，初稿漏 Genie，已补为修改。JEPA 系[10–12]“学习 latent targets 而不重建每个观测细节”、JEPA-Anything 经 OPF 扩展[9] 与原文一致；初稿把该点写成“降低计算开销”，原文无效率/开销表述，已删除并标为未获支持的推断。RSI-Anything 组织 predictions 与 observed outcomes 指导 action selection 及后续 policy/world-model 版本接受，与原文一致；“从预测能力到递归决策逻辑的跨越”属解释性概括，已注明非原文原话。",
+            "block_index": 6,
+            "source_quote": "World Models [6], MuZero [8], Dreamer [7], and Genie [38] establish predictive environments as a basis for control, planning, and interactive generation. Joint-embedding predictive architectures learn latent targets without reconstructing every observation detail [10–12], and JEPA-Anything extends this line through OPF across heterogeneous data types [9]. Building on these predictive capabilities, RSI-Anything organizes how predictions and observed outcomes guide action selection and the acceptance of subsequent policy or world-model versions.\n\n",
+            "source_quote_id": "s6:b6:p0"
+          },
+          {
+            "assessment": "核对科学/实验室代理与本文拼接方式。VLA 与 cross-embodiment 数据集作为物理系统动作条件模型的动机[39–41]、LabHorizon 度量 visual next-action prediction 与 protocol-aligned planning[22]、化学侧工具/yield predictors/贝叶斯优化/机器人实验室[28,42–46]、ReactionT5 支持 product/retrosynthesis/yield prediction[47]、single-cell foundation models 与 perturbation predictors[48–51] 的配对均与原文一致。关键纠正：原文只说本文 chemistry adapter 组合 ReactionT5 的 reaction-prediction backbone 与 JEPA-Anything[9] 的 predictive design 做 action-conditioned yield forecasting，初稿将 VLA 列为其组件，已改回原文归因。transition and feedback contract 连接各领域的表述与原文一致；初稿“自主发现与验证”为概括措辞，已标为解读而非原文主张。",
+            "block_index": 8,
+            "source_quote": "Vision-language-action and cross-embodiment datasets motivate action-conditioned models for physical systems [39–41]. LabHorizon measures visual next-action prediction and protocol-aligned planning [22]. In chemistry, language-model tools, yield predictors, Bayesian optimization, and robotic laboratories provide complementary components for selecting and testing reactions [28, 42–46]. ReactionT5 [47] is a reaction-pretrained transformer that supports product, retrosynthesis, and yield prediction; our chemistry adapter combines this reaction-prediction backbone with the predictive design of JEPA-Anything [9] for action-conditioned yield forecasting. Single-cell foundation models and perturbation predictors support cellular-response forecasting [48–51]. RSI-Anything connects these domain capabilities through a common transition and feedback contract, so that the outcome of a program, experiment, or intervention can inform candidate selection and subsequent system updates.\n\n",
+            "source_quote_id": "s6:b8:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 7,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐项核对：(1)“两个角色”对应原文 informing which actions receive external feedback 与 providing a predictor that can itself improve from that feedback，准确；(2) 原文把代码修复增益归于 Predictive selection and model adaptation，把实验室规划改进归于 retained policy versions，初稿原总结中“结合预测选择与模型适应在实验室规划等任务带来提升”属归因滑动，已在 summary 与批注中纠正；(3) GUI 的减少重复点击/错误提交限定于 checkbox 任务，已在批注中补上限定；(4) 共同贡献契合原文 procedure for using prediction–observation pairs to guide current actions and assess changes to the system，准确。",
+            "block_index": 1,
+            "source_quote": "The results support two roles for world models in recursive improvement: informing which actions receive external feedback and providing a predictor that can itself improve from that feedback. Predictive selection and model adaptation yielded successive gains in code repair, while retained policy versions improved laboratory planning. In GUI tasks, RSI-Anything updated both the policy and the world model and achieved higher task completion, with fewer repeated clicks and incorrect-submission episodes on the checkbox task. Together with measured-feedback search and the end-to-end immunescience workflow, these findings connect prediction-guided decisions to learning and retained system changes. The common contribution is a procedure for using prediction– observation pairs to guide current actions and assess changes to the system that will make subsequent decisions.\n\n",
+            "source_quote_id": "s7:b1:p0"
+          },
+          {
+            "assessment": "核对“解耦更新节奏”与两类检查的分工，均与原文一致：可靠性检查 govern when model adaptation is attempted，组件与兼容性检查 govern which version is carried forward。发现初稿把检查机制解读为“解决 RSI 中常见的灾难性遗忘或震荡问题”，原文无此主张亦无对应实验，已改为推断/待证并明确标注证据边界。",
+            "block_index": 2,
+            "source_quote": "The design links decisions about actions to decisions about system versions. Pairing predictions with observations allows the same experience to inform candidate utility and predictive reliability. Policies and world models can change on diferent schedules: a reliable predictor can support policy or workflow development, and new outcome evidence can motivate predictor adaptation while the policy remains fixed. Reliability checks govern when model adaptation is attempted, and component and compatibility checks govern which version is carried forward. Retaining accepted versions makes subsequent experience depend on the system’s accumulated improvements.\n\n",
+            "source_quote_id": "s7:b2:p0"
+          },
+          {
+            "assessment": "核对局限四项：Joint multiround evaluation 用于确立单一任务内持续互促、实验室仅评估 protocol-aligned planning 且物理执行需另行评估、化学限于两个 Suzuki–Miyaura 筛选的实验预算、免疫科学治疗假设待实验测试——均与原文一致。初稿“模拟环境或半自动流程下的验证”为原文未支持的推断，已标注为推断并移除其结论语气。",
+            "block_index": 3,
+            "source_quote": "Domain generality concerns the reuse of this improvement mechanism across domainspecific world models, policies, and evaluation procedures. The evaluations support predictive selection, predictor adaptation, successive policy improvement, and feedbackguided search in their respective settings. Joint multiround evaluation is needed to establish sustained mutual improvement of the policy and world model within a single task. The present laboratory results assess protocol-aligned planning; reliable physical execution requires evaluation on the relevant equipment and workflows. The chemistry results cover two Suzuki–Miyaura screens under the reported experiment budgets, and the therapeutic hypothesis generated in the immune-science application awaits experimental testing.\n\n",
+            "source_quote_id": "s7:b3:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 8,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对了三处世界模型的分工（W1 给执行类别概率、ReactionT5-JEPA-Anything 给产率分布、免疫世界模型给免疫状态与生物学读出）与 Table 4 的索引作用，均与原文一致。初稿“W1 与 ReactionT5 均基于 JEPA-Anything 设计”只对 W1 有原文支持（§6.1 明确 W1 用 JEPA-Anything 预测式设计），ReactionT5 的依据仅为命名与表名，已改为基于命名的推断并标注待方法章节证实。",
+            "block_index": 1,
+            "source_quote": "The domain settings instantiate the shared framework with diferent states, action spaces, prediction targets, and feedback sources. Our code execution predictor, W1, supplies execution-class probabilities for candidate–test pairs, ReactionT5–JEPA-Anything supplies a yield distribution, and the immune world model supplies immune-state and biological readouts. Table 4 summarizes the domain-specific models, prediction targets, feedback sources, and update pathways evaluated in each application. The following sections describe the evaluation settings and statistical reporting.\n\n",
+            "source_quote_id": "s8:b1:p0"
+          },
+          {
+            "assessment": "核对了五条域级实例化表述（代码固定 coder 测预测选择与预测器自适应、实验室五个连续策略版本、GUI 同时更新策略与世界模型、化学反馈引导条件搜索、免疫把工作流演化/模型构建与固定预测器下游分析分开），叙述与原文一致，四域差异的概括无误。初稿“化学测试不更新模型”超出本段范围（原文仅说 feedback-guided condition search），已改为原文未提及的推断并标注待证。",
+            "block_index": 2,
+            "source_quote": "The experiments instantiate distinct parts of the full protocol. Code repair holds the coder fixed while testing predictive selection and predictor adaptation; laboratory planning follows five successive policy versions. GUI evaluations measure task completion and action behavior as RSI-Anything updates both the policy and the world model. Chemistry tests feedback-guided condition search, and the immune-science application separates workflow evolution and model construction from downstream analysis with a fixed predictor.\n\n",
+            "source_quote_id": "s8:b2:p0"
+          },
+          {
+            "assessment": "逐项核对了 Coder 固定与“proposes four revisions”、W1 为 3B、源自 Qwen2.5-Coder-3B-Instruct 经 LoRA、每个候选–测试对返回执行结果类别概率、两种配置（冻结 W1 vs 在 Coder 固定下更新 W1）、200 个 CodeContests 任务/3 种子/至多 3 轮、对照含随机选择与容量匹配静态验证器、四项指标语义及 online/hidden 测试分工，数字与因果关系均与原文吻合。末尾“轻量适配足以胜任”和“更新 W1 意在验证更准预测提升筛选效率”属推断，已在批注中显式标注为推断（原文未给结果数值支撑）。",
+            "block_index": 4,
+            "source_quote": "Code repair. The state contains the current program, generated tests, and observed feedback; each action is a candidate revision. The ReasonFlux-Coder-7B policy proposes four revisions and is held fixed [14]. W1 is our 3B execution-outcome world model, built using the predictive design of JEPA-Anything [9] and adapted from Qwen2.5- Coder-3B-Instruct [52] with LoRA [53]. For every candidate–test pair, it returns the probability of each execution-result class. Both RSI-Anything configurations aggregate these probabilities to rank the four revisions before one revision is executed. The fixed-world-model configuration (CURE-WM-Lite) retains W1, whereas the world-modeladaptation configuration updates W1 with the coder held fixed. We evaluated 200 CodeContests tasks [15] across three seeds and at most three feedback rounds. The comparison included both RSI-Anything configurations, random selection, and a capacitymatched static verifier. Metrics were final hidden-test all-pass rate, online te",
+            "source_quote_id": "s8:b4:p0"
+          },
+          {
+            "assessment": "核对 Table 4 各行内容：Code repair 配 W1 五类概率、GUI 行世界模型通过交互反馈更新、Lab planning 用 JEPA-Anything 协议模型与 4B 策略、Chemistry 由实测产率引导后续条件选择、Immune 用免疫世界模型且下游分析用固定预测器，均可对应。该表解析后列间文本错位（GUI 行单元格串行），已在批注中声明为谨慎复原而非逐字引用；同时纠正初稿把 Lab planning“五个连续版本”理解为世界模型随时间进化——原文与 §6.1 明确是五个连续 4B 策略版本。",
+            "block_index": 5,
+            "source_quote": "Table 4 | Domain bindings and reported update scope. The world model predicts consequences; the policy proposes or selects actions.\n<table><tr><td>Setting</td><td>State; action</td><td>World model; prediction Policy / workflow;</td><td>feedback-driven changes</td><td>Feedback; evaluation</td></tr><tr><td></td><td>Code repair Program, tests, and feedback; candidate revision</td><td>JEPA-Anything-based W1 adapted from Qwen2.5-Coder-3B- Instruct [52] with LoRA [53]; five-class</td><td>Fixed ReasonFlux- Execution-test Coder-7B; fixed or feedback; final feedback-adapted W1</td><td>test-suite success and online test usage</td></tr><tr><td>GUI interaction GUI action</td><td></td><td>probabilities Interface state and task; GUI outcome predictor; Action policy and consequences of candidate interface actions</td><td>world model updated through interaction feedback</td><td>Task outcomes; completion and action-level diagnostics</td></tr><tr><td>Lab planning</td><td>Protocol context; candidate acti",
+            "source_quote_id": "s8:b5:p0"
+          },
+          {
+            "assessment": "核对了 APPS Introductory 1,000 题与 LiveCodeBench v6 1,055 题、种子 0/1/2、共享初始程序与同一 ReasonFlux-Coder-7B 策略、每轮 4 个候选项、至多 3 轮、公共测试通过即停止、最终成功需过完整官方测试套件，数字与条件均无误。初稿“模拟真实编程竞赛环境”属推断，已标注为合理推断而非原文表述。",
+            "block_index": 6,
+            "source_quote": "We additionally evaluated APPS Introductory (1,000 problems) and LiveCodeBench v6 (1,055 problems) using seeds 0, 1, and 2. Repair methods shared the initial program for each problem and seed and used the same ReasonFlux-Coder-7B policy, with four repair candidates per round and at most three repair rounds. Public-test feedback guided repair, which stopped when all public tests passed. Final success required passing the complete oficial test suite.\n\n",
+            "source_quote_id": "s8:b6:p0"
+          },
+          {
+            "assessment": "核对了 MiniWoB++ click-checkboxes 与 OS-World、世界模型指导动作选择且交互结果同时更新策略与世界模型、保留策略–模型对用于后续交互、四项 checkbox 指标与 World-based 控制、Figure 4e–g 对应 RSI-Anything 配置、OSWorld 三方对比（initial agent / RLAnything / RSI-Anything）、相对提升公式 $100(s_{method}/s_{reference}-1)\\%$，以及 Figure 4d 以 initial agent 为共同参考、另一处以 RLAnything 为参考，均与原文一致；初稿未出现数字或因果关系错误，仅对“典型在线强化学习场景”一类框定语保留了推断性质。",
+            "block_index": 7,
+            "source_quote": "GUI agents. We evaluated the MiniWoB++ click-checkboxes task [19] and OS-World [20]. World-model predictions guide GUI action selection, and observed interaction outcomes provide feedback for updating both the action policy and the world model. The retained policy–model pair is used in subsequent interactions. The checkbox evaluation compares baseline, adapted, and final configurations using task success rate, mean actions per episode, repeated-click count, and the number of episodes with incorrect submissions. Success rates are also shown for the World-based control. The action and error diagnostics in Figure $_ { 4 \\mathrm { e } - \\mathrm { g } }$ describe the RSI-Anything configurations. The OSWorld comparison includes the initial agent, RLAnything [21], and RSI-Anything. For success rates $s _ { \\mathrm { m e t h o d } }$ and $s _ { \\mathrm { r e f e r e n c e : } }$ , relative improvement is $1 0 0 ( s _ { \\mathrm { m e t h o d } } / s _ { \\mathrm { r e f e r e n c e } } - 1 ) \\%$",
+            "source_quote_id": "s8:b7:p0"
+          },
+          {
+            "assessment": "核对了 LabHorizon F200 为 200 任务、L1 为下一动作准确率、L2 为协议对齐序列且 Final Score 由序列相似度与参数准确率合成、4B 策略 + JEPA-Anything 协议世界模型、五个连续 4B 策略版本对应 0.2180–0.4601、参考系统为 Qwen3.6-35B-A3B Actor 与 Gemini 3.1 Pro Simulator/Selector、参考 L2 0.4532 [22]、L1 0.700 vs 0.665，数字全部一致且明确是策略版本而非世界模型版本。初稿 Q&A 中“能排除随机波动”的因果解释为推断，已标注；并提示 0.4601 与 0.4532 来源不同，跨来源比较需注意口径。",
+            "block_index": 8,
+            "source_quote": "Laboratory planning. LabHorizon evaluates Level-1 next-action accuracy and Level-2 protocol-aligned action sequences on its 200-task F200 setting [22]. Level-2 Final Score combines action-sequence similarity and parameter accuracy. The RSI-Anything policy versions use a 4B model to generate plans and a JEPA-Anything-based protocol world model to predict their consequences. The F200 evaluation follows five consecutive 4B policy versions from the same RSI-Anything self-improvement process, ranging from 0.2180 to 0.4601. The Actor–Simulator–Selector reference uses a trained Qwen3.6-35B-A3B Actor [27] and Gemini 3.1 Pro as Simulator and Selector [24], with a reported LabHorizon Level-2 score of 0.4532 [22]. Level-1 next-action accuracy was 0.700 for RSI-Anything and 0.665 for the reference.\n\n",
+            "source_quote_id": "s8:b8:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 8,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "核对项：(1) 适配器组成（ReactionT5 骨干 + JEPA-Anything 预测式设计）与映射 $p_{\\phi}(y \\mid r, c)$ 表述与原文一致，未改；(2) 修正初稿把「in flow」挂到 LC–MS 上的误读——原文为 'with ligand, base, and solvent choices in flow, measured by LC–MS'，in flow 修饰反应体系；(3) 补回初稿遗漏的 'mean best observed yield' 口径与第一组筛选的 4-chloroanisole coupling 对象；(4) 原文未说明两套筛选是否共享同一模型，标为待证，未作推断。",
+            "block_index": 9,
+            "source_quote": "Reaction optimization. We construct the ReactionT5–JEPA-Anything adapter by combining the ReactionT5 reaction-prediction backbone [47] with the predictive design of JEPA-Anything [9]. It maps a serialized reaction � and candidate condition vector � to a predicted yield distribution $p _ { \\phi } ( y \\mid r , c )$ . One screen varied Pd–NHC–DMS precatalyst, base, and solvent for the 4-chloroanisole coupling and measured GC analytical yield. A second screen used $\\mathrm { P d } ( \\mathrm { O A c } ) _ { 2 }$ with ligand, base, and solvent choices in flow, measured by LC–MS. Bayesian optimization is the baseline in both screens. Results are reported as best observed or mean best observed yield for each separate protocol. Measured yields guide subsequent condition choices, and performance is summarized by the best observed yield at matched experiment counts.\n\n",
+            "source_quote_id": "s8:b9:p0"
+          },
+          {
+            "assessment": "核对项：(1) 显式动作为「细胞因子、基因扰动、候选疗法」三类，建模任务为 withheld-intervention 预测、跨尺度预测、动作组合三类，均为原文直述，初稿各漏一项，已补；(2) 'retained policy configuration in this construction stage' 为原文明确条件，已保留；(3) 下游冻结世界模型参数、仅演化分析状态/候选干预/假设排序，与原文一致；(4) SIRPα 抑制 + IL-36γ 轴调节仅为 'prospective nomination … for subsequent experimental testing'，已明确标为待实验验证的前瞻性提名；原文该处为 OCR 乱码（SIRP / IL-36），α/γ 属依上下文推断，已标注推断界限。",
+            "block_index": 10,
+            "source_quote": "End-to-end immune-science application. The immune-science application uses an actionconditioned immune world model that encodes cellular state, tissue immune context, and individual context, and treats cytokines, genetic perturbations, or candidate therapies as explicit actions [13]. Agent Genesis evolved scientific-agent workflows and model configurations, producing a model for withheld-intervention forecasting, cross-scale prediction, and action composition. The selected model-building agent workflow is the retained policy configuration in this construction stage. During downstream intervention analysis, the resulting world-model parameters are frozen while the analysis state, candidate interventions, and hypothesis ranking evolve through model inference and self-correction. Therapeutic-hypothesis generation combined measured perturbation evidence with this model-guided analysis. The resulting prospective nomination combines SIRP� inhibition with IL-36�-axis modulation for subsequent",
+            "source_quote_id": "s8:b10:p0"
+          },
+          {
+            "assessment": "核对句尾 'The resulting prospective nomination combines SIRP… inhibition with IL-36…-axis modulation for subsequent experimental testing'：初稿把该提名表述为「最终产出」，未提示其未经验证；已在批注中限定为前瞻性提名、待后续实验测试，并说明 α/γ 由 OCR 乱码推断。",
+            "block_index": 10,
+            "source_quote": " experimental testing.\n\n",
+            "source_quote_id": "s8:b10:p1"
+          },
+          {
+            "assessment": "核对数字与因果：(1) 600 次 CodeContests 任务-种子评估、95% 区间、任务级重采样为聚类推断单位，均核对无误；(2) 修正初稿遗漏的比较对象限定——原文为 'RSI-Anything with a fixed world model and the static verifier'，初稿简写会改变比较含义，已补；(3) APPS/LiveCodeBench 为三种子算术平均，对应 3,000 与 3,165 次问题-种子评估，数字正确；(4) 补回初稿省略的 LabHorizon F200（200 任务均值分数）、24.21/0.69 个百分点增益为基准均值之差、化学 running best 以贝叶斯优化为对照、免疫设置见 [13]；(5) 原文用 '95% interval' 未交代构造方式，未断言其为置信区间；两个增益各自对应的基准原文未在本句点明，标为需回正文确认的推断。",
+            "block_index": 12,
+            "source_quote": "Success rates are reported over 600 CodeContests task-seed evaluations. We report the paired percentage-point diference between RSI-Anything with a fixed world model and the static verifier, together with its 95% interval. Tasks recur across seeds, so task-level resampling is the unit for clustered inference. APPS and LiveCodeBench report the arithmetic mean of final full-test success rates across three seeds, corresponding to 3,000 and 3,165 problem–seed evaluations, respectively. LabHorizon F200 reports mean scores over 200 tasks [22]. The 24.21- and 0.69-percentage-point gains are diferences between these benchmark means. Chemistry reports the observed running best within each optimization sequence, with Bayesian optimization as the comparator. Evaluation settings for the immune-science application are described in [13].\n\n",
+            "source_quote_id": "s8:b12:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 9,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对条目为 Cobbe et al. 2021 \"Training verifiers to solve math word problems\"（arXiv:2110.14168，与条目 URL 一致）。初稿称其指向 Process Reward Model，属超出条目支持内容的表述，已改为\"结果级验证器\"并标注本文是否使用过程监督为待证。",
+            "block_index": 1,
+            "source_quote": "[1] Karl Cobbe, Vineet Kosaraju, Mohammad Bavarian, Mark Chen, Heewoo Jun, Lukasz Kaiser, Matthias Plappert, Jerry Tworek, Jacob Hilton, Reiichiro Nakano, Christopher Hesse, and John Schulman. Training verifiers to solve math word problems. arXiv preprint arXiv:2110.14168, 2021. URL https://arxiv.org/abs/2110.14168.\n\n",
+            "source_quote_id": "s9:b1:p0"
+          },
+          {
+            "assessment": "条目为 Reflexion（arXiv:2303.11366），核心为语言形式的自我反思与情节记忆反馈。初稿用\"经验回放\"描述不准确（那是参数化缓冲机制），已修正措辞；本文是否采用反思循环标注为推断。",
+            "block_index": 2,
+            "source_quote": "[2] Noah Shinn, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, and Shunyu Yao. Reflexion: Language agents with verbal reinforcement learning. arXiv preprint arXiv:2303.11366, 2023. URL https://arxiv.org/abs/2303.11366.\n\n",
+            "source_quote_id": "s9:b2:p0"
+          },
+          {
+            "assessment": "条目为 ReST（arXiv:2308.08998），系迭代式\"生成-过滤-再训练\"流程。初稿\"离线 RL 微调技术\"方向正确但过度简化，已补足迭代性；\"本文可能采用自训练\"标注为推断。",
+            "block_index": 3,
+            "source_quote": "[3] Caglar Gulcehre, Tom Le Paine, Srivatsan Srinivasan, Ksenia Konyushkova, Lotte Weerts, Abhishek Sharma, Aditya Siddhant, Alex Ahern, Miaosen Wang, Chenjie Gu, Wolfgang Macherey, Arnaud Doucet, Orhan Firat, and Nando de Freitas. Reinforced self-training (ReST) for language modeling. arXiv preprint arXiv:2308.08998, 2023. URL https://arxiv.org/abs/2308.08998.\n\n",
+            "source_quote_id": "s9:b3:p0"
+          },
+          {
+            "assessment": "条目为 DPO（NeurIPS, vol. 36, 2023）。初稿\"转化为分类问题\"为通俗说法，已精确为\"带 KL 约束的 RLHF 目标重参数化，可直接在偏好对上优化\"；本文是否使用 DPO 标注为推断。",
+            "block_index": 4,
+            "source_quote": "[4] Rafael Rafailov, Archit Sharma, Eric Mitchell, Stefano Ermon, Christopher D. Manning, and Chelsea Finn. Direct preference optimization: Your language model is secretly a reward model. In Advances in Neural Information Processing Systems, volume 36, 2023.\n\n",
+            "source_quote_id": "s9:b4:p0"
+          },
+          {
+            "assessment": "条目为 STaR（NeurIPS, vol. 35, pp. 15476–15488, 2022），自举正确推理链。初稿描述与条目一致，未修改实质内容，仅补充模型是否借鉴属推断。",
+            "block_index": 5,
+            "source_quote": "[5] Eric Zelikman, Yuhuai Wu, Jesse Mu, and Noah D. Goodman. STaR: Bootstrapping reasoning with reasoning. In Advances in Neural Information Processing Systems, volume 35, pages 15476–15488, 2022.\n\n",
+            "source_quote_id": "s9:b5:p0"
+          },
+          {
+            "assessment": "条目为 Ha & Schmidhuber 2018 World Models（arXiv:1803.10122）。初稿称其为\"本文的理论基石之一\"缺乏证据，属推断被写成结论，已降级为背景引用、角色待正文确认。",
+            "block_index": 6,
+            "source_quote": "[6] David Ha and Jürgen Schmidhuber. World Models. arXiv preprint arXiv:1803.10122, 2018. URL https://arxiv.org/abs/1803.10122.\n\n",
+            "source_quote_id": "s9:b6:p0"
+          },
+          {
+            "assessment": "核对卷号 640、页码 647–653、DOI 10.1038/s41586-025-08744-2 与条目一致。条目未出现\"DreamerV3\"字样，初稿的名称映射已明确标注为基于公开常识的推断。",
+            "block_index": 7,
+            "source_quote": "[7] Danijar Hafner, Jurgis Pasukonis, Jimmy Ba, and Timothy Lillicrap. Mastering diverse control tasks through world models. Nature, 640:647–653, 2025. doi: 10.1038/s41586-025-08744-2.\n\n",
+            "source_quote_id": "s9:b7:p0"
+          },
+          {
+            "assessment": "核对卷 588、页 604–609、DOI 10.1038/s41586-020-03051-4 与条目一致；条目标题为 \"planning with a learned model\"，对应 MuZero 而非 AlphaZero。初稿的 AlphaZero 归属被判定为错误并已修正。",
+            "block_index": 8,
+            "source_quote": "[8] Julian Schrittwieser, Ioannis Antonoglou, Thomas Hubert, et al. Mastering atari, go, chess and shogi by planning with a learned model. Nature, 588:604–609, 2020. doi: 10.1038/s41586-020-03051-4.\n\n",
+            "source_quote_id": "s9:b8:p0"
+          },
+          {
+            "assessment": "条目为 JEPA-Anything（arXiv:2609.20800），标题含 \"diferent\"（疑为 different 的解析拼写）。作者与条目 [13] 大量重叠，作为线索记录；初稿\"本文关注通用世界模型构建能力\"标注为推断。",
+            "block_index": 9,
+            "source_quote": "[9] Taoyong Cui, Zhongyao Wang, Xinyue Xu, Weiyang Liu, Zhaochen Yu, Yuying Zhang, Qiang Gao, Mengyue Yang, Wanli Ouyang, Pheng Ann Heng, Yingcheng Wu, Zhenfei Yin, and Ling Yang. JEPA-Anything: Learning predictive models across diferent worlds. arXiv preprint arXiv:2609.20800, 2026. URL https://arxiv.org/abs/2609.20800.\n\n",
+            "source_quote_id": "s9:b9:p0"
+          },
+          {
+            "assessment": "条目为 Assran et al. 2023（arXiv:2301.08243），即 I-JEPA，非对比式自监督，作者含 Yann LeCun。初稿\"LeCun 提出的\"已改为\"参与署名\"以避免单人归属；\"本文核心参考\"标注为未证实推断。",
+            "block_index": 10,
+            "source_quote": "[10] Mahmoud Assran, Quentin Duval, Ishan Misra, Piotr Bojanowski, Pascal Vincent, Michael Rabbat, Yann LeCun, and Nicolas Ballas. Self-supervised learning from images with a joint-embedding predictive architecture. arXiv preprint arXiv:2301.08243, 2023. URL https://arxiv.org/abs/ 2301.08243.\n\n",
+            "source_quote_id": "s9:b10:p0"
+          },
+          {
+            "assessment": "条目为 Bardes et al. 2024（arXiv:2404.08471），视频特征预测学习表征。初稿\"V-JEPA 前身\"的时序关系属推断，已标注；\"支撑本文动态环境建模\"同样标注为推断。",
+            "block_index": 11,
+            "source_quote": "[11] Adrien Bardes, Quentin Garrido, Jean Ponce, Xinlei Chen, Michael Rabbat, Yann LeCun, Mahmoud Assran, and Nicolas Ballas. Revisiting feature prediction for learning visual representations from video. arXiv preprint arXiv:2404.08471, 2024. URL https://arxiv.org/abs/2404.08471.\n\n",
+            "source_quote_id": "s9:b11:p0"
+          },
+          {
+            "assessment": "条目为 V-JEPA 2（arXiv:2506.09985），标题确含 understanding、prediction、planning。初稿\"极可能是直接前身或主要对比对象\"超出被引用可支持范围，已降级为待正文确认的候选。",
+            "block_index": 12,
+            "source_quote": "[12] Mido Assran, Adrien Bardes, David Fan, et al. V-JEPA 2: Self-supervised video models enable understanding, prediction and planning. arXiv preprint arXiv:2506.09985, 2025. URL https: //arxiv.org/abs/2506.09985.\n\n",
+            "source_quote_id": "s9:b12:p0"
+          },
+          {
+            "assessment": "核对 DOI 10.48550/arXiv.2609.14709 与条目一致。初稿\"展示世界模型在垂直领域的高价值应用潜力\"属评价性推断，已改为\"提示世界模型被用于科学领域，本文用途待确认\"；与 [9] 的作者重叠仅作线索。",
+            "block_index": 13,
+            "source_quote": "[13] Taoyong Cui, Xi Wang, Zonghang Li, Jinchao Ding, Lingsen You, Yuzhi Xu, Wanghan Xu, Fang Wu, Kejun Ying, Wanli Ouyang, Pheng Ann Heng, Ling Yang, Zhenfei Yin, and Yingcheng Wu. An immune world model for multiscale forecasting and therapeutic hypothesis generation. arXiv preprint arXiv:2609.14709, 2026. doi: 10.48550/arXiv.2609.14709. URL https://arxiv.org/abs/ 2609.14709.\n\n",
+            "source_quote_id": "s9:b13:p0"
+          },
+          {
+            "assessment": "核对 DOI 10.48550/arXiv.2506.03136 与条目一致。初稿\"显示本文可能涉及代码生成领域的 RL 反馈闭环\"为推断，已标注该条目也可能仅作为\"自动反馈训练\"的先例被引用。",
+            "block_index": 14,
+            "source_quote": "[14] Yinjie Wang, Ling Yang, Ye Tian, Ke Shen, and Mengdi Wang. Co-evolving LLM coder and unit tester via reinforcement learning. arXiv preprint arXiv:2506.03136, 2025. doi: 10.48550/arXiv.2506.03136. URL https://arxiv.org/abs/2506.03136.\n\n",
+            "source_quote_id": "s9:b14:p0"
+          },
+          {
+            "assessment": "核对 Science 378(6624):1092–1097、DOI 10.1126/science.abq1158 与条目一致。初稿\"定义竞赛级代码生成标准\"系评价性表述，已改为\"常被用作参照系\"。",
+            "block_index": 15,
+            "source_quote": "[15] Yujia Li, David Choi, Junyoung Chung, Nate Kushman, Julian Schrittwieser, Rémi Leblond, Tom Eccles, James Keeling, Felix Gimeno, Agustin Dal Lago, et al. Competition-level code generation with AlphaCode. Science, 378(6624):1092–1097, 2022. doi: 10.1126/science.abq1158.\n\n",
+            "source_quote_id": "s9:b15:p0"
+          },
+          {
+            "assessment": "核对 Monthly Weather Review 78(1):1–3, 1950 与条目一致（DOI 含 <、> 字符，批注需转义）。初稿\"重视中间步骤的不确定性量化\"因果链不成立——Brier score 为结果级概率评分，已改为待证。",
+            "block_index": 16,
+            "source_quote": "[16] Glenn W. Brier. Verification of forecasts expressed in terms of probability. Monthly Weather Review, 78(1):1–3, 1950. doi: 10.1175/1520-0493(1950)078<0001:VOFEIT>2.0.CO;2.\n\n",
+            "source_quote_id": "s9:b16:p0"
+          },
+          {
+            "assessment": "核对 DOI 10.48550/arXiv.2105.09938 与条目一致，条目为 APPS 数据集。初稿\"本文实验将在真实编码任务上评估\"属推断（也可能仅为评测背景），已标注。",
+            "block_index": 17,
+            "source_quote": "[17] Dan Hendrycks, Steven Basart, Saurav Kadavath, Mantas Mazeika, Akul Arora, Ethan Guo, Collin Burns, Samir Puranik, Horace He, Dawn Song, and Jacob Steinhardt. Measuring coding challenge competence with APPS. arXiv preprint arXiv:2105.09938, 2021. doi: 10.48550/arXiv.2105.09938. URL https://arxiv.org/abs/2105.09938.\n\n",
+            "source_quote_id": "s9:b17:p0"
+          },
+          {
+            "assessment": "核对 arXiv:2403.07974 与条目一致，条目强调抗污染的时间切分评测。初稿\"反映作者对评测可信度的关注\"为推断，已标注；条目中数字间空格与断行 URL 按解析产物保留。",
+            "block_index": 18,
+            "source_quote": "[18] Naman Jain, King Han, Alex Gu, Wen-Ding Li, Fanjia Yan, Tianjun Zhang, Sida Wang, Armando Solar-Lezama, Koushik Sen, and Ion Stoica. LiveCodeBench: Holistic and contamination free evaluation of large language models for code. arXiv preprint arXiv:2403.07974, 2024. doi: 10.48550/arXiv.2403. 07974. URL https://arxiv.org/abs/2403.07974.\n\n",
+            "source_quote_id": "s9:b18:p0"
+          },
+          {
+            "assessment": "条目为 ICLR 2018 的 Web 界面工作流引导探索 RL。初稿\"可能与本文动作空间定义有关\"未获条目支持，已标注为推断，并指出也可能仅作交互式智能体背景。",
+            "block_index": 19,
+            "source_quote": "[19] Evan Zheran Liu, Kelvin Guu, Panupong Pasupat, Tianlin Shi, and Percy Liang. Reinforcement learning on web interfaces using workflow-guided exploration. In International Conference on Learning Representations, 2018. URL https://arxiv.org/abs/1802.08802.\n\n",
+            "source_quote_id": "s9:b19:p0"
+          },
+          {
+            "assessment": "核对 DOI 10.48550/arXiv.2404.07972 与条目一致，条目为 OSWorld 基准。初稿\"指向本文具备系统级操作能力\"把推断写成结论，已改为待正文确认其为评测基准还是动机引用。",
+            "block_index": 20,
+            "source_quote": "[20] Tianbao Xie, Danyang Zhang, Jixuan Chen, Xiaochuan Li, Siheng Zhao, Ruisheng Cao, Toh Jing Hua, Zhoujun Cheng, Dongchan Shin, Fangyu Lei, Yitao Liu, Yiheng Xu, Shuyan Zhou, Silvio Savarese, Caiming Xiong, Victor Zhong, and Tao Yu. OSWorld: Benchmarking multimodal agents for open-ended tasks in real computer environments. arXiv preprint arXiv:2404.07972, 2024. doi: 10.48550/arXiv.2404.07972. URL https://arxiv.org/abs/2404.07972.\n\n",
+            "source_quote_id": "s9:b20:p0"
+          },
+          {
+            "assessment": "核对 DOI 10.48550/arXiv.2602.02488 与条目一致。初稿\"可能是本文解决非平稳性的理论依据\"为推断，已明确标注，条目仅提供标题与出处。",
+            "block_index": 21,
+            "source_quote": "[21] Yinjie Wang, Tianbao Xie, Ke Shen, Mengdi Wang, and Ling Yang. RLAnything: Forge environment, policy, and reward model in completely dynamic RL system. arXiv preprint arXiv:2602.02488, 2026. doi: 10.48550/arXiv.2602.02488. URL https://arxiv.org/abs/2602.02488.\n\n",
+            "source_quote_id": "s9:b21:p0"
+          },
+          {
+            "assessment": "核对仓库链接与访问日期 2026-09-30 按条目照录，未做外部访问核验。初稿\"暗示应用场景延伸至科学实验自动化\"属推断，已标注；断行空格按解析产物保留。",
+            "block_index": 22,
+            "source_quote": "[22] Stanford Cong Lab. Pushing the limits of laboratory 3D perception and long-horizon planning via protocol-aligned action prediction. Public benchmark repository, 2026. URL https://github. com/Stanford-CongLab/LabHorizon. Accessed September 30, 2026.\n\n",
+            "source_quote_id": "s9:b22:p0"
+          },
+          {
+            "assessment": "条目为 xAI Grok 4.3 模型文档，版本与日期按原文照录、未外部核验。初稿\"作为商业 SOTA 用于横向对比\"把惯例当事实，已改为若出现在实验节则可能为基线、待确认。",
+            "block_index": 23,
+            "source_quote": "[23] xAI. Grok 4.3. xAI model documentation, 2026. URL https://docs.x.ai/developers/ models/grok-4.3. Accessed September 30, 2026.\n\n",
+            "source_quote_id": "s9:b23:p0"
+          },
+          {
+            "assessment": "条目为 Gemini 3.1 Pro 公告（2026-02），标题中 \"Oficial\" 疑为 Official 的解析拼写、URL 断行按原样保留。初稿\"旨在超越顶级闭源模型\"为无支持断言，已降级为待实验节确认。",
+            "block_index": 24,
+            "source_quote": "[24] Google. Gemini 3.1 Pro. Oficial model announcement, February 2026. URL https: //blog.google/innovation-and-ai/models-and-research/gemini-models/ gemini-3-1-pro/.\n\n",
+            "source_quote_id": "s9:b24:p0"
+          },
+          {
+            "assessment": "条目为 OpenAI GPT-5.5 发布（2026-04），版本与日期按原文照录、未外部核验。初稿\"对标下一代前沿通用人工智能系统\"属强断言，已改为用途待正文确认。",
+            "block_index": 25,
+            "source_quote": "[25] OpenAI. Introducing GPT-5.5. OpenAI product release, April 2026. URL https://openai.com/ index/introducing-gpt-5-5/.\n\n",
+            "source_quote_id": "s9:b25:p0"
+          },
+          {
+            "assessment": "条目为 Kimi K2.6 模型卡（访问日期 2026-09-30，按原文照录）。初稿\"用于证明本文方法在开源生态中的竞争力\"为推断，已标注为待正文确认。",
+            "block_index": 26,
+            "source_quote": "[26] Moonshot AI. Kimi K2.6. Hugging Face model card, 2026. URL https://huggingface.co/ moonshotai/Kimi-K2.6. Accessed September 30, 2026.\n\n",
+            "source_quote_id": "s9:b26:p0"
+          },
+          {
+            "assessment": "条目为 Qwen3.6-35B-A3B 模型卡（访问日期 2026-09-30）。初稿\"MoE 架构代表\"系基于命名惯例的推断而非条目自述，已标注；\"用于效率对比\"同样标注为推断。",
+            "block_index": 27,
+            "source_quote": "[27] Qwen Team. Qwen3.6-35B-A3B. Hugging Face model card, 2026. URL https://huggingface. co/Qwen/Qwen3.6-35B-A3B. Accessed September 30, 2026.\n\n",
+            "source_quote_id": "s9:b27:p0"
+          },
+          {
+            "assessment": "核对 Nature 590:89–96, 2021、DOI 10.1038/s41586-021-03213-y 与条目一致。初稿\"强烈暗示本文涉及世界模型指导实验设计或分子合成\"属过度推断，已降级为\"若正文涉及主动优化则为先例引用，否则仅为背景\"。",
+            "block_index": 28,
+            "source_quote": "[28] Benjamin J. Shields, Jason Stevens, Jun Li, et al. Bayesian reaction optimization as a tool for chemical synthesis. Nature, 590:89–96, 2021. doi: 10.1038/s41586-021-03213-y.\n\n",
+            "source_quote_id": "s9:b28:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 9,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "核对条目内部一致性：arXiv 编号 2504.15228 与 URL 路径一致，可确认。初稿“用于对比本文机制”为引用意图推断，本段无证据，已改为待正文核实。",
+            "block_index": 29,
+            "source_quote": "[29] Maxime Robeyns, Martin Szummer, and Laurence Aitchison. A self-improving coding agent. arXiv preprint arXiv:2504.15228, 2025. doi: 10.48550/arXiv.2504.15228. URL https://arxiv.org/ abs/2504.15228.\n\n",
+            "source_quote_id": "s9:b29:p0"
+          },
+          {
+            "assessment": "核对标题与编号一致（2505.22954）。发现 `Openended`、`Jef Clune` 疑为 OCR/拼写问题，批注保留原文并标注；初稿“可能借鉴变异-选择思想”属推断，已标待证。",
+            "block_index": 30,
+            "source_quote": "[30] Jenny Zhang, Shengran Hu, Cong Lu, Robert Lange, and Jef Clune. Darwin gödel machine: Openended evolution of self-improving agents. arXiv preprint arXiv:2505.22954, 2025. doi: 10.48550/ arXiv.2505.22954. URL https://arxiv.org/abs/2505.22954.\n\n",
+            "source_quote_id": "s9:b30:p0"
+          },
+          {
+            "assessment": "核对编号 2609.26457 与 URL 一致。初稿称其“最直接的对标或基础文献”超出本条可证范围，已改为需正文论述强度判断的待证事项。",
+            "block_index": 31,
+            "source_quote": "[31] Dhruv Srikanth, Bingchen Zhao, Dixing Xu, Yuxiang Wu, and Zhengyao Jiang. Recursive selfimprovement of AI research agents. arXiv preprint arXiv:2609.26457, 2026. doi: 10.48550/arXiv. 2609.26457. URL https://arxiv.org/abs/2609.26457.\n\n",
+            "source_quote_id": "s9:b31:p0"
+          },
+          {
+            "assessment": "核对编号 2305.16291 与 URL 一致，标题为开放式具身代理。初稿关于“技能库积累范式对科研代理的启示”的引用动机无法由本段确认，已标为待正文定位。",
+            "block_index": 32,
+            "source_quote": "[32] Guanzhi Wang, Yuqi Xie, Yunfan Jiang, Ajay Mandlekar, Chaowei Xiao, Yuke Zhu, Linxi Fan, and Anima Anandkumar. Voyager: An open-ended embodied agent with large language models. arXiv preprint arXiv:2305.16291, 2023. doi: 10.48550/arXiv.2305.16291. URL https://arxiv.org/ abs/2305.16291.\n\n",
+            "source_quote_id": "s9:b32:p0"
+          },
+          {
+            "assessment": "核对编号 2512.19682 与 URL 一致。标题中 `Dificulty` 疑应为 `Difficulty`，已作 OCR 勘误标注；初稿条件式用途推断已明确标为待证。",
+            "block_index": 33,
+            "source_quote": "[33] Jiacheng Guo, Ling Yang, Peter Chen, Qixin Xiao, Yinjie Wang, Xinzhe Juan, Jiahao Qiu, Ke Shen, and Mengdi Wang. GenEnv: Dificulty-aligned co-evolution between LLM agents and environment simulators. arXiv preprint arXiv:2512.19682, 2025. doi: 10.48550/arXiv.2512.19682. URL https: //arxiv.org/abs/2512.19682.\n\n",
+            "source_quote_id": "s9:b33:p0"
+          },
+          {
+            "assessment": "核对编号 2511.16043 与 URL 一致。标题支持“零数据+工具集成推理”，但初稿“暗示本文采用类似自举策略”超出本段证据，已纠正为需方法章节佐证。",
+            "block_index": 34,
+            "source_quote": "[34] Peng Xia, Kaide Zeng, Jiaqi Liu, Can Qin, Fang Wu, Yiyang Zhou, Caiming Xiong, and Huaxiu Yao. Agent0: Unleashing self-evolving agents from zero data via tool-integrated reasoning. arXiv preprint arXiv:2511.16043, 2025. doi: 10.48550/arXiv.2511.16043. URL https://arxiv.org/abs/ 2511.16043.\n\n",
+            "source_quote_id": "s9:b34:p0"
+          },
+          {
+            "assessment": "核对编号 2603.10165 与 URL 一致。标题可支持“通过对话训练代理”；初稿“表明本文探讨自然语言反馈作为 RL 信号”属推断，已标待正文核实。",
+            "block_index": 35,
+            "source_quote": "[35] Yinjie Wang, Xuyang Chen, Xiaolong Jin, Mengdi Wang, and Ling Yang. OpenClaw-RL: Train any agent simply by talking. arXiv preprint arXiv:2603.10165, 2026. doi: 10.48550/arXiv.2603.10165. URL https://arxiv.org/abs/2603.10165.\n\n",
+            "source_quote_id": "s9:b35:p0"
+          },
+          {
+            "assessment": "核对编号 2608.24876 与 URL 一致。初稿“(本文)状态持久化的必要性”由本条无法支撑，已改为条件推断并标待证。",
+            "block_index": 36,
+            "source_quote": "[36] Zhaochen Yu, Yingcheng Wu, Zhenfei Yin, Kaiyuan Chen, Zhe Zhao, Mengdi Wang, Shuicheng Yan, and Ling Yang. Recursive experiential-working memory evolution for long-horizon agent harnesses. arXiv preprint arXiv:2608.24876, 2026. doi: 10.48550/arXiv.2608.24876. URL https: //arxiv.org/abs/2608.24876.\n\n",
+            "source_quote_id": "s9:b36:p0"
+          },
+          {
+            "assessment": "核对编号 2609.17523 与 URL 一致。初稿“直接前驱或并行工作”是强判断，References 无引用语境，已改为需回正文确认引用角色。",
+            "block_index": 37,
+            "source_quote": "[37] Shuhan Xue, Jianyuan Zhong, Ziyuan Nan, Wenbin Li, Zhaochen Yu, Jinchao Ding, Qiang Gao, Pengyu Zhan, Yuntong Zhang, Tian Cheng, Zhenfei Yin, Yingcheng Wu, and Ling Yang. Science-Buddy: Recursive-in-recursive self-improvement for interactive scientific agents. arXiv preprint arXiv:2609.17523, 2026. doi: 10.48550/arXiv.2609.17523. URL https://arxiv.org/abs/ 2609.17523.\n\n",
+            "source_quote_id": "s9:b37:p0"
+          },
+          {
+            "assessment": "核对条目无 DOI、仅 URL，URL 与编号 2402.15391 一致。初稿关于“虚拟实验室可行性论证”的引用用途为推测，已标待证。",
+            "block_index": 38,
+            "source_quote": "[38] Jake Bruce, Michael Dennis, Ashley Edwards, et al. Genie: Generative interactive environments. arXiv preprint arXiv:2402.15391, 2024. URL https://arxiv.org/abs/2402.15391.\n\n",
+            "source_quote_id": "s9:b38:p0"
+          },
+          {
+            "assessment": "核对编号 2307.15818 与 URL 一致。标题可支持 VLA 知识迁移表述；初稿“对比纯数字代理局限”属延伸推断，已标注。",
+            "block_index": 39,
+            "source_quote": "[39] Anthony Brohan, Noah Brown, Justice Carbajal, et al. RT-2: Vision-language-action models transfer web knowledge to robotic control. arXiv preprint arXiv:2307.15818, 2023. URL https://arxiv. org/abs/2307.15818.\n\n",
+            "source_quote_id": "s9:b39:p0"
+          },
+          {
+            "assessment": "核对编号 2310.08864 与 URL 一致。初稿“反衬数据稀缺挑战”为把本条用作论证支点的推断，已改为需定位引用句。",
+            "block_index": 40,
+            "source_quote": "[40] Open X-Embodiment Collaboration, Abby O’Neill, Abdul Rehman, et al. Open X-Embodiment: Robotic learning datasets and RT-X models. arXiv preprint arXiv:2310.08864, 2023. URL https: //arxiv.org/abs/2310.08864.\n\n",
+            "source_quote_id": "s9:b40:p0"
+          },
+          {
+            "assessment": "核对编号 2403.12945 与 URL 一致。初稿“支持仿真优于实体操作的论点”为强推断，已明确标注不能由参考文献条目推定。",
+            "block_index": 41,
+            "source_quote": "[41] Alexander Khazatsky, Karl Pertsch, Suraj Nair, et al. DROID: A large-scale in-the-wild robot manipulation dataset. arXiv preprint arXiv:2403.12945, 2024. URL https://arxiv.org/abs/2403. 12945.\n\n",
+            "source_quote_id": "s9:b41:p0"
+          },
+          {
+            "assessment": "核对期刊、卷页、年份与 DOI 均在条目内自洽（Nature 624:570–578, 2023）。初稿“首个”“里程碑”属外部评价，超出本段证据，已纠正删除并说明可证范围。",
+            "block_index": 42,
+            "source_quote": "[42] Daniil A. Boiko, Robert MacKnight, Ben Kline, and Gabe Gomes. Autonomous chemical research with large language models. Nature, 624:570–578, 2023. doi: 10.1038/s41586-023-06792-0.\n\n",
+            "source_quote_id": "s9:b42:p0"
+          },
+          {
+            "assessment": "核对期刊、卷页、DOI 自洽（Nature Machine Intelligence 6:525–535, 2024）。初稿“必须用工具弥补幻觉”“可能扩展工具集”为推断，已标待正文核实。",
+            "block_index": 43,
+            "source_quote": "[43] Andres M. Bran, Sam Cox, Oliver Schilter, et al. Augmenting large language models with chemistry tools. Nature Machine Intelligence, 6:525–535, 2024. doi: 10.1038/s42256-024-00832-8.\n\n",
+            "source_quote_id": "s9:b43:p0"
+          },
+          {
+            "assessment": "核对期刊、卷号、DOI 自洽（MLST 2:015016, 2021）。初稿给出“专家模型或评估基准”两种并列猜测且未证，已改为两者均待正文确认。",
+            "block_index": 44,
+            "source_quote": "[44] Philippe Schwaller, Alain C. Vaucher, Teodoro Laino, and Jean-Louis Reymond. Prediction of chemical reaction yields using deep learning. Machine Learning: Science and Technology, 2:015016, 2021. doi: 10.1088/2632-2153/abc81d.\n\n",
+            "source_quote_id": "s9:b44:p0"
+          },
+          {
+            "assessment": "核对 Nature 583:237–241, 2020 与 DOI 自洽。发现作者名 `Mafettone` 疑为 `Maffettone`，已作 OCR 勘误标注；初稿成本/灵活性对比为推断，已标需引用句支撑。",
+            "block_index": 45,
+            "source_quote": "[45] Benjamin Burger, Phillip M. Mafettone, Vladimir V. Gusev, et al. A mobile robotic chemist. Nature, 583:237–241, 2020. doi: 10.1038/s41586-020-2442-2.\n\n",
+            "source_quote_id": "s9:b45:p0"
+          },
+          {
+            "assessment": "核对 Nature 624:86–91, 2023 与 DOI 自洽。标题支持无机材料自主合成实验室；初稿“为本文实验设计模块提供参照”属推断，已标待证。",
+            "block_index": 46,
+            "source_quote": "[46] Nathan J. Szymanski, Bernardus Rendy, Yuxing Fei, et al. An autonomous laboratory for the accelerated synthesis of inorganic materials. Nature, 624:86–91, 2023. doi: 10.1038/s41586-023-06734-w.\n\n",
+            "source_quote_id": "s9:b46:p0"
+          },
+          {
+            "assessment": "核对期刊、卷号、DOI 自洽（J. Cheminformatics 17:126, 2025）。初稿由小样本预测推出“本文策略比从头训练更有效”，属超出证据的结论，已纠正为待证假设。",
+            "block_index": 47,
+            "source_quote": "[47] Tatsuya Sagawa and Ryosuke Kojima. ReactionT5: A pre-trained transformer model for accurate chemical reaction prediction with limited data. Journal of Cheminformatics, 17:126, 2025. doi: 10.1186/s13321-025-01075-4.\n\n",
+            "source_quote_id": "s9:b47:p0"
+          },
+          {
+            "assessment": "核对 Nature Methods 21:1470–1480, 2024 与 DOI 自洽。初稿“为本文架构提供灵感”为条件推断，已标注不得与本文自身架构混同。",
+            "block_index": 48,
+            "source_quote": "[48] Haotian Cui, Chloe Wang, Hassaan Maan, et al. scGPT: Toward building a foundation model for single-cell multi-omics using generative AI. Nature Methods, 21:1470–1480, 2024. doi: 10.1038/ s41592-024-02201-0.\n\n",
+            "source_quote_id": "s9:b48:p0"
+          },
+          {
+            "assessment": "核对 Nature 618:616–624, 2023 与 DOI 自洽。标题支持迁移学习用于网络生物学；初稿“支持本文代理利用已有知识加速假设生成”为外推，已标待证。",
+            "block_index": 49,
+            "source_quote": "[49] Christina V. Theodoris, Ling Xiao, Anant Chopra, et al. Transfer learning enables predictions in network biology. Nature, 618:616–624, 2023. doi: 10.1038/s41586-023-06139-9.\n\n",
+            "source_quote_id": "s9:b49:p0"
+          },
+          {
+            "assessment": "核对 Nature Biotechnology 42:927–935, 2024 与 DOI 自洽。初稿“对应代理的推理模块”为映射式猜测，已改为需在正文找到对应模块才成立。",
+            "block_index": 50,
+            "source_quote": "[50] Yusuf Roohani, Kexin Huang, and Jure Leskovec. Predicting transcriptional outcomes of novel multigene perturbations with GEARS. Nature Biotechnology, 42:927–935, 2024. doi: 10.1038/ s41587-023-01905-6.\n\n",
+            "source_quote_id": "s9:b50:p0"
+          },
+          {
+            "assessment": "核对 Nature Methods 20:1759–1768, 2023 与 DOI 自洽。初稿“暗示本文在实验设计中使用类似统计方法”为无证据推断，已标为待证或删除。",
+            "block_index": 51,
+            "source_quote": "[51] Charlotte Bunne, Stefan G. Stark, Gabriele Gut, et al. Learning single-cell perturbation responses using neural optimal transport. Nature Methods, 20:1759–1768, 2023. doi: 10.1038/s41592-023-01969-x.\n\n",
+            "source_quote_id": "s9:b51:p0"
+          },
+          {
+            "assessment": "核对编号 2409.12186 与 URL、DOI 一致。关键纠正：初稿断言“明确本文使用的底层大语言模型版本”，但参考文献条目不能证明本文以 Qwen2.5-Coder 为基座，已改为待正文实现章节确认。",
+            "block_index": 52,
+            "source_quote": "[52] Binyuan Hui, Jian Yang, Zeyu Cui, Jiaxi Yang, Dayiheng Liu, Lei Zhang, Tianyu Liu, Jiajun Zhang, Bowen Yu, et al. Qwen2.5-Coder technical report. arXiv preprint arXiv:2409.12186, 2024. doi: 10.48550/arXiv.2409.12186. URL https://arxiv.org/abs/2409.12186.\n\n",
+            "source_quote_id": "s9:b52:p0"
+          },
+          {
+            "assessment": "核对条目标注为 ICLR 2022 且无 DOI，与原文一致。关键纠正：初稿“表明本文可能进行了轻量级适配”为推断，LoRA 是否被本文采用须由训练设置章节证明，已标待证。",
+            "block_index": 53,
+            "source_quote": "[53] Edward J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, and Weizhu Chen. LoRA: Low-rank adaptation of large language models. In International Conference on Learning Representations, 2022.\n\n",
+            "source_quote_id": "s9:b53:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 10,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对主张：“PhAI Labs 是第一作者单位/主要研发力量”。原文仅写 `<sup>1</sup> PhAI Labs`，无作者—机构映射信息，该主张无证据；已改为仅陈述机构名并明确编号不等于作者顺序。",
+            "block_index": 1,
+            "source_quote": "<sup>1</sup> PhAI Labs\n\n",
+            "source_quote_id": "s10:b1:p0"
+          },
+          {
+            "assessment": "核对主张：“CUHK 可能涉及学术合作或特定技术模块支持”。原文仅列出机构名，无任何分工描述，属超出证据的推断；已删除并标注为待证。",
+            "block_index": 2,
+            "source_quote": "<sup>2</sup> The Chinese University of Hong Kong\n\n",
+            "source_quote_id": "s10:b2:p0"
+          },
+          {
+            "assessment": "核对主张：“澳门大学可能贡献数据集、算力或理论支持”。原文仅有 `University of Macau`，未提及数据集/算力/理论；判定为无依据推断并改正。",
+            "block_index": 3,
+            "source_quote": "<sup>3</sup> University of Macau\n\n",
+            "source_quote_id": "s10:b3:p0"
+          },
+          {
+            "assessment": "核对主张：“SJTU 可能负责核心算法实现或实验验证”。原文只有机构名，无任务分配信息；该因果归因不成立，已改为事实性陈述。",
+            "block_index": 4,
+            "source_quote": "<sup>4</sup> Shanghai Jiao Tong University\n\n",
+            "source_quote_id": "s10:b4:p0"
+          },
+          {
+            "assessment": "核对主张：“复旦可能因 NLP/多模态背景参与”。属于用学校一般背景替代本文证据的外推；原文未提及任何 NLP 或多模态分工，已纠正。",
+            "block_index": 5,
+            "source_quote": "<sup>5</sup> Fudan University\n\n",
+            "source_quote_id": "s10:b5:p0"
+          },
+          {
+            "assessment": "核对主张：“牛津提升国际影响力、提供理论框架”。原文仅列出机构名，两项评价均无文本支撑，已改写为可核对事实（位列第 6 项）。",
+            "block_index": 6,
+            "source_quote": "<sup>6</sup> University of Oxford\n\n",
+            "source_quote_id": "s10:b6:p0"
+          },
+          {
+            "assessment": "核对主张：“斯坦福参与意味着方法具有 SOTA 潜力”。本 section 无任何性能数据，该推断属循环论证且不可验证，已删除。",
+            "block_index": 7,
+            "source_quote": "<sup>7</sup> Stanford University\n\n",
+            "source_quote_id": "s10:b7:p0"
+          },
+          {
+            "assessment": "核对主张：“北大可能提供本土数据场景或预训练支持”。原文仅列出 `Peking University`，无此信息，判定为待证推断并在批注中显式标注。",
+            "block_index": 8,
+            "source_quote": "<sup>8</sup> Peking University\n\n",
+            "source_quote_id": "s10:b8:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 11,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐字核对原文片段：该段实际列出四个邮箱与四个缩写（pheng@cse.cuhk.edu.hk (P.A.H.); yin@phai-labs.com (Z.Y.); wuyc@phai-labs.com (Y.W.); and yang@phai-labs.com (L.Y.)）。初稿批注与摘要只保留 P. Heng 一人，属事实不完整，已修改为完整列出四位通讯联系人。同时将“本节仅列出一位通讯作者”的隐含表述删除，改为明确说明是多通讯作者、且分属高校与 phai-labs.com 两个机构域。对“Z.Y./Y.W./L.Y. 与邮箱前缀一一对应”的姓名推断，原文未给全名，已在批注中标为推断而非事实。",
+            "block_index": 1,
+            "source_quote": "Correspondence: pheng@cse.cuhk.edu.hk (P.A.H.); yin@phai-labs.com (Z.Y.);   \nwuyc@phai-labs.com (Y.W.); and yang@phai-labs.com (L.Y.).",
+            "source_quote_id": "s11:b1:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      }
+    ],
+    "final": {
+      "verdict": "corrected",
+      "checks": [
+        {
+          "target": "readme",
+          "claim": "| 代码修复成功率（静态验证器 → 预测选择 → 模型适应） | 26.3% → 29.2% → 31.2% |",
+          "section_index": 1,
+          "block_index": 1,
+          "source_quote_id": "s1:b1:p0",
+          "assessment": "摘要逐字支持该行三档数字与“coder fixed / 测试用量相当”条件；3.1 与 Table 2 给出同一组数值（s4:b4:p0 为 29.2% 与 26.3%，31.2% 见 s4:b5:p0）。本行按两次相互独立比较展开，避免把 26.3%→31.2% 压缩成单次增益。",
+          "source_quote": "Recursive self-improvement (RSI) aims to transform interaction experience into persistent improvements, yet external feedback is costly and world-model predictions may become unreliable as policies evolve. We introduce RSI-Anything, a domaingeneral framework built on JEPA-Anything that uses predictive world models to guide action and learning-data selection. Observed feedback drives policy or workflow improvement and conditional world-model adaptation, while component and compatibility checks govern the retention of updated policy–model pairs. Across diverse computational and scientific domains, RSI-Anything demonstrates substantial gains. In code repair, with the coder fixed, success increases from 26.3% with a static verifier to 29.2% through predictive selection and 31.2% after world-model adaptation, at comparable test usage. Graphical user interface (GUI) evaluations showed higher task completion, while average actions decrease by 39.4%. Across five successive policy versions, lab"
+        },
+        {
+          "target": "readme",
+          "claim": "| 实验室规划（5 个连续策略版本 Final Score） | 21.80% → 38.03% → 41.99% → 44.56% → 46.01% |",
+          "section_index": 5,
+          "block_index": 8,
+          "source_quote_id": "s5:b8:p0",
+          "assessment": "五个 Final Score 数值与原文逐字一致，且原文同段给出最终版比初始版高 24.21 个百分点；与摘要“more than double from 21.80% to 46.01%”（s1:b1:p1）不矛盾。表中未把递增幅度描述为线性（实际增量递减）。",
+          "source_quote": "The Final Score increased across all five evaluated versions: 21.80%, 38.03%, 41.99%, 44.56%, and 46.01% (Figure 5). The final version improved on the initial version by 24.21 percentage points. This progression shows continued improvement in protocolaligned planning as successive policy versions were retained within the RSI-Anything process.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "| OSWorld 相对 RLAnything 成功率提升 | +5.5%（相对初始 agent +18.4%） |",
+          "section_index": 4,
+          "block_index": 21,
+          "source_quote_id": "s4:b21:p0",
+          "assessment": "原文明确两个参照系不同：5.5% 相对 RLAnything、18.4% 相对初始 agent，并另给 RLAnything 相对初始 agent +12.3%。本行保留参照系标注，防止把 5.5% 误读为相对初始 agent；原文未给出该比较的方差或显著性。",
+          "source_quote": "On OSWorld, RSI-Anything improved task success rate by 5.5% relative to RLAnything [21] and by 18.4% relative to the initial agent (Figure 4d). RLAnything improved success by 12.3% relative to the initial agent.\n\n"
+        },
+        {
+          "target": "insight.method",
+          "claim": "外部反馈驱动策略/工作流改进并条件触发世界模型适配",
+          "section_index": 2,
+          "block_index": 6,
+          "source_quote_id": "s2:b6:p0",
+          "assessment": "Introduction 对 RSI-Anything 的表述为 “External feedback drives policy learning or workflow revision and triggers world-model adaptation when reliability checks warrant it”，与主张一致；“条件”对应 Eq.11 的“不可靠 + 适配数据充分 + 预算足够”三重触发（s3:b45:p0），覆盖不足时判为 insufficient 且不触发（s3:b46:p0）。",
+          "source_quote": "To address these challenges, we introduce RSI-Anything, a domain-general framework that integrates predictive world models with feedback-driven recursive improvement (Figure 2). World-model predictions guide action selection, prioritize external evaluations, and support learning-data selection or construction. External feedback drives policy learning or workflow revision and triggers world-model adaptation when reliability checks warrant it. The policy and world model can evolve asynchronously, with component-level checks evaluating individual updates and compatibility checks determining which policy–model pair is retained. This retained pair shapes subsequent candidates and learning experience, closing the recursive improvement loop.\n\n"
+        },
+        {
+          "target": "insight.findings",
+          "claim": "代码修复（coder 固定）成功率从静态验证器 26.3% 升至预测选择 29.2% 及适配后 31.2%",
+          "section_index": 1,
+          "block_index": 1,
+          "source_quote_id": "s1:b1:p0",
+          "assessment": "摘要原文为 “with the coder fixed, success increases from 26.3% with a static verifier to 29.2% through predictive selection and 31.2% after world-model adaptation, at comparable test usage”；findings 中的“在线测试用量相当”另有 3.71/3.72 次每题与 Table 2 支持（s4:b4:p0、s4:b17:p0）。",
+          "source_quote": "Recursive self-improvement (RSI) aims to transform interaction experience into persistent improvements, yet external feedback is costly and world-model predictions may become unreliable as policies evolve. We introduce RSI-Anything, a domaingeneral framework built on JEPA-Anything that uses predictive world models to guide action and learning-data selection. Observed feedback drives policy or workflow improvement and conditional world-model adaptation, while component and compatibility checks govern the retention of updated policy–model pairs. Across diverse computational and scientific domains, RSI-Anything demonstrates substantial gains. In code repair, with the coder fixed, success increases from 26.3% with a static verifier to 29.2% through predictive selection and 31.2% after world-model adaptation, at comparable test usage. Graphical user interface (GUI) evaluations showed higher task completion, while average actions decrease by 39.4%. Across five successive policy versions, lab"
+        },
+        {
+          "target": "insight.data",
+          "claim": "MiniWoB++ click-checkboxes、OSWorld（GUI 交互）",
+          "section_index": 8,
+          "block_index": 7,
+          "source_quote_id": "s8:b7:p0",
+          "assessment": "方法节写明 “We evaluated the MiniWoB++ click-checkboxes task [19] and OS-World [20]”，数据集命名成立；“GUI 交互/GUI 环境”是本文对该域的归类（3.2 节与 Figure 4 caption 同义使用）。",
+          "source_quote": "GUI agents. We evaluated the MiniWoB++ click-checkboxes task [19] and OS-World [20]. World-model predictions guide GUI action selection, and observed interaction outcomes provide feedback for updating both the action policy and the world model. The retained policy–model pair is used in subsequent interactions. The checkbox evaluation compares baseline, adapted, and final configurations using task success rate, mean actions per episode, repeated-click count, and the number of episodes with incorrect submissions. Success rates are also shown for the World-based control. The action and error diagnostics in Figure $_ { 4 \\mathrm { e } - \\mathrm { g } }$ describe the RSI-Anything configurations. The OSWorld comparison includes the initial agent, RLAnything [21], and RSI-Anything. For success rates $s _ { \\mathrm { m e t h o d } }$ and $s _ { \\mathrm { r e f e r e n c e : } }$ , relative improvement is $1 0 0 ( s _ { \\mathrm { m e t h o d } } / s _ { \\mathrm { r e f e r e n c e } } - 1 ) \\%$"
+        },
+        {
+          "target": "insight.limitations",
+          "claim": "缺乏单一任务内策略与世界模型持续互促的联合多轮评估",
+          "section_index": 7,
+          "block_index": 3,
+          "source_quote_id": "s7:b3:p0",
+          "assessment": "Discussion 原文 “Joint multiround evaluation is needed to establish sustained mutual improvement of the policy and world model within a single task.” 为该主张的直接来源；同段另列物理执行、化学两屏与免疫假设待验证，limitations 已逐条对应。",
+          "source_quote": "Domain generality concerns the reuse of this improvement mechanism across domainspecific world models, policies, and evaluation procedures. The evaluations support predictive selection, predictor adaptation, successive policy improvement, and feedbackguided search in their respective settings. Joint multiround evaluation is needed to establish sustained mutual improvement of the policy and world model within a single task. The present laboratory results assess protocol-aligned planning; reliable physical execution requires evaluation on the relevant equipment and workflows. The chemistry results cover two Suzuki–Miyaura screens under the reported experiment budgets, and the therapeutic hypothesis generated in the immune-science application awaits experimental testing.\n\n"
+        },
+        {
+          "target": "insight.relevance",
+          "claim": "适用于代码生成、GUI 自动化、科学实验规划与发现等需高效利用有限反馈的场景",
+          "section_index": 4,
+          "block_index": 1,
+          "source_quote_id": "s4:b1:p0",
+          "assessment": "领域清单（代码修复、GUI 交互、实验室规划、反应优化）有原文直接支持；“需高效利用有限反馈的场景”属应用推广，原文只声明在受限交互预算与匹配实验次数下评估，该推广已在 relevance 字段内标注为推断。",
+          "source_quote": "We examined how world-model predictions improve action selection, how retained updates support further improvement, and how prediction and feedback guide decisions under limited interaction budgets. Code repair and GUI interaction cover general computational tasks, alongside physical-domain laboratory planning and experimental reaction optimization. Within these settings, we evaluate predictive selection, model adaptation, task completion, successive policy versions, and search at matched experiment counts. We then examine an end-to-end application of RSI-Anything in immune science, connecting scientific-agent workflow evolution, world-model construction, and scientific analysis.\n\n"
+        },
+        {
+          "target": "insight.method_type",
+          "claim": "领域通用递归自我改进框架，含形式化机制与门控保留协议",
+          "section_index": 2,
+          "block_index": 6,
+          "source_quote_id": "s2:b6:p0",
+          "assessment": "原文称 RSI-Anything 为 “a domain-general framework that integrates predictive world models with feedback-driven recursive improvement”；“形式化机制”对应 2.1–2.5 的 Eq.1–18 定义，“门控保留协议”对应 Eq.13–18 与三类数据划分（s3:b61:p0）。这是结构描述而非性能主张。",
+          "source_quote": "To address these challenges, we introduce RSI-Anything, a domain-general framework that integrates predictive world models with feedback-driven recursive improvement (Figure 2). World-model predictions guide action selection, prioritize external evaluations, and support learning-data selection or construction. External feedback drives policy learning or workflow revision and triggers world-model adaptation when reliability checks warrant it. The policy and world model can evolve asynchronously, with component-level checks evaluating individual updates and compatibility checks determining which policy–model pair is retained. This retained pair shapes subsequent candidates and learning experience, closing the recursive improvement loop.\n\n"
+        },
+        {
+          "target": "insight.research_question",
+          "claim": "如何在外部反馈昂贵且策略与世界模型双向耦合的条件下，实现递归自我改进（RSI）",
+          "section_index": 2,
+          "block_index": 5,
+          "source_quote_id": "s2:b5:p0",
+          "assessment": "“双向耦合”有该片段直接支持（策略更新改变世界模型所依赖的候选与经验分布，世界模型更新改变候选排序与学习信号）；“外部反馈昂贵”出自摘要（s1:b1:p0）与 Introduction 第 3 段（s2:b3:p0），属跨片段组合表述，已在 research_question 中以同一句并列呈现而非归于单一出处。",
+          "source_quote": "Closing this loop introduces a coupled-update challenge. Policy updates change the candidate actions and experience distributions on which the world model operates, potentially undermining prediction reliability. Conversely, world-model updates alter candidate rankings, imagined trajectories, and the learning signals guiding policy improvement. Consequently, improving either component independently does not guarantee better joint performance. Reliable RSI therefore requires determining when to update each component, assessing prediction reliability under changing policies, and ensuring that retained policy–model pairs improve subsequent interaction and learning.\n\n"
+        }
+      ],
+      "correction_attempts": 0
+    }
+  },
+  "source_sha256": "2d3120302ac4c04bc1fd3df6b9f0f37d12fa60f436033740fec9753d8a09b9c6",
+  "source_chars": 74474,
+  "read_chars": 74474,
+  "sections": [
+    {
+      "title": "RSI-Anything: Unlocking Recursive Self-Improvement with World Models",
+      "path": "sections/00-section.md"
+    },
+    {
+      "title": "Abstract",
+      "path": "sections/01-section.md"
+    },
+    {
+      "title": "1. Introduction",
+      "path": "sections/02-section.md"
+    },
+    {
+      "title": "2. RSI-Anything Framework",
+      "path": "sections/03-section.md"
+    },
+    {
+      "title": "3. Results",
+      "path": "sections/04-section.md"
+    },
+    {
+      "title": "GUI task completion and action behavior",
+      "path": "sections/05-section.md"
+    },
+    {
+      "title": "4. Related Work",
+      "path": "sections/06-section.md"
+    },
+    {
+      "title": "5. Discussion",
+      "path": "sections/07-section.md"
+    },
+    {
+      "title": "6. Experimental Methods",
+      "path": "sections/08-section.md"
+    },
+    {
+      "title": "References",
+      "path": "sections/09-section.md"
+    },
+    {
+      "title": "A. Author Affiliations and Correspondence",
+      "path": "sections/10-section.md"
+    },
+    {
+      "title": "Correspondence",
+      "path": "sections/11-section.md"
+    }
+  ],
+  "skill_sha256": "ee7f8825c3ad31536f83796acedb40bce9e574a3de951ec7161608b24d211c77",
+  "extracted_metadata": {
+    "title": "RSI-Anything: Unlocking Recursive Self-Improvement with World Models"
+  },
+  "input_metadata": {
+    "arxiv_id": "2610.13912",
+    "authors": "",
+    "source_url": "https://arxiv.org/abs/2610.13912",
+    "title": "(AI 精读中…)",
+    "year": ""
+  },
+  "pipeline_version": 3,
+  "reading_fingerprint": "21a09250355f7b10a6a1095af162b1e2bbe7e60eb754535f84e1a1431d6e69c6"
+}
