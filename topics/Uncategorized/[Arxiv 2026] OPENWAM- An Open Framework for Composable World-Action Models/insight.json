@@ -1,0 +1,31 @@
+{
+  "research_question": "现有世界-动作模型（WAMs）同时改变视频骨干、交互结构与训练流程，导致设计选择难以横向比较。本文问：在固定因果视频骨干下，不同视频-动作交互模式如何影响控制性能？局部上下文动力学组件能否跨任务复用？",
+  "method": "以 Wan2.2-5B 为起点做无动作标签因果机器人视频预训练；用 Mixture-of-Transformers 接入动作专家，支持 Joint/VTA/ATV/Decoupled 四种生成程序；独立训练局部上下文逆/正动力学模型（IDM/FDM），通过反事实分支扩充转移监督，实现冻结 IDM 与适配视频预测器的组合推理。",
+  "data": "预训练语料约 3.34M 条轨迹、14,641 小时，来自 Open X-Embodiment、AgiBot World、Ego-Exo4D 等 8 个异构源。下游仿真用 LIBERO 四套件及自建 LIBERO-Long-CF（32,000 条反事实片段）；真实世界用双臂 Franka FR3 采集三个任务共 580 条演示。",
+  "findings": "因果预训练使 VTA 在 LIBERO-Long 上从 68.4% 升至 97.8%，VTA 四套件平均 98.6%。迁移时冻结局部上下文 IDM 配合混合监督在四个 held-out LIBERO-90 任务达 84.0%，全上下文仅 47.0%，纯演示局部 21.5%。反事实监督使 FDM RGB 误差降 34.5%，K=16 结果识别率从 21.1% 升至 71.3%。",
+  "limitations": "主要验证于仿真环境，未证实完整视频–动作模型的零样本迁移；单一多目标检查点尚未在所有模式下匹敌专用最佳变体；基线为他人报告结果而非同设置重跑；真实机器人任务仅给单一成功率且未交代相机标定细节；局部上下文充分性并非普遍成立。",
+  "relevance": "推断：若读者研究视频-动作策略的架构消融或模块化复用，本文提供统一底座与受控实验范式；若关注利用失败/探索数据提升泛化，其反事实局部动力学接口可直接借鉴；对大规模机器人视频预训练的数据配比亦有参考价值。",
+  "method_type": "世界动作模型",
+  "themes": [
+    "世界-动作模型",
+    "因果视频预训练",
+    "Mixture-of-Transformers",
+    "局部动力学模型",
+    "反事实数据增强",
+    "组件复用"
+  ],
+  "citation_refs": [
+    "Wan2.2",
+    "Open X-Embodiment",
+    "LIBERO",
+    "UVA",
+    "π0.5",
+    "OpenVLA-OFT",
+    "LingBot-VA",
+    "Diffusion Policy",
+    "Ego-Exo4D",
+    "MoT"
+  ],
+  "evidence_level": "full_text",
+  "core_rank": 0
+}
