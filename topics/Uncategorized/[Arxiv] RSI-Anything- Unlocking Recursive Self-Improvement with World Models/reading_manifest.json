@@ -1324,100 +1324,137 @@
       }
     ],
     "final": {
-      "verdict": "corrected",
       "checks": [
         {
-          "target": "readme",
+          "assessment": "摘要逐字支持该行三档数字与“coder fixed / 测试用量相当”条件；3.1 与 Table 2 给出同一组数值（s4:b4:p0 为 29.2% 与 26.3%，31.2% 见 s4:b5:p0）。本行按两次相互独立比较展开，避免把 26.3%→31.2% 压缩成单次增益。",
+          "block_index": 1,
           "claim": "| 代码修复成功率（静态验证器 → 预测选择 → 模型适应） | 26.3% → 29.2% → 31.2% |",
           "section_index": 1,
-          "block_index": 1,
+          "source_quote": "Recursive self-improvement (RSI) aims to transform interaction experience into persistent improvements, yet external feedback is costly and world-model predictions may become unreliable as policies evolve. We introduce RSI-Anything, a domaingeneral framework built on JEPA-Anything that uses predictive world models to guide action and learning-data selection. Observed feedback drives policy or workflow improvement and conditional world-model adaptation, while component and compatibility checks govern the retention of updated policy–model pairs. Across diverse computational and scientific domains, RSI-Anything demonstrates substantial gains. In code repair, with the coder fixed, success increases from 26.3% with a static verifier to 29.2% through predictive selection and 31.2% after world-model adaptation, at comparable test usage. Graphical user interface (GUI) evaluations showed higher task completion, while average actions decrease by 39.4%. Across five successive policy versions, lab",
           "source_quote_id": "s1:b1:p0",
-          "assessment": "摘要逐字支持该行三档数字与“coder fixed / 测试用量相当”条件；3.1 与 Table 2 给出同一组数值（s4:b4:p0 为 29.2% 与 26.3%，31.2% 见 s4:b5:p0）。本行按两次相互独立比较展开，避免把 26.3%→31.2% 压缩成单次增益。",
-          "source_quote": "Recursive self-improvement (RSI) aims to transform interaction experience into persistent improvements, yet external feedback is costly and world-model predictions may become unreliable as policies evolve. We introduce RSI-Anything, a domaingeneral framework built on JEPA-Anything that uses predictive world models to guide action and learning-data selection. Observed feedback drives policy or workflow improvement and conditional world-model adaptation, while component and compatibility checks govern the retention of updated policy–model pairs. Across diverse computational and scientific domains, RSI-Anything demonstrates substantial gains. In code repair, with the coder fixed, success increases from 26.3% with a static verifier to 29.2% through predictive selection and 31.2% after world-model adaptation, at comparable test usage. Graphical user interface (GUI) evaluations showed higher task completion, while average actions decrease by 39.4%. Across five successive policy versions, lab"
+          "target": "readme"
         },
         {
-          "target": "readme",
+          "assessment": "五个 Final Score 数值与原文逐字一致，且原文同段给出最终版比初始版高 24.21 个百分点；与摘要“more than double from 21.80% to 46.01%”（s1:b1:p1）不矛盾。表中未把递增幅度描述为线性（实际增量递减）。",
+          "block_index": 8,
           "claim": "| 实验室规划（5 个连续策略版本 Final Score） | 21.80% → 38.03% → 41.99% → 44.56% → 46.01% |",
           "section_index": 5,
-          "block_index": 8,
+          "source_quote": "The Final Score increased across all five evaluated versions: 21.80%, 38.03%, 41.99%, 44.56%, and 46.01% (Figure 5). The final version improved on the initial version by 24.21 percentage points. This progression shows continued improvement in protocolaligned planning as successive policy versions were retained within the RSI-Anything process.\n\n",
           "source_quote_id": "s5:b8:p0",
-          "assessment": "五个 Final Score 数值与原文逐字一致，且原文同段给出最终版比初始版高 24.21 个百分点；与摘要“more than double from 21.80% to 46.01%”（s1:b1:p1）不矛盾。表中未把递增幅度描述为线性（实际增量递减）。",
-          "source_quote": "The Final Score increased across all five evaluated versions: 21.80%, 38.03%, 41.99%, 44.56%, and 46.01% (Figure 5). The final version improved on the initial version by 24.21 percentage points. This progression shows continued improvement in protocolaligned planning as successive policy versions were retained within the RSI-Anything process.\n\n"
+          "target": "readme"
         },
         {
-          "target": "readme",
+          "assessment": "原文明确两个参照系不同：5.5% 相对 RLAnything、18.4% 相对初始 agent，并另给 RLAnything 相对初始 agent +12.3%。本行保留参照系标注，防止把 5.5% 误读为相对初始 agent；原文未给出该比较的方差或显著性。",
+          "block_index": 21,
           "claim": "| OSWorld 相对 RLAnything 成功率提升 | +5.5%（相对初始 agent +18.4%） |",
           "section_index": 4,
-          "block_index": 21,
+          "source_quote": "On OSWorld, RSI-Anything improved task success rate by 5.5% relative to RLAnything [21] and by 18.4% relative to the initial agent (Figure 4d). RLAnything improved success by 12.3% relative to the initial agent.\n\n",
           "source_quote_id": "s4:b21:p0",
-          "assessment": "原文明确两个参照系不同：5.5% 相对 RLAnything、18.4% 相对初始 agent，并另给 RLAnything 相对初始 agent +12.3%。本行保留参照系标注，防止把 5.5% 误读为相对初始 agent；原文未给出该比较的方差或显著性。",
-          "source_quote": "On OSWorld, RSI-Anything improved task success rate by 5.5% relative to RLAnything [21] and by 18.4% relative to the initial agent (Figure 4d). RLAnything improved success by 12.3% relative to the initial agent.\n\n"
+          "target": "readme"
         },
         {
-          "target": "insight.method",
+          "assessment": "Introduction 对 RSI-Anything 的表述为 “External feedback drives policy learning or workflow revision and triggers world-model adaptation when reliability checks warrant it”，与主张一致；“条件”对应 Eq.11 的“不可靠 + 适配数据充分 + 预算足够”三重触发（s3:b45:p0），覆盖不足时判为 insufficient 且不触发（s3:b46:p0）。",
+          "block_index": 6,
           "claim": "外部反馈驱动策略/工作流改进并条件触发世界模型适配",
           "section_index": 2,
-          "block_index": 6,
+          "source_quote": "To address these challenges, we introduce RSI-Anything, a domain-general framework that integrates predictive world models with feedback-driven recursive improvement (Figure 2). World-model predictions guide action selection, prioritize external evaluations, and support learning-data selection or construction. External feedback drives policy learning or workflow revision and triggers world-model adaptation when reliability checks warrant it. The policy and world model can evolve asynchronously, with component-level checks evaluating individual updates and compatibility checks determining which policy–model pair is retained. This retained pair shapes subsequent candidates and learning experience, closing the recursive improvement loop.\n\n",
           "source_quote_id": "s2:b6:p0",
-          "assessment": "Introduction 对 RSI-Anything 的表述为 “External feedback drives policy learning or workflow revision and triggers world-model adaptation when reliability checks warrant it”，与主张一致；“条件”对应 Eq.11 的“不可靠 + 适配数据充分 + 预算足够”三重触发（s3:b45:p0），覆盖不足时判为 insufficient 且不触发（s3:b46:p0）。",
-          "source_quote": "To address these challenges, we introduce RSI-Anything, a domain-general framework that integrates predictive world models with feedback-driven recursive improvement (Figure 2). World-model predictions guide action selection, prioritize external evaluations, and support learning-data selection or construction. External feedback drives policy learning or workflow revision and triggers world-model adaptation when reliability checks warrant it. The policy and world model can evolve asynchronously, with component-level checks evaluating individual updates and compatibility checks determining which policy–model pair is retained. This retained pair shapes subsequent candidates and learning experience, closing the recursive improvement loop.\n\n"
+          "target": "insight.method"
         },
         {
-          "target": "insight.findings",
+          "assessment": "摘要原文为 “with the coder fixed, success increases from 26.3% with a static verifier to 29.2% through predictive selection and 31.2% after world-model adaptation, at comparable test usage”；findings 中的“在线测试用量相当”另有 3.71/3.72 次每题与 Table 2 支持（s4:b4:p0、s4:b17:p0）。",
+          "block_index": 1,
           "claim": "代码修复（coder 固定）成功率从静态验证器 26.3% 升至预测选择 29.2% 及适配后 31.2%",
           "section_index": 1,
-          "block_index": 1,
+          "source_quote": "Recursive self-improvement (RSI) aims to transform interaction experience into persistent improvements, yet external feedback is costly and world-model predictions may become unreliable as policies evolve. We introduce RSI-Anything, a domaingeneral framework built on JEPA-Anything that uses predictive world models to guide action and learning-data selection. Observed feedback drives policy or workflow improvement and conditional world-model adaptation, while component and compatibility checks govern the retention of updated policy–model pairs. Across diverse computational and scientific domains, RSI-Anything demonstrates substantial gains. In code repair, with the coder fixed, success increases from 26.3% with a static verifier to 29.2% through predictive selection and 31.2% after world-model adaptation, at comparable test usage. Graphical user interface (GUI) evaluations showed higher task completion, while average actions decrease by 39.4%. Across five successive policy versions, lab",
           "source_quote_id": "s1:b1:p0",
-          "assessment": "摘要原文为 “with the coder fixed, success increases from 26.3% with a static verifier to 29.2% through predictive selection and 31.2% after world-model adaptation, at comparable test usage”；findings 中的“在线测试用量相当”另有 3.71/3.72 次每题与 Table 2 支持（s4:b4:p0、s4:b17:p0）。",
-          "source_quote": "Recursive self-improvement (RSI) aims to transform interaction experience into persistent improvements, yet external feedback is costly and world-model predictions may become unreliable as policies evolve. We introduce RSI-Anything, a domaingeneral framework built on JEPA-Anything that uses predictive world models to guide action and learning-data selection. Observed feedback drives policy or workflow improvement and conditional world-model adaptation, while component and compatibility checks govern the retention of updated policy–model pairs. Across diverse computational and scientific domains, RSI-Anything demonstrates substantial gains. In code repair, with the coder fixed, success increases from 26.3% with a static verifier to 29.2% through predictive selection and 31.2% after world-model adaptation, at comparable test usage. Graphical user interface (GUI) evaluations showed higher task completion, while average actions decrease by 39.4%. Across five successive policy versions, lab"
+          "target": "insight.findings"
         },
         {
-          "target": "insight.data",
+          "assessment": "方法节写明 “We evaluated the MiniWoB++ click-checkboxes task [19] and OS-World [20]”，数据集命名成立；“GUI 交互/GUI 环境”是本文对该域的归类（3.2 节与 Figure 4 caption 同义使用）。",
+          "block_index": 7,
           "claim": "MiniWoB++ click-checkboxes、OSWorld（GUI 交互）",
           "section_index": 8,
-          "block_index": 7,
+          "source_quote": "GUI agents. We evaluated the MiniWoB++ click-checkboxes task [19] and OS-World [20]. World-model predictions guide GUI action selection, and observed interaction outcomes provide feedback for updating both the action policy and the world model. The retained policy–model pair is used in subsequent interactions. The checkbox evaluation compares baseline, adapted, and final configurations using task success rate, mean actions per episode, repeated-click count, and the number of episodes with incorrect submissions. Success rates are also shown for the World-based control. The action and error diagnostics in Figure $_ { 4 \\mathrm { e } - \\mathrm { g } }$ describe the RSI-Anything configurations. The OSWorld comparison includes the initial agent, RLAnything [21], and RSI-Anything. For success rates $s _ { \\mathrm { m e t h o d } }$ and $s _ { \\mathrm { r e f e r e n c e : } }$ , relative improvement is $1 0 0 ( s _ { \\mathrm { m e t h o d } } / s _ { \\mathrm { r e f e r e n c e } } - 1 ) \\%$",
           "source_quote_id": "s8:b7:p0",
-          "assessment": "方法节写明 “We evaluated the MiniWoB++ click-checkboxes task [19] and OS-World [20]”，数据集命名成立；“GUI 交互/GUI 环境”是本文对该域的归类（3.2 节与 Figure 4 caption 同义使用）。",
-          "source_quote": "GUI agents. We evaluated the MiniWoB++ click-checkboxes task [19] and OS-World [20]. World-model predictions guide GUI action selection, and observed interaction outcomes provide feedback for updating both the action policy and the world model. The retained policy–model pair is used in subsequent interactions. The checkbox evaluation compares baseline, adapted, and final configurations using task success rate, mean actions per episode, repeated-click count, and the number of episodes with incorrect submissions. Success rates are also shown for the World-based control. The action and error diagnostics in Figure $_ { 4 \\mathrm { e } - \\mathrm { g } }$ describe the RSI-Anything configurations. The OSWorld comparison includes the initial agent, RLAnything [21], and RSI-Anything. For success rates $s _ { \\mathrm { m e t h o d } }$ and $s _ { \\mathrm { r e f e r e n c e : } }$ , relative improvement is $1 0 0 ( s _ { \\mathrm { m e t h o d } } / s _ { \\mathrm { r e f e r e n c e } } - 1 ) \\%$"
+          "target": "insight.data"
         },
         {
-          "target": "insight.limitations",
+          "assessment": "Discussion 原文 “Joint multiround evaluation is needed to establish sustained mutual improvement of the policy and world model within a single task.” 为该主张的直接来源；同段另列物理执行、化学两屏与免疫假设待验证，limitations 已逐条对应。",
+          "block_index": 3,
           "claim": "缺乏单一任务内策略与世界模型持续互促的联合多轮评估",
           "section_index": 7,
-          "block_index": 3,
+          "source_quote": "Domain generality concerns the reuse of this improvement mechanism across domainspecific world models, policies, and evaluation procedures. The evaluations support predictive selection, predictor adaptation, successive policy improvement, and feedbackguided search in their respective settings. Joint multiround evaluation is needed to establish sustained mutual improvement of the policy and world model within a single task. The present laboratory results assess protocol-aligned planning; reliable physical execution requires evaluation on the relevant equipment and workflows. The chemistry results cover two Suzuki–Miyaura screens under the reported experiment budgets, and the therapeutic hypothesis generated in the immune-science application awaits experimental testing.\n\n",
           "source_quote_id": "s7:b3:p0",
-          "assessment": "Discussion 原文 “Joint multiround evaluation is needed to establish sustained mutual improvement of the policy and world model within a single task.” 为该主张的直接来源；同段另列物理执行、化学两屏与免疫假设待验证，limitations 已逐条对应。",
-          "source_quote": "Domain generality concerns the reuse of this improvement mechanism across domainspecific world models, policies, and evaluation procedures. The evaluations support predictive selection, predictor adaptation, successive policy improvement, and feedbackguided search in their respective settings. Joint multiround evaluation is needed to establish sustained mutual improvement of the policy and world model within a single task. The present laboratory results assess protocol-aligned planning; reliable physical execution requires evaluation on the relevant equipment and workflows. The chemistry results cover two Suzuki–Miyaura screens under the reported experiment budgets, and the therapeutic hypothesis generated in the immune-science application awaits experimental testing.\n\n"
+          "target": "insight.limitations"
         },
         {
-          "target": "insight.relevance",
+          "assessment": "领域清单（代码修复、GUI 交互、实验室规划、反应优化）有原文直接支持；“需高效利用有限反馈的场景”属应用推广，原文只声明在受限交互预算与匹配实验次数下评估，该推广已在 relevance 字段内标注为推断。",
+          "block_index": 1,
           "claim": "适用于代码生成、GUI 自动化、科学实验规划与发现等需高效利用有限反馈的场景",
           "section_index": 4,
-          "block_index": 1,
+          "source_quote": "We examined how world-model predictions improve action selection, how retained updates support further improvement, and how prediction and feedback guide decisions under limited interaction budgets. Code repair and GUI interaction cover general computational tasks, alongside physical-domain laboratory planning and experimental reaction optimization. Within these settings, we evaluate predictive selection, model adaptation, task completion, successive policy versions, and search at matched experiment counts. We then examine an end-to-end application of RSI-Anything in immune science, connecting scientific-agent workflow evolution, world-model construction, and scientific analysis.\n\n",
           "source_quote_id": "s4:b1:p0",
-          "assessment": "领域清单（代码修复、GUI 交互、实验室规划、反应优化）有原文直接支持；“需高效利用有限反馈的场景”属应用推广，原文只声明在受限交互预算与匹配实验次数下评估，该推广已在 relevance 字段内标注为推断。",
-          "source_quote": "We examined how world-model predictions improve action selection, how retained updates support further improvement, and how prediction and feedback guide decisions under limited interaction budgets. Code repair and GUI interaction cover general computational tasks, alongside physical-domain laboratory planning and experimental reaction optimization. Within these settings, we evaluate predictive selection, model adaptation, task completion, successive policy versions, and search at matched experiment counts. We then examine an end-to-end application of RSI-Anything in immune science, connecting scientific-agent workflow evolution, world-model construction, and scientific analysis.\n\n"
+          "target": "insight.relevance"
         },
         {
-          "target": "insight.method_type",
+          "assessment": "原文称 RSI-Anything 为 “a domain-general framework that integrates predictive world models with feedback-driven recursive improvement”；“形式化机制”对应 2.1–2.5 的 Eq.1–18 定义，“门控保留协议”对应 Eq.13–18 与三类数据划分（s3:b61:p0）。这是结构描述而非性能主张。",
+          "block_index": 6,
           "claim": "领域通用递归自我改进框架，含形式化机制与门控保留协议",
           "section_index": 2,
-          "block_index": 6,
+          "source_quote": "To address these challenges, we introduce RSI-Anything, a domain-general framework that integrates predictive world models with feedback-driven recursive improvement (Figure 2). World-model predictions guide action selection, prioritize external evaluations, and support learning-data selection or construction. External feedback drives policy learning or workflow revision and triggers world-model adaptation when reliability checks warrant it. The policy and world model can evolve asynchronously, with component-level checks evaluating individual updates and compatibility checks determining which policy–model pair is retained. This retained pair shapes subsequent candidates and learning experience, closing the recursive improvement loop.\n\n",
           "source_quote_id": "s2:b6:p0",
-          "assessment": "原文称 RSI-Anything 为 “a domain-general framework that integrates predictive world models with feedback-driven recursive improvement”；“形式化机制”对应 2.1–2.5 的 Eq.1–18 定义，“门控保留协议”对应 Eq.13–18 与三类数据划分（s3:b61:p0）。这是结构描述而非性能主张。",
-          "source_quote": "To address these challenges, we introduce RSI-Anything, a domain-general framework that integrates predictive world models with feedback-driven recursive improvement (Figure 2). World-model predictions guide action selection, prioritize external evaluations, and support learning-data selection or construction. External feedback drives policy learning or workflow revision and triggers world-model adaptation when reliability checks warrant it. The policy and world model can evolve asynchronously, with component-level checks evaluating individual updates and compatibility checks determining which policy–model pair is retained. This retained pair shapes subsequent candidates and learning experience, closing the recursive improvement loop.\n\n"
+          "target": "insight.method_type"
         },
         {
-          "target": "insight.research_question",
+          "assessment": "“双向耦合”有该片段直接支持（策略更新改变世界模型所依赖的候选与经验分布，世界模型更新改变候选排序与学习信号）；“外部反馈昂贵”出自摘要（s1:b1:p0）与 Introduction 第 3 段（s2:b3:p0），属跨片段组合表述，已在 research_question 中以同一句并列呈现而非归于单一出处。",
+          "block_index": 5,
           "claim": "如何在外部反馈昂贵且策略与世界模型双向耦合的条件下，实现递归自我改进（RSI）",
           "section_index": 2,
-          "block_index": 5,
+          "source_quote": "Closing this loop introduces a coupled-update challenge. Policy updates change the candidate actions and experience distributions on which the world model operates, potentially undermining prediction reliability. Conversely, world-model updates alter candidate rankings, imagined trajectories, and the learning signals guiding policy improvement. Consequently, improving either component independently does not guarantee better joint performance. Reliable RSI therefore requires determining when to update each component, assessing prediction reliability under changing policies, and ensuring that retained policy–model pairs improve subsequent interaction and learning.\n\n",
           "source_quote_id": "s2:b5:p0",
-          "assessment": "“双向耦合”有该片段直接支持（策略更新改变世界模型所依赖的候选与经验分布，世界模型更新改变候选排序与学习信号）；“外部反馈昂贵”出自摘要（s1:b1:p0）与 Introduction 第 3 段（s2:b3:p0），属跨片段组合表述，已在 research_question 中以同一句并列呈现而非归于单一出处。",
-          "source_quote": "Closing this loop introduces a coupled-update challenge. Policy updates change the candidate actions and experience distributions on which the world model operates, potentially undermining prediction reliability. Conversely, world-model updates alter candidate rankings, imagined trajectories, and the learning signals guiding policy improvement. Consequently, improving either component independently does not guarantee better joint performance. Reliable RSI therefore requires determining when to update each component, assessing prediction reliability under changing policies, and ensuring that retained policy–model pairs improve subsequent interaction and learning.\n\n"
+          "target": "insight.research_question"
         }
       ],
-      "correction_attempts": 0
+      "correction_attempts": 0,
+      "editorial_corrections": [
+        {
+          "changes": [
+            {
+              "after": "```mermaid\nflowchart TD\n    A[\"输入: 任务规范、当前状态与领域上下文\"] --> B[\"策略提出候选集（代码修复为 4 个修订）\"]\n    B --> C[\"世界模型预测候选后果与结果读出\"]\n    C --> D{\"验证器: 有效性过滤 + 效用加权排序（Eq.7）\"}\n    D -->|\"可行且符合剩余预算\"| E[\"执行被选候选，获得在线测试或实验结果\"]\n    D -->|\"无效或超预算\"| F[\"排除候选，不产生反馈\"]\n    E --> G[\"反馈写入历史，拆分为策略改进集与预测器适配集\"]\n    G --> H{\"可靠性评估: 不可靠 + 数据充分 + 预算足够？\"}\n    H -->|\"是\"| I[\"Adapt 得到预测器候选版本\"]\n    H -->|\"否或覆盖不足\"| J[\"保持当前预测器\"]\n    G --> K[\"策略或工作流更新得到候选版本\"]\n    I --> L[\"分别检查组件：通过则采用候选版本；失败或未更新则保留该组件旧版，另一组件可继续更新\"]\n    J --> L\n    K --> L\n    L --> P{\"至少一个组件发生变化？\"}\n    P -->|\"否\"| N[\"沿用当前策略-模型对进入下一轮\"]\n    P -->|\"是\"| Q{\"组装后的策略-模型对通过配对兼容性检查？\"}\n    Q -->|\"通过\"| M[\"输出: 保留组装后的策略-模型对进入下一轮\"]\n    Q -->|\"失败\"| R[\"整对回退到当前策略-模型对\"]\n    style D fill:#f9f,stroke:#333\n    style H fill:#bbf,stroke:#333\n    style Q fill:#f96,stroke:#333\n```",
+              "before": "```mermaid\nflowchart TD\n    A[\"输入: 任务规范、当前状态与领域上下文\"] --> B[\"策略提出候选集（代码修复为 4 个修订）\"]\n    B --> C[\"世界模型预测候选后果与结果读出\"]\n    C --> D{\"验证器: 有效性过滤 + 效用加权排序（Eq.7）\"}\n    D -->|\"可行且符合剩余预算\"| E[\"执行被选候选，获得在线测试或实验结果\"]\n    D -->|\"无效或超预算\"| F[\"排除候选，不产生反馈\"]\n    E --> G[\"反馈写入历史，拆分为策略改进集与预测器适配集\"]\n    G --> H{\"可靠性评估: 不可靠 + 数据充分 + 预算足够？\"}\n    H -->|\"是\"| I[\"Adapt 得到预测器候选版本\"]\n    H -->|\"否或覆盖不足\"| J[\"保持当前预测器\"]\n    G --> K[\"策略或工作流更新得到候选版本\"]\n    I --> L{\"组件检查与配对兼容性检查\"}\n    J --> L\n    K --> L\n    L -->|\"通过\"| M[\"输出: 保留新策略-模型对进入下一轮\"]\n    L -->|\"失败\"| N[\"回退到当前策略-模型对\"]\n    style D fill:#f9f,stroke:#333\n    style H fill:#bbf,stroke:#333\n    style L fill:#f96,stroke:#333\n```",
+              "field": "readme.mermaid_retention"
+            },
+            {
+              "after": "CURE-WM-Lite 是保留 W1 不更新的配置，W1 采用 JEPA-Anything 的预测设计；",
+              "before": "正文未解释 CURE-WM-Lite 与 JEPA-Anything 的命名关系；",
+              "field": "readme.fixed_w1_relationship"
+            }
+          ],
+          "id": "paper128-retention-and-fixed-w1-20261015-v1",
+          "notice": "Codex 离线抽查纠正，非原模型自动核验结论；仅纠正保留流程图与固定 W1 配置关系，不代表全文质量合格。",
+          "original_checkpoint_sha256": "c0effb5d2bf268fc0f2f72bbfad2f0729afebf5face6f3b86238dc54062714c6",
+          "original_data_sha256": "55c8b3d4944da12432c5cab1a83f3b74b332624b4a927c1c6bd2dedd5f9ab56d",
+          "review_type": "offline_editorial_review",
+          "reviewer": "Codex",
+          "source_evidence": [
+            {
+              "quote": "Failure of a component check retains its current version; failure of the pair check retains the entire current pair. If neither component changes, the current pair carries forward without a new pair comparison.",
+              "section": "2.5. Recursive retention"
+            },
+            {
+              "quote": "W1 is our 3B execution-outcome world model, built using the predictive design of JEPA-Anything [9] and adapted from Qwen2.5- Coder-3B-Instruct [52] with LoRA [53].",
+              "section": "6.1. Domain-specific evaluation settings"
+            },
+            {
+              "quote": "The fixed-world-model configuration (CURE-WM-Lite) retains W1, whereas the world-modeladaptation configuration updates W1 with the coder held fixed.",
+              "section": "6.1. Domain-specific evaluation settings"
+            }
+          ],
+          "source_sha256": "2d3120302ac4c04bc1fd3df6b9f0f37d12fa60f436033740fec9753d8a09b9c6"
+        }
+      ],
+      "verdict": "corrected"
     }
   },
   "source_sha256": "2d3120302ac4c04bc1fd3df6b9f0f37d12fa60f436033740fec9753d8a09b9c6",
