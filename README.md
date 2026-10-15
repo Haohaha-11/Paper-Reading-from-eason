@@ -5,10 +5,10 @@
 > **A personal research library for deep, connected reading.**<br>
 > 从论文原文出发，沉淀机制理解、实验证据、研究边界与可复用问题。
 
-[![Topics](https://img.shields.io/badge/Topics-19-2563eb?style=flat-square)](./topics/)
-[![Paper Notes](https://img.shields.io/badge/Paper%20Notes-127-0f766e?style=flat-square)](./topics/)
-[![Annotated Sections](https://img.shields.io/badge/Annotated%20Sections-780-7c3aed?style=flat-square)](./topics/)
-[![Source PDFs](https://img.shields.io/badge/Source%20PDFs-124-d97706?style=flat-square)](./topics/)
+[![Topics](https://img.shields.io/badge/Topics-20-2563eb?style=flat-square)](./topics/)
+[![Paper Notes](https://img.shields.io/badge/Paper%20Notes-131-0f766e?style=flat-square)](./topics/)
+[![Annotated Sections](https://img.shields.io/badge/Annotated%20Sections-889-7c3aed?style=flat-square)](./topics/)
+[![Source PDFs](https://img.shields.io/badge/Source%20PDFs-130-d97706?style=flat-square)](./topics/)
 ![Language](https://img.shields.io/badge/Notes-中文旁批-e11d48?style=flat-square)
 
 这是我的个人文献阅读与研究积累仓库。它不是简单的 paper list，也不是把摘要重新改写一遍；目标是把每篇论文转化为可追溯、可比较、可继续追问的研究材料：
@@ -54,6 +54,15 @@ flowchart LR
 | **[VLA](./topics/VLA/README.md)** | 2 篇 | 从 RoboTwin 生成式数字孪生/双臂数据，连到 StarVLA 的模块化 backbone–action-head 系统与统一评测。 |
 
 ## 最近更新
+
+### 2026-10-15 · 阅读管线升级与新批读
+
+HaOceanLab 的 AI 精读改为 Qwen3.8-Flash 逐段批注 → DeepSeek-V4.1-Flash 对照原文复核 → Qwen3.8-Max 全文综合，批注改为写给读者的短注（标题 + 1–3 句）。本轮新增 4 篇全文批读，暂放在 Uncategorized，归入研究主线后移动目录即可。
+
+- [SpatialASM: Internalizing Active Mentalization for Spatial Reasoning](./topics/Uncategorized/%5BArxiv%202026%5D%20SpatialASM-%20Internalizing%20Active%20Mentalization%20for%20Spatial%20Reasoning/README.md)（[arXiv 2610.13832](https://arxiv.org/abs/2610.13832)）
+- [HLA-WM: Hybrid Linear Attention for Long-Horizon Video World Models](./topics/Uncategorized/%5BArxiv%202026%5D%20HLA-WM-%20Hybrid%20Linear%20Attention%20for%20Long-Horizon%20Video%20World%20Models/README.md)（[arXiv 2610.05739](https://arxiv.org/abs/2610.05739)）
+- [IMPROVING TEST-TIME SCALING WITH ADAPTIVE LOOPED TRANSFORMERS](./topics/Uncategorized/%5BArxiv%5D%20IMPROVING%20TEST-TIME%20SCALING%20WITH%20ADAPTIVE%20LOOPED%20TRANSFORMERS/README.md)（[arXiv 2609.35748](https://arxiv.org/abs/2609.35748)）
+- [RSI-Anything: Unlocking Recursive Self-Improvement with World Models](./topics/Uncategorized/%5BArxiv%5D%20RSI-Anything-%20Unlocking%20Recursive%20Self-Improvement%20with%20World%20Models/README.md)（[arXiv 2610.13912](https://arxiv.org/abs/2610.13912)）
 
 ### 2026-08-28 · VLA
 
@@ -120,8 +129,9 @@ flowchart LR
 | [GRPO](./topics/GRPO/README.md) | 1 | Group Relative Policy Optimization 与 Agentic RL |
 | [Tech Reports](./topics/Tech-repoorts/README.md) | 5 | 前沿模型技术报告、训练配方与系统能力 |
 | [Rebuttal](./topics/Rebuttal/README.md) | 2 | 论文论证、审稿回应与研究主张边界 |
+| [Uncategorized](./topics/Uncategorized/README.md) | 4 | 阅读完成、尚未归入研究主线的论文；归类后移入对应 topic |
 
-**合计：19 个 topic，127 份论文笔记，780 个批读 section。**
+**合计：20 个 topic，131 份论文笔记，889 个批读 section。**
 
 ## 一篇完整批读包含什么
 
