@@ -1,0 +1,34 @@
+{
+  "research_question": "大型视觉语言模型（LVLMs）缺乏主动空间心理化能力，即无法像人类一样在复杂空间推理中主动规划任务相关视角并在心理上重构该视角下的场景布局。如何将这种能力内化到 LVLM 中而不依赖推理时的外部工具？",
+  "method": "提出 SpatialASM 框架：1) 用基于 FLUX.2-klein-9B 微调的异中心新视角生成器（NVG）作为训练时模拟引擎；2) 合成显式 ASM 推理轨迹用于 SFT，将渲染图替换为文本 caption 使模型内化想象；3) 自动构建两类视角采择多选任务，用 GeoP 过滤后经 GRPO 强化学习训练；4) 提出 Geometry Perturbation（GeoP）指标，以加入渲染视图前后点云的 Chamfer distance 评估渲染视图的几何一致性。",
+  "data": "NVG 训练集 SpatialASM-edit140k 共 139,730 个样本，全部自动构建自 DL3DV，输入图像数 1 至 4；SFT 数据 SpatialASM-66k 是 128k 条 ASM 轨迹的子集（缩减规则未说明），且只由 Holi-Spatial 来源构建，不含 Mindcube-train 样本以避免与评测集重叠；RL 数据 SpatialASM-RL-58k 共 58,346 条（Holi-Spatial 28,594 + DL3DV 29,752）。评测覆盖 7 个空间推理基准与 3 个通用 VQA 基准。",
+  "findings": "在 Qwen3-VL 与 Qwen3.5 系列四个骨干上，7 个空间基准平均准确率提升 +1.2 至 +3.5 分（4B +3.5、8B +2.9、30B-A3B +2.5、9B +1.2），单基准最高 +8.7（Spatial457-6d，8B）与 +5.2（MindCube，4B）；通用 VQA 平均分变化在 0.6 分以内。Table 4 消融显示 GeoP 过滤在 SFT 与 RL 两阶段都提升平均分，SFT+RL 组合最佳（4B 平均 50.6）。作者称 NVG 的 GeoP 高于 SVC 但推理准确率更高，归因于异中心视角表示更利于 LVLM 对齐空间对应关系。",
+  "limitations": "GeoP 是依赖重建模型 F（论文用 MapAnything）的代理指标，不是几何一致性的真值；SFT 阈值 θ=2.5 与 RL 阈值 θ_RL（backward 1.2、其余 0.6）由经验与人工检查设定，原文未给出阈值或重建模型的消融。作者承认向后视角生成图像的 GeoP 天然更高；正文 Table 2 与 Table 7 在给定文本中列对齐错乱，复现需回原表核对。动态场景与具身交互被列为未来工作。",
+  "relevance": "推断：若读者研究 LVLM 空间推理、思维链数据合成或世界模型蒸馏，本文提供了一种不修改架构、仅靠后训练就能内化主动视角探索能力的可扩展路径；其异中心视角参数化与 GeoP 过滤策略可迁移到其他需要几何一致性约束的视觉生成或数据合成任务。",
+  "method_type": "后训练内化",
+  "themes": [
+    "空间推理",
+    "主动心理化",
+    "视角规划与想象",
+    "新视角生成",
+    "GRPO 强化学习",
+    "思维链合成",
+    "几何一致性"
+  ],
+  "citation_refs": [
+    "World2VLM",
+    "HoliSpatial",
+    "VST",
+    "MindCube",
+    "Spatial457",
+    "ESI-Bench",
+    "GeoThinker",
+    "FLUX.2",
+    "GRPO",
+    "Qwen3-VL",
+    "DL3DV",
+    "MapAnything"
+  ],
+  "evidence_level": "full_text",
+  "core_rank": 0
+}
