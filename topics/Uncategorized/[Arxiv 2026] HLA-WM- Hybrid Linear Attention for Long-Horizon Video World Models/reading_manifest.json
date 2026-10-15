@@ -1,0 +1,1415 @@
+{
+  "provider": "bailian",
+  "model": "qwen3.8-flash",
+  "kind": "paper",
+  "stage_models": {
+    "annotations": "qwen3.8-flash",
+    "synthesis": "qwen3.8-max",
+    "verifier": "deepseek-v4.1-flash"
+  },
+  "verification": {
+    "status": "reviewed",
+    "model": "deepseek-v4.1-flash",
+    "scope": "模型对照原文的独立复核；引文位置由程序校验，不代表外部事实得到独立证实",
+    "batches": [
+      {
+        "section_index": 0,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对作者姓名与上标编号：7 位作者、编号 1/2/3 与初稿“来自 Monash、Adelaide 和浙大”一致，未修改事实部分。将“主要研究视频世界模型中的长时程记忆问题”由断言降级为**推断（待证）**，因本行仅为作者列表，不含研究方向陈述。",
+            "block_index": 1,
+            "source_quote": "Zhuokun Chen<sup>1</sup> Feng Chen<sup>2</sup> Xi Lin<sup>3</sup> Xiyu Wu<sup>3</sup> Jiahao He<sup>3</sup> Jianfei Cai<sup>1</sup> Bohan Zhuang<sup>3</sup>"
+          },
+          {
+            "assessment": "核对机构名与编号映射，三所机构拼写无误，并补充编号到具体作者的对应关系。**删改**了初稿“通常此类跨机构合作在基准测试和数据集构建上具有互补优势”一句：原文只有署名信息，无任何关于机构分工或数据/基准构建优势的证据，该说法属超证据推断，已改为明确的证据边界声明。",
+            "block_index": 2,
+            "source_quote": "<sup>1</sup>Monash University <sup>2</sup>The University of Adelaide <sup>3</sup>Zhejiang University"
+          },
+          {
+            "assessment": "逐项核对数字与条件：60 秒 SANA-WM-Bench、6 项聚合指标、PSNR +0.74 dB、旋转误差 -28.5%、不额外训练——全部与原文一致，未修改数值。另核对摘要其余数字：MBench-A 为 547 样本 / 4 子集 / 3 项指标、内存减少 12×、吞吐最多下降 1.6%、上下文为 60 秒，均与原文相符。**纠正两处**：(a) 初稿 Q&A 断言“免训练”是为“即插即用、避免训练成本、验证通用性”，摘要仅陈述 training-free 事实，动机无证据，已标注为推断（待证）；(b) 指出原文 “afine structure” 系 “affine” 拼写笔误。",
+            "block_index": 3,
+            "source_quote": "On the 60-second SANA-WM-Bench, HLA-WM improves all six aggregate revisit-consistency and camera-control metrics of the base autoregressive generator without additional training, including a 0.74 dB PSNR gain and a 28.5% reduction in rotation error."
+          },
+          {
+            "assessment": "核对 URL 逐字一致。**纠正**初稿“建议读者访问以获取第一手资料”一类引导性表述：本次核对未访问该页面，故明确写入“未访问、不对页面内容作任何断言”，并统一批注格式为 `> 💡 **标题**:` 形式。",
+            "block_index": 4,
+            "source_quote": "Project Page: https://caesarhhh.github.io/hla-wm/"
+          },
+          {
+            "assessment": "核对四个关键词逐字一致，并确认它们与摘要的“长程记忆问题—线性注意力/GDN—视频世界模型”叙事对应。**纠正**初稿“构成后续方法论章节的理论基石”这一修辞性断言，降级为推断（待证），并指出方法论依据应以正文形式化描述为准。",
+            "block_index": 5,
+            "source_quote": "Keywords: Video World Models, Linear Attention, Long-Range Memory, Gated DeltaNet"
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 1,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对初稿对核心问题的表述：初稿写成“在 full KV 缓存与循环线性注意力之间取得平衡”，原文问题实为“retain efficient memory while still recovering distant scene information”；已改为原文表述。初稿把“易遗忘”提前到本段，但该观察出现在下一段 GDN 诊断，已删去并标注为跨段推断。",
+            "block_index": 1,
+            "source_quote": "World models predict environment dynamics, enabling agents to anticipate future observations and reason about the consequences of their actions [1, 2]. Recent video world models realize such simulation through autoregressive generation conditioned on agent actions or camera trajectories [3– 7]."
+          },
+          {
+            "assessment": "核对 GDN 描述与长程遗忘观察：原文支持“明显长程遗忘”和 Fig. 1 中 revisit consistency 下降。初稿“为引入混合架构提供实证依据”原文未直接推出，已标为推断；“实验观察”改为“诊断性观察”。",
+            "block_index": 2,
+            "source_quote": "Among modern recurrent linear-attention architectures, Gated DeltaNet (GDN) combines data-dependent decay with delta-rule updates to manage information within a compact recurrent state [15]. Nevertheless, we observe a clear long-range forgetting problem in GDN-based video world models."
+          },
+          {
+            "assessment": "核对 caption 描述：“急剧下降”来自正文而非 caption，已注明；初稿遗漏左下角 camera displacement，已补；未获得图片视觉信息已在批注中声明；“核心证据”标为推断。",
+            "block_index": 3,
+            "source_quote": "Figure 1 Long-range forgetting in GDN-based world-model rollouts. Upper left: Revisit SSIM over increasing temporal gaps. Lower left: Camera displacement along the qualitative trajectory. Right: Qualitative comparison of the first visit, far excursion, and revisit at the similar camera pose."
+          },
+          {
+            "assessment": "核对“分析 GDN 循环状态转移”与“独立可寻址”的动机：原文支持，但本段无公式或定量证明；初稿“深入分析”过强，已改为“提出机理假设并据此设计记忆组织”。",
+            "block_index": 4,
+            "source_quote": "To understand this limitation, we analyze the recurrent state transition in GDN. Since the full history is compressed into a single recurrent state, earlier information must survive all intervening updates to remain recoverable, motivating a memory organization in which compact historical states remain independently addressable."
+          },
+          {
+            "assessment": "核对方法定位与问题条件：training-free、hybrid、不保留 full token-level KV cache 均支持。修正“稀疏历史访问”为“选择性访问”；补充 coarse/fine 两级结构，初稿遗漏。",
+            "block_index": 5,
+            "source_quote": "We therefore ask whether a pretrained recurrent video world model can recover distant scene history without retaining a full token-level KV cache or requiring additional training. To this end, we propose HLA-WM, a training-free hybrid linear-attention framework that combines coarse-grained geometry-guided retrieval with fine-grained recurrent linear-attention access."
+          },
+          {
+            "assessment": "核对相机元数据寻址、代理来源、参数不变：均支持。初稿遗漏 persistent sink、recent context 和 without a learned router，已补入最终批注。",
+            "block_index": 6,
+            "source_quote": "For camera-controlled world-model rollouts, camera metadata provides a natural addressing signal without requiring a learned router [16, 17]. HLA-WM uses a lightweight camera-frustum overlap proxy derived from poses, intrinsics, and a scene-level depth estimate to identify relevant historical chunks."
+          },
+          {
+            "assessment": "核对数字 12×、1.6% 与相机可控性条件：数字一致；相机可控性改善限定于 Stage 1，初稿省略该限定，已补；同时补入 downstream refinement 的 mode-dependent trade-offs 和 MBench-A 全覆盖表述。",
+            "block_index": 7,
+            "source_quote": "At Stage 1, where HLA-WM directly modifies recurrent memory, it also improves camera controllability by reducing accumulated structural drift and maintaining a more stable spatial reference during generation. Downstream refinement introduces mode-dependent trade-ofs, while the long-range consistency gains remain evident across both benchmarks."
+          },
+          {
+            "assessment": "核对为贡献列表引导句，无实质主张；保留为过渡批注。",
+            "block_index": 8,
+            "source_quote": "Our main contributions are summarized as follows:"
+          },
+          {
+            "assessment": "核对贡献 1 表述：empirically characterize 与 weaken access 支持；初稿“已知问题的量化”为原文未支持的推断，已修正为实证刻画与机理解释。",
+            "block_index": 9,
+            "source_quote": "We empirically characterize long-range forgetting in GDN-based video world models and show how accumulated recurrent transitions progressively weaken access to distant scene information."
+          },
+          {
+            "assessment": "核对三个手段与 training-free 属性：均支持；“通用范式”超出原文，已标为推断。",
+            "block_index": 10,
+            "source_quote": "We propose HLA-WM, a training-free hybrid linear-attention framework that equips recurrent video world models with selectively addressable historical memory through compact afine summaries, camera-guided addressing, and chronological state recomposition."
+          },
+          {
+            "assessment": "核对 0.74 dB、28.5%、60-second 和 without training：数字与限定条件一致；已注明 MBench-A 具体数字未在本段列出。",
+            "block_index": 11,
+            "source_quote": "Extensive experiments on SANA-WM-Bench and MBench-A demonstrate improved longrange scene consistency. On the 60-second SANA-WM-Bench, HLA-WM improves the base autoregressive generator by 0.74 dB in PSNR and reduces rotation error by 28.5% without training."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 2,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对了四类记忆分类及引用编号、开销随 rollout 增长的因果表述、帧级记忆“may require”的不确定性。初稿写“需要重新编码并重算”略强，已改为“可能需要”，其余分类与痛点均在原文证据内，未发现新增引用或外部事实。",
+            "block_index": 1,
+            "source_quote": "Although these mechanisms improve long-range consistency, they introduce additional storage and retrieval overhead that can grow with the rollout. In particular, frame-based memories may require retrieved observations to be re-encoded and their attention caches recomputed, while token, feature, and spatial memories require maintaining and querying additional historical representations, limiting their eficiency for long-horizon generation."
+          },
+          {
+            "assessment": "核对了线性注意力固定大小循环状态、GLA/DeltaNet/GDN 的机制演进、自回归视频生成扩展，以及“持续压缩导致远距离信息易受衰减和干扰”的结论。初稿“难以完美保留长程细节”是额外推断，原文只支持 attenuation/interference，已删除该强表述并标明推断边界。",
+            "block_index": 2,
+            "source_quote": "Despite their favorable memory eficiency, these methods continuously compress historical observations into a limited recurrent state, making distant information increasingly susceptible to attenuation and interference from subsequent updates during long-horizon generation."
+          },
+          {
+            "assessment": "核对了初稿“未提供 caption”的错误判断：原文 caption 明确描述 Figure 2 为 GDN 长程遗忘证据，并给出 Chunk 3 的累计保留 $W_{3\\to j}$ 在 Chunk 35 降至 0.0416。初稿关于“效率对比/状态演变/方法比较框架”的推测没有原文支持，已改为依据 caption 的 Figure 2 批读，并声明未获得图片视觉细节。",
+            "block_index": 3,
+            "source_quote": "Although the early scene becomes relevant again near the end of the rollout, its retained influence continuously decreases as intermediate chunks are generated, reaching only 0.0416 at Chunk 35."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 3,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对点：(1) 研究对象与场景——原文为 SANA-WM 中 GDN 的 long-range forgetting，初稿\"世界模型\"定位来自后文 \"worldmodel rollouts\"/\"SANA-WM Benchmark\"，已改标为推断；(2) 初稿称作者\"定义\"chunk 级更新机制，原文为 can be written as（写出），已改为\"写出\"；(3) 初稿展开 GDN 为 Gated Delta Networks，原文无此展开，已标注为外部推断。",
+            "block_index": 1,
+            "source_quote": "We first investigate the long-range forgetting behavior of GDN in SANA-WM [7]. At the chunk level, the recurrent update of chunk i can be written as"
+          },
+          {
+            "assessment": "核对公式本体：Eq. (1) 逐字符与原文一致，$S_{i-1}A_i + B_i$ 的结构描述无误。修改了初稿两处：(1) $A_i$/$B_i$ 的语义界定实由下一段原文给出，本块不再单方面断言；(2) 初稿\"标准线性 RNN/GDN 的递归结构\"系外部归类，原文未述，已标为推断。",
+            "block_index": 2,
+            "source_quote": "S _ { i } = S _ { i - 1 } A _ { i } + B _ { i } ,\\tag{1}"
+          },
+          {
+            "assessment": "核对符号定义：$A_i$ = 作用于历史记忆的状态转移，$B_i$ = 本 chunk 新写入信息，初稿一致。纠正了初稿的越界推断——\"若 $A$ 具有收缩性质则早期信息被指数级稀释\"：原文只提 repeated transformation，未假设收缩性、未给指数衰减结论，已明确标为推断/待证，并指出展开结果见 Eq. (2) 而非本段。",
+            "block_index": 3,
+            "source_quote": "where $A _ { i }$ denotes the state transition applied to historical memory and $B _ { i }$ represents the information newly written by the current chunk. Expanding the recurrence over multiple chunks gives"
+          },
+          {
+            "assessment": "核对公式本体：Eq. (2) 的连乘项 $B_iA_{i+1}A_{i+2}\\cdots A_j$ 与原文逐字符一致。纠正初稿\"已被中间变换链完全重塑\"——原文用词是 repeatedly transformed，\"完全\"为加强，已改为\"反复变换\"；并补充连乘本身不蕴含信息必然丢失，最终方向取决于各 $A$ 性质，属原文未判定项。",
+            "block_index": 4,
+            "source_quote": "S _ { j } = \\cdots + B _ { i } A _ { i + 1 } A _ { i + 2 } \\cdots A _ { j } + \\cdots + B _ { j } .\\tag{2}"
+          },
+          {
+            "assessment": "核对定义来源：cumulative retention 用 average norm of the intervening transition product 度量，初稿表述一致，未改。补充了一处初稿未提的张力：原文名之为 cumulative retention，但读数规则（block 7）是越小衰减越强，故该量实际为衰减度量，已提醒读者勿按字面理解；同时记录 AvgNorm 的动机原文未说明。",
+            "block_index": 5,
+            "source_quote": "Thus, information written by an early chunk is repeatedly transformed by all subsequent transition matrices before it can influence a distant future scene. We quantify its cumulative retention from chunk i to chunk j using the average norm of the intervening transition product:"
+          },
+          {
+            "assessment": "核对公式本体：Eq. (3) 的 AvgNorm 形式与原文一致。修改初稿\"使用平均范数而非最大奇异值，旨在反映典型情况下的信号强度衰减\"——最大奇异值对比与 AvgNorm 动机均为原文所无，已标为推断；AvgNorm 的统计口径（平均范围、归一方式）原文未给，标为待证。",
+            "block_index": 6,
+            "source_quote": "W _ { i \\to j } = { \\mathrm { A v g N o r m } } \\left( A _ { i + 1 } A _ { i + 2 } \\cdot \\cdot \\cdot A _ { j } \\right) ,\\tag{3}"
+          },
+          {
+            "assessment": "核对读数方向：$W$ 越小衰减越强，初稿一致。纠正初稿两点越界：(1) \"理论阈值\"——原文未给任何阈值；(2) \"$W$ 极低时模型无法利用该记忆\"——原文未建立此因果链。已明确该处只有一致性证据，不构成阈值判定或因果证明。",
+            "block_index": 7,
+            "source_quote": "where a smaller $W _ { i \\to j }$ indicates stronger attenuation from chunk i to $j .$"
+          },
+          {
+            "assessment": "核对关键数字与因果：0.0416 确为原文数据，且语境是 Chunk 3 信息在 Chunk 35 时的 retained influence，初稿的数值引用无误。纠正两处：(1) 初稿\"中间跨越了 32 个无关视角\"——Chunk 3 到 35 相隔 32 步，中间 chunk 为 4–34 共 31 个，且原文（block 9）称大多数中间 chunk 为不同视角而非全部无关；(2) $W_{3\\to35}$ 的下标写法是本次批读的映射推断，原文未显式写。另将\"证实\"弱化为支持性证据。",
+            "block_index": 8,
+            "source_quote": "Figure 2 illustrates this phenomenon on a representative trajectory from the SANA-WM Benchmark. The camera leaves the region observed at Chunk 3, traverses a large loop, and eventually returns to a nearby viewpoint at Chunk 35."
+          },
+          {
+            "assessment": "核对核心结论：\"时序更新 vs 空间与几何邻近性\"的错配陈述与原文一致，末句\"选择性保留并组合场景相关历史状态、而非均匀传播\"有原文支撑，均保留。修改初稿\"中间无关帧的 $A$ 矩阵无差别地扭曲了有用记忆\"——原文只说 repeatedly transformed / undergo repeated transformations，\"扭曲\"为价值判断，已改为\"反复变换\"。",
+            "block_index": 9,
+            "source_quote": "As a result, scene information that becomes relevant again can be substantially attenuated before it is needed. This exposes a fundamental mismatch in conventional GDN memory: historical information is updated according to temporal progression, whereas its relevance in worldmodel rollouts is often determined by spatial and geometric proximity."
+          },
+          {
+            "assessment": "核对图表身份：本 block 是 Figure 3（HLA-WM overview）的图片与 caption，初稿将其误作 Figure 2 的\"记忆衰减曲线\"，属张冠李戴，已整条重写为 Figure 3 批读。据 caption 核对三要素：历史 chunk 由独立 GDN summary 表示、geometry-guided retrieval 选取场景相关历史 chunk 并连同 persistent sink 与 recent context、选中 summary 按时间顺序组合成 query-specific recurrent state，均与原文一致。明确声明本节原文未提供该图的视觉细节，本批注仅依据 caption，未就图内连线作断言（图片视觉信息未获得）。",
+            "block_index": 10,
+            "source_quote": "Figure 3 Overview of HLA-WM. Historical video chunks are represented by independent GDN summaries. Given the current query, geometry-guided retrieval selects scene-relevant historical chunks together with persistent sink and recent context."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 4,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对框架命名、hybrid linear-attention 定位与“用可独立寻址 chunk 记忆替换单一累积 GDN 记忆”的核心主张，均与原文一致。修改：删除“导致 distant information 被干扰或遗忘”中“遗忘”的表述，原文只承诺 bypass unrelated intermediate updates 并保持线性状态紧凑性，遗忘属推断。",
+            "block_index": 2,
+            "source_quote": "We propose HLA-WM, a hybrid linear-attention framework for long-horizon video world models. The key idea is to replace the single accumulated GDN memory with a collection of independently addressable chunk-wise memories."
+          },
+          {
+            "assessment": "核对 GDN 为 token-wise 递归更新、$t$ 按 recurrent scan order 索引，与原文一致，保留原批注。",
+            "block_index": 4,
+            "source_quote": "Gated DeltaNet maintains a recurrent linear state through token-wise updates [15]. Let t index tokens in the recurrent scan order. For token $t ,$ the state update is"
+          },
+          {
+            "assessment": "逐项核对 Eq. 4 的公式形式与批注转述一致；$\\gamma_t$ 控制 memory decay、$\\beta_t$ 控制 delta update strength 的解释来自下一 block 的正文，批注已注明出处，未越界。",
+            "block_index": 5,
+            "source_quote": "$$\nS _ { t } = \\gamma _ { t } S _ { t - 1 } + \\beta _ { t } \\left( v _ { t } - S _ { t - 1 } k _ { t } \\right) k _ { t } ^ { \\top } ,\\tag{4}\n$$"
+          },
+          {
+            "assessment": "核对 $k_t$、$v_t$、$\\gamma_t$、$\\beta_t$ 的语义，与原文一致。修改：初稿称重排是“为了便于 chunk 级并行和重组”，但原文仅写 Rearranging Eq. 4 gives，未声明动机，已改为批注推断并保留原文表述。",
+            "block_index": 6,
+            "source_quote": "where $k _ { t }$ and $v _ { t }$ are the key and value vectors projected from the current token representation, γ<sub>t</sub> controls memory decay, and $\\beta _ { t }$ controls the strength of the delta update. Rearranging Eq. 4 gives"
+          },
+          {
+            "assessment": "核对 Eq. 5 的仿射形式与批注一致。保留批注，但注明“$A$ 变换已有记忆、$B$ 写入信息”的措辞原文是针对 chunk 级（block 17）提出，挪用到 token 级属类比。",
+            "block_index": 7,
+            "source_quote": "$$\nS _ { t } = S _ { t - 1 } A _ { t } + B _ { t } ,\\tag{5}\n$$"
+          },
+          {
+            "assessment": "该块仅为公式引入连接词，核对它确实承接 Eq. 5 与 Eq. 6 的定义，批注按上下文给出且未添加实质主张。",
+            "block_index": 8,
+            "source_quote": "where"
+          },
+          {
+            "assessment": "核对 Eq. 6 的 $A_t$、$B_t$ 表达式，批注转述正确。修改：删除“类似 Householder 变换”的类比——标准 Householder 为 $I-2vv^\\top$ 且要求 $v$ 单位向量、结果正交，本式无归一化与正交性保证并叠加 $\\gamma_t$ 缩放，已改为“带衰减因子的秩-1 修正”。",
+            "block_index": 9,
+            "source_quote": "$$\nA _ { t } = \\gamma _ { t } I - \\beta _ { t } k _ { t } k _ { t } ^ { \\top } , \\qquad B _ { t } = \\beta _ { t } v _ { t } k _ { t } ^ { \\top } .\\tag{6}\n$$"
+          },
+          {
+            "assessment": "核对“该仿射形式可跨连续 token 组合”这一主张（原文拼写 afine 应为 affine），批注转述与原文一致，保留。",
+            "block_index": 10,
+            "source_quote": "This afine form can be directly composed over consecutive tokens. Consider chunk i containing"
+          },
+          {
+            "assessment": "核对 chunk 含 $L$ 个 token、$(i,\\ell)$ 记第 $\\ell$ 个 token 的符号约定，与原文一致；批注所说的展开目的属对下一式的自然引导。",
+            "block_index": 11,
+            "source_quote": "L tokens, and let $( i , \\ell )$ denote its ℓ-th token. Unrolling the recurrence within the chunk gives"
+          },
+          {
+            "assessment": "核对 chunk 内 unroll 的展开式：$S_{i-1}$ 乘全部 $A$，加上各 $B$ 乘其后 $A$ 的连乘，批注转述与公式一致。",
+            "block_index": 12,
+            "source_quote": "$$\nS _ { i } = S _ { i - 1 } A _ { i , 1 } A _ { i , 2 } \\cdot \\cdot \\cdot A _ { i , L } + B _ { i , 1 } A _ { i , 2 } \\cdot \\cdot \\cdot A _ { i , L } + \\cdot \\cdot \\cdot + B _ { i , L } .\n$$"
+          },
+          {
+            "assessment": "核对“整段 chunk 可表示为单个仿射转移”的结论，与原文一致。批注补充的“存储从每 token 变为每 chunk 一对矩阵”是机制含义的合理展开，未与原文冲突。",
+            "block_index": 13,
+            "source_quote": "Therefore, the entire chunk can be represented by a single afine transition"
+          },
+          {
+            "assessment": "核对 Eq. 7 与批注“chunk 级更新、形式同 Eq. 5 但已聚合整段效果”的说明，一致。",
+            "block_index": 14,
+            "source_quote": "$$\nS _ { i } = S _ { i - 1 } A _ { i } + B _ { i } ,\\tag{7}\n$$"
+          },
+          {
+            "assessment": "该块为公式引入连接词，核对它承接 Eq. 7 与 Eq. 8，批注未添加实质主张。",
+            "block_index": 15,
+            "source_quote": "where"
+          },
+          {
+            "assessment": "核对 Eq. 8 的连乘/求和结构与索引。修改：初稿把索引写成 $j$ 与原文不符，已更正为原文使用的 $\\ell$、$u$；“乘积遵循扫描顺序”有 block 17 原文支撑。",
+            "block_index": 16,
+            "source_quote": "$$\nA _ { i } = A _ { i , 1 } A _ { i , 2 } \\cdot \\cdot \\cdot A _ { i , L } , \\qquad B _ { i } = \\sum _ { \\ell = 1 } ^ { L } B _ { i , \\ell } \\prod _ { u = \\ell + 1 } ^ { L } A _ { i , u } .\\tag{8}\n$$"
+          },
+          {
+            "assessment": "核对“乘积遵循扫描顺序、空积为 identity、$(A_i,B_i)$ 为充分摘要”三项主张，与原文一致（原文 suficient 为解析丢字）。批注中“不必保留原始视觉 token”有 block 20 的 without replaying their original visual tokens 支撑，但存储开销讨论原文此处未展开，已注明。",
+            "block_index": 17,
+            "source_quote": "Here, the products follow the recurrent scan order, with an empty product defined as the identity. The pair $( A _ { i } , B _ { i } )$ therefore provides a suficient summary of chunk i:"
+          },
+          {
+            "assessment": "核对该句引出摘要组合规则（Eq. 9），批注定位正确，未添加主张。",
+            "block_index": 18,
+            "source_quote": "Equivalently, their summaries follow the composition rule"
+          },
+          {
+            "assessment": "核对组合规则并做方向验证：先施加 $i$ 得 $S'=SA_i+B_i$，再施加 $j$ 得 $S''=S(A_iA_j)+(B_iA_j+B_j)$，与 Eq. 9 一致，故“先 $i$ 后 $j$”的批注解读正确。",
+            "block_index": 19,
+            "source_quote": "$$\n( A _ { i } , B _ { i } ) \\star ( A _ { j } , B _ { j } ) = ( A _ { i } A _ { j } , B _ { i } A _ { j } + B _ { j } ) .\\tag{9}\n$$"
+          },
+          {
+            "assessment": "核对结合律与“任意历史子集可重组、无需重放原始视觉 token”的主张，批注转述与原文一致（原文 eficiently 为解析丢字）。",
+            "block_index": 20,
+            "source_quote": "The operation is associative, enabling an arbitrary subset of historical chunk summaries to be eficiently recomposed without replaying their original visual tokens through the model."
+          },
+          {
+            "assessment": "核对检索输入（query chunk $q$ 与 eligible historical chunk $i$）与所用信息（camera poses、intrinsics、scene-level median-depth estimate），与原文一致。修改：初稿在此处写“保证鲁棒性”，原文于 block 22 未如此声称（不依赖 RGB 与语义特征的表述实际出现在 block 29），已移至该处并标注。",
+            "block_index": 22,
+            "source_quote": "Given the individually addressable chunk-wise memories, we retrieve historical chunks according to their geometric relevance to the current view. For each query chunk q and an eligible historical chunk i, we estimate their overlap using only camera poses, intrinsics, and a scene-level mediandepth estimate."
+          },
+          {
+            "assessment": "核对 Eq. 10 的射线构造与批注一致，并补充说明第三分量为 1 表示该方向向量未归一化、深度由后续代理深度提供。",
+            "block_index": 23,
+            "source_quote": "$$\n\\mathbf { r } ( u , v ) = \\left[ \\frac { u - c _ { x } } { f _ { x } } , \\frac { v - c _ { y } } { f _ { y } } , 1 \\right] ^ { \\top } ,\\tag{10}\n$$"
+          },
+          {
+            "assessment": "核对“围绕中值深度实例化代理 3D 点”的做法与原文一致。修改：初稿“由于缺乏精确深度图”属动机推断，原文此处未表述该前提，已标注为推断。",
+            "block_index": 24,
+            "source_quote": "and instantiate proxy 3D points at several depths around the scene-level median depth,"
+          },
+          {
+            "assessment": "核对 Eq. 11 的三层深度取值 $\\{0.5d_{med}, d_{med}, 1.5d_{med}\\}$ 与批注一致，未发现夸大。",
+            "block_index": 25,
+            "source_quote": "$$\n\\mathcal { D } = \\{ 0 . 5 d _ { \\mathrm { m e d } } , d _ { \\mathrm { m e d } } , 1 . 5 d _ { \\mathrm { m e d } } \\} .\\tag{11}\n$$"
+          },
+          {
+            "assessment": "核对代理点先转世界坐标再投影到另一 chunk 视图的流程，批注的“验证跨视角几何对应”是对该操作的合理描述，未添加原文未有的结论。",
+            "block_index": 26,
+            "source_quote": "These proxy points are transformed into world coordinates using the corresponding camera poses and projected into the camera views of the other chunk."
+          },
+          {
+            "assessment": "核对 $V(i\\to q)$ 定义（以正深度投影到 chunk $q$ 至少一个视图的代理点比例）与批注一致。批注注明该度量基于代理点与正深度判据，不同于真实遮挡计算。",
+            "block_index": 27,
+            "source_quote": "Let $V ( i  q )$ denote the fraction of proxy points constructed from chunk i that project with positive depth into at least one camera view of chunk $q .$ We define the symmetric frustum-overlap score as"
+          },
+          {
+            "assessment": "核对 Eq. 12 的双向平均定义与批注一致，未发现错误。",
+            "block_index": 28,
+            "source_quote": "$$\nR ( i , q ) = \\frac { 1 } { 2 } \\left[ V ( i \\to q ) + V ( q \\to i ) \\right] .\\tag{12}\n$$"
+          },
+          {
+            "assessment": "核对该段的自我限定“轻量代理而非精确 3D 交集”，批注转述正确。修改两点：原文对 [16,17] 只说类似几何准则曾被用于相关任务，未称其“证明有效性”；“适合实时或大规模场景”无原文依据，已删除。不依赖生成 RGB 与学习语义特征的表述已归位到本条。",
+            "block_index": 29,
+            "source_quote": "The score provides a lightweight proxy for geometric overlap rather than exact 3D scene intersection. Similar geometry-based criteria have been used to retrieve relevant historical context for longhorizon video generation and world simulation [16, 17]."
+          },
+          {
+            "assessment": "核对 sink（preserve global context）、recent chunks（local temporal continuity）的固定保留设定，与原文一致；初稿对 sink 的“全局锚点/起始状态”解释与原文一致，但“记忆断裂风险”属措辞演绎，已注明。",
+            "block_index": 30,
+            "source_quote": "In addition to the retrieved historical chunks, we retain the first chunk as a persistent sink to preserve global context, together with recent chunks to maintain local temporal continuity."
+          },
+          {
+            "assessment": "该块仅为上一句的跨页续行词，核对它确实属于 block 30 的 abrupt camera motion 句尾，批注未添加实质主张。",
+            "block_index": 31,
+            "source_quote": "motion."
+          },
+          {
+            "assessment": "核对 $\\mathcal{H}_q$ 为剔除 sink 与 recent 后剩余的历史块集合，批注一致；检索仅在 $\\mathcal{H}_q$ 内进行可在 Eq. 13 的 TopK 下标中得到确认。",
+            "block_index": 32,
+            "source_quote": "Let $\\mathcal { H } _ { q }$ denote the remaining historical chunks after excluding the sink and recent context. The selected history is"
+          },
+          {
+            "assessment": "核对 Eq. 13 的三部分并集结构（sink、recent、$\\mathcal{H}_q$ 上按 $R(i,q)$ 的 Top-K）与批注一致。",
+            "block_index": 33,
+            "source_quote": "$$\n\\begin{array} { r } { \\mathcal { T } _ { q } = \\mathcal { T } _ { \\mathrm { s i n k } } \\cup \\mathcal { T } _ { \\mathrm { r e c e n t } } \\cup \\mathrm { T o p K } _ { i \\in \\mathcal { H } _ { q } } R ( i , q ) . } \\end{array}\\tag{13}\n$$"
+          },
+          {
+            "assessment": "核对该设计总结的两个方面（稀疏长程几何检索 + 自适应短期上下文）及效果表述，与原文一致。修改：初稿“过滤了无关中间场景的噪声”把原文 interference（干扰）改写为“噪声”，已按原文更正。",
+            "block_index": 34,
+            "source_quote": "This design combines sparse retrieval of geometrically relevant long-range memory with adaptive preservation of short-term context, reducing interference from unrelated intermediate scenes while maintaining local continuity during abrupt camera motion."
+          },
+          {
+            "assessment": "核对检索后必须恢复原始时间顺序，批注给出的理由（GDN 状态更新依赖时间先后）与 Eq. 9 需按序施加的推导一致，属合理说明。",
+            "block_index": 36,
+            "source_quote": "After retrieval, the selected chunks are restored to their original chronological order. Denote the ordered set as"
+          },
+          {
+            "assessment": "核对 Eq. 14 仅定义有序集合 $\\pi_q$。修改：初稿断言 $\\pi_m$ 是“按时间排序的第 $m$ 个选中 chunk 的索引”，原文未逐字说明其语义，已标注为批注推断。",
+            "block_index": 37,
+            "source_quote": "$$\n\\pi _ { q } = ( \\pi _ { 1 } , \\pi _ { 2 } , \\ldots , \\pi _ { M } ) .\\tag{14}\n$$"
+          },
+          {
+            "assessment": "核对本步确实调用 Eq. 9 的结合律做链式合并，批注一致。",
+            "block_index": 38,
+            "source_quote": "Using the associative rule in Eq. 9, their summaries can be directly composed as"
+          },
+          {
+            "assessment": "核对 Eq. 15 的连乘形式与批注“按时间顺序相乘”一致，并补充矩阵乘法不可交换故顺序不可颠倒。",
+            "block_index": 39,
+            "source_quote": "$$\nA _ { \\pi _ { q } } = \\prod _ { m = 1 } ^ { M } A _ { \\pi _ { m } } ,\\tag{15}\n$$"
+          },
+          {
+            "assessment": "该块为公式引入连接词，核对它承接 Eq. 15 与 Eq. 16，批注未添加实质主张。",
+            "block_index": 40,
+            "source_quote": "and"
+          },
+          {
+            "assessment": "核对 Eq. 16 的求和/连乘结构与批注“每个 $B_{\\pi_m}$ 需乘以其后所有 $A$”的解释一致，且与 Eq. 8 结构同构的判断正确。",
+            "block_index": 41,
+            "source_quote": "$$\nB _ { \\pi _ { q } } = \\sum _ { m = 1 } ^ { M } B _ { \\pi _ { m } } \\prod _ { n = m + 1 } ^ { M } A _ { \\pi _ { n } } .\\tag{16}\n$$"
+          },
+          {
+            "assessment": "核对该句引出由组合后的 $A_{\\pi_q}$、$B_{\\pi_q}$ 计算历史状态，批注定位正确。",
+            "block_index": 42,
+            "source_quote": "The resulting historical recurrent state is"
+          },
+          {
+            "assessment": "核对 Eq. 17 的形式与批注一致。修改：初稿“$S_0$ 通常为零或 sink 初始化”无原文依据，本条未规定取值，已标注为额外推断/待证。",
+            "block_index": 43,
+            "source_quote": "$$\nS _ { q } ^ { \\mathrm { h i s t } } = S _ { 0 } A _ { \\pi _ { q } } + B _ { \\pi _ { q } } ,\\tag{17}\n$$"
+          },
+          {
+            "assessment": "核对原文仅说明 $S_0$ 是 initial GDN state。修改：删除初稿“通常为零或 sink 初始化”的推断表述，并注明“从推导到状态计算的闭环”属修辞性总结而非原文主张。",
+            "block_index": 44,
+            "source_quote": "where $S _ { 0 }$ is the initial GDN state."
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 4,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "核对了因果方向与限定条件：原文说标准 GDN 被“所有后续 chunk”变换，并未称这些 chunk 与查询“无关”，故修正初稿“后续无关变换”的表述；同时保留“不替换为平均/求和”的条件，并明确筛选发生在 chunk 选择层。",
+            "block_index": 45,
+            "source_quote": "Standard GDN composes every historical chunk in temporal order, causing information written by an early scene to be repeatedly transformed by all subsequent chunks. In contrast, HLA-WM shortens this propagation path by excluding geometrically irrelevant intermediate chunks."
+          },
+          {
+            "assessment": "核对了退化性质的性质限定（consistency check ≠ 证明）与第二条通路（softmax-attention 的 KV cache，非“多模态/多路径”），两处均已修正；无重前向这一条件与原文首句一致，保留。",
+            "block_index": 46,
+            "source_quote": "When all previous chunks are selected, the composition reduces to the original chronological GDN recurrence, providing a direct consistency check for the chunk-wise formulation. For the accompanying softmax-attention pathway, we apply the same selected chunk set to the corresponding historical KV cache."
+          },
+          {
+            "assessment": "核对了内核实现层级与摘要缓存的独立性（“cached independently of the incoming recurrent state”）；初稿“使得并行化和检索成为可能”属超出原文的推断，已删除并在批注中标注为推断界限。原文 OCR 拼写 “Eficient” 保留不改。",
+            "block_index": 47,
+            "source_quote": "Eficient State Recomposition Kernel. We implement direct state recomposition on top of the chunk-wise Triton GDN kernels."
+          },
+          {
+            "assessment": "核对了内存标度主张：原文仅给出随 chunk 数扩展的标度关系，未提供长视频显存实测，故将初稿“显著降低显存压力”标注为推断；并用原文 “largely preserving” 替换“保持不变”的绝对化表述。",
+            "block_index": 48,
+            "source_quote": "Since historical information is cached at the chunk level rather than the token level, the memory footprint scales with the number of chunks instead of the number of visual tokens."
+          },
+          {
+            "assessment": "逐格核对了表中数值：确认 Stage-1 两种拆分重访一致性与 RotErr 改善，同时发现 Simple-Trajectory 的 Stage-1 + AR Refine 中 TransErr（2.1587→2.1910）与 CamMC（2.3121→2.3240）变差，故推翻初稿“相机控制均显著提升”；并用提升量（PSNR +0.73 vs +0.74、SSIM +0.0270 vs +0.0223、RotErr −6.12 vs −5.29）推翻“困难轨迹下改善更明显”。FPS 22.403→22.053 的轻微下降保留。加粗最优与个别单元格归属因缺渲染信息且转写错位，明确记为未能核验。",
+            "block_index": 49,
+            "source_quote": "Table 1 Main results on SANA-WM-Bench under diferent generation stages and refinement modes. We report revisit consistency, camera controllability, and inference throughput. Best results within each setting are shown in bold."
+          }
+        ],
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 5,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对了基线身份（官方 1.6B SANA-WM）、Stage 1 的 4 步蒸馏自回归流式生成与 recurrent GDN states、下游 causal AR 或双向细化可选，以及 HLA-WM 只改 Stage 1 记忆机制且无需额外训练。初稿这些表述与原文一致，未修改。初稿未提及的两点由本段原文补入：两个 split 各 80 条轨迹、分辨率 1280×704；以及 baseline 与 HLA-WM 使用相同输入、相机轨迹、prompt 和生成配置这一公平性条件。",
+            "block_index": 2,
+            "source_quote": "We use the oficial 1.6B SANA-WM as our baseline. Its Stage 1 model performs 4-step distilled autoregressive streaming generation with recurrent GDN states, followed by optional causal AR or bidirectional refinement. HLA-WM modifies only the Stage 1 memory mechanism and requires no additional training or fine-tuning, while downstream refinement remains unchanged."
+          },
+          {
+            "assessment": "逐项核对了采样调度、每 block 3 个 latent 帧、默认保留 sink/最近/top-1 历史 chunk（按几何重叠排序）以及 $\\tau_{turn}=25^{\\circ}$ 触发下近期上下文由 1 扩到 3 个 chunk。初稿的数字与条件均与原文吻合，未修改。批注中补入 H200 与 140 GB、LTX-2 refiner 与 causal VAE（同段原文），并说明该触发是规则式而非学习式，属对原文条件的描述性解读，非新结论。",
+            "block_index": 3,
+            "source_quote": "Following the default 4-step distilled configuration, we use the sampling schedule [1000, 960, 889, 727, 0] and three latent frames per autoregressive block. Unless otherwise specified, HLA-WM retains one sink chunk, the most recent chunk, and the top-1 historical chunk ranked by geometric overlap. When the within-chunk change in camera translation direction exceeds $\\tau _ { \\mathrm { t u r n } } = 2 5 ^ { \\circ }$ , the recent context is temporarily expanded from one to three chunks."
+          },
+          {
+            "assessment": "核对了三个相机控制指标名称、沿用 SANA-WM 评估协议、以及轨迹由 Pi3X（$\\pi^3$ 增强实现）估计。初稿指标名与高低方向（PSNR/SSIM 越高越好、LPIPS 越低越好）正确，未修改。新增的“指标值依赖 Pi3X 估计精度、原文未做该估计器误差分析”是标注原文未提供的证据边界，明确写为隐含依赖而非本文结论。",
+            "block_index": 4,
+            "source_quote": "Camera controllability is measured by rotation error (RotErr), relative translation error $\\left( \\mathrm { T r a n s E r r } _ { \\mathrm { r e l } } \\right)$ , and relative camera-motion consistency $\\left( \\mathrm { C a m M C _ { r e l } } \\right)$ , following the SANA-WM evaluation protocol [7]. Camera trajectories are estimated using Pi3X, an enhanced implementation of $\\pi ^ { 3 }$ [28]."
+          },
+          {
+            "assessment": "用表内数值做了加减核对：10.17→11.01 = +0.84 dB、0.2545→0.2848 = +0.0303、0.6251→0.5823 = −0.0428，与 block 9 文字一致；并核对 AR 与双向细化两行的 PSNR 差为 +0.37 与 +0.58。据此确认该表归属 MBench-A（对应 block 9），而非 block 8 的 SANA-WM-Bench，此为对初稿未说明之处的补充。同时指出 AR 细化行 LPIPS 绝对值高于 Stage-1 行（0.6554 vs 0.6251 等），属跨 pipeline 观察，已删除“所有细化都单调改善”的暗示；初稿“提升主要来自基础生成阶段”属解释，已标为推断。",
+            "block_index": 5,
+            "source_quote": "Table 2 Overall results on MBench-A under diferent inference modes. Best results within each setting are shown in bold."
+          },
+          {
+            "assessment": "caption 仅有这一句，本段未提供图片视觉信息。初稿关于曲线形状、与 Full KV / native GDN 的对比以及具体内存数值的可视化描述都超出 caption 可支持范围；虽用“可能/应”等模糊措辞，仍已改写为推断、待证，并指出相关数字（2.15 GiB、12×、1.6%）来自 block 10 正文而非图本身。未新增任何视觉描述，未改写任何可核实数据。",
+            "block_index": 6,
+            "source_quote": "Figure 4 Memory scaling comparison."
+          },
+          {
+            "assessment": "逐项核对 Hard/Simple 的 PSNR、SSIM、LPIPS、RotErr 数值与百分比，初稿引用无误，未修改。批注中补入同段关于 AR 细化下 Simple 的 RotErr 下降但 TransErr 与 CamMC 略升的条件，避免把相机控制写成全面提升。",
+            "block_index": 8,
+            "source_quote": "On Hard trajectories, PSNR and SSIM increase by 0.74 dB and 0.0223, LPIPS decreases by 0.0196, and RotErr is reduced by 26.0%. Similar improvements are observed on Simple trajectories, including a 0.73 dB PSNR gain and a 31.0% reduction in RotErr."
+          },
+          {
+            "assessment": "针对初稿“恢复并放大这些收益”做纠正：原文只说 preserves the benefits more consistently，给出 PSNR 增益 0.52/0.46 dB，小于 Stage 1 的 0.73/0.74 dB，故“放大”无证据；“恢复”亦为原文未作的因果表述，已按原文口径改写并保留 RotErr 降幅 22.0%/20.1%。同时标注：Full-sequence refinement 与 block 2 的 bidirectional refinement 等同属推断；block 8 引用的 Table 1 不在提供范围内，其数值不可据表独立核对。",
+            "block_index": 8,
+            "source_quote": "Full-sequence refinement preserves the benefits more consistently and improves all six metrics on both splits, including PSNR gains of 0.52/0.46 dB and RotErr reductions of 22.0%/20.1% on the Simple/Hard splits."
+          },
+          {
+            "assessment": "核对 0.84 dB、0.0303、−0.0428 及三种推理模式下的一致改善，与 Table 2 加减一致，未修改数字。纠正初稿两处措辞：把 MBench-A 说成“更大的基准”缺乏依据（547 样本与原基准并非严格可比），把结果说成“证实”通用性属过度断言，已降级为原文 generalizes effectively 的主张；并标明该表仅含保真类指标，MBench-A 结论不覆盖相机控制维度。",
+            "block_index": 9,
+            "source_quote": "As shown in Table 2, HLA-WM consistently improves PSNR, SSIM, and LPIPS across all three inference modes. The gains are most pronounced at Stage 1, where PSNR and SSIM increase by 0.84 dB and 0.0303, respectively, while LPIPS decreases by 0.0428."
+          },
+          {
+            "assessment": "核对 2.15 GiB、12×、1.6% 三个数字及其口径：2.15 GiB 为历史状态内存、12× 相对 full KV caching、1.6% 为跨所评估设置的最大吞吐损失，初稿引用正确。纠正“native GDN 丢失细节”与“最佳折中”两处：原文只描述 GDN 以常数内存压缩全部历史，未测量细节损失，“最佳折中”为评价性判断，均已标为推断；可核实结论保留为在不线性增长内存的前提下维持 selectively addressable 的历史条目。",
+            "block_index": 10,
+            "source_quote": "HLA-WM retains selectively addressable long-range memory through compact chunk-wise summaries, requiring only 2.15 GiB of historical-state memory at a 60-second context, 12× less than full KV caching, while incurring at most a 1.6% reduction in inference throughput across the evaluated settings."
+          }
+        ],
+        "correction_attempts": 1,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 5,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "逐字核对该段开头与 AR 室内案例部分。初稿所列三点漂移（通道几何改变、货架排列不一致、货架与天花板灯对齐偏离首次访问）与原文逐一对应，未夸大；但初稿使用“严重结构漂移”对应 substantial structural drift，属可接受的语气贴近，我保留但明确其为作者用语。核对到的超出证据处主要有两处并已修改：(1) 初稿称本段“验证”长程记忆优势，实为作者的定性描述，本段无任何数值指标，已改为限定为“展示/定性证据”；(2) 初稿在“可追问点”中暗示可能存在重投影误差等定量支持，原文并未提及任何这类指标，已改为明确标注为待证推断。修正后保留了该段“两种精修模式分别举例、附录另有可视化”的结构信息。",
+            "block_index": 11,
+            "source_quote": "Qualitative Results. Figure 5 further illustrates the long-range memory improvements of HLA-WM under diferent refinement modes. In the AR-refined indoor example, the baseline exhibits substantial structural drift after a long revisit: the aisle geometry changes, the shelf arrangement becomes inconsistent, and the alignment between the shelves and ceiling lights deviates noticeably from the first visit."
+          },
+          {
+            "assessment": "逐字核对 caption 的全部三句：上/下排对应 causal AR / bidirectional refinement、示例含首次访问+中间视图+后续回访且同一相机轨迹、回访指标在各方法内部的首次访问帧与回访帧之间计算——初稿对这些事实的转述正确。已修改的推断部分：初稿称该协议“暗示了评估标准是‘一致性’而非单纯的生成质量”，caption 只规定了指标计算区间，并未给出指标名称、公式或“一致性”即评价维度的声明，“而非生成质量”属外部解读，已标注为推断；同时补充说明本次未获得该图视觉内容，画面描述均依据 caption，避免以未见图像作断言。另保留并强化了初稿“需结合定量表格”的正确提醒。",
+            "block_index": 12,
+            "source_quote": "Figure 5 Qualitative comparison on long-range revisit scenarios under causal AR refinement (top) and bidirectional refinement (bottom). Each example shows the first visit, intermediate views, and a later revisit along the same camera trajectory. Revisit metrics are computed between the first-visit and revisit frames within each method."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 6,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对问题定位：原文限定为“video world models 中的 recurrent linear attention”，批注初稿写成“VLM 在处理长视频时受限于注意力机制对远距离信息的衰减”，扩大了适用范围并混淆了模型类别，已修正为原文表述。",
+            "block_index": 1,
+            "source_quote": "We identify long-range forgetting as a key limitation of recurrent linear attention in video world models."
+          },
+          {
+            "assessment": "核对方法命名与机制：原文方法名为 HLA-WM，机制为检索几何相关的 chunk 级记忆并选择性重组；初稿的“SLM（Selective Long-term Memory）架构”“显式检索与重排序”均为不支持的表述，已纠正。初稿“隐含验证了……而非仅靠注意力窗口扩展”属加戏，原文无此对比，已删除。",
+            "block_index": 1,
+            "source_quote": "Based on this insight, we propose HLA-WM, which retrieves geometrically relevant chunk-wise memories and selectively recomposes them for long-range recall."
+          },
+          {
+            "assessment": "核对证据边界：原文确认基准为 SANA-WM-Bench、提升项为 revisit fidelity 与 camera controllability、成本优势相对 full KV caching、推理开销 modest（均为定性）。初稿“未提供具体实验数据”不准确，已改为“未给数值，需回查实验章节”；数值提升幅度在本段无法判定，标注为待证。",
+            "block_index": 1,
+            "source_quote": "Experiments on SANA-WM-Bench demonstrate consistent improvements in revisit fidelity and camera controllability, while retaining substantially lower memory cost than full KV caching and introducing only modest inference overhead."
+          },
+          {
+            "assessment": "核对限制与未来工作：原文明确 training-free 限制可得增益，未来方向为将 selective state retrieval 纳入训练。批注保留该因果关系，并明确其“未来工作、尚未验证”的属性，未夸大为已实现改进。",
+            "block_index": 2,
+            "source_quote": "HLA-WM is currently training-free, which limits the achievable gains. Future work could integrate selective state retrieval into training to better preserve and exploit long-range memory."
+          },
+          {
+            "assessment": "核对检索信号范围：原文为 solely on camera geometry and FOV overlap，未显式建模 occlusion/visibility/semantic relevance。批注据此保留“几何相关不等于可见或语义相关”的推断，并明确标注该推断缺少消融证据、属待证，未表述为论文已验证结论。",
+            "block_index": 2,
+            "source_quote": "In addition, our retrieval relies solely on camera geometry and FOV overlap, without explicitly modeling occlusion, visibility, or semantic relevance."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 7,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对作者与题名：条目确为 Ha & Schmidhuber《World Models》。初稿“奠基之作”为题名外的领域评价，已降级为“早期代表性工作”，并把“本文历史脉络起点”标为推断；引用动机无法从文献表判定。",
+            "block_index": 1,
+            "source_quote": "[1] David Ha and Jürgen Schmidhuber. World models. arXiv preprint arXiv:1803.10122, 2(3): 440, 2018."
+          },
+          {
+            "assessment": "核对题名与出处：Nature 640(8059):647–653, 2025 一致。初稿“DreamerV3”不在条目内，属常识推断，已标注；“作为对比基准或动机来源”无条目依据，标为推断。",
+            "block_index": 2,
+            "source_quote": "[2] Danijar Hafner, Jurgis Pasukonis, Jimmy Ba, and Timothy Lillicrap. Mastering diverse control tasks through world models. Nature, 640(8059):647–653, 2025."
+          },
+          {
+            "assessment": "核对题名：“Interactive world foundation model”支持“交互式世界基础模型”。“第 1 代”为题名外推断（依赖后续 2.0/3.0 命名），已标注；“对后续工作的影响”亦标为推断。",
+            "block_index": 3,
+            "source_quote": "[3] Yifan Zhang, Chunli Peng, Boyang Wang, Puyi Wang, Qingcheng Zhu, Fei Kang, Biao Jiang, Zedong Gao, Eric Li, Yang Liu, et al. Matrix-game: Interactive world foundation model. arXiv preprint arXiv:2506.18701, 2025."
+          },
+          {
+            "assessment": "核对题名：明确含 “open-source real-time and streaming interactive world model”，故“开源、实时、流式”有据。“从离线到在线的演进路径”为跨条目推断，需正文支撑。",
+            "block_index": 4,
+            "source_quote": "[4] Xianglong He, Chunli Peng, Zexiang Liu, Boyang Wang, Yifan Zhang, Qi Cui, Fei Kang, Biao Jiang, Mengyin An, Yangyang Ren, et al. Matrix-game 2.0: An open-source real-time and streaming interactive world model. arXiv preprint arXiv:2508.13009, 2025."
+          },
+          {
+            "assessment": "核对题名：仅 “An interactive world generation model”，无扩散或自回归字样。初稿“扩散模型与自回归结合的新范式”超出条目证据，已删除并改为仅确认定位的表述。",
+            "block_index": 5,
+            "source_quote": "[5] Xiaofeng Mao, Shaoheng Lin, Zhen Li, Chuanhao Li, Wenshuo Peng, Tong He, Jiangmiao Pang, Mingmin Chi, Yu Qiao, and Kaipeng Zhang. Yume: An interactive world generation model. arXiv preprint arXiv:2507.17744, 2025."
+          },
+          {
+            "assessment": "核对题名与出处：ICLR、pages 79167–79184 与初稿一致，题名支持“通用交互式世界模型 + 自回归去噪”。“理解长时序一致性的重要参考”为条目外推断，已标注。",
+            "block_index": 6,
+            "source_quote": "[6] Yixuan Zhu, Jiaqi Feng, Wenzhao Zheng, Yuan Gao, Xin Tao, Pengfei Wan, Jiwen Lu, and Jie Zhou. Astra: General interactive world model with autoregressive denoising. In ICLR, volume 2026, pages 79167–79184, 2026."
+          },
+          {
+            "assessment": "核对题名：含 minute-scale 与 hybrid linear diffusion transformer，故“分钟级”“混合线性扩散 Transformer”有据。初稿“计算效率是关键考量”属由题名推出的合理推断，已标注并注明效率数值须查正文；原文 Eficient/difusion 拼写保持不动。",
+            "block_index": 7,
+            "source_quote": "[7] Haoyi Zhu, Haozhe Liu, Yuyang Zhao, Tian Ye, Junsong Chen, Jincheng Yu, Tong He, Song Han, and Enze Xie. Sana-wm: Eficient minute-scale world modeling with hybrid linear difusion transformer. arXiv preprint arXiv:2605.15178, 2026."
+          },
+          {
+            "assessment": "核对题名与出处：NeurIPS 2025, pages 49371–49393 一致，题名支持“长期空间记忆”主题标签。初稿“直接关联本文核心痛点”属推断，已标注为不具备条目证据。",
+            "block_index": 8,
+            "source_quote": "[8] Tong Wu, Shuai Yang, Ryan Po, Yinghao Xu, Ziwei Liu, Dahua Lin, and Gordon Wetzstein. Video world models with long-term spatial memory. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, NeurIPS, volume 38, Main Conference, pages 49371–49393. Curran Associates, Inc., 2025."
+          },
+          {
+            "assessment": "核对题名：“long-horizon memory”支持长时域记忆标签。“关键竞品或灵感来源”为题名外关系推断，需正文或对比表支持，已降级为推断。",
+            "block_index": 9,
+            "source_quote": "[9] Yicong Hong, Yiqun Mei, Chongjian Ge, Yiran Xu, Yang Zhou, Sai Bi, Yannick Hold-Geofroy, Mike Roberts, Matthew Fisher, Eli Shechtman, et al. Relic: Interactive video world model with long-horizon memory. arXiv preprint arXiv:2512.04040, 2025."
+          },
+          {
+            "assessment": "核对题名：同时含 real-time/streaming 与 long-horizon memory，标签成立。初稿“标志着工程落地与算法优化的成熟度”是评价性推断，已弱化为题名层面的并置描述。",
+            "block_index": 10,
+            "source_quote": "[10] Zile Wang, Zexiang Liu, Jiaxing Li, Kaichen Huang, Baixin Xu, Fei Kang, Mengyin An, Peiyu Wang, Biao Jiang, Yichen Wei, et al. Matrix-game 3.0: Real-time and streaming interactive world model with long-horizon memory. arXiv preprint arXiv:2604.08995, 2026."
+          },
+          {
+            "assessment": "核对题名与会议：ICLR 2026、题名支持“实时交互式长视频生成”。“延迟优化或并行处理策略”不在题名内，属推断，已标注待查正文。",
+            "block_index": 11,
+            "source_quote": "[11] Shuai Yang, Wei Huang, Ruihang Chu, Yicheng Xiao, Yuyang Zhao, Xianbang Wang, Muyang Li, Enze Xie, Ying-Cong Chen, Yao Lu, Song Han, and Yukang Chen. Longlive: Real-time interactive long video generation. In ICLR, 2026."
+          },
+          {
+            "assessment": "核对题名：low-rank latent KV cache、minute-scale、autoregressive video diffusion 均在题名内，故核心机制描述有据。“注意力压缩对长序列重要”属由机制名推导的推断，已标注。",
+            "block_index": 12,
+            "source_quote": "[12] Hidir Yesiltepe, Jiazhen Hu, Tuna Han Salih Meral, Adil Kaan Akan, Kaan Oktay, Hoda Eldardiry, and Pinar Yanardag. Videomla: Low-rank latent kv cache for minute-scale autoregressive video difusion. arXiv preprint arXiv:2605.30351, 2026."
+          },
+          {
+            "assessment": "核对题名与出处：ICML 2020, pages 5156–5165 一致，题名支持线性注意力与快速自回归。“理论基石”为题名外评价，已标注为领域评价而非条目事实。",
+            "block_index": 13,
+            "source_quote": "[13] Angelos Katharopoulos, Apoorv Vyas, Nikolaos Pappas, and François Fleuret. Transformers are rnns: Fast autoregressive transformers with linear attention. In ICML, pages 5156–5165. PMLR, 2020."
+          },
+          {
+            "assessment": "核对题名：把线性注意力用作 cross-frame memory 并面向自回归视频扩散，方向标签成立。“理论到特定模态任务的迁移”为概括性推断，已如实标注。",
+            "block_index": 14,
+            "source_quote": "[14] Kunyang Li, Mubarak Shah, and Yuzhang Shang. Attend locally, remember linearly: Linear attention as cross-frame memory for autoregressive video difusion. arXiv preprint arXiv:2605.16579, 2026."
+          },
+          {
+            "assessment": "核对题名与出处：ICLR 2025, pages 29687–29707 一致，题名支持“改进 Mamba2 + delta rule”。Mamba2 属 SSM，故关联为合理推断，但“长依赖最新进展”并非本条给出的实验结论，已标注。",
+            "block_index": 15,
+            "source_quote": "[15] Songlin Yang, Jan Kautz, and Ali Hatamizadeh. Gated delta networks: Improving mamba2 with delta rule. In ICLR, volume 2025, pages 29687–29707, 2025."
+          },
+          {
+            "assessment": "核对题名与出处：SIGGRAPH Asia 2025, pages 1–11 一致，题名支持“记忆检索 + 场景一致长视频生成”。初稿“显式记忆库”超出题名，已改为“记忆检索机制”并注明是否显式需查原文。",
+            "block_index": 16,
+            "source_quote": "[16] Jiwen Yu, Jianhong Bai, Yiran Qin, Quande Liu, Xintao Wang, Pengfei Wan, Di Zhang, and Xihui Liu. Context as memory: Scene-consistent interactive long video generation with memory retrieval. In Proceedings of the SIGGRAPH Asia 2025 Conference Papers, pages 1–11, 2025."
+          },
+          {
+            "assessment": "核对题名与出处：NeurIPS 2025, pages 49632–49652 一致，题名支持“记忆 + 长期一致世界模拟”。“与本文目标高度重合、需对比”属推断性阅读建议，已显式标注为建议。",
+            "block_index": 17,
+            "source_quote": "[17] Zeqi Xiao, Yushi LAN, Yifan Zhou, Wenqi Ouyang, Shuai Yang, Yanhong Zeng, and Xingang Pan. Worldmem: Long-term consistent world simulation with memory. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, NeurIPS, volume 38, Main Conference, pages 49632–49652. Curran Associates, Inc., 2025."
+          },
+          {
+            "assessment": "核对题名：MBench 为视频世界模型记忆能力基准，标签成立。初稿“已形成标准化评测体系”属夸大，已修正为“存在专门基准，是否标准化需看正文与后续引用”。",
+            "block_index": 18,
+            "source_quote": "[18] Shengjun Zhang, Zhang Zhang, Simin Huang, Zhenyu Tang, Hanyang Wang, Chensheng Dai, Min Chen, Yifan Li, Yuxin Li, Yingjie Chen, Hao Liu, Chen Li, Jing Lyu, and Yueqi Duan. Mbench: A comprehensive benchmark on memory capability for video world models, 2026."
+          },
+          {
+            "assessment": "核对题名：temporal cache compression 与 sparse attention 均在题名内，机制标签成立。“系统层面优化手段”属概括性推断，未作事实断言。",
+            "block_index": 19,
+            "source_quote": "[19] Dvir Samuel, Issar Tzachor, Matan Levy, Michael Green, Gal Chechik, and Rami Ben-Ari. Fast autoregressive video difusion and world models with temporal cache compression and sparse attention. arXiv preprint arXiv:2602.01801, 2026."
+          },
+          {
+            "assessment": "核对题名：仅支持“可寻址记忆”机制名。初稿“解决了传统注意力无法精确定位历史信息的问题”为强推断，已降级为“可能针对历史信息定位问题，待正文验证”。",
+            "block_index": 20,
+            "source_quote": "[20] Xindi Wu, Sven Elflein, James Lucas, Olga Russakovsky, Laura Leal-Taixé, Despoina Paschalidou, Jonathan Lorraine, and Aljoša Ošep. Addressable memory for video world models. arXiv preprint arXiv:2608.07408, 2026."
+          },
+          {
+            "assessment": "核对题名：geometry-aware 与 implicit memory 有据；“3D 先验”“多模态融合”为题名外添加，已标为推断。",
+            "block_index": 21,
+            "source_quote": "[21] Zhengxuan Wei, Xu Guo, Xinghui Li, Xunzhi Xiang, Min Wei, Yiran Zhu, Qiulin Wang, Xintao Wang, Pengfei Wan, Xiangwang Hou, et al. Geometry-aware implicit memory for video world models. arXiv preprint arXiv:2606.02436, 2026."
+          },
+          {
+            "assessment": "核对题名与署名：技术报告、交互式长时域世界建模成立。“工业界实践参考”属推断，署名 “AlayaWorld Team” 不构成机构属性证据，已标注。",
+            "block_index": 22,
+            "source_quote": "[22] AlayaWorld Team, Kaipeng Zhang, Chuanhao Li, Yifan Zhan, Yongtao Ge, Yuanyang Yin, Jiaming Tan, Kang He, Liaoyuan Fan, Mingliang Zhai, et al. Alayaworld: Interactive long-horizon world modeling–full technical report. arXiv preprint arXiv:2607.18367, 2026."
+          },
+          {
+            "assessment": "核对题名与出处：ICML 2021, pages 9355–9366 一致，题名支持“线性 Transformer 与快速权重编程”的等价视角；“动态权重更新视角”为该题名的合理概括。",
+            "block_index": 23,
+            "source_quote": "[23] Imanol Schlag, Kazuki Irie, and Jürgen Schmidhuber. Linear transformers are secretly fast weight programmers. In ICML, pages 9355–9366. PMLR, 2021."
+          },
+          {
+            "assessment": "核对题名与出处：PMLR 235:56501–56523 一致，题名支持“硬件高效训练”。“适合大规模部署”属推断，题名未承诺部署场景，已标注。",
+            "block_index": 24,
+            "source_quote": "[24] Songlin Yang, Bailin Wang, Yikang Shen, Rameswar Panda, and Yoon Kim. Gated linear attention transformers with hardware-eficient training. In Ruslan Salakhutdinov, Zico Kolter, Katherine Heller, Adrian Weller, Nuria Oliver, Jonathan Scarlett, and Felix Berkenkamp, editors, ICML, volume 235 of Proceedings of Machine Learning Research, pages 56501–56523. PMLR, 21–27 Jul 2024."
+          },
+          {
+            "assessment": "核对题名与出处：NeurIPS 37:115491–115522 一致，题名支持“沿序列长度并行化 + delta rule”；“减少串行瓶颈”是由 parallelizing 推出的推断，已标注。",
+            "block_index": 25,
+            "source_quote": "[25] Songlin Yang, Bailin Wang, Yu Zhang, Yikang Shen, and Yoon Kim. Parallelizing linear transformers with the delta rule over sequence length. NeurIPS, 37:115491–115522, 2024."
+          },
+          {
+            "assessment": "核对题名、出处与作者：IEEE TIP 13(4):600–612, 2004 一致，题名给出 structural similarity，即 SSIM 出处；缩写 SSIM 未出现于题名，属可靠常识推断，已注明。“常用客观指标”为评价性表述。",
+            "block_index": 26,
+            "source_quote": "[26] Zhou Wang, Alan C Bovik, Hamid R Sheikh, and Eero P Simoncelli. Image quality assessment: from error visibility to structural similarity. IEEE transactions on image processing, 13(4): 600–612, 2004."
+          },
+          {
+            "assessment": "核对题名与出处：CVPR 2018, pages 586–595 一致。题名未写 LPIPS，故“LPIPS”属常识推断并已标注；“比 PSNR/SSIM 更符合人类感知”为本条目无法证实的文献主张，标为待证。",
+            "block_index": 27,
+            "source_quote": "[27] Richard Zhang, Phillip Isola, Alexei A Efros, Eli Shechtman, and Oliver Wang. The unreasonable efectiveness of deep features as a perceptual metric. In CVPR, pages 586–595. IEEE, 2018."
+          },
+          {
+            "assessment": "核对题名与出处：ICLR 2026, pages 10481–10497 一致，题名支持“置换等变视觉几何学习”。“多视图几何约束”“提升生成物理合理性”为题名外推断，已标注需正文证据。",
+            "block_index": 28,
+            "source_quote": "[28] Yifan Wang, Jianjun Zhou, Haoyi Zhu, Wenzheng Chang, Yang Zhou, Zizun Li, Junyi Chen, Jiangmiao Pang, Chunhua Shen, and Tong He. \\π<sup>3</sup>: Permutation-equivariant visual geometry learning. In ICLR, volume 2026, pages 10481–10497, 2026."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 10,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对检索输入约束：原文明确只用相机内参、外参和场景级中位深度标量，且不使用生成 RGB、光流、语义特征、稠密深度。初稿\"计算量大且易受生成误差累积影响\"的对照性论断在原文中无直接表述，已改为标注为推断；\"与生成画面解耦\"保留为正文直接支持的主张。",
+            "block_index": 1,
+            "source_quote": "For each autoregressive chunk, we estimate its geometric overlap with historical chunks from the prescribed camera trajectory."
+          },
+          {
+            "assessment": "核对符号定义：$a_c$、$b_c$ 确为块 $c$ 的起止帧索引，初稿表述正确。补充说明原文 \"chunk $^{c,}$\" 是 MinerU 下标错位伪影（实为 chunk $c$），未改变语义。",
+            "block_index": 2,
+            "source_quote": "For a video with N output frames and C autoregressive chunks, let $a _ { c }$ and $b _ { c }$ denote the starting and ending frame indices assigned to chunk $^ { c , }$ respectively."
+          },
+          {
+            "assessment": "逐符号核对 Eq.18 并修正初稿措辞：取 max 的两项分别是\"本块起点加 1\"与\"下一块名义起点\"，而非初稿所写\"前一块终点加 1\"。\"块非空\"由 $b_c\\ge a_c+1$ 支持，\"相邻块首尾相接\"由 $b_c$ 取下一块名义起点支持。另补 `\\tag{}` 的 GitHub 渲染限制说明。",
+            "block_index": 3,
+            "source_quote": "a _ { c } = \\mathrm { r o u n d } \\left( \\frac { c N } { C } \\right) , \\qquad b _ { c } = \\mathrm { m a x } \\left( a _ { c } + 1 , \\mathrm { r o u n d } \\left( \\frac { ( c + 1 ) N } { C } \\right) \\right) ."
+          },
+          {
+            "assessment": "核对数字：$N=961$、$C=40$ 与 \"approximately 24 camera poses per chunk\" 均与原文一致（$961/40\\approx24.0$）。$7\\times7$ 网格与 5%–95% 区间亦为原文；初稿\"避免边缘畸变干扰\"的理由属推断，已标注；并补出每帧最多 $7\\times7\\times3=147$ 个代理点的推算（由原文三段信息直接相乘得出）。",
+            "block_index": 4,
+            "source_quote": "In our 60-second setting, $N = 9 6 1$ and $C = 4 0$ , yielding approximately 24 camera poses per chunk."
+          },
+          {
+            "assessment": "核对 Eq.19 三个代理深度系数 0.5/1.0/1.5 倍 $d_{med}$：与原文逐字一致，初稿表述正确。补充一点原文隐含事实：该集合是整段共享的常量，与像素位置无关。",
+            "block_index": 5,
+            "source_quote": "\\mathcal { D } = \\{ 0 . 5 d _ { \\mathrm { m e d } } , d _ { \\mathrm { m e d } } , 1 . 5 d _ { \\mathrm { m e d } } \\} ,"
+          },
+          {
+            "assessment": "核对 $d_{med}$ 的定义：原文写的是 scene-level median-depth proxy，初稿\"预计算的标量、非逐像素深度\"与之一致；但原文未说明该标量如何估计，初稿的\"预计算\"属推断，已在批注中标注为待查，未当作论文陈述。",
+            "block_index": 6,
+            "source_quote": "where $d _ { \\mathrm { m e d } }$ denotes the scene-level median-depth proxy."
+          },
+          {
+            "assessment": "逐项核对 Eq.20 的几何含义并纠正初稿：(u,v) 减主点再除焦距、$z$ 分量为 1，得到的是相机坐标系下未归一化的射线方向，不是单位向量，也不是 NDC 坐标。初稿\"归一化设备坐标下的方向向量\"已改。该式作为针孔模型反向投影方向的表述保留。",
+            "block_index": 7,
+            "source_quote": "\\mathbf { r } ( u , v ) = \\left[ \\frac { u - c _ { x } } { f _ { x } } , \\frac { v - c _ { y } } { f _ { y } } , 1 \\right] ^ { \\top } ."
+          },
+          {
+            "assessment": "核对坐标变换描述：原文确认代理点由深度 $d\\in\\mathcal{D}$ 与相机到世界变换得到世界坐标，初稿方向正确。指出 $\\mathcal{P}_i$ 记号在下一段才正式定义（此处为前向引用），并注明原文 \"camera-toworld\" 为 MinerU 解析粘连。",
+            "block_index": 8,
+            "source_quote": "Each proxy point at depth $d \\in \\mathcal { D }$ is then transformed into world coordinates using the camera-toworld transformation."
+          },
+          {
+            "assessment": "核对 $V(i\\to j)$ 的定义：确为 $\\mathcal{P}_i$ 中点正深度投影进块 $j$ 任一像平面的比例，初稿量化描述正确；但原文只检查正深度与投影落点，未涉及遮挡判断，初稿\"遮挡/视野交集测试\"的\"遮挡\"超出证据，已删除。同时注明 MinerU 把箭头 → 丢成空格。",
+            "block_index": 9,
+            "source_quote": "We define the directed visibility score $V ( i  j )$ as the fraction of points in $\\mathcal { P } _ { i }$ that project with positive depth into the image plane of at least one camera frame in chunk $j .$"
+          },
+          {
+            "assessment": "这是本次核对的关键纠错：Eq.21 已显式给出对称重叠公式 $R(i,j)=\\frac12[V(i\\to j)+V(j\\to i)]$，初稿却称\"原文未显式写出最终公式、只是描述了 symmetric overlap score\"，与原文不符，已改为确认公式存在并说明箭头解析丢失。对\"用于决定哪些历史块被检索\"的表述以第 12 段 $R(i,c)$ 为证据保留。",
+            "block_index": 10,
+            "source_quote": "R ( i , j ) = \\frac { 1 } { 2 } [ V ( i  j ) + V ( j  i ) ] ."
+          },
+          {
+            "assessment": "核对自述局限：原文确认 $R$ 只是视锥重叠代理、不显式建模遮挡与场景几何，该点作为正文陈述保留。初稿\"假设场景静态或变化缓慢\"及\"稀疏采样在复杂遮挡下低估重叠\"属外推，已明确标注为推断而非论文结论。",
+            "block_index": 11,
+            "source_quote": "This score provides a lightweight proxy for frustum overlap rather than exact 3D scene intersection, as it does not explicitly model occlusion or scene geometry."
+          },
+          {
+            "assessment": "核对检索策略与顺序约束：原文确认\"保留 sink 与 recent 块 + 其余按 $R(i,c)$ 取 Top-K + 重组前按时间重排\"，初稿机制描述正确。两项更正：GDN 全称本节未给出（初稿猜为 Gated Deep Network，标为待证）；sink 的作用本节未说明（初稿\"稳定注意力分布\"为无依据推断，已标注）。",
+            "block_index": 12,
+            "source_quote": "The selected chunks are reordered chronologically before GDN state recomposition."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 11,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对动机句与输入定义：“abrupt trajectory changes”“adapt the recent-history budget based on the motion within the current query chunk”“regular 24-frame camera chunk with translation vectors p0…p23”均与原文一致，批注保留未改。改动点：删去初稿把输入直接说成“query chunk（24帧）内部运动方向变化”的轻微越界表述——原文只在此段给出输入序列，方向变化的判别量由 Eq. 22–24 定义，已把量化判据后移，避免超出本段证据。",
+            "block_index": 1,
+            "source_quote": "To preserve local continuity under abrupt trajectory changes, we adapt the recent-history budget based on the motion within the current query chunk. For a regular 24-frame camera chunk with translation vectors $\\{ \\mathbf { p } _ { 0 } , \\ldots , \\mathbf { p } _ { 2 3 } \\}$ , we define\n\n",
+            "source_quote_id": "s11:b1:p0"
+          },
+          {
+            "assessment": "核对 Eq. 22 的两个差分式：$\\mathbf{d}_{\\mathrm{early}} = \\mathbf{p}_7 - \\mathbf{p}_0$ 与 $\\mathbf{d}_{\\mathrm{late}} = \\mathbf{p}_{23} - \\mathbf{p}_{16}$ 与原文逐字一致（含 OCR 下标的字母间隔）。纠正：初稿把二者称作“chunk 前半部分（前8帧）/后半部分（最后8帧）的净位移”，原文并未如此命名，已改标为合理推断（各自覆盖 0–7、16–23，中间第 8–15 帧被跳过），并把“进入/离开 chunk 的运动方向”从断言降级为推断。",
+            "block_index": 2,
+            "source_quote": "$$\n\\mathbf { d } _ { \\mathrm { e a r l y } } = \\mathbf { p } _ { 7 } - \\mathbf { p } _ { 0 } , \\qquad \\mathbf { d } _ { \\mathrm { l a t e } } = \\mathbf { p } _ { 2 3 } - \\mathbf { p } _ { 1 6 } ,\\tag{22}\n$$\n\n",
+            "source_quote_id": "s11:b2:p0"
+          },
+          {
+            "assessment": "核对过渡句 “and compute their angular diference as”：原文确实拼作 “diference”（OCR 漏字），批注保留原样并标注，未擅自改写；初稿对“下一步求夹角”的解读与下文 Eq. 23 吻合，予以保留。",
+            "block_index": 3,
+            "source_quote": "and compute their angular diference as\n\n",
+            "source_quote_id": "s11:b3:p0"
+          },
+          {
+            "assessment": "核对 Eq. 23：$\\theta_c = \\arccos(\\mathbf{d}_{\\mathrm{early}}^{\\top}\\mathbf{d}_{\\mathrm{late}} / (\\|\\mathbf{d}_{\\mathrm{early}}\\|_2\\|\\mathbf{d}_{\\mathrm{late}}\\|_2))$，分子分母与原文一致。纠正措施表述：初稿称“使用标准的余弦相似度公式计算角度差”，已改为“用归一化点积的 arccos 反解夹角”，更贴合公式本身。并补充原文未讨论的零向量奇异情形（分母为 0），标注为未覆盖条件，不作为原文主张。",
+            "block_index": 4,
+            "source_quote": "$$\n\\theta _ { c } = \\operatorname { a r c c o s } \\frac { \\mathbf { d } _ { \\mathrm { e a r l y } } ^ { \\top } \\mathbf { d } _ { \\mathrm { l a t e } } } { \\| \\mathbf { d } _ { \\mathrm { e a r l y } } \\| _ { 2 } \\| \\mathbf { d } _ { \\mathrm { l a t e } } \\| _ { 2 } } .\\tag{23}\n$$\n\n",
+            "source_quote_id": "s11:b4:p0"
+          },
+          {
+            "assessment": "核对引入句 “The recent-history budget is then set to”：确认后文 r_c 即该预算的取值。新增限定：本节未说明 r_c 的计量单位（帧/chunk/token），因此批注明确写出“r_c=3 与 r_c=1 的物理含义在本节内未定义”，防止把初稿隐含的“多保留 2 帧”当作原文事实。",
+            "block_index": 5,
+            "source_quote": "The recent-history budget is then set to\n\n",
+            "source_quote_id": "s11:b5:p0"
+          },
+          {
+            "assessment": "核对 Eq. 24 分段规则：$r_c = 3$ 当 $\\theta_c \\geq \\tau_{\\mathrm{turn}}$，否则 $r_c = 1$，与原文完全一致。纠正证据边界：初稿“保留更多过去帧的信息以维持连贯性”中的“帧”为推断（原文未给单位），已标注为推断；同时明确 $r_c=1$ 是默认预算这一点需由 block 7 的 “revert to the default budget” 反推，而非本式直接声明。",
+            "block_index": 6,
+            "source_quote": "$$\nr _ { c } = { \\left\\{ \\begin{array} { l l } { 3 , } & { \\theta _ { c } \\geq \\tau _ { \\mathrm { t u r n } } , } \\\\ { 1 , } & { \\mathrm { o t h e r w i s e } , } \\end{array} \\right. }\\tag{24}\n$$\n\n",
+            "source_quote_id": "s11:b6:p0"
+          },
+          {
+            "assessment": "核对阈值与作用范围，发现并修正初稿硬性错误：原文明确写 “where $\\tau_{\\mathrm{turn}} = 25^{\\circ}$”，初稿却称“阈值具体数值未在此处给出（可能在实验设置中）”，此为无根据表述，已改为 25°；并据 “applied only to the current chunk; subsequent chunks revert to the default budget unless the criterion is triggered again” 补充逐 chunk 瞬时重判、不跨 chunk 继承的作用范围限定，该点初稿遗漏。",
+            "block_index": 7,
+            "source_quote": "where $\\tau _ { \\mathrm { t u r n } } = 2 5 ^ { \\circ }$ . The expanded recent context is applied only to the current chunk; subsequent chunks revert to the default budget unless the criterion is triggered again.\n\n",
+            "source_quote_id": "s11:b7:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 12,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐字核对（保留原文 afine/suficient/efect 的 OCR 拼写）。原文确认三点：实现建立在原始 GDN kernels 上；缓存的是每个 chunk 的 frame-wise Phase-A 充分统计量；该统计量表征对“任意 incoming recurrent state”的 affine 效果。因此初稿“利用缓存的中间状态而非重新计算 Transformer 全序列”方向正确（对应原文 avoids re-evaluating historical chunks through the Transformer），但初稿“复杂度从 $O(N^2)$ 降至线性”“长上下文推理加速”在本段无任何依据，属超出证据的推断，已删除并改写为明确标注的推断/待证。批注中“Phase-B 扫描逻辑本身未改，只改输入来源”直接来自本段与后文的 chronological order + Phase-B forward scan 描述。",
+            "block_index": 1,
+            "source_quote": "The afine state composition described in the main text is implemented directly on top of the original GDN kernels. After each chunk is completed, we cache its frame-wise Phase-A suficient statistics, which characterize its afine efect on an arbitrary incoming recurrent state."
+          },
+          {
+            "assessment": "逐字核对适用范围与排除项：重组仅限 main GDN matrix 与 normalization states；camera-GDN recurrent state、GDN short-convolution state、FFN temporal-convolution state 保持原按时间顺序更新。据此纠正初稿两处错误：(1) 初稿称“FFN 层可并行或流式处理”，与原文“retain their original chronological updates”相反；(2) 初稿的“注意力层/KV Cache”“动态内存池和滑动窗口支持任意长度”在本段无出处。原文同一段另称对兼容 GDN blocks 批处理以减少 kernel-launch 与 data-movement 开销且 “without changing the underlying recurrence”，批注已按此表述为等价实现优化。至于“为何只对这两类状态做重组”，原文未给理由，批注明确标为推断且待证，未当作论文主张。",
+            "block_index": 2,
+            "source_quote": "Selective recomposition is applied only to the main GDN matrix and normalization states. The camera-GDN recurrent state, GDN short-convolution state, and FFN temporal-convolution state retain their original chronological updates."
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 13,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐句核对：原文明确为 Eq. 21 计算 pairwise geometric overlap scores、按 within-chunk trajectory change 确定 recent-history budget、Eq. 13 选择历史 chunk、重组 main-GDN state、用 query-specific memory 生成当前 chunk、$t = 0$ 前向传播缓存 affine summary、camera-control 与 local convolutional states 保持原时序。初稿写成重组 KV cache（Eq. 4）、Transformer 前向（Eq. 5）、更新 $h_t$ 与新 KV cache（Eq. 6-7），与原文不符，属于无证据推断，已改为原文机制。原文未在段内给出内存预算固定或复杂度收益的数字，已在批注中标为推断边界。",
+            "block_index": 1,
+            "source_quote": "Algorithm 1 summarizes the complete inference procedure of HLA-WM. The pairwise geometric overlap scores are first computed from the prescribed camera trajectory using Eq. 21. At each autoregressive step, we determine the recent-history budget according to the within-chunk trajectory change, select the historical chunks using Eq. 13, and recompose the corresponding main-GDN state. The current chunk is then generated using the resulting query-specific memory. After generation, an additional $t = 0$ forward pass caches the afine summary of the completed chunk for subsequent retrieval. Throughout this process, camera-control and local convolutional states retain their original chronological updates.\n\n",
+            "source_quote_id": "s13:b1:p0"
+          },
+          {
+            "assessment": "核对因果与范围主张：原文说检索只访问 historical chunks、选中 chunk 按原始时间顺序重组、只重组 main-GDN recurrent memory、camera-GDN recurrent state 与 local convolutional states 走原始 streaming recurrence、历史 chunk 不被 Transformer 重新评估。初稿的 KV cache 稀疏化、线性显存增长、实时场景适配均无原文依据，已删除或标记为外推；保留原文确实给出的“历史 chunk 不过 Transformer”这一效率依据。",
+            "block_index": 2,
+            "source_quote": "The retrieval procedure accesses only historical chunks, and the selected chunks are always recomposed in their original temporal order. Importantly, HLA-WM recomposes only the main-GDN recurrent memory; the camera-GDN recurrent state and local convolutional states follow the original streaming recurrence. Historical chunks are therefore never re-evaluated through the Transformer.\n\n",
+            "source_quote_id": "s13:b2:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 14,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐句核对组件定义与因果措辞：源文明确 W/o Select A 保留全部历史 chunk 的 transition terms A_i 而选择性组合 write terms，W/o Select B 反之，初稿理解正确，保留。修改两处：(a) 初稿把“保留未选中块 transition 或全部历史 write term 都会显著降低 PSNR/SSIM 并增加相机误差”合并陈述，源文对 Select A 用 substantially、对 Select B 仅用 consistently degrades revisit fidelity 与 camera controllability，已按原文区分措辞强度；(b) 源文仅称无关中间 transitions 助长 long-range forgetting，未对 write term 作同样归因，初稿把“冗余历史写入导致长程遗忘”写成既定结论，已改为标注为批注者推断。另补充源文给定的 K=1 与 Hard-Trajectory split 前提。",
+            "block_index": 1,
+            "source_quote": "Table 3 evaluates the major components of HLA-WM with K = 1 on the Hard-Trajectory split. Here, $^ { 6 6 } \\mathrm { W / o }$ Select $A ^ { \\mathfrak { s } }$ retains the transition terms $A _ { i }$ of all historical chunks while selectively composing their write terms, whereas $^ { 6 6 } \\mathrm { W / o }$ Select $B ^ { \\ast }$ retains all historical write terms $B _ { i }$ while selectively composing the transitions. Removing the sink degrades both revisit consistency and camera controllability, highlighting the importance of persistent global context. Retaining the transition terms of unselected chunks substantially reduces PSNR and SSIM and increases camera errors, supporting our observation that irrelevant intermediate transitions contribute to long-range forgetting. Similarly, retaining all historical write terms consistently degrades both revisit fidelity and camera controllability, indicating that selective composition is beneficial for both transition and write components of ",
+            "source_quote_id": "s14:b1:p0"
+          },
+          {
+            "assessment": "逐步核对算法行号与编号引用：Eq. 21 计算 R(i,j)、Eqs. 23–24 计算 r_q、Eq. 13 选择 T_q、不足时 T_q 取 {0,…,q−1}、按时间排序、取 cached affine summaries、重组 S_q^hist 并替换 main-GDN recurrent state、t=0 cache-writing forward pass、按时间更新 camera-GDN 与局部卷积状态，均与源文一致，无数字或顺序错误。补充说明该算法块在本节中系解析顺序所致、描述的是整体推理流程；将“Recompose 的具体数学形式”明确标为待证，初稿仅作为可追问点，未越过证据。",
+            "block_index": 2,
+            "source_quote": "Algorithm 1 Overall Inference Procedure of HLA-WM   \nRequire: Prescribed camera trajectory, retrieval budget K, and turn threshold τ<sub>turn</sub>   \n1: Compute pairwise geometric overlap scores $R ( i , j )$ using Eq. 21   \n2: Initialize the chunk-wise GDN summary bank and streaming states   \n3: for query chunk q = 0, . . . , C − 1 do   \n4: Compute the recent-history budget $r _ { q }$ using Eqs. 23–24   \n5: if insuficient history for selective retrieval then   \n6: $\\mathcal { T } _ { q } \\gets \\{ 0 , \\dots , q - 1 \\}$   \n7: else   \n8: Select historical chunks $\\mathcal { T } _ { q }$ according to Eq. 13   \n9: Sort $\\mathcal { T } _ { q }$ in chronological order   \n10: Gather the cached afine summaries of chunks in $\\mathcal { T } _ { q }$   \n11: Recompose the query-specific historical state $S _ { q } ^ { \\mathrm { h i s t } }$   \n12: Replace the main-GDN recurrent state with $S _ { q } ^ { \\mathrm { { h i s t } } }$   \n13: end if   \n14: Generate chunk q using the resulting streamin",
+            "source_quote_id": "s14:b2:p0"
+          },
+          {
+            "assessment": "逐项核对 Table 3 全部 30 个数值并修正两处张冠李戴：初稿称 w/o Select A 的 TransErr 为 1.9326、CamMC 为 2.0531，实际 1.9326/2.0531 属于 w/o Sink，Select A 应为 TransErr 1.8552、CamMC 2.0562；初稿称 w/o Select B 的 LPIPS 为 0.5901，实际为 0.5921，0.5901 属 w/o Select A。核对通过项：HLA-WM 六项全优（10.11/0.1997/0.5848/15.0887/1.8388/1.9482），w/o Sink PSNR 9.71 与 RotErr 15.9351，PSNR 最低为 w/o Select A 的 9.61。另纠正初稿“w/o Turn-aware 全面性能下降”的笼统说法：其 TransErr 2.1096 为最差，但 CamMC 1.9899 优于 Sink/SelectA/SelectB 三个变体，故已改为按指标方向陈述。",
+            "block_index": 3,
+            "source_quote": "Table 3 Component ablation on the Hard-Trajectory split using Stage 1 outputs. Best results are shown in bold.\n<table><tr><td rowspan=\"2\">Variant</td><td colspan=\"3\">Revisit Consistency</td><td colspan=\"3\">Camera Control</td></tr><tr><td>PSNR ↑</td><td>SSIM ↑</td><td>LPIPS↓</td><td>RotErr (°) ↓</td><td>TransErr ↓</td><td>CamMC↓</td></tr><tr><td>HLA-WM</td><td>10.11</td><td>0.1997</td><td>0.5848</td><td>15.0887</td><td>1.8388</td><td>1.9482</td></tr><tr><td>w/o Sink</td><td>9.71</td><td>0.1867</td><td>0.6019</td><td>15.9351</td><td>1.9326</td><td>2.0531</td></tr><tr><td>w/o Select A</td><td>9.61</td><td>0.1887</td><td>0.5901</td><td>15.2426</td><td>1.8552</td><td>2.0562</td></tr><tr><td>w/o Select B</td><td>9.64</td><td>0.1892</td><td>0.5921</td><td>15.2326</td><td>1.9830</td><td>2.0564</td></tr><tr><td>w/o Turn-aware</td><td>9.96</td><td>0.1917</td><td>0.5876</td><td>15.1784</td><td>2.1096</td><td>1.9899</td></tr></table>\n\n",
+            "source_quote_id": "s14:b3:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 15,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对三种消融变体定义（GDN-only 只重组主 GDN 记忆并保留原生 softmax KV；KV-only 只把检索历史用于 softmax KV 且保持原生 GDN 状态；full HLA-WM 把同一检索历史用于两条路径）以及“Tables 4 和 5 分别对应 SANA-WM-Bench 与 MBench-A 的归属”，与原文一致。修改：补充 Baseline 为表格中的第四个对照；把“验证双路径必要性”明确标为解读，原文仅用 isolate the roles。",
+            "block_index": 1,
+            "source_quote": "We further isolate the roles of GDN-state recomposition and softmax KV-cache alignment under the Top-1 retrieval setting. GDN-only applies selective recomposition to the main GDN memory while retaining the native softmax KV history. KV-only applies the selected history only to the softmax KV cache while keeping the native GDN states. The full HLA-WM applies the same retrieved history to both memory pathways. Tables 4 and 5 report the results on SANA-WM-Bench and MBench-A, respectively.\n\n",
+            "source_quote_id": "s15:b1:p0"
+          },
+          {
+            "assessment": "核对“GDN 是长程记忆改进主要来源、KV 对齐提供互补稳定”“组合在两个 split 取得最佳 PSNR/SSIM/LPIPS”“因果 AR 细化下取得最强重访性能并在 Hard 轨迹改善全部六项指标”，均与原文一致。修改：初稿“在因果 AR 细化下全面超越基线”超出原文范围，已改为原文的“最强重访性能 + Hard 六项指标改善”；“KV 效果随轨迹类型波动”保留。",
+            "block_index": 2,
+            "source_quote": "The two memory pathways play complementary but asymmetric roles. At Stage 1, GDN-only already yields substantial gains in revisit consistency on both SANA-WM-Bench splits, whereas KV-only provides comparatively smaller improvements. Their combination further improves long-range recall, with the full HLA-WM achieving the best PSNR, SSIM, and LPIPS on both splits. KV alignment additionally improves camera stability, although its efect varies across trajectory types. Under causal AR refinement, the full method achieves the strongest revisit performance on both splits and improves all six metrics on Hard trajectories. These results indicate that GDN-state recomposition is the primary source of long-range memory improvement, while KV-cache alignment provides complementary stabilization of the attention-based context.\n\n",
+            "source_quote_id": "s15:b2:p0"
+          },
+          {
+            "assessment": "核对 Hard Bi.Refine 数值：GDN-only RotErr 33.0406 vs Baseline 13.1713、HLA-WM 10.5268，以及表格 caption 所述 Top-1 检索与加粗规则。修改：初稿“Bi. Refine 下 HLA-WM 在所有指标上均为最优”不成立——Simple Bi.Refine 的 TransErr 最低为 GDN-only 1.8627（HLA-WM 1.8637），Hard Bi.Refine 的 SSIM 最高为 GDN-only 0.3304（HLA-WM 0.3142）；已按原文“最佳 PSNR、LPIPS 与三项相机指标”收窄。表格末两行 OCR 将 KV-only 与 HLA-WM 并入同一 <tr>，数值按列拆分属推断，已标注待 PDF 复核。",
+            "block_index": 3,
+            "source_quote": "0.5468</td><td>13.1713</td><td>1.6649</td><td>1.7694</td></tr><tr><td>GDN-only</td><td>13.49</td><td>0.3304</td><td>0.5601</td><td>33.0406</td><td>2.1843</td><td>2.4584</td></tr><tr><td>KV-only HLA-WM</td><td>13.26</td><td>0.3047</td><td>0.5469 0.5384</td><td>11.4688 10.5268</td><td>1.5860 1.5449</td><td>1.6696</td></tr><tr><td></td><td>13.51</td><td>0.3142</td><td></td><td></td><td></td><td>1.6230</td></tr></table>\n\n",
+            "source_quote_id": "s15:b3:p3"
+          },
+          {
+            "assessment": "核对“GDN-only 显著提升 SSIM 但 RotErr 从 13.17° 升至 33.04°”“只改递归历史会与伴随 softmax 上下文失配”“HLA-WM 取得最佳 PSNR、LPIPS 与三项相机控制指标”“KV 对齐在递归历史选择性重组时尤其重要”，与原文一致。修改：初稿“在保持高 SSIM 的同时”把 SSIM 表述得强于原文实际主张，已限定为不宣称 SSIM 最优，并补充 GDN-only 才是该设置 SSIM 最高。",
+            "block_index": 4,
+            "source_quote": "The bidirectional setting further illustrates the interaction between the two pathways. On Hard trajectories, GDN-only substantially improves SSIM but increases RotErr from 13.17<sup>◦</sup> to 33.04<sup>◦</sup>. This suggests that modifying only the recurrent history can create a mismatch with the accompanying softmax context. Applying the same historical selection to the KV cache restores consistency between the two memory pathways, and the full method achieves the best PSNR, LPIPS, and all three camera-control metrics. Thus, KV alignment is particularly important for maintaining stable generation when the recurrent history is selectively recomposed.\n\n",
+            "source_quote_id": "s15:b4:p0"
+          },
+          {
+            "assessment": "核对 MBench-A 模式：Stage 1、因果 AR 细化与双向细化中 GDN-only 一致大于 KV-only；HLA-WM 在每一设置取得最佳 PSNR/SSIM/LPIPS；组合带来最强最一致性能，均与原文一致。界限：本段对应的 Table 5 未出现在要求的 source_blocks 中，相关数字不可核验，已在批注中标为仅依正文转述、待补充表格后确认。",
+            "block_index": 5,
+            "source_quote": "MBench-A exhibits an even clearer pattern. Across Stage 1, causal AR refinement, and bidirectional refinement, GDN-only consistently provides larger gains than KV-only, while the full HLA-WM achieves the best PSNR, SSIM, and LPIPS in every setting. This confirms that directly modifying the recurrent GDN memory is the main driver of improved long-range recall, whereas KV-cache alignment alone provides limited gains. Combining the two yields the strongest and most consistent overall performance.\n\n",
+            "source_quote_id": "s15:b5:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 16,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对正文主张与数字：确认其控制变量表述（同一 sink memory 与 turn-aware recent-context，仅改 K）、‘K=1 取得最佳 PSNR/SSIM/LPIPS’、‘K=5 最低 RotErr、K=4 最低 TransErr 与 CamMC’、以及‘across different retrieval budgets 性能 broadly comparable’均与原文一致。修改点：初稿把‘过大的检索窗口可能引入噪声或稀释关键信息’写成结论性解释，原文只给出‘单个高相关历史块通常足够’的定性表述，故已改为推断并标注待证；初稿‘显著降低计算开销’亦改为原文仅声称 retrieval quality 与 efficiency 的 trade-off、无量化数据。",
+            "block_index": 1,
+            "source_quote": "We study the efect of the retrieval budget K on the Hard-Trajectory split using Stage 1 outputs. All variants use the same sink memory and turn-aware recent-context strategy, difering only in the number of historical chunks retrieved by geometric overlap. As shown in Table 6, performance remains broadly comparable across diferent retrieval budgets, and increasing K does not consis tently improve either revisit fidelity or camera controllability. Notably, K = 1 achieves the best PSNR, SSIM, and LPIPS while using the smallest retrieval budget. Larger values provide modest gains in some camera-control metrics, with K = 5 achieving the lowest RotErr and K = 4 the lowest TransErr and CamMC. These results indicate that a single highly relevant historical chunk is often suficient for efective long-range recall. We therefore adopt K = 1 as the default setting for its favorable trade-of between retrieval quality and eficiency.\n\n",
+            "source_quote_id": "s16:b1:p0"
+          },
+          {
+            "assessment": "核对 Table 5 caption（GDN-state recomposition 与 KV-cache alignment、MBench-A、Top-1 retrieval）并逐行核验三个 pipeline 的 PSNR/SSIM/LPIPS，确认 HLA-WM 在三组设定下均为最优（如 Bidirectional Refine 行 13.52/0.3431/0.5470）。修改点：初稿称该表‘似乎是另一组消融实验的结果……需确认是否误置于 A.5 节’，已改为仅陈述‘与 K 消融无直接对应关系’，避免给出原文未支持的归属判断；同时补充 KV-only 在 Causal AR Refine 行 PSNR 12.35 略低于 Baseline 12.36 的例外，防止把‘单模块变体均被超越’读成全项增益。",
+            "block_index": 2,
+            "source_quote": "Table 5 Ablation of GDN-state recomposition and KV-cache alignment on MBench-A under Top-1 retrieval. Best results within each inference setting are shown in bold.\n<table><tr><td>Pipeline</td><td>Method</td><td>PSNR ↑</td><td>SSIM ↑</td><td>LPIPS ↓</td></tr><tr><td rowspan=\"4\">Stage 1</td><td>Baseline</td><td>10.17</td><td>0.2545</td><td>0.6251</td></tr><tr><td>GDN-only</td><td>10.61</td><td>0.2626</td><td>0.6052</td></tr><tr><td>KV-only</td><td>10.43</td><td>0.2606</td><td>0.6091</td></tr><tr><td>HLA-WM</td><td>11.01</td><td>0.2848</td><td>0.5823</td></tr><tr><td rowspan=\"4\">Causal AR Refine</td><td>Baseline</td><td>12.36</td><td>0.2996</td><td>0.6554</td></tr><tr><td>GDN-only</td><td>12.57</td><td>0.3064</td><td>0.6492</td></tr><tr><td>KV-only</td><td>12.35</td><td>0.3016</td><td>0.6547</td></tr><tr><td>HLA-WM</td><td>12.73</td><td>0.3122</td><td>0.6447</td></tr><tr><td rowspan=\"4\">Bidirectional Refine</td><td>Baseline</td><td>12.94</td><td>0.3310</td><td>0.5597</td></tr><tr><td>GDN-",
+            "source_quote_id": "s16:b2:p0"
+          },
+          {
+            "assessment": "逐值核对 Table 6：PSNR 10.11→9.89、LPIPS 0.5848→0.5915、RotErr 15.0887→11.5435 与初稿一致；并核出 TransErr 与 CamMC 在 K=4 触底（1.6985、1.7832）后于 K=5 回升（1.7200、1.7970），修正初稿未点明的‘相机指标非单调’这一点。修改点：删除初稿‘相机误差可通过其他机制补偿、视觉伪影更难修复’的因果推断，该说法在原文无依据，已明确标注为超出证据的推断。",
+            "block_index": 3,
+            "source_quote": "Table 6 Ablation on the retrieval budget K on the Hard-Trajectory split using Stage 1 outputs. Best results are shown in bold.\n<table><tr><td rowspan=\"2\">K</td><td colspan=\"3\">Revisit Consistency</td><td colspan=\"3\">Camera Control</td></tr><tr><td>PSNR ↑</td><td>SSIM↑</td><td>LPIPS↓</td><td>RotErr (°) ↓</td><td>TransErr ↓</td><td>CamMC↓</td></tr><tr><td>1</td><td>10.11</td><td>0.1997</td><td>0.5848</td><td>15.0887</td><td>1.8388</td><td>1.9482</td></tr><tr><td>3</td><td>10.06</td><td>0.1973</td><td>0.5865</td><td>14.1537</td><td>1.7658</td><td>1.8661</td></tr><tr><td>4</td><td>10.00</td><td>0.1936</td><td>0.5885</td><td>12.2795</td><td>1.6985</td><td>1.7832</td></tr><tr><td>5</td><td>9.89</td><td>0.1886</td><td>0.5915</td><td>11.5435</td><td>1.7200</td><td>1.7970</td></tr></table>\n\n",
+            "source_quote_id": "s16:b3:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 17,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对实验设定：$K=4$、80 场景、400 重访对、相同模型/生成设置/seed/评估协议，以及三种基线的定义，均与原文一致。修改一处：初稿把 Random 写作“随机采样”，原文为 ‘Random deterministically samples up to six states’，已更正为确定性采样。另将“非严格等计算量”明确标注为作者原文自述的限定，而非本笔记的额外判断。",
+            "block_index": 1,
+            "source_quote": "We evaluate whether geometry provides an efective signal for selecting historical states by comparing HLA-WM with three geometry-agnostic selection strategies on Hard80 under Stage 1 inference. To more clearly expose the diferences among selection strategies, we conduct this comparison with a larger retrieval budget of K = 4, allowing each method to operate over a broader historical context. Random deterministically samples up to six states from the available history, Recent retains the six most recent states, and Uniform selects six states approximately uniformly over the entire history. In contrast, HLA-WM retains a sink state and recent context while selecting distant historical chunks according to camera-frustum overlap. All variants use the same model, generation setting, seed, and evaluation protocol, covering 80 scenes and 400 revisit pairs. The three heuristic baselines use a fixed budget of at most six historical states, whereas HLA-WM normally uses six states but temporarily ",
+            "source_quote_id": "s17:b1:p0"
+          },
+          {
+            "assessment": "逐项核对 Table 7 的 24 个数值（4 行 × 6 列），全部与原文一致；PSNR +0.09、LPIPS −0.0072 的差值计算正确。纠正初稿“HLA-WM 在所有指标上均最优”的表述：TransErr 上 HLA-WM 为 1.6985，高于 Uniform 的 1.6881，故已改为“多数指标占优、TransErr 略逊”，并有 block 6 原文可直接佐证。",
+            "block_index": 2,
+            "source_quote": "Table 7 Comparison of historical state selection strategies on Hard80 under Stage 1 inference with K = 4. Higher PSNR and SSIM are better, while lower LPIPS and camera errors are better.\n<table><tr><td>Selection Policy</td><td>PSNR ↑</td><td>SSIM ↑</td><td>LPIPS ↓</td><td>RotErr (°) ↓</td><td>TransErr ↓</td><td>CamMC↓</td></tr><tr><td>Random</td><td>9.70</td><td>0.1864</td><td>0.6049</td><td>14.1883</td><td>1.7822</td><td>1.8924</td></tr><tr><td>Recent</td><td>9.29</td><td>0.1696</td><td>0.6179</td><td>27.6876</td><td>2.0142</td><td>2.2408</td></tr><tr><td>Uniform</td><td>9.91</td><td>0.1910</td><td>0.5957</td><td>12.3324</td><td>1.6881</td><td>1.7838</td></tr><tr><td>HLA-WM</td><td>10.00</td><td>0.1936</td><td>0.5885</td><td>12.2795</td><td>1.6985</td><td>1.7832</td></tr></table>\n\n",
+            "source_quote_id": "s17:b2:p0"
+          },
+          {
+            "assessment": "该 block 仅为图片引用，无文本证据。核对初稿对“PSNR 随重访间隔变化的提升”的曲线描述，属无视觉信息支撑的推断，已改为依 caption 定位的表述并标注待证；同时说明其归属 Figure 6（左，PSNR improvement）。",
+            "block_index": 3,
+            "source_quote": "![](images/3fbf9a38030eb16d45078ffd3b4edb9ce24f2e54f6ad28be6e335030bbef3768.jpg)\n\n",
+            "source_quote_id": "s17:b3:p0"
+          },
+          {
+            "assessment": "该 block 仅为图片引用，无文本证据。初稿称其“佐证结构细节保留优势”，无图像可核，已降级为待证，并依 caption 的左右中对应关系标为 SSIM improvement（middle）。",
+            "block_index": 4,
+            "source_quote": "![](images/359269a51f724a160f412a0d37d5ad3a743176cdf59a5e79a8ee14aadee857f3.jpg)\n\n",
+            "source_quote_id": "s17:b4:p0"
+          },
+          {
+            "assessment": "核对 caption 文本：相对 SANA-WM、Hard-Trajectory split、不同重访间隔、左 PSNR/中 SSIM/右 LPIPS、三阶段（Stage 1、AR refinement、bidirectional refinement），均一致。纠正初稿把三张子图直接当作“完整证据链”的推断，指出图与 Table 7 属不同实验，并说明多子图被拆分、应使用整图的规范问题。",
+            "block_index": 5,
+            "source_quote": "![](images/00b63e055225817d43b4419cfe6a56576db5014a2950b1867e9de9796670f290.jpg)  \nFigure 6 Performance improvement over SANA-WM across diferent revisit intervals on the Hard-Trajectory split. We report PSNR improvement (left), SSIM improvement (middle), and LPIPS reduction (right) for Stage 1, AR refinement, and bidirectional refinement.\n\n",
+            "source_quote_id": "s17:b5:p0"
+          },
+          {
+            "assessment": "核对数字：PSNR 9.91→10.00、SSIM 0.1910→0.1936、LPIPS 0.5957→0.5885 均与原文一致；RotErr、CamMC 略低与 Uniform 的 TransErr 略低亦与原文一致。删除初稿“基于几何语义的稀疏注意力机制”一说——原文只表述为历史状态选择策略，该说法超出证据，属推断。",
+            "block_index": 6,
+            "source_quote": "As shown in Table 7, uniformly covering the history already provides a substantially stronger baseline than random or purely recent selection, highlighting the importance of maintaining access to distant context. Uniform selection remains competitive, likely because the one-minute evaluation horizon allows uniformly sampled states to cover much of the observed scene history. Nevertheless, geometry-guided selection further improves all three revisit-consistency metrics, increasing PSNR from 9.91 to 10.00 and SSIM from 0.1910 to 0.1936, while reducing LPIPS from 0.5957 to 0.5885. It also achieves slightly lower RotErr and CamMC, while Uniform obtains a marginally lower TransErr. These results indicate that explicitly selecting view-relevant historical states provides additional benefit beyond broad temporal coverage, supporting camera geometry as an efective criterion for long-range memory retrieval.\n\n",
+            "source_quote_id": "s17:b6:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 18,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐句核对 block 1 的全部主张。(1) 间隔分组：原文为 short ($\\lt 10$ s)、medium (10–40 s)、long ($\\ge 40$ s)，初稿写作“短间隔 (0–5s)”“长间隔 (>30s)”，两者均与原文不符，已按原文更正。(2) 数据来源：原文全段只引用 Figure 6，初稿引入“Table 6”并给出“PSNR 差值仅 ~0.02dB”“H+L vs L 的 PSNR 提升从 0.1dB 增至 0.4dB+”，正文与所提供的 source_blocks 中不存在这些数字或该表，属无支持表述，已删除并注明“原文无数值”。(3) 模型名：原文为 HLA-WM，初稿写作 HLWM，已更正。(4) 趋势强度：原文对 medium/long 用 generally larger、对 PSNR 用 increases consistently，初稿“增益爆发式增长”为语气放大，已下调为原文措辞。(5) 指标条件：原文明确 SSIM 在 AR refinement 下 non-monotonic，初稿遗漏该限定，已补入；LPIPS 的“短间隔轻微退化→长间隔明显改善”与原文一致，保留但去掉无据的程度副词。(6) 结论边界：原文为 consistent with its effectiveness in mitigating long-horizon forgetting，属相容性而非因果证明，初稿“证明该模块有效缓解了信息丢失”超出证据，已改为“相一致”；“稀疏、非连续重访场景”原文无此表述，已标注为推断。(7) 短间隔增益较小仅由原文“medium/long 增益更大”间接推得，机制原因原文未解释，已在 Q&A 中标为推断。",
+            "block_index": 1,
+            "source_quote": "Figure 6 analyzes the efect of revisit interval on the improvement of HLA-WM. We group revisit pairs into short (< 10 s), medium (10–40 s), and long $\\mathrm { ( \\ge 4 0 ~ s ) }$ intervals. Across Stage 1, AR refinement, and bidirectional refinement, the gains are generally larger for medium and long revisits. In particular, PSNR improvement increases consistently with the revisit interval across all three generation modes. LPIPS exhibits a similar trend, shifting from minor degradation at short intervals to clear improvement for long revisits. SSIM also shows substantially larger gains at medium or long intervals for Stage 1 and bidirectional refinement, although the trend under AR refinement is not monotonic. Overall, these results indicate that the benefit of selective long-range memory becomes more pronounced as the temporal distance between repeated observations increases, consistent with its efectiveness in mitigating long-horizon forgetting.\n\n",
+            "source_quote_id": "s18:b1:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 19,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐字核对该段：确认两个组织主张——先报 SANA-WM-Bench 的四个场景类别，后报 MBench-A 的四个官方子集，草稿对此的复述无误。修改点：草稿\"主文聚合结果可能掩盖不同场景下的性能差异\"原文并未断言，已明确标注为推断；并补充事实边界——本块不含 MBench-A 子集级结果表，其数值待证；\"oficial\"为解析原样拼写。",
+            "block_index": 1,
+            "source_quote": "We provide detailed category- and subset-level results to complement the aggregate results in the main paper. We first report the four scene categories of SANA-WM-Bench, followed by the four oficial subsets of MBench-A.\n\n",
+            "source_quote_id": "s19:b1:p0"
+          },
+          {
+            "assessment": "核对 Table 8 前半段（Simple-Trajectory Split 的 Game Style / Indoor / Outdoor City / Outdoor Nature 及指标列名、'Stage 1 outputs' 限定）。确认草稿在此范围内：PSNR 4/4 更高成立、SSIM 4/4 更高成立、LPIPS 更低成立。修正一：草稿\"HLA-WM PSNR 普遍高出约 1-2 dB\"不成立，实际 Simple 提升为 0.29–1.21 dB，已改为正确区间与逐项数值。修正二：草稿所举 \"Outdoor City RotErr 5.98° vs 12.24°\" 未说明划分，已明确其为 Simple-Trajectory；同时指出该片段已出现反向项（Game Style TransErr 2.0047 vs 1.9242、CamMC 2.0939 vs 2.0482），故草稿\"多数情况下误差更低\"的限定词必须保留，不能写成一致占优。",
+            "block_index": 2,
+            "source_quote": "Table 8 Category-level results on SANA-WM-Bench using Stage 1 outputs. Best results within each category are shown in bold.\n<table><tr><td>Category</td><td>Method</td><td>PSNR ↑</td><td>SSIM ↑</td><td>LPIPS ↓</td><td>RotErr (°) ↓</td><td>TransErr ↓</td><td>CamMC↓</td></tr><tr><td colspan=\"8\">Simple-Trajectory Split</td></tr><tr><td>Game Style</td><td>SANA-WM HLA-WM</td><td>9.85 11.06</td><td>0.2070 0.2639</td><td>0.6197 0.5866</td><td>16.5064 12.8640</td><td>1.9242 2.0047</td><td>2.0482 2.0939</td></tr><tr><td>Indoor</td><td>SANA-WM HLA-WM</td><td>9.38 10.05</td><td>0.2105 0.2338</td><td>0.6576 0.6306</td><td>38.6940 29.0323</td><td>1.6993 1.6196</td><td>2.0227 1.8481</td></tr><tr><td>Outdoor City</td><td>SANA-WM HLA-WM</td><td>8.96 9.25</td><td>0.1323 0.1561</td><td>0.6390 0.6240</td><td>12.2424 5.9851</td><td>2.0782 1.5976</td><td>2.1372 1.6170</td></tr><tr><td>Outdoor Nature</td><td>SANA-WM HLA-WM</td><td>8.52 9.29</td><td>0.1419 0.1459</td><td>0.6145 0.5785</td><td>11.3733 6.4643</",
+            "source_quote_id": "s19:b2:p0"
+          },
+          {
+            "assessment": "核对 Table 8 后半段（Hard-Trajectory Split 四类）。关键纠正：Hard-Trajectory Outdoor Nature 的 SSIM 为 SANA-WM 0.1526 vs HLA-WM 0.1521，HLA-WM 反而更低，直接推翻草稿\"在两种轨迹难度、四个类别上 SSIM 均更优\"的表述，已在批注与摘要中改为 7/8 并列出例外。确认成立项：Hard Game Style RotErr 14.2161°（SANA）< 14.3713°（HLA），草稿\"SANA-WM 略好\"正确，且已补全 Hard 划分 PSNR 提升 0.39–1.57 dB 的逐项数值。附带说明证据界限：caption 的\"加粗表示类别内最优\"无法从抽出文本核验，HLA-WM 优势的成因解释属推断，本节无归因证据。",
+            "block_index": 2,
+            "source_quote": "td><td>3.3483 3.1493</td><td>3.3814 3.1603</td></tr><tr><td colspan=\"8\">Hard-Trajectory Split</td></tr><tr><td>Game Style</td><td>SANA-WM HLA-WM</td><td>9.84 11.41</td><td>0.2023 0.2550</td><td>0.5823 0.5505</td><td>14.2161 14.3713</td><td>1.8745 1.8250</td><td>1.9719 1.9349</td></tr><tr><td>Indoor</td><td>SANA-WM HLA-WM</td><td>9.22 9.63</td><td>0.2085 0.2305</td><td>0.6390 0.6330</td><td>36.5361 26.6061</td><td>1.2446 1.0675</td><td>1.6297 1.3277</td></tr><tr><td>Outdoor City</td><td>SANA-WM HLA-WM</td><td>9.17 9.56</td><td>0.1463 0.1611</td><td>0.6206 0.6122</td><td>16.0176 9.9119</td><td>1.8409 1.6669</td><td>1.9254 1.7070</td></tr><tr><td>Outdoor Nature</td><td>SANA-WM HLA-WM</td><td>9.23 9.84</td><td>0.1526 0.1521</td><td>0.5756 0.5437</td><td>14.7337 9.4654</td><td>3.0208 2.7958</td><td>3.0760 2.8233</td></tr></table>\n\n",
+            "source_quote_id": "s19:b2:p1"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 20,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对四项：类别数量与名称、每类别场景数、表格编号与三种评估设置、增益分布结论。初稿只概括“按场景类别拆分评估”，遗漏了 4 个类别名、每类别每条 trajectory split 各 20 个场景、表 8–10 对应 Stage 1/causal AR refinement/bidirectional refinement 这些可核查事实，已补入正文原样表述。另将初稿“验证泛化能力、而非仅看整体平均分”的动机表述明确降级为推断，因为原文未出现“泛化/鲁棒性”字样，也未定义类别难度分级；同时保留原文 OCR 拼写 trade-ofs 并注明对应 trade-offs。",
+            "block_index": 1,
+            "source_quote": "SANA-WM-Bench contains four scene categories—Game Style, Indoor, Outdoor City, and Outdoor Nature—with 20 scenes per category in each trajectory split. Tables 8–10 report category-level results under Stage 1, causal AR refinement, and bidirectional refinement. The gains are broadly distributed across scene categories, with Stage 1 showing the most consistent improvements and downstream refinement introducing several category-dependent trade-ofs.\n\n",
+            "source_quote_id": "s20:b1:p0"
+          },
+          {
+            "assessment": "核对三项：提升是否集中于单一场景类型、Stage 1 与下游 refinement 的相对表现、聚合层面的一致性指标结论。发现并纠正初稿一处命名错位——原文主体是 HLA-WM（模型），初稿写“SANA-WM 是否通过某种机制……”，把基准名当作模型名。初稿“不同类别对物理规律遵循要求不同”无原文支撑，已标为推断/待证。原文关于“HLA-WM 在每种被评估推理模式下提升全部三项 revisit-consistency 指标”的聚合结论，初稿完全未提，已补入；并明确原文并未断言各场景类别内部同步提升，须回到表 8–10 逐类别核对。",
+            "block_index": 2,
+            "source_quote": "Overall, the category-level results show that the improvements are not concentrated in a single scene type. Stage 1 provides the most consistent gains, while downstream refinement introduces several category-specific trade-ofs. At the aggregate level, HLA-WM improves all three revisit-consistency metrics under each evaluated inference mode.\n\n",
+            "source_quote_id": "s20:b2:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 21,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对初稿最核心的事实判断：初稿称\"当前提供的文本仅包含标题，未包含具体的表格数据、图表或文字描述\"，并据此判定无法做量化解读。逐字核对本段原文后，该判断不成立——本段含实质内容与可核验数字：547 个样本、四个子集（Causal、Human、Environment、Object）、两级聚合流程（先平均 matched revisit pairs 再做 macro average）、Table 11、三种推理模式、12 个 mode–subset 组合、三项指标 PSNR/SSIM/LPIPS 及\"同时改善\"的方向性主张。已重写批注：改以评测协议与结果主张为切入，并补充一处自洽性核对（12 = 3 × 4）与一处指标取向说明（PSNR/SSIM 越高越好、LPIPS 越低越好，故\"提升\"指朝有利方向变化）。同时明确证据边界：Table 11 具体数值未随本段给出，故各子集/各模式下的提升幅度无法在此核验，属待证；推理模式的具体名称原文未列出，亦标为待证。初稿批注标题为泛化的\"Section 概览\"，已替换为有信息量的中文标题。",
+            "block_index": 1,
+            "source_quote": "MBench-A contains 547 samples across four oficial subsets: Causal, Human, Environment, and Object. For each sample, we first average its matched revisit pairs and then compute the macro average across samples. Table 11 reports the complete subset-level results under the three evaluated inference modes. Across all 12 mode–subset combinations, HLA-WM simultaneously improves PSNR, SSIM, and LPIPS, demonstrating consistent generalization across diverse scene and interaction types.\n\n",
+            "source_quote_id": "s21:b1:p0"
+          },
+          {
+            "assessment": "核对初稿对本段的处理：初稿未对本段作任何实质批读，仅以\"内容缺失\"覆盖，遗漏了本段的论证功能。逐字核对后，本段主张可分解为两项：一是定性排除——子集级结果确认总体改善并非由某一特定子集驱动；二是限定条件下的方向一致性——增益幅度在子集与 refinement modes 之间有所不同，但 HLA-WM 在所有被评估的 MBench-A 设置上改善全部三项 revisit-consistency 指标。已据此新写批注，明确区分\"方向一致（强主张）\"与\"幅度一致（不成立）\"，防止读者把前者扩大为后者。并标明未提供的证据类型：方差、置信区间、显著性检验均缺，Table 11 数值亦未出现，故统计显著性属待证、不作断言。初稿中\"准确率、F1 分数\"与\"SOTA 方法对比\"属与本节指标体系和文本无关的跨域推断，已删除，未在本段批注中保留。",
+            "block_index": 2,
+            "source_quote": "The subset-level results confirm that the aggregate improvements are not driven by a particular subset. Although the gain magnitude varies across subsets and refinement modes, HLA-WM improves all three revisit-consistency metrics in every evaluated MBench-A setting.\n\n",
+            "source_quote_id": "s21:b2:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 23,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对了两个主张：(1) 原文确以四个场景（山景、街道、图书馆、教室）对比 Stage 1 输出中 baseline 与 HLA-WM 的重访一致性，并明确“before downstream refinement”，初稿此点正确；(2) 初稿把该阶段直接称为“因果自回归（causal AR）细化之前”，但本段只说 downstream refinement，causal AR 的表述来自 Table 9 caption，已改为标注为跨段推断。初稿“潜在表示/记忆模块本身具备更强时序连贯性”属机制归因，原文未提供任何机制证据，已改写为待正文方法节与消融验证的推断。原文该段无任何数值，初稿未虚构数字，予以保留。",
+            "block_index": 1,
+            "source_quote": "Figure 7 provides additional qualitative comparisons for the Stage 1 outputs before downstream refinement. In the first example, the baseline exhibits clear drift in the revisit view, with noticeable changes in the mountain contours, foreground ridge shape, and cloud distribution. In contrast, HLA-WM better preserves the overall mountain silhouette, the foreground terrain layout, and the spatial relationship between the ridge and the cloud layer. In the second example, the baseline alters the street geometry upon revisit, leading to inconsistent crosswalk patterns, road markings, and building alignment. HLA-WM more faithfully maintains the width and orientation of the crosswalk, the road layout, and the arrangement of nearby buildings and trees. In the third example, the baseline largely loses the original library-like structure and replaces it with a substantially diferent interior configuration. HLA-WM better preserves the bookshelf arrangement, corridor layout, desk region, and wind",
+            "source_quote_id": "s23:b1:p0"
+          },
+          {
+            "assessment": "核对了 caption 与 Simple-Trajectory 数值：caption 为“after causal AR refinement”“Best results within each category are shown in bold”，初稿表述一致。逐项复核 Game Style（15.19/15.79、0.3225/0.3505、0.5582/0.5492、19.8894/16.5280、2.1729/2.0506、2.3106/2.1496）与 Outdoor City（14.21/14.26、0.2353/0.2510、0.5803/0.5777、15.1111/14.4444、1.9558/1.9104、2.0376/1.9801），HLA-WM 六项全优，初稿正确。但初稿称“Simple-Trajectory 中 HLA-WM 各项指标均优”与 Indoor 行矛盾（TransErr 1.6263 vs 1.5308、CamMC 1.9040 vs 1.8652 均更差），已纠正。初稿“Indoor Hard 的 SANA-WM TransErr 略优”引用的是 Hard 行数据，与本检查片段不符，已移入 Hard 部分并改判为待证。",
+            "block_index": 2,
+            "source_quote": "Table 9 Category-level results on SANA-WM-Bench after causal AR refinement. Best results within each category are shown in bold.\n<table><tr><td>Category</td><td>Method</td><td>PSNR ↑</td><td>SSIM ↑</td><td>LPIPS ↓</td><td>RotErr (°) ↓</td><td>TransErr ↓</td><td>CamMC↓</td></tr><tr><td colspan=\"8\">Simple-Trajectory Split</td></tr><tr><td>Game Style</td><td>SANA-WM HLA-WM</td><td>15.19 15.79</td><td>0.3225 0.3505</td><td>0.5582 0.5492</td><td>19.8894 16.5280</td><td>2.1729 2.0506</td><td>2.3106 2.1496</td></tr><tr><td>Indoor</td><td>SANA-WM HLA-WM</td><td>13.64 14.08</td><td>0.3127 0.3172</td><td>0.6013 0.5956</td><td>35.3855 34.3931</td><td>1.5308 1.6263</td><td>1.8652 1.9040</td></tr><tr><td>Outdoor City</td><td>SANA-WM HLA-WM</td><td>14.21 14.26</td><td>0.2353 0.2510</td><td>0.5803 0.5777</td><td>15.1111 14.4444</td><td>1.9558 1.9104</td><td>2.0376 1.9801</td></tr><tr><td>Outdoor Nature</td><td>SANA-WM HLA-WM</td><td>14.70 15.13</td><td>0.2375 0.2302</td><td>0.5555 0.5503</td><td>13.3",
+            "source_quote_id": "s23:b2:p0"
+          },
+          {
+            "assessment": "核对 Hard-Trajectory 三行：Indoor 行 Method 单元格为“SANA-WM HLA-WM SANA-WM”三个名称却仅两组数值；Outdoor City 行方法名顺序为“HLA-WM SANA-WM”（与其他行相反）；Outdoor Nature 行仅列“HLA-WM”却有两组数值——存在明显解析错位，数值—方法归属不可靠，故初稿关于 Indoor Hard（TransErr 1.2361 vs 1.1457）和 Outdoor Nature Hard 的优劣判断被删除并记为待证。Game Style 行复核：第二组在 PSNR/SSIM/LPIPS/RotErr/CamMC 更优，但 TransErr 1.8923 vs 1.8901 略差，初稿隐含的“全项更优”已改为并说明唯一例外。另核实表内无方差或显著性信息，初稿“细化无法弥补基础缺陷”“自然场景非刚性导致位姿波动大”等因果表述已改标为超出证据的推断。",
+            "block_index": 2,
+            "source_quote": "400 15.8077</td><td>2.9753 3.1768</td><td>3.0350 3.2625</td></tr><tr><td colspan=\"8\">Hard-Trajectory Split</td></tr><tr><td>Game Style</td><td>SANA-WM HLA-WM</td><td>14.95 15.73</td><td>0.3220 0.3398</td><td>0.5269 0.5140</td><td>23.5136 18.0932</td><td>1.8901 1.8923</td><td>2.0707 2.0223</td></tr><tr><td>Indoor</td><td>SANA-WM HLA-WM SANA-WM</td><td>13.81 13.71</td><td>0.3003 0.3139</td><td>0.5923 0.5920</td><td>35.8487 30.6444</td><td>1.2361 1.1457</td><td>1.6201 1.4865</td></tr><tr><td>Outdoor City</td><td>HLA-WM SANA-WM</td><td>13.56 13.74</td><td>0.2507 0.2570</td><td>0.5812 0.5877</td><td>20.0231 19.7262</td><td>1.8331 1.8103</td><td>1.9407 1.9228</td></tr><tr><td>Outdoor Nature</td><td>HLA-WM</td><td>14.18 14.71</td><td>0.2147 0.2143</td><td>0.5478 0.5290</td><td>23.1465 19.6023</td><td>3.0804 2.8921</td><td>3.2001 2.9858</td></tr></table>\n\n",
+            "source_quote_id": "s23:b2:p1"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 24,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对了本段的设定与主张范围：原文明确写「Figure 8 provides additional qualitative comparisons under causal AR refinement」以及「HLA-WM better preserves previously observed scene content when the camera revisits the same region after an extended rollout」，草稿「在长程重访场景下保持能力优于基线」属直接支持，保留。但草稿「这直接支撑了因果自回归精修能有效缓解累积误差、提升长期一致性的主张」在原文中没有对应句子，原文只给四个案例的现象描述与一句 overall 结论，因此已改写为推断并标明证据边界。同时补充说明本次未获得 Figure 8 图像视觉信息，四例细节为转述原文而非独立看图核验。原文中未出现基线名称，草稿用「基线」指代，无越界。",
+            "block_index": 1,
+            "source_quote": "Figure 8 provides additional qualitative comparisons under causal AR refinement. Across all examples, HLA-WM better preserves previously observed scene content when the camera revisits the same region after an extended rollout. In the first example, the baseline substantially changes the distant skyline and foreground layout upon revisit, whereas HLA-WM better preserves the overall scene structure and characteristic background content. In the second example, the baseline noticeably alters the foreground geometry and loses much of the original structural layout, while HLA-WM better maintains the major scene elements and their spatial arrangement. In the third example, the baseline largely loses the distinctive foreground structure and changes the arrangement of surrounding objects, whereas HLA-WM more faithfully preserves these characteristic elements and their relative geometry. In the fourth example, HLA-WM better maintains the spatial arrangement of tables, people, and illuminated st",
+            "source_quote_id": "s24:b1:p0"
+          },
+          {
+            "assessment": "核对段末总括句「Overall, these examples demonstrate improved preservation of both global scene structure and distinctive visual content over long-range revisits」。草稿的「全局场景结构+独特视觉内容保持」与此一致，保留；但草稿曾隐含把该结论外推到「显著提升长期时空一致性」的定量层面，此处已剔除，改为仅限定性案例范围。",
+            "block_index": 1,
+            "source_quote": "ructures, while the baseline exhibits substantial changes in the revisited scene. Overall, these examples demonstrate improved preservation of both global scene structure and distinctive visual content over long-range revisits.\n\n",
+            "source_quote_id": "s24:b1:p1"
+          },
+          {
+            "assessment": "核对表头与 Simple-Trajectory 部分数值：指标方向 PSNR↑/SSIM↑/LPIPS↓/RotErr↓/TransErr↓/CamMC↓与草稿一致；Simple Game Style SANA-WM 13.74/0.3351/0.5485/9.7648/1.7510/1.8012 对 HLA-WM 14.20/0.3553/0.5377/6.8672/1.8842/1.9156，证实 TransErr 上升（1.7510→1.8842）；Simple Indoor 21.6798→16.1626 证实草稿「21.6°→16.1°」引用准确。修正点：草稿「LPIPS 尤其在 Indoor 和 Outdoor Nature 更低」不准确，可读行中 LPIPS 全部更低；草稿「RotErr 显著降低」需加例外；另发现 Simple Outdoor City 的 HLA-WM TransErr/CamMC 格缺失，已标注为数据不完整。",
+            "block_index": 2,
+            "source_quote": "Table 10 Category-level results on SANA-WM-Bench after bidirectional refinement. Best results within each category are shown in bold.\n<table><tr><td>Category</td><td>Method</td><td>PSNR ↑</td><td>SSIM ↑</td><td>LPIPS↓</td><td>RotErr (°) ↓</td><td>TransErr ↓</td><td>CamMC↓</td></tr><tr><td colspan=\"8\">Simple-Trajectory Split</td></tr><tr><td>Game Style</td><td>SANA-WM HLA-WM</td><td>13.74 14.20</td><td>0.3351 0.3553</td><td>0.5485 0.5377</td><td>9.7648 6.8672</td><td>1.7510 1.8842</td><td>1.8012 1.9156</td></tr><tr><td>Indoor</td><td>SANA-WM HLA-WM</td><td>12.67 13.03</td><td>0.3174 0.3401</td><td>0.6045 0.5980</td><td>21.6798 16.1626</td><td>1.4978 1.0450</td><td>1.6675 1.1800</td></tr><tr><td>Outdoor City</td><td>SANA-WM HLA-WM</td><td>12.79 13.05</td><td>0.2479 0.2676</td><td>0.5767 0.5644</td><td>7.1726 6.6284</td><td>1.7286</td><td>1.7495</td></tr><tr><td>Outdoor Nature</td><td>SANA-WM HLA-WM</td><td>12.97</td><td>0.2776</td><td>0.5849</td><td>6.9223</td><td>1.6204 2.9796</td><td>1",
+            "source_quote_id": "s24:b2:p0"
+          },
+          {
+            "assessment": "核对 Hard-Trajectory 与串行区域：Hard Game Style RotErr 由 8.1256 升至 9.1194，构成对草稿「RotErr 显著降低/证明相机运动估计更准确」的反例，已改正为「多数下降、Hard Game Style 例外」。Outdoor Nature 块与「Hard-Trajectory Split」标签在 OCR 中串行（1.6204/2.9796/2.9997 与 13.94/0.2960/0.5456/5.8709/2.9053/2.9150），故 Simple Outdoor Nature 的 HLA-WM TransErr/CamMC 具体值无法唯一确定，已在批注中标为推断；但无论按哪种对齐，其值都高于 SANA-WM 的 1.6204/1.6402，故「该类别平移误差未改善」这一判断成立。",
+            "block_index": 2,
+            "source_quote": ".6402 2.9997</td></tr><tr><td>Hard-Trajectory Split</td><td></td><td>13.94</td><td>0.2960</td><td>0.5456</td><td>5.8709</td><td>2.9053</td><td>2.9150</td></tr><tr><td colspan=\"8\"></td></tr><tr><td>Game Style</td><td>SANA-WM HLA-WM</td><td>13.75 14.55</td><td>0.3443</td><td>0.5140</td><td>8.1256</td><td>1.4874</td><td>1.5398</td></tr><tr><td>Indoor</td><td>SANA-WM</td><td>12.96</td><td>0.3797 0.3148</td><td>0.4956 0.5846</td><td>9.1194 22.9948</td><td>1.5393 0.9594</td><td>1.5961 1.2115</td></tr><tr><td></td><td>HLA-WM</td><td>12.98</td><td>0.3248</td><td>0.5774</td><td>14.8387</td><td>0.7795</td><td>0.9455</td></tr><tr><td>Outdoor City</td><td>SANA-WM</td><td>12.46</td><td>0.2631</td><td>0.5644</td><td>13.5222</td><td>1.6371</td><td>1.7186</td></tr><tr><td></td><td>HLA-WM</td><td>12.89</td><td>0.2822</td><td>0.5585</td><td>11.4256</td><td>1.5799</td><td>1.6459</td></tr><tr><td>Outdoor Nature</td><td>SANA-WM</td><td>13.03</td><td>0.2667</td><td>0.5242</td><td>8.0424</td><td>2.5758</td><",
+            "source_quote_id": "s24:b2:p1"
+          },
+          {
+            "assessment": "核对表末 Outdoor Nature 行与 Table 10 caption：caption 原文为「Category-level results on SANA-WM-Bench after bidirectional refinement. Best results within each category are shown in bold.」，草稿称 Table 10 为「双向精修后」忠于 caption，保留；但草稿由此在整段摘要中写成「AR 精修阶段显著提升了长期时空一致性」，把双向精修结果归因给 AR 精修，已改为归属待证并指出与本节标题 Stage 1 + AR Refine 的表述张力。另核对 Hard Outdoor Nature 末行 13.61/0.2702/0.5220/6.7236/2.2810/2.3046 与 SANA-WM 13.03/0.2667/0.5242/8.0424/2.5758/2.6078，PSNR/SSIM 上升、LPIPS 与位姿误差下降成立。草稿「表格排版混乱导致部分数值对齐困难」的提醒准确，予以保留。",
+            "block_index": 2,
+            "source_quote": "td>2.6078</td></tr><tr><td></td><td>HLA-WM</td><td>13.61</td><td>0.2702</td><td>0.5220</td><td>6.7236</td><td>2.2810</td><td>2.3046</td></tr></table>\n\n",
+            "source_quote_id": "s24:b2:p2"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 25,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对正文四案例的方法条件与因果表述：block 1 明确本节为\"under bidirectional refinement\"，四例分别为走廊（floor pattern/wall modules/side structures）、湖泊（lake surface/shoreline/landscape，HLA-WM 保 mountain silhouette、tree line、shoreline geometry 与 reflections）、木质结构（baseline introduces a large wooden structure that is absent from the first visit）、屋顶与天际线。初稿把 baseline 第三例的凭空结构、第二例的反射保持写对，未改事实；但初稿未说明该段为纯定性、无任何数值，且结尾既可追溯为 paper 自述主张，已补注。\"牺牲多样性\"的新增问题标为待证，因正文与 Table 11 均无多样性指标。",
+            "block_index": 1,
+            "source_quote": "Figure 9 provides additional qualitative comparisons under bidirectional refinement. In the first example, the baseline exhibits noticeable drift in the corridor geometry upon revisit, including changes in the floor pattern, wall modules, and spatial arrangement of the side structures. In contrast, HLA-WM better preserves the corridor layout, perspective, and characteristic interior elements. In the second example, the baseline substantially alters the lake surface, shoreline, and surrounding landscape, with pronounced distortions appearing in the revisited view. HLA-WM more faithfully maintains the mountain silhouette, tree line, shoreline geometry, and their reflections on the water. In the third example, the baseline introduces a large wooden structure that is absent from the first visit and significantly changes the foreground composition. HLA-WM avoids this spurious structural change and better preserves the open-water layout, ice distribution, and distant mountain ridge. In the f",
+            "source_quote_id": "s25:b1:p0"
+          },
+          {
+            "assessment": "核对 Figure 7 的 caption 事实：caption 只给出\"Additional qualitative comparisons for Stage 1 outputs\"及多帧一致性评估方式，未声明它是其他模式的\"基准参照\"。初稿使用\"此图通常用于……\"的模板化、无出处表述，已改写为：captions 事实（多案例、首次访问+两中间视图+重访、同一方法内部首尾帧比较）+ 明示为推断的基准参照角色。同时如实声明未获得图片像素信息。",
+            "block_index": 2,
+            "source_quote": "![](images/5c1de5e2041be1faf08fb95e223e49a5525a8327a877430818df4cb0e73fdad3.jpg)  \nFigure 7 Additional qualitative comparisons for Stage 1 outputs. Each example shows the first visit, two intermediate views, and a later revisit along the same camera trajectory. Revisit consistency is evaluated between the first-visit and revisit frames within each method.\n\n",
+            "source_quote_id": "s25:b2:p0"
+          },
+          {
+            "assessment": "核对 Figure 8 caption 仅声明\"under causal AR refinement\"且帧结构与 Figure 7 相同。初稿\"侧重于单向时间序列上的误差累积与修正效果\"及\"利用历史帧信息减少部分漂移、但受限于因果性仍无法解决非相邻帧几何冲突\"均为超出 caption 与本节正文的机理性推测，已保留但明确降级为待证假设，并说明本节无误差累积曲线或对应实验支撑。",
+            "block_index": 3,
+            "source_quote": "![](images/eace347ca2f4f4506bc07c042c2a40c522f2a3649335a979b6708b7986a268c5.jpg)  \nFigure 8 Additional qualitative comparisons under causal AR refinement. Each example shows the first visit, two intermediate views, and a later revisit along the same camera trajectory. Revisit consistency is evaluated between the first-visit and revisit frames within each method.\n\n",
+            "source_quote_id": "s25:b3:p0"
+          },
+          {
+            "assessment": "核对 Figure 9 caption 与 Figure 7/8 除细化模式外完全一致；初稿称本图\"支撑正文关于保留走廊布局、湖面反射、避免幻觉结构的关键视觉证据\"，与 block 1 的四案例可对应，保留；但\"双向机制允许同时利用过去和未来的上下文信息，理论上能更好约束几何结构\"属方法层推断，本节无正/反向上下文消融，已标注为推断。另补充本节标题写\"Stage 1 + Bidirectional Refine\"却同时收录 Fig. 8（Causal AR Refine）与三模式表格的编排观察。未获得图片像素信息已如实声明。",
+            "block_index": 4,
+            "source_quote": "![](images/2e2c2162d53470b7cf565796abd3acd20b6656c47be1a1d27a065e76428941c6.jpg)  \nFigure 9 Additional qualitative comparisons under bidirectional refinement. Each example shows the first visit, two intermediate views, and a later revisit along the same camera trajectory. Revisit consistency is evaluated between the first-visit and revisit frames within each method.\n\n",
+            "source_quote_id": "s25:b4:p0"
+          },
+          {
+            "assessment": "核对表头与表注：Subset/n/Method/PSNR↑/SSIM↑/LPIPS↓ 与\"four oficial MBench-A subsets under diferent inference modes\"、\"Best results ... shown in bold\"。据此修正初稿把行分组误计为\"四种推理模式\"的错误——实为 Stage 1、Causal AR Refine、Bidirectional Refine 三种模式 × 四个子集；并说明加粗信息在提取文本中丢失、无法核实。另指出多行方法名合并入同一单元格（如 \"SANA-WM HLA-WM\"）、SSIM 格出现双数值，构成逐格配对风险。",
+            "block_index": 5,
+            "source_quote": "Table 11 Detailed Top-1 results on the four oficial MBench-A subsets under diferent inference modes. Best results within each subset and mode are shown in bold.\n<table><tr><td>Subset</td><td>n</td><td>Method</td><td>PSNR ↑</td><td>SSIM ↑</td><td>LPIPS ↓</td></tr><tr><td>Stage 1</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Causal</td><td>100</td><td>SANA-WM HLA-WM</td><td>10.4068 11.0022</td><td>0.28982 0.31830</td><td>0.65461 0.61659</td></tr><tr><td>Human</td><td>120</td><td>SANA-WM HLA-WM</td><td>9.5147</td><td>0.26845</td><td>0.67977</td></tr><tr><td>Environment</td><td>227</td><td>SANA-WM HLA-WM</td><td>10.2161 10.4140</td><td>0.30275 0.24056</td><td>0.63759 0.59436</td></tr><tr><td>Object</td><td>100</td><td>SANA-WM</td><td>11.4626 10.1755</td><td>0.27144 0.23386</td><td>0.54857 0.59953</td></tr><tr><td></td><td></td><td>HLA-WM</td><td>10.9412</td><td>0.25989</td><td>0.55808</td></tr><tr><td>Causal AR Refine</td><td></td><td>SANA-WM</td><td>12.4358</td><td></td><t",
+            "source_quote_id": "s25:b5:p0"
+          },
+          {
+            "assessment": "核对具体数值与推断边界：Stage 1 Causal 子集 HLA-WM PSNR 11.0022，Causal AR Refine 为 12.6230，Bidirectional 为 13.2118，PSNR 上升方向可确认；但初稿\"所有细化均降低 LPIPS\"被表内 Causal AR Refine 的 Causal 行 LPIPS 0.67586/0.66550 高于 Stage 1 的 0.65461/0.61659 所否证，已改为非单调。Environment 的 0.51069 与 14.1215/0.33725 同区，但同区还有 0.52598、0.60919，方法归属不确定、差距亦不\"显著\"，已降级为待确认。Object 区域 HLA-WM 0.52774 对 SANA-WM 0.53320 的 LPIPS 优势极小且 Stage 1 区域尚有 HLA-WM 0.55808，初稿的\"基线更优后反超\"改为弱结论。",
+            "block_index": 5,
+            "source_quote": "td>0.60919 0.52598</td></tr><tr><td></td><td>227</td><td>HLA-WM</td><td>14.1215</td><td>0.33725</td><td>0.51069</td></tr><tr><td></td><td></td><td>SANA-WM</td><td>13.1585</td><td>0.31224</td><td></td></tr><tr><td></td><td>100</td><td></td><td></td><td></td><td>0.53320</td></tr><tr><td>Object</td><td></td><td>HLA-WM</td><td>13.6448</td><td>0.31892</td><td>0.52774</td></tr></table>",
+            "source_quote_id": "s25:b5:p2"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      }
+    ],
+    "final": {
+      "verdict": "corrected",
+      "checks": [
+        {
+          "target": "readme",
+          "claim": "Stage 1 直接把 Hard 轨迹 PSNR 提升 0.74 dB、旋转误差降低 26.0%",
+          "section_index": 5,
+          "block_index": 8,
+          "source_quote_id": "s5:b8:p0",
+          "assessment": "直接支持：原文写“On Hard trajectories, PSNR and SSIM increase by 0.74 dB and 0.0223, LPIPS decreases by 0.0196, and RotErr is reduced by 26.0%”，与 Table 1（9.37→10.11、20.3759→15.0887）一致。已纠正初稿关键数字表把 Hard 的 RotErr 写成“−26.0% ~ −28.5%”的口径混用。",
+          "source_quote": "Performance on SANA-WM-Bench. Table 1 evaluates HLA-WM across diferent stages of the SANA-WM generation pipeline. At Stage 1, where HLA-WM directly modifies the recurrent memory, it improves all revisit-consistency and camera-control metrics on both trajectory splits. On Hard trajectories, PSNR and SSIM increase by 0.74 dB and 0.0223, LPIPS decreases by 0.0196, and RotErr is reduced by 26.0%. Similar improvements are observed on Simple trajectories, including a 0.73 dB PSNR gain and a 31.0% reduction in RotErr. These camera-control gains are consistent with improved scene stability, as preserving previously observed geometry reduces structural drift and provides a more reliable spatial reference for camera-conditioned generation. The improvements largely persist after downstream refinement. Under causal AR refinement, all three revisit-consistency metrics improve on both splits. On Hard trajectories, all three cameracontrol metrics also improve, while on Simple trajectories RotErr decr"
+        },
+        {
+          "target": "readme",
+          "claim": "28.5%（与 Hard −26.0% / Simple −31.0% 的两 split 平均一致，为本次批读的算式推断）",
+          "section_index": 0,
+          "block_index": 3,
+          "source_quote_id": "s0:b3:p1",
+          "assessment": "原文只给出 28.5% 这一个数，并未说明它是两 split 平均；“平均口径”是本次批读用 Table 1 数值算出的推断（(26.0+31.0)/2=28.5），已在最终文本中显式标注为推断，未冒充原文陈述。",
+          "source_quote": "sistency and camera-control metrics of the base autoregressive generator without additional training, including a 0.74 dB PSNR gain and a 28.5% reduction in rotation error. The improvements persist after downstream refinement and generalize to MBench-A, where HLA-WM consistently improves all three revisit-consistency metrics across all four subsets and all evaluated inference modes over 547 samples. At a 60-second context, HLA-WM reduces historical-state memory by 12× relative to full KV caching while incurring at most a 1.6% reduction in inference throughput. These results demonstrate that selectively addressable recurrent memory can improve long-range scene recall while preserving the eficiency advantages of GDN.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "60 秒上下文下历史状态内存比 full KV 缓存少 12×，推理吞吐最多下降 1.6%",
+          "section_index": 0,
+          "block_index": 3,
+          "source_quote_id": "s0:b3:p1",
+          "assessment": "逐字支持：摘要写“reduces historical-state memory by 12× relative to full KV caching while incurring at most a 1.6% reduction in inference throughput”；5.2 节补充 2.15 GiB，Table 1 的 FPS 22.403→22.053（约 −1.56%）与之相容。",
+          "source_quote": "sistency and camera-control metrics of the base autoregressive generator without additional training, including a 0.74 dB PSNR gain and a 28.5% reduction in rotation error. The improvements persist after downstream refinement and generalize to MBench-A, where HLA-WM consistently improves all three revisit-consistency metrics across all four subsets and all evaluated inference modes over 547 samples. At a 60-second context, HLA-WM reduces historical-state memory by 12× relative to full KV caching while incurring at most a 1.6% reduction in inference throughput. These results demonstrate that selectively addressable recurrent memory can improve long-range scene recall while preserving the eficiency advantages of GDN.\n\n"
+        },
+        {
+          "target": "insight.method",
+          "claim": "利用 GDN 仿射结构缓存 chunk 级仿射摘要 $(A_i,B_i)$（Eq. 7–9）",
+          "section_index": 4,
+          "block_index": 17,
+          "source_quote_id": "s4:b17:p0",
+          "assessment": "支持 $(A_i,B_i)$ 是 chunk 的充分摘要（$A_i$ 描述该 chunk 如何变换既有记忆、$B_i$ 表示该 chunk 写入的信息），Eq. 9 的结合律见 s4:b19:p0；独立缓存的工程流程见 A.2（s12:b1:p0）。“缓存”一词在正文与附录中均有对应，非推断。",
+          "source_quote": "Here, the products follow the recurrent scan order, with an empty product defined as the identity. The pair $( A _ { i } , B _ { i } )$ therefore provides a suficient summary of chunk i: $A _ { i }$ describes how the chunk transforms existing memory, while $B _ { i }$ represents the information written by the chunk itself.\n\n"
+        },
+        {
+          "target": "insight.method",
+          "claim": "用相机位姿、内参与场景级中值深度构造代理 3D 点计算对称视锥重叠分（Eq. 12）做几何检索",
+          "section_index": 4,
+          "block_index": 22,
+          "source_quote_id": "s4:b22:p0",
+          "assessment": "支持检索只使用“camera poses, intrinsics, and a scene-level median-depth estimate”；对称分数 $R(i,q)$ 的定义在 s4:b28:p0，代理深度三层集合在 s4:b25:p0。该主张是对多处原文的压缩表述，未超出原文范围。",
+          "source_quote": "Given the individually addressable chunk-wise memories, we retrieve historical chunks according to their geometric relevance to the current view. For each query chunk q and an eligible historical chunk i, we estimate their overlap using only camera poses, intrinsics, and a scene-level mediandepth estimate. For a sampled image-plane location $( u , v )$ , we construct the camera-space ray\n\n"
+        },
+        {
+          "target": "insight.findings",
+          "claim": "MBench-A 547 样本、4 子集、3 种推理模式下 PSNR/SSIM/LPIPS 一致改善",
+          "section_index": 5,
+          "block_index": 9,
+          "source_quote_id": "s5:b9:p0",
+          "assessment": "支持：原文写明“HLA-WM consistently improves PSNR, SSIM, and LPIPS across all three inference modes”，Table 2 三种模式六行数值均优于 baseline（如 Stage-1 10.17→11.01），与 A.8.2 的 12 个 mode–subset 组合一致。",
+          "source_quote": "Performance on MBench. We further evaluate HLA-WM on the full MBench-A benchmark with 547 samples to assess its generalization beyond SANA-WM-Bench. As shown in Table 2, HLA-WM consistently improves PSNR, SSIM, and LPIPS across all three inference modes. The gains are most pronounced at Stage 1, where PSNR and SSIM increase by 0.84 dB and 0.0303, respectively, while LPIPS decreases by 0.0428. The improvements remain consistent after downstream refinement, with PSNR gains of 0.37 dB and 0.58 dB under causal AR and bidirectional refinement, respectively. These results demonstrate that the proposed memory mechanism generalizes efectively across diferent refinement modes and diverse scene and interaction patterns. Detailed subset-level results are provided in the Appendix.\n\n"
+        },
+        {
+          "target": "insight.findings",
+          "claim": "Hard PSNR +0.74 dB、SSIM +0.0223、LPIPS −0.0196、RotErr −26.0%（摘要给出 28.5%，推断为两 split 平均；Simple 为 −31.0%）",
+          "section_index": 5,
+          "block_index": 8,
+          "source_quote_id": "s5:b8:p0",
+          "assessment": "前四项逐字支持；括号内“两 split 平均”为本次批读推断（见上一条检查），已明确标注。同时纠正初稿把 28.5% 当作 Hard 轨迹数值的写法。",
+          "source_quote": "Performance on SANA-WM-Bench. Table 1 evaluates HLA-WM across diferent stages of the SANA-WM generation pipeline. At Stage 1, where HLA-WM directly modifies the recurrent memory, it improves all revisit-consistency and camera-control metrics on both trajectory splits. On Hard trajectories, PSNR and SSIM increase by 0.74 dB and 0.0223, LPIPS decreases by 0.0196, and RotErr is reduced by 26.0%. Similar improvements are observed on Simple trajectories, including a 0.73 dB PSNR gain and a 31.0% reduction in RotErr. These camera-control gains are consistent with improved scene stability, as preserving previously observed geometry reduces structural drift and provides a more reliable spatial reference for camera-conditioned generation. The improvements largely persist after downstream refinement. Under causal AR refinement, all three revisit-consistency metrics improve on both splits. On Hard trajectories, all three cameracontrol metrics also improve, while on Simple trajectories RotErr decr"
+        },
+        {
+          "target": "insight.findings",
+          "claim": "几何检索在 PSNR/SSIM/LPIPS/RotErr/CamMC 上优于 Uniform，但 TransErr 略高（1.6985 vs 1.6881）",
+          "section_index": 17,
+          "block_index": 6,
+          "source_quote_id": "s17:b6:p0",
+          "assessment": "支持且带边界：原文写几何引导选择把所有三项重访一致性指标进一步改善（9.91→10.00、0.1910→0.1936、0.5957→0.5885），并“slightly lower RotErr and CamMC, while Uniform obtains a marginally lower TransErr”。因此最终文本避免写成“全指标最优”。",
+          "source_quote": "As shown in Table 7, uniformly covering the history already provides a substantially stronger baseline than random or purely recent selection, highlighting the importance of maintaining access to distant context. Uniform selection remains competitive, likely because the one-minute evaluation horizon allows uniformly sampled states to cover much of the observed scene history. Nevertheless, geometry-guided selection further improves all three revisit-consistency metrics, increasing PSNR from 9.91 to 10.00 and SSIM from 0.1910 to 0.1936, while reducing LPIPS from 0.5957 to 0.5885. It also achieves slightly lower RotErr and CamMC, while Uniform obtains a marginally lower TransErr. These results indicate that explicitly selecting view-relevant historical states provides additional benefit beyond broad temporal coverage, supporting camera geometry as an efective criterion for long-range memory retrieval.\n\n"
+        },
+        {
+          "target": "insight.limitations",
+          "claim": "检索只用相机几何与 FOV overlap，未建模遮挡、可见性与语义相关性",
+          "section_index": 6,
+          "block_index": 2,
+          "source_quote_id": "s6:b2:p0",
+          "assessment": "逐字支持（作者自陈局限）。后续“静态/刚性场景假设”一句在原文中无对应表述，已在最终 insight 中标注为推断；A.1.1 的“does not explicitly model occlusion or scene geometry”也支持同一方向。",
+          "source_quote": "Limitations and Future Work. HLA-WM is currently training-free, which limits the achievable gains. Future work could integrate selective state retrieval into training to better preserve and exploit long-range memory. In addition, our retrieval relies solely on camera geometry and FOV overlap, without explicitly modeling occlusion, visibility, or semantic relevance. Incorporating richer or learned retrieval signals may further improve robustness in complex scenes.\n\n"
+        },
+        {
+          "target": "insight.research_question",
+          "claim": "能否在不保留 token 级 full KV cache、也不额外训练的前提下，选择性恢复远处相关场景历史？",
+          "section_index": 1,
+          "block_index": 5,
+          "source_quote_id": "s1:b5:p0",
+          "assessment": "支持：该段正是研究问题的原文表述（“recover distant scene history without retaining a full token-level KV cache or requiring additional training”），并与 Introduction 开头的中心问题句相容。",
+          "source_quote": "We therefore ask whether a pretrained recurrent video world model can recover distant scene history without retaining a full token-level KV cache or requiring additional training. To this end, we propose HLA-WM, a training-free hybrid linear-attention framework that combines coarse-grained geometry-guided retrieval with fine-grained recurrent linear-attention access. HLA-WM exploits the afine structure of GDN to cache compact chunk-wise summaries of historical state transitions, selectively retrieves relevant summaries using camera geometry, and recomposes them into a query-specific recurrent state. This establishes an intermediate memory regime between a single recurrent state and token-level full-history caching, enabling selective access to distant history while retaining compact linear-state storage.\n\n"
+        },
+        {
+          "target": "insight.data",
+          "claim": "simple/hard 两个 split 各 80 条相机控制轨迹、4 类场景",
+          "section_index": 5,
+          "block_index": 2,
+          "source_quote_id": "s5:b2:p0",
+          "assessment": "支持：原文写“contains simple and hard splits, each with 80 camera-controlled trajectories spanning four scene categories”；同一块还给出 961 帧 @16 fps、约 60 秒、1280×704 与 1.6B baseline，这些补充信息均在 s5:b2:p0 内。",
+          "source_quote": "Datasets and Baselines. We conduct experiments on SANA-WM-Bench [7] and MBench-A [18]. SANA-WM-Bench contains simple and hard splits, each with 80 camera-controlled trajectories spanning four scene categories: indoor, outdoor city, outdoor nature, and game-style environments. Each trajectory contains 961 frames at 16 fps, corresponding to approximately 60 seconds, with a resolution of $1 2 8 0 \\times 7 0 4$ . MBench-A contains 547 samples across four oficial subsets: Causal, Human, Environment, and Object. We use the oficial 1.6B SANA-WM as our baseline. Its Stage 1 model performs 4-step distilled autoregressive streaming generation with recurrent GDN states, followed by optional causal AR or bidirectional refinement. HLA-WM modifies only the Stage 1 memory mechanism and requires no additional training or fine-tuning, while downstream refinement remains unchanged. Within each setting, the baseline and HLA-WM use identical inputs, camera trajectories, prompts, and generation configurati"
+        },
+        {
+          "target": "insight.method_type",
+          "claim": "免训练推理期记忆读写机制改进",
+          "section_index": 1,
+          "block_index": 10,
+          "source_quote_id": "s1:b10:p0",
+          "assessment": "“training-free”为原文逐字定性；把改动定位为“推理期记忆读写”是对 4.2–4.4 与 A.2（只重组主 GDN 记忆、参数不变、不重放历史 token）的归类标签，属归纳性描述，非原文原句。",
+          "source_quote": "• We propose HLA-WM, a training-free hybrid linear-attention framework that equips recurrent video world models with selectively addressable historical memory through compact afine summaries, camera-guided addressing, and chronological state recomposition.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "AR 精修下 Simple 轨迹的 TransErr 与 CamMC 反而轻微变差，说明相机可控性增益并非无条件",
+          "section_index": 5,
+          "block_index": 8,
+          "source_quote_id": "s5:b8:p1",
+          "assessment": "支持前半句：原文写“while on Simple trajectories RotErr decreases but TransErr and CamMC increase slightly”，Table 1 数值亦为 2.1587→2.1910 与 2.3121→2.3240。“并非无条件”是对该句的概括性解读，未超出证据。",
+          "source_quote": "eases but TransErr and CamMC increase slightly. Full-sequence refinement preserves the benefits more consistently and improves all six metrics on both splits, including PSNR gains of 0.52/0.46 dB and RotErr reductions of 22.0%/20.1% on the Simple/Hard splits. Overall, selective long-range memory consistently improves revisit fidelity while generally enhancing camera controllability over long rollouts. Detailed category-level results, together with extensive ablations on component contributions, GDN/KV alignment, retrieval budget, and historical selection strategies, are provided in the Appendix.\n\n"
+        },
+        {
+          "target": "insight.relevance",
+          "claim": "原则上可迁移到其他循环线性注意力架构，但原文未做跨架构实验，属推断",
+          "section_index": 2,
+          "block_index": 2,
+          "source_quote_id": "s2:b2:p0",
+          "assessment": "引文只说明线性注意力是一类通用机制及其演进（GLA → DeltaNet → GDN），并未提供跨架构迁移实验；因此迁移主张属推断，已在最终 insight.relevance 中显式标注“属推断”，未与原文结论混同。",
+          "source_quote": "Linear Attention for World Models. Linear attention reformulates attention through associative computation, allowing historical information to be summarized into fixed-size recurrent states instead of maintaining a KV cache that grows with sequence length [13, 23]. Building on this formulation, subsequent works improve the expressiveness and memory management of linear states through more sophisticated recurrent updates. Gated Linear Attention introduces datadependent decay to selectively forget historical information [24], while DeltaNet employs the delta rule to enable targeted updates to the recurrent memory [25]. Gated DeltaNet (GDN) further combines these two mechanisms, providing both adaptive forgetting and selective memory updates within a fixed-size state [15]. More recently, recurrent linear attention has been extended to autoregressive video generation, where linear states serve as compact cross-frame memory for long-form generation [7, 14]. Despite their favorable memory ef"
+        }
+      ],
+      "correction_attempts": 0
+    }
+  },
+  "source_sha256": "a16a72d0ef1cd675a6602fdbfc82d8ba679c535378a483b364117d8d57b3c9d2",
+  "source_chars": 79513,
+  "read_chars": 79513,
+  "sections": [
+    {
+      "title": "HLA-WM: Hybrid Linear Attention for Long-Horizon Video World Models",
+      "path": "sections/00-section.md"
+    },
+    {
+      "title": "1 Introduction",
+      "path": "sections/01-section.md"
+    },
+    {
+      "title": "2 Related Work",
+      "path": "sections/02-section.md"
+    },
+    {
+      "title": "3 Empirical Insights",
+      "path": "sections/03-section.md"
+    },
+    {
+      "title": "4 Method",
+      "path": "sections/04-section.md"
+    },
+    {
+      "title": "5 Experiments",
+      "path": "sections/05-section.md"
+    },
+    {
+      "title": "6 Conclusion",
+      "path": "sections/06-section.md"
+    },
+    {
+      "title": "References",
+      "path": "sections/07-section.md"
+    },
+    {
+      "title": "A Appendix",
+      "path": "sections/08-section.md"
+    },
+    {
+      "title": "A.1 Additional Implementation Details",
+      "path": "sections/09-section.md"
+    },
+    {
+      "title": "A.1.1 Geometry-Aware Historical Retrieval",
+      "path": "sections/10-section.md"
+    },
+    {
+      "title": "A.1.2 Turn-Aware Recent Context",
+      "path": "sections/11-section.md"
+    },
+    {
+      "title": "A.2 Implementation of State Recomposition",
+      "path": "sections/12-section.md"
+    },
+    {
+      "title": "A.2.1 Overall Inference Procedure",
+      "path": "sections/13-section.md"
+    },
+    {
+      "title": "A.3 Component Ablation",
+      "path": "sections/14-section.md"
+    },
+    {
+      "title": "A.4 GDN-State Recomposition and KV-Cache Alignment",
+      "path": "sections/15-section.md"
+    },
+    {
+      "title": "A.5 Number of Retrieved Historical Chunks",
+      "path": "sections/16-section.md"
+    },
+    {
+      "title": "A.6 Efectiveness of Geometry-Guided Historical Selection",
+      "path": "sections/17-section.md"
+    },
+    {
+      "title": "A.7 Efect of Revisit Interval",
+      "path": "sections/18-section.md"
+    },
+    {
+      "title": "A.8 Detailed Benchmark Results",
+      "path": "sections/19-section.md"
+    },
+    {
+      "title": "A.8.1 SANA-WM-Bench Category Results",
+      "path": "sections/20-section.md"
+    },
+    {
+      "title": "A.8.2 MBench-A Subset Results",
+      "path": "sections/21-section.md"
+    },
+    {
+      "title": "A.9 Additional Qualitative Results",
+      "path": "sections/22-section.md"
+    },
+    {
+      "title": "A.9.1 Stage 1",
+      "path": "sections/23-section.md"
+    },
+    {
+      "title": "A.9.2 Stage 1 + AR Refine",
+      "path": "sections/24-section.md"
+    },
+    {
+      "title": "A.9.3 Stage 1 + Bidirectional Refine",
+      "path": "sections/25-section.md"
+    }
+  ],
+  "skill_sha256": "ee7f8825c3ad31536f83796acedb40bce9e574a3de951ec7161608b24d211c77",
+  "extracted_metadata": {
+    "title": "HLA-WM: Hybrid Linear Attention for Long-Horizon Video World Models",
+    "year": "2026"
+  },
+  "input_metadata": {
+    "arxiv_id": "2610.05739",
+    "authors": "",
+    "source_url": "https://arxiv.org/abs/2610.05739",
+    "title": "(AI 精读中…)",
+    "year": ""
+  },
+  "pipeline_version": 3,
+  "reading_fingerprint": "8aaa82c88373493d6c09e077d187da405d8679a47064de0ffd3bb3dbdb9a1086"
+}

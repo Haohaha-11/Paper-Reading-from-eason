@@ -1,0 +1,31 @@
+{
+  "research_question": "长时程视频世界模型中，基于 Gated DeltaNet (GDN) 的循环线性注意力把全部历史压进单一状态，远处相关场景信息会被后续更新逐步衰减：能否在不保留 token 级 full KV cache、也不额外训练的前提下，选择性恢复远处相关场景历史？",
+  "method": "提出免训练框架 HLA-WM：利用 GDN 仿射结构缓存 chunk 级仿射摘要 $(A_i,B_i)$（Eq. 7–9），用相机位姿、内参与场景级中值深度构造代理 3D 点计算对称视锥重叠分（Eq. 12）做几何检索，结合 turn-aware 动态扩展近期上下文（Eq. 13、24），把选中 chunk 按时间序重组为 query 特定循环状态 $S_q^{hist}=S_0A_{\\pi_q}+B_{\\pi_q}$（Eq. 17）；选择性重组只作用于主 GDN 记忆，并同步到 softmax 注意力通路的历史 KV cache。",
+  "method_type": "免训练推理期记忆读写机制改进（training-free, inference-time memory addressing/recomposition）",
+  "data": "SANA-WM-Bench：simple/hard 两个 split 各 80 条相机控制轨迹、4 类场景（indoor / outdoor city / outdoor nature / game-style），每条 961 帧 @16 fps（约 60 秒）、分辨率 1280×704；MBench-A：547 样本、4 个官方子集（Causal/Human/Environment/Object）。指标为重复位姿帧间 PSNR/SSIM/LPIPS 与 RotErr/TransErr/CamMC；基线为官方 1.6B SANA-WM（Stage 1 四步蒸馏 + 可选 causal AR / 双向精修）。",
+  "findings": "60 秒 SANA-WM-Bench 上 Stage-1 两个 split 的全部 6 项聚合指标提升：Hard PSNR +0.74 dB、SSIM +0.0223、LPIPS −0.0196、RotErr −26.0%（摘要给出 28.5%，推断为两 split 平均；Simple 为 −31.0%）；MBench-A 547 样本、4 子集、3 种推理模式下 PSNR/SSIM/LPIPS 一致改善；60 秒上下文历史状态内存较 full KV 少 12×，吞吐最多降 1.6%。消融显示 GDN 状态重组是长程召回的主要来源、KV 对齐主要带来相机稳定性；K=1 保真度指标最优（相机指标 K=5 的 RotErr 最低）；几何检索在 PSNR/SSIM/LPIPS/RotErr/CamMC 上优于 Uniform，但 TransErr 略高（1.6985 vs 1.6881）。",
+  "limitations": "免训练限制增益上限（作者自陈，6 节）；检索只用相机几何与 FOV overlap，未建模遮挡、可见性与语义相关性；静态 / 刚性场景假设及稀疏代理点在复杂遮挡下的精度影响属推断，原文未做实验；大 K 反而变差、AR 精修下 Simple 的 TransErr/CamMC 轻微变差，原文均未解释机制；附录部分表格行列错位，精确数值待核。",
+  "relevance": "面向已训练好的长时程流式世界模型提供免训练即插即用的记忆读取改造，工程落地成本低（推断）；把“按时间递推的记忆”改成“按几何选择性寻址的记忆”这一思路，原则上可迁移到其他循环线性注意力架构，但原文未做跨架构实验，属推断。",
+  "citation_refs": [
+    "SANA-WM",
+    "MBench-A",
+    "Gated DeltaNet (GDN)",
+    "GLA",
+    "DeltaNet",
+    "Pi3X",
+    "Matrix-Game",
+    "Ha & Schmidhuber World Models"
+  ],
+  "themes": [
+    "视频世界模型",
+    "循环线性注意力",
+    "长程记忆",
+    "Gated DeltaNet",
+    "免训练框架",
+    "相机几何检索",
+    "状态重组",
+    "长时程视频生成"
+  ],
+  "evidence_level": "full_text",
+  "core_rank": 0
+}
