@@ -1,0 +1,1432 @@
+{
+  "provider": "bailian",
+  "model": "qwen3.8-flash",
+  "kind": "paper",
+  "stage_models": {
+    "annotations": "qwen3.8-flash",
+    "synthesis": "qwen3.8-max",
+    "verifier": "deepseek-v4.1-flash"
+  },
+  "verification": {
+    "status": "reviewed",
+    "model": "deepseek-v4.1-flash",
+    "scope": "模型对照原文的独立复核；引文位置由程序校验，不代表外部事实得到独立证实",
+    "batches": [
+      {
+        "section_index": 0,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "初稿称 Pieter Abbeel 和 Koushil Sreenath 为“通讯作者”，但原文只用 † 标注，未给出任何含义说明，属超出证据的推断，已改为如实描述记号并注明原文未说明。初稿列举的姓名与 ∗/† 归属与原文一致。",
+            "block_index": 1,
+            "source_quote": "Qiayuan Liao Yiyang Shao<sup>∗</sup> Junfeng Long<sup>∗</sup> Kevin Zakka Roberto Horowitz Pieter Abbeel<sup>†</sup> Koushil Sreenath<sup>†</sup>\n\n",
+            "source_quote_id": "s0:b1:p0"
+          },
+          {
+            "assessment": "初稿称主页“提供代码与演示视频链接”，原文该块只有机构与 URL，未提及代码或视频，属捏造，已删除并改为注明原文未说明。机构 UC Berkeley 与 URL 与原文一致。",
+            "block_index": 2,
+            "source_quote": "UC Berkeley https://supermimic.github.io\n\n",
+            "source_quote_id": "s0:b2:p0"
+          },
+          {
+            "assessment": "逐项核对 Figure 1 caption：128 L40 GPU×168 h（SONIC）对 1 H100×3 h、GPU-hours 减少 1000 倍以上、左图想象 rollout、§4.1，均与原文一致。补充一句说明未获得图像视觉信息、描述仅来自 caption，以避免读者误以为看到曲线形状；未改动任何数字。",
+            "block_index": 3,
+            "source_quote": "![](images/b48ea6cfd89a359a5fdd7bc67925a543ecf87b68a3bf89c7cd538f35aa1c9fd2.jpg)  \nFigure 1: A learned differentiable world model trains a humanoid whole-body controller and reduces GPU-hours by more than 1000× versus cluster-scale model-free reinforcement learning (§4.1). Left: the policy improves through imagined rollouts of the world model. Right: 128 L40 GPUs train for 168 h in SONIC [1], against one H100 for 3 h in this work.\n\n",
+            "source_quote_id": "s0:b3:p0"
+          },
+          {
+            "assessment": "核对 Abstract 前半：可微分世界模型、共享动力学、由刚体模拟器记录的 transitions 拟合、世界模型与策略同一循环共训、短程想象 rollout 的 BPTT 提供解析梯度，均与原文一致。",
+            "block_index": 4,
+            "source_quote": "Abstract: Tracking large human-motion datasets has become the dominant route to general, expressive humanoid whole-body control, but scaling across many motions is expensive. Current pipelines use model-free reinforcement learning, either merging per-motion specialists through lossy distillation, or brute-forcing a single policy with cluster-scale compute. SuperMimic amortizes learning across all motions with one differentiable world model of their shared dynamics, fit from logged transitions of a standard rigid-body simulator. The world model and the tracking policy train together in one loop, and backpropagation-through-time over short imagined rollouts gives the policy analytic gradients. Fast imagined rollouts and analytic gradients make policy learning efficient. In 3 hours on a single GPU, SuperMimic surpasses the return of a state-of-the-art motion tracker baseline trained for 7 days on 128 GPUs. It reduces GPU-hours by more than 1000× and fails on only 25 of 129,514 benchmark m",
+            "source_quote_id": "s0:b4:p0"
+          },
+          {
+            "assessment": "核对数字：3 小时单 GPU 超过 128 GPU 训练 7 天的基线、失败 25/129,514 对 179、2 GPU 9.8 小时零失败、动作量 1–264 小时误差稳定、迁移 Unitree G1，全部与原文一致。修正初稿“失败率从 179 降至 25”的措辞（原文是失败动作个数，非率），并补充 Figure 1 给出的 GPU 型号，避免把 Figure 1 的 H100/L40 细节误当作摘要原文。",
+            "block_index": 4,
+            "source_quote": "otions, versus 179 failures for the baseline. After 9.8 hours on two GPUs, SuperMimic achieves zero failures. From 1 to 264 hours of motion, the world model’s prediction error stays stable, and GPU-hours to a target return grow slowly. Our policy transfers to a physical Unitree G1 across diverse and acrobatic motions. SuperMimic removes compute as the bottleneck to scaling humanoid whole-body control, making it practical to measure motiontracking scaling laws.\n\n",
+            "source_quote_id": "s0:b4:p1"
+          },
+          {
+            "assessment": "关键词三项与原文完全一致，初稿概括准确，仅保留原意并补出英文关键词原样，便于检索。",
+            "block_index": 5,
+            "source_quote": "Keywords: Humanoid Robot, Whole-Body Control, Model-Based Reinforcement Learning\n\n",
+            "source_quote_id": "s0:b5:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 1,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "数字核对无误：SONIC 为 128 GPU、约 168 h、约 21,000 GPU-hours；‘参考动作共享同一人形刚体动力学’与‘模型无关 RL 未显式建模该结构’均与原文一致。但初稿的‘算力随动作多样性线性增长’原文只说 scaling to more motions amounts to scaling up compute，未给出线性关系，属于超出证据的推断，已改为‘动作覆盖越多，算力开销就越大’。初稿未点出‘共享动力学’这一关键前提，已补入。",
+            "block_index": 1,
+            "source_quote": "Humanoid robots hold the promise of operating in environments designed for people, but doing so requires whole-body controllers that span diverse human motion, from locomotion and dance to crouching and balance recovery. Physics-based motion imitation addresses this by training RL policies to track reference motion clips [2] drawn from large motion-capture (mocap) datasets [1]. Existing systems scale this idea either by distilling many clip-specific experts into one controller [3] or by training a generalist policy over a large motion library [1]. In both cases, a more diverse motion library produces a more capable controller. But both also become computationally expensive as motion coverage grows: the state-of-the-art tracker SONIC [1], for example, trains for ∼168 h on 128 GPUs, totaling roughly 21,000 GPU-hours. Although reference motions differ, they share the same humanoid hybrid rigid-body dynamics. Model-free RL fails to explicitly model this shared structure, instead repeatedly",
+            "source_quote_id": "s1:b1:p0"
+          },
+          {
+            "assessment": "逐项核对：单一可微世界模型由 logged simulator transitions 拟合、BPTT 在短 imagined rollouts 上给出解析策略梯度、一个动力学模型在整个 mocap 库上摊销学习、梯度来自学得模型而非对模拟器求导因而兼容非平滑接触与不可微实现——初稿表述与原文一一对应，因果与方法条件均未越界，故逐字保留，未作改动。",
+            "block_index": 2,
+            "source_quote": "SuperMimic addresses this inefficiency with a single learned, differentiable world model fit from logged simulator transitions. Backpropagation-through-time (BPTT) through short imagined rollouts provides analytic policy gradients through the learned model, allowing one dynamics model to amortize learning across the entire mocap library. Because these gradients come from the learned model rather than from differentiating the simulator, SuperMimic remains compatible with rigid body simulators, including those with non-smooth contacts and non-differentiable implementations.\n\n",
+            "source_quote_id": "s1:b2:p0"
+          },
+          {
+            "assessment": "初稿‘12.9万动作测试集上失败率显著更低’过于含糊且漏掉具体设置：原文为 129,514 个动作，单 GPU 3 h 失败 25 个动作、双 GPU 9.8 h 失败 0 个，对比 SONIC 发布检查点 179 个（Appendix F）。已改为写出精确数字与条件。其余数字核对无误：3 h、>1000×、264× 数据集长度、迁移到 Unitree G1；初稿漏掉 G1 迁移这一条证据，已补入。‘验证了泛化性与可扩展性’中‘泛化性’是原摘要未支持的措辞，已删除，仅保留原文可支持的预测误差稳定与算力增长缓慢。",
+            "block_index": 3,
+            "source_quote": "On one GPU, SuperMimic surpasses the normalized return of SONIC’s released checkpoint within 3 h and reduces GPU-hours by more than 1000× (§4.1). On a 129,514-motion benchmark, Super-Mimic fails on 25 motions after 3 h on one GPU and on none after 9.8 h on two GPUs, against 179 for SONIC’s released checkpoint (Appendix F). Across a 264× increase in dataset length, the world model’s prediction error stays stable and SuperMimic’s compute to a fixed return grows slowly. The learned policy transfers to a physical Unitree G1. In a preliminary study of downstream interfaces, an RL-trained velocity encoder outperforms a distillation baseline.\n\n",
+            "source_quote_id": "s1:b3:p0"
+          },
+          {
+            "assessment": "段组摘要核对：初稿末句‘作者承认目前为初步研究，重点在于证明世界模型在效率与扩展性上的优势’把 preliminary study 的范围扩大了——原文的 preliminary study 仅指 downstream interfaces（RL 训练的 velocity encoder 对比蒸馏基线），并非对整篇工作的自我限定。摘要已改写为限定在该下游接口部分，并补齐单 GPU 3 h 失败 25 个动作这一数字。",
+            "block_index": 3,
+            "source_quote": "On one GPU, SuperMimic surpasses the normalized return of SONIC’s released checkpoint within 3 h and reduces GPU-hours by more than 1000× (§4.1). On a 129,514-motion benchmark, Super-Mimic fails on 25 motions after 3 h on one GPU and on none after 9.8 h on two GPUs, against 179 for SONIC’s released checkpoint (Appendix F). Across a 264× increase in dataset length, the world model’s prediction error stays stable and SuperMimic’s compute to a fixed return grows slowly. The learned policy transfers to a physical Unitree G1. In a preliminary study of downstream interfaces, an RL-trained velocity encoder outperforms a distillation baseline.\n\n",
+            "source_quote_id": "s1:b3:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 2,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "原文只说该设定“long dominated by model-free PPO”，作者展示的是 BPTT 通过可微世界模型能训练全身跟踪策略且控制器迁移到实体 Unitree G1；初稿“打破了传统无模型 PPO 的主导地位”把“证明可行”升格为“取代/打破主导”，强于原文证据，已改为说明原文 claim 的边界。同时补出 BPTT（沿时间反向传播）这一关键机制，避免读者对缩写陌生。迁移到 Unitree G1 与原文一致。",
+            "block_index": 1,
+            "source_quote": "• Model-based RL (MBRL) for deployable humanoid control. We demonstrate that BPTT through a learned, differentiable world model can train whole-body tracking policies in a setting long dominated by model-free proximal policy optimization (PPO) [4], and that the resulting controller transfers to a physical Unitree G1.\n\n",
+            "source_quote_id": "s2:b1:p0"
+          },
+          {
+            "assessment": "核对数字：超过 SONIC 的 return、单 GPU、GPU-hours 减少超过 1000×、训练成本随动作库扩大增长缓慢、§4.1，均与原文一致。初稿“GPU 耗时”未点明是 GPU-hours，“超越…性能”未说明比的是 return，已改为“回报（return）”“GPU-hours”以对应原文指标。初稿“解决了…依赖瓶颈”是评价性转述，原文为“making scaling … practical without huge GPU infrastructure”，已改为更贴原文的表述。",
+            "block_index": 2,
+            "source_quote": "• Compute is no longer the bottleneck to scaling. SuperMimic surpasses the return of SONIC, a cluster-scale PPO pipeline, on a single GPU and reduces GPU-hours by more than 1000× (§4.1). Its training cost grows slowly as the motion library expands, making scaling humanoid wholebody control practical without huge GPU infrastructure.\n\n",
+            "source_quote_id": "s2:b2:p0"
+          },
+          {
+            "assessment": "三个属性的数字均核对无误：数据集长度增加 264× 时预测误差稳定、rollout 比模拟器快 10× 以上、约 64× 更少的想象步数。关键修正：原文是“the best return of PPO on the world model”，即 PPO 在世界模型上取得的最佳回报，初稿“达到 PPO 的最佳回报”容易误读为 PPO 在真实环境/原设定下的回报，已补上“在世界模型上”。三项属性与算力下降的因果方向为作者自述，未作外推。",
+            "block_index": 3,
+            "source_quote": "• An analysis of the ingredients behind the gains. We identify three world-model properties behind the compute reduction: prediction error that stays stable over a 264× increase in dataset length, rollouts more than 10× faster than the simulator, and analytic gradients, with which the policy reaches the best return of PPO on the world model with about 64× fewer imagined steps.\n\n",
+            "source_quote_id": "s2:b3:p0"
+          },
+          {
+            "assessment": "原文明确标注 This is a preliminary study，训练下游 goal encoder 用的是“the interface’s own task reward”，对比对象是 distillation baseline，结果限于 velocity commands 上跟踪更准。初稿“证明了模型在非模仿类强化学习任务中的通用性”属于超出证据的推断，且“非模仿类 RL”并非原文说法（原文是 beyond distillation），已删除该结论并注明推广性属于推断；“传统的蒸馏基线”中的“传统”为原文未有的修饰，已去掉。",
+            "block_index": 4,
+            "source_quote": "• RL-trained downstream control beyond distillation. As a preliminary study, the same learned world model trains a downstream goal encoder on the interface’s own task reward. On velocity commands, the policy tracks more accurately with this encoder than with a distillation baseline.\n\n",
+            "source_quote_id": "s2:b4:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 3,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "核对 DeepMimic/PHC/SONIC 三条引用与“需大量模拟器 rollout 和算力”的说法，与原文 training these large-scale motion trackers requires extensive simulator rollouts and substantial computation 一致；“共享可微动力学模型 + 解析梯度替代 model-free rollout 估计”对应原文 learning a differentiable dynamics model shared across all motions / exploit analytic gradients rather than model-free rollout estimates，未越出证据。因果与数字无误，批注逐字保留。",
+            "block_index": 1,
+            "source_quote": "Large-scale physics-based motion tracking. Physics-based motion imitation learns controllers that reproduce reference motions under contact-rich rigid-body dynamics. DeepMimic [2] demonstrated expressive character skills through model-free reinforcement learning, and PHC [11] extended this paradigm to large motion sets with robust recovery. SONIC [1] further demonstrated that scaling motion data, policy capacity, and training compute produces generalist controllers that transfer to humanoid hardware. These results establish motion tracking as a practical route to broad wholebody behavior coverage. However, training these large-scale motion trackers requires extensive simulator rollouts and substantial computation. SuperMimic addresses this bottleneck by learning a differentiable dynamics model shared across all motions, so policy improvement can exploit analytic gradients rather than model-free rollout estimates.\n\n",
+            "source_quote_id": "s3:b1:p0"
+          },
+          {
+            "assessment": "逐行核对表格内容：SuperMimic 行 Mimic 与 Downstream 两列为空，Latent 列为 MBRL，Task signal 为 Distill / RL，Real robot 为 V，与初稿“MBRL+Distill/RL”一致。初稿仅泛称“真机部署情况”，且未指出 V/√/X 的含义在正文与表注中均未定义，属于信息缺失性含糊，故改为点明 SuperMimic 行的具体取值并提示符号未定义。未描述表格之外的内容。",
+            "block_index": 2,
+            "source_quote": "<table><tr><td>Method</td><td>Mimic</td><td>Latent</td><td>Downstream</td><td>Task signal</td><td>Real robot</td></tr><tr><td>NPMP [5]</td><td>SVG(0)</td><td>BC</td><td>SVG(0)</td><td>RL</td><td>X</td></tr><tr><td>ControlVAE [6]</td><td>MBRL</td><td></td><td>MBRL</td><td>RL</td><td>X</td></tr><tr><td>PhysicsVAE [7]</td><td>PPO</td><td>BC¹</td><td>PPO</td><td>RL</td><td>X</td></tr><tr><td>PULSE [8]</td><td>PPO</td><td>DAgger</td><td>PPO</td><td>RL</td><td>X</td></tr><tr><td>MaskedMimic [9]</td><td>A2C</td><td>DAgger</td><td></td><td>Distill</td><td>X</td></tr><tr><td>BeyondMimic [3]</td><td>PPO</td><td>DAgger</td><td>CGD</td><td>Distill</td><td>V</td></tr><tr><td>SONIC [1]</td><td></td><td>PPO</td><td></td><td>Distill²</td><td>V</td></tr><tr><td>LATENT [10]</td><td>PPO</td><td>DAgger</td><td>PPO</td><td>RL</td><td>√</td></tr><tr><td>SuperMimic</td><td></td><td>MBRL</td><td></td><td>Distill / RL</td><td>V</td></tr></table>\n\n",
+            "source_quote_id": "s3:b2:p0"
+          },
+          {
+            "assessment": "表注核对：Merged cells denote jointly trained stages, while adjacent unmerged cells indicate sequential training, with each stage trained after freezing the previous one，与批注“合并=联合训练、相邻未合并=冻结前序阶段后顺序训练”一致；缩写 SVG(0)/BC/CGD/A2C/DAgger 的释义也逐项对应。An accurate annotation, returned verbatim.",
+            "block_index": 3,
+            "source_quote": "Table 1: Comparison of various methods and their training strategies across different stages. The Mimic, Latent, and Downstream columns indicate the training strategy used at each stage. Task signal is what trains the downstream interface: its own task reward (RL) or a reference-tracking signal (Distill). Merged cells denote jointly trained stages, while adjacent unmerged cells indicate sequential training, with each stage trained after freezing the previous one.  \nSVG(0): stochastic value gradients; BC: offline behavior cloning on fixed expert rollouts, as opposed to DAgger’s student rollouts; CGD: classifier guidance diffusion; A2C: advantage actor–critic; DAgger: dataset aggregation. <sup>1</sup>Behavior cloning with a one-step next-state consistency term through a frozen, learned dynamics model. <sup>2</sup>Goal encoders train jointly with the tracker on the motion-tracking reward and latent-alignment losses; no task-specific reward.\n\n",
+            "source_quote_id": "s3:b3:p0"
+          },
+          {
+            "assessment": "核对方法清单 SuperTrack [12]、ControlVAE [6]、MoConVQ [13]、SuperDyno [14] 及“扩展到数万段动作”（tens of thousands of motion clips）均无误。初稿遗漏了原文给出的关键方法条件：world model conditions on simulator context，deployed actor 使用 noisy proprioceptive observations 与 goal input（§3.2），故补入该条件并保留 §3.2 指向；§4.1–4.2、§4.4 的评估范围与原文列举一致，未加原文没有的结论。",
+            "block_index": 4,
+            "source_quote": "Learned differentiable dynamics for motion control. SuperTrack [12] optimizes motion-control policies through a learned differentiable surrogate of the simulator. ControlVAE [6] jointly learns a dynamics model, latent skill representation, and generative controller, while MoConVQ [13] extends learned-model training to discrete motion representations over tens of hours of data. SuperDyno [14] scales differentiable neural dynamics to tens of thousands of motion clips. These methods establish the effectiveness of learned dynamics and analytic policy gradients for scalable simulated-character control. SuperMimic extends this direction to single-GPU training of a large-scale humanoid tracker and to its sim-to-real deployment: its world model conditions on simulator context, while the de ployed actor uses noisy proprioceptive observations and a goal input (§3.2). We evaluate how model accuracy, rollout throughput, and differentiable policy updates contribute to training efficiency, and how p",
+            "source_quote_id": "s3:b4:p0"
+          },
+          {
+            "assessment": "核对 Dreamer/DreamerV3 的 latent dynamics、TD-MPC 的 short-horizon planning with terminal-value prediction、DayDreamer 的真机世界模型学习以及 SHAC 的可微仿真短程 actor–critic 更新，描述均对应原文。原文明确 SHAC 是 SuperMimic critic-bootstrapped objective 的动机来源，初稿只写“结合两者”而未点出这一点，属含糊，故改为写明 critic-bootstrapped 的启发关系；surrogate 从 simulator transitions 学习、反传穿过短程想象 rollout、兼容标准刚体模拟器均与原文一致。",
+            "block_index": 5,
+            "source_quote": "Model-based policy optimization and robot deployment. Dreamer [15] and DreamerV3 [16] learn latent dynamics for imagination-based actor–critic learning, while TD-MPC [17] combines short-horizon planning with terminal-value prediction. DayDreamer [18] demonstrates world-model learning directly on physical robots. SHAC [19] uses differentiable simulation for short-horizon actor–critic updates, motivating SuperMimic’s critic-bootstrapped objective. Analytic-gradient robot control can also combine a simplified differentiable surrogate with a high-fidelity forward simulator, as demonstrated for quadruped locomotion [20]. SuperMimic learns its surrogate from simulator transitions and backpropagates through short imagined rollouts, retaining compatibility with standard rigid-body simulators.\n\n",
+            "source_quote_id": "s3:b5:p0"
+          },
+          {
+            "assessment": "原文为 Both optimize policies using PPO on imagined rollouts；RWM-U additionally uses uncertainty-penalized offline optimization；两者 pretrain the world model on trajectories from other policies；SuperMimic optimizes the policy by differentiating the return。初稿把“世界模型用其他策略轨迹预训练”与“PPO 离线预训练模式”混为一谈，且把 uncertainty-penalized offline optimization 略去，属方法条件表述不准，故改写为分别陈述 PPO-on-imagination、RWM-U 的不确定性惩罚离线优化、世界模型预训练来源与 SuperMimic 的 return 求导更新。数据流方向（他策略数据 vs 自采数据）与原文一致。",
+            "block_index": 6,
+            "source_quote": "RWM [21] and RWM-U [22] demonstrate that policies trained in learned neural simulators can transfer to physical robots. Both optimize policies using PPO on imagined rollouts; RWM-U additionally uses uncertainty-penalized offline optimization. SuperMimic instead optimizes the policy by differentiating the return through its learned dynamics. RWM and RWM-U pretrain the world model on trajectories from other policies. In contrast, SuperMimic fits its world model during training on data its own policy collects.\n\n",
+            "source_quote_id": "s3:b6:p0"
+          },
+          {
+            "assessment": "核对 NPMP、PhysicsVAE、PULSE、LATENT、MaskedMimic、BeyondMimic、SONIC、ControlVAE 各自的下游接口做法与原文一致。SuperMimic 部分：jointly trains goal-specific encoders and a shared decoder through the same dynamics model (Appendix B) 无误；§4.5 的初步研究是 velocity interface 与 motion-tracking interface 并行训练、once on each objective（即分别用 reference-tracking reward 和自身 task reward 各训练一次），初稿“多目标优化”含义模糊，故改为明确两种目标各训练一次，未超出原文表述。",
+            "block_index": 7,
+            "source_quote": "Reusable motion representations and downstream control. Reusable controllers connect motion tracking to downstream goal interfaces (Table 1). NPMP [5] and PhysicsVAE [7] learn latent motor representations from expert behavior; PULSE [8] and LATENT [10] use learned motion representations for downstream reinforcement learning. MaskedMimic [9] supports partial-body and multimodal goals through motion inpainting, while BeyondMimic [3] uses guided diffusion for goal following. SONIC [1] jointly trains goal encoders with its tracker using tracking rewards and latentalignment losses. ControlVAE [6] optimizes downstream task policies through its learned model while freezing the skill controller. SuperMimic jointly trains goal-specific encoders and a shared decoder through the same dynamics model (Appendix B). Goal interfaces can optimize either a reference-tracking reward or their own task reward. Our preliminary study trains a velocity interface concurrently with the motion-tracking interface",
+            "source_quote_id": "s3:b7:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 3,
+        "part": 2,
+        "checks": [
+          {
+            "assessment": "对照 caption 原文逐点核对：三阶段流程（缓冲区 B、k 步窗口拟合世界模型、经冻结模型 H 步想象的 BPTT 优化策略）以及 §3.2、§3.3 的引用均与原文一致；'虚线箭头为梯度、⇕ 表示被训练'亦为原文表述。初稿批注有一处遗漏：原文明确 critic $V_\\psi$ 是在同一阶段训练并用 bootstrap 补足 H 步之外的回报，初稿未提'同阶段训练'；另初稿未说明图像视觉信息不可得，读者可能误以为描述来自看图。已在批注中补上这两点，其余技术表述保留原意。初稿 summary 中'可能为排版错误或引用前文方法'属于对版面的猜测，原文无依据，已删除；初稿把 action 记作 $a$，但该符号在 OCR 文本中已损坏，已改为如实说明无法确认；并补入'新样本替换最旧样本'与符号表其余条目。",
+            "block_index": 8,
+            "source_quote": "![](images/9b352519742d68a541167146888cac41a2aaa360c9a0af631a4712ffa6eaacec.jpg)  \nFigure 2: SuperMimic training loop. (1) The current policy $\\pi _ { \\theta }$ collects transitions in simulation into a fixed-size replay buffer B, where new transitions replace the oldest. (2) The differentiable world model is fit to k-step windows sampled from B (§3.2). (3) The policy is improved by backpropagation-through-time through the frozen world model over H imagined steps; a critic $V _ { \\psi } ,$ trained in the same phase, bootstraps the return beyond H (§3.3). Dashed arrows are gradients; $\\Updownarrow$ , = trained. Symbols: goal $\\mathbf { \\sigma } _ { \\mathbf { \\sigma } _ { \\mathbf { \\sigma } _ { \\mathbf { \\lambda } } } } \\mathbf { \\sigma } _ { \\mathbf { \\sigma } _ { \\mathbf { \\lambda } } } \\mathbf { \\sigma } _ { \\mathbf { \\lambda } _ { \\mathbf { \\lambda } } } \\mathbf { \\sigma } _ { \\mathbf { \\lambda } _ { \\mathbf { \\lambda } } } \\mathbf { \\sigma } _ { \\mathbf { \\lambda } _ { \\mathbf { \\la",
+            "source_quote_id": "s3:b8:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "corrected"
+      },
+      {
+        "section_index": 4,
+        "part": 1,
+        "checks": [
+          {
+            "assessment": "逐项对照原文：批注所述的三个阶段（策略收集 simulator transitions 入 replay buffer；用短 replay 窗口拟合可微分世界模型；将 imagined return 反向传播经过 frozen world model 来改进策略）与原文 First/Second/Third 一致；Dyna 风格与每个 rollout 从 replay-buffer 状态播种的说法与原文 'seeded from a replay-buffer state in the Dyna style [23, 24]' 一致；“动力学独立于策略、旧数据仍有效”对应原文 'the dynamics do not depend on the policy that collected them'，属原文明确陈述而非推断；'多技能动作库' 对应 multi-skill motion library。摘要中“冻结世界模型”对应原文 frozen world model，“缓冲区、模型和策略持续更新”对应原文 'The buffer, model, and policy are updated throughout training'，数字与条件无出入。核对了因果（因动力学不依赖采集策略，故旧数据可用于拟合）与未超出证据的边界：摘要未把 Figure 2 或 Algorithm A.1 的具体内容写成结论，仅提及存在；原文提到的 multiple goal interfaces 在两处输出中均未展开，属可接受的省略而非错误。批注与摘要在事实、条件、因果上均无需修改，故原样保留。",
+            "block_index": 2,
+            "source_quote": "SuperMimic trains one goal-conditioned whole-body controller across a multi-skill motion library and supports multiple goal interfaces. It captures the shared humanoid dynamics in a differentiable world model and improves the policy through short imagined rollouts. Training alternates between three phases in one loop (Figure 2). First, the current policy collects simulator transitions into a replay buffer. Second, we fit the differentiable world model to short replay windows. Third, the policy is improved by backpropagating an imagined return through the frozen world model, with each rollout seeded from a replay-buffer state in the Dyna style [23, 24]. The buffer, model, and policy are updated throughout training, so dynamics learning and control improve together rather than in separate stages (Algorithm A.1, Appendix D). Transitions from earlier policies remain valid for fitting the world model, because the dynamics do not depend on the policy that collected them.\n\n",
+            "source_quote_id": "s4:b2:p0"
+          }
+        ],
+        "correction_attempts": 0,
+        "verdict": "pass"
+      },
+      {
+        "section_index": 4,
+        "part": 2,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 3,
+            "source_quote_id": "s4:b3:p0",
+            "assessment": "核对 POMDP 记号：状态、目标、动作三元组及终止标志均与原文一致；终止标志 1 表示终止已写入。原文状态给出本体感知观测与终止标志，摘要表述准确。",
+            "source_quote": "We denote the goal-conditioned partially observable Markov decision process (POMDP) by M and use compact notation with state $\\mathbf { } _ { s _ { t } , }$ , goal $\\mathbf { \\nabla } _ { \\mathbf { { \\mathfrak { g } } } _ { t } } ,$ , and action $\\mathbf { } \\mathbf { a } _ { t }$ . State $\\mathbf { \\boldsymbol { s } } _ { t }$ gives the proprioceptive observation $\\mathbf { } _  \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\math"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s4:b3:p3",
+            "assessment": "核对策略段：原文为确定性策略 $\\pi_\\theta$，动作参数化归一化关节设定值，动作跟踪时目标读自参考运动。批注初稿把策略写成 β，与原文不符（β 未出现），已改为 $\\pi_\\theta$ 并补上目标是参考运动的来源。",
+            "source_quote": "ence motion. During data collection, the simulator executes the noisy action $\\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { "
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s4:b3:p4",
+            "assessment": "核对噪声条件：原文说噪声拓宽世界模型拟合的动作范围、仅服务于模型拟合且为可选，replay buffer 存执行后的带噪动作。初稿写“仅用于建模而非最终控制”，后半句是原文未明说的推断，已替换为原文的“仅服务模型拟合且可选”，并补上 replay buffer 存带噪动作这一可复现细节。",
+            "source_quote": "} \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf \\Xi \\mathbf { } \\mathbf { } \\mathbf { } \\mathbf \\Xi \\mathbf { } \\mathbf { } \\mathbf \\Xi \\mathbf { } \\mathbf \\Xi \\mathbf { } \\mathbf \\Xi \\mathbf { } \\mathbf \\Xi \\mathbf { } \\mathbf \\Xi \\mathbf { } \\mathbf \\mathbf { } \\mathbf \\Xi \\mathbf \\Xi \\mathbf { } \\mathbf \\mathbf \\Xi \\Xi \\mathbf { } \\mathbf \\mathbf \\Xi \\mathbf { } \\mathbf \\mathbf \\Xi \\mathbf \\Xi \\mathbf \\Xi \\Xi \\mathbf \\Xi \\mathbf \\Xi \\mathbf \\Xi \\mathbf \\Xi \\mathbf \\Xi \\mathbf \\Xi \\mathbf \\Xi \\mathbf \\mathbf \\Xi \\mathbf \\Xi \\mathbf \\mathbf \\Xi \\mathbf \\Lambda \\mathbf \\mathbf \\Lambda \\mathbf \\mathbf \\mathbf \\Lambda \\mathbf \\mathbf \\Lambda \\mathbf \\mathbf \\mathbf \\Lambda \\mathbf \\mathbf \\mathbf \\mathbf \\Lambda \\mathbf \\mathbf \\mathbf \\mathbf \\mathbf \\Lambda \\mathbf \\mathbf \\m"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s4:b3:p6",
+            "assessment": "核对回报与可微性：$c_0=1$、$c_{t+1}=c_t(1-d_{t+1})$、$J$ 的求和式、模拟器硬终止对世界模型终止概率 $\\hat{d}_t\\in[0,1]$、观测噪声 $\\eta_t$ 在世界模型外采样、hat 记号约定，均与原文一致；摘要中“保持可微”是原文明确给出的理由，未超证据。",
+            "source_quote": "magined rollouts. Throughout, a hat marks the world-model counterpart of a simulator quantity. We also factor the observation as $o _ { t } = { \\bar { o } } _ { t } + \\eta _ { t }$ , with $\\bar { \\mathbf { o } } _ { t }$ the noise-free observation and known observation noise $\\eta _ { t } \\sim \\rho _ { \\eta }$ sampled outside the world model. Appendix A gives the full spaces and reward.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s4:b4:p0",
+            "assessment": "核对接口段：默认全参考动作跟踪，其他目标接口（例速度）共享学习动力学并与动作跟踪联合训练，与原文逐点一致；该批注准确，逐字保留。",
+            "source_quote": "The default interface is full-reference motion tracking. Other goal interfaces, such as velocity, share the same learned dynamics and train jointly with motion tracking (Appendix B).\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 4,
+        "part": 3,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 6,
+            "source_quote_id": "s4:b6:p0",
+            "assessment": "核对：原文明确说模拟器不必提供梯度、学可微代理以获得策略梯度，且以 $\\xi$（摩擦、标定偏移、躯干质心）为条件预测无噪声观测；批注未把“雅可比”漏成必须项，表述与原文一致，保留原文。",
+            "source_quote": "The simulator’s articulated multi-rigid-body dynamics are known, but the simulator need not provide gradients, so SuperMimic learns a differentiable surrogate to obtain policy gradients: it supplies the predictions and Jacobians for the BPTT update in §3.3. The resulting analytic policy gradient is the gradient of a surrogate for the expected return in simulation. Since the simulator’s randomness has known sources, the world model stays deterministic: it conditions on the per-episode sim context ξ (friction, calibration offsets, and torso center-of-mass) and predicts the noise-free observation $\\bar { \\mathbf { o } } _ { t }$\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s4:b7:p0",
+            "assessment": "纠正：原文是“learned dynamics model 加 reward/observation/termination 三个头”，初稿写成“四个预测头（含状态）”，把动力学模型误算成第四个头，已改为一个动力学模型加三个头，并补上解析头不进损失。",
+            "source_quote": "The world model contains a learned dynamics model and reward, observation, and termination heads; each head is either learned or computed analytically,\n\n"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s4:b8:p0",
+            "assessment": "纠正：观测头符号是 $\\hat\\sigma_t=g_\\omega(\\hat s_t,\\xi)$，初稿写作 $\\hat o_t$，与原文符号不符；并补准条件依赖——奖励头用 $(\\hat s_t,a_t,g_t)$、终止头用 $(\\hat s_t,g_t)$，均不依赖 $\\xi$，观测头不依赖动作。",
+            "source_quote": "$$\n\\begin{array} { r } { \\hat { s } _ { t + 1 } = f _ { \\omega } \\big ( \\hat { s } _ { t } , a _ { t } , \\xi \\big ) , \\qquad \\hat { r } _ { t + 1 } = r _ { \\omega } \\big ( \\hat { s } _ { t } , a _ { t } , g _ { t } \\big ) , \\qquad \\hat { \\sigma } _ { t } = g _ { \\omega } \\big ( \\hat { s } _ { t } , \\xi \\big ) , \\qquad \\hat { d } _ { t } = d _ { \\omega } \\big ( \\hat { s } _ { t } , g _ { t } \\big ) . } \\end{array}\n$$\n\n"
+          },
+          {
+            "block_index": 9,
+            "source_quote_id": "s4:b9:p0",
+            "assessment": "核对：$k=8$、以记录状态 $\\hat s_0=s_0$ 为种子、沿记录动作前滚、最小化损失，均与原文一致，保留。",
+            "source_quote": "We fit the network weights ω on k-step autoregressive replay windows $( k { = } 8 )$ , seeded at the logged state $\\hat { \\pmb { s } } _ { 0 } = { \\pmb { s } } _ { 0 }$ and rolled forward on logged actions, by minimizing\n\n"
+          },
+          {
+            "block_index": 10,
+            "source_quote_id": "s4:b10:p0",
+            "assessment": "核对：式 1 四项分别为状态 MSE、奖励平方误差、观测 MSE、终止 BCE，批注概括正确且未编造系数；“解析头无损失项”虽出自下一段，但与原文相符，保留。",
+            "source_quote": "$$\n\\mathcal { L } _ { \\mathrm { W M } } ( \\omega ) = \\mathbb { E } _ { \\boldsymbol { B } } \\sum _ { j = 1 } ^ { k } \\Big [ \\| \\hat { \\mathbf { s } } _ { j } - \\boldsymbol { s } _ { j } \\| ^ { 2 } + ( \\hat { \\boldsymbol { r } } _ { j } - \\boldsymbol { r } _ { j } ) ^ { 2 } + \\| \\hat { \\bar { \\mathbf { o } } } _ { j } - \\boldsymbol { \\bar { o } } _ { j } \\| ^ { 2 } + \\mathrm { B C E } ( \\hat { d } _ { j } , d _ { j } ) \\Big ] ,\\tag{1}\n$$\n\n"
+          },
+          {
+            "block_index": 11,
+            "source_quote_id": "s4:b11:p0",
+            "assessment": "纠正：本段只定义 $r_j$、$d_j$ 与 BCE；初稿称本段“明确 $\\bar o_j$ 为去噪观测”，而该定义在第 3.2 节开头，已改为注明此处未重复定义，避免把内容归到本段。",
+            "source_quote": "where an analytic head has no loss term. Here $r _ { j }$ is the simulator reward, $d _ { j } \\in \\{ 0 , 1 \\}$ is the simulator termination label, and BCE is the binary cross-entropy.\n\n"
+          },
+          {
+            "block_index": 13,
+            "source_quote_id": "s4:b13:p0",
+            "assessment": "核对：固定 $\\omega$、优化 $\\pi_\\theta$ 与 $V_\\psi$、$H=32$、critic 负责 $H$ 步之外、$H>k$、以及“自回归拟合使其能纠正自身误差故可长程稳定”均为原文说法，保留。",
+            "source_quote": "During each policy update, we hold the world-model weights $\\omega$ fixed and optimize $\\pi _ { \\theta }$ and $V _ { \\psi }$ on imagined rollouts of H=32 steps. The critic $V _ { \\psi }$ estimates the return beyond step $H ,$ , so the model must be accurate only within these H steps. This imagination horizon exceeds the k-step replay windows on which we fit the model (§3.2). In practice, the learned model remains stable over indefinitely long rollouts, because the k-step autoregressive fit trains it to correct its own prediction errors.\n\n"
+          },
+          {
+            "block_index": 14,
+            "source_quote_id": "s4:b14:p0",
+            "assessment": "核对：起点 $s_0\\sim\\rho_0$ 并带记录 $\\xi$，每步输出去噪观测、再加传感器噪声 $\\eta_t\\sim\\rho_\\eta$，策略为 $\\pi_\\theta(\\hat{\\bar o}_t+\\eta_t,g_t)$，批注准确，保留。",
+            "source_quote": "Each imagined rollout starts from a replay-buffer state $s _ { 0 } \\sim \\rho _ { 0 }$ with its recorded sim context $\\xi .$ At step t, the model emits $\\hat { \\bar { \\mathbf { o } } } _ { t }$ , we re-add sensor noise, and the policy acts: $\\mathbf { } \\mathbf { a } _ { t } = \\pi _ { \\theta } ( \\hat { \\bar { \\mathbf { o } } } _ { t } + \\eta _ { t } , \\mathbf { g } _ { t } )$ $\\eta _ { t } \\sim \\rho _ { \\eta }$ . The policy objective over imagined rollouts is\n\n"
+          },
+          {
+            "block_index": 15,
+            "source_quote_id": "s4:b15:p0",
+            "assessment": "纠正：求和是 $t=0$ 到 $H-1$，对应 $\\hat r_1$ 至 $\\hat r_H$ 共 $H$ 个奖励项，初稿写“前 $H-1$ 步”少算一项；已改为 $H$ 个即时奖励并保留存活权重与 $\\gamma^H\\hat c_H V_\\psi$ 末项。",
+            "source_quote": "$$\n\\hat { J } ( \\theta ) = \\mathbb { E } _ { s _ { 0 } \\sim \\rho _ { 0 } , \\pi _ { \\theta } } \\Big [ \\sum _ { t = 0 } ^ { H - 1 } \\gamma ^ { t } \\hat { c } _ { t } \\hat { r } _ { t + 1 } ~ + ~ \\gamma ^ { H } \\hat { c } _ { H } V _ { \\psi } ( \\hat { s } _ { H } , g _ { H } , \\pmb { \\xi } ) \\Big ] .\\tag{2}\n$$\n\n"
+          },
+          {
+            "block_index": 16,
+            "source_quote_id": "s4:b16:p0",
+            "assessment": "纠正：原文只陈述用 BeyondMimic 跟踪奖励并去掉自碰撞惩罚（细节在 Appendix A），未给理由；初稿“旨在简化奖励结构、聚焦姿态匹配”属作者未说的推断，已改为明标“推断”。",
+            "source_quote": "For motion tracking, the reward $r _ { t + 1 }$ is the BeyondMimic motion-tracking reward [3] without its self-collision penalty (Appendix A).\n\n"
+          },
+          {
+            "block_index": 17,
+            "source_quote_id": "s4:b17:p0",
+            "assessment": "核对：BPTT 经世界模型对 $\\hat s_t$、$a_t$ 的雅可比得一阶梯度，PPO 用 $\\nabla_\\theta\\log\\pi$ 的似然比估计，作者称短视界下方差低得多；批注未把“短视界”这一限定漏掉，保留。",
+            "source_quote": "The world model is differentiable, so BPTT computes a first-order gradient $\\nabla _ { \\boldsymbol { \\theta } } \\hat { J }$ through the H imagined steps via the world model’s Jacobians with respect to $\\hat { \\mathbf { } } _ { \\pmb { s } _ { t } }$ and $\\mathbf { } \\mathbf { a } _ { t }$ . In contrast, PPO treats the dynamics as a black box: it weights the score $\\nabla _ { \\theta }$ log $\\pi _ { \\theta }$ of a stochastic policy by the advantages of sampled actions, a likelihood-ratio estimate. BPTT instead differentiates the return with respect to each action, so over short horizons its gradient has much lower variance.\n\n"
+          },
+          {
+            "block_index": 18,
+            "source_quote_id": "s4:b18:p0",
+            "assessment": "纠正：原文只说 critic 拟合“仅在想象转移上”反向计算的 GAE 回报；初稿“确保价值评估与策略优化的环境一致性、避免真实环境噪声干扰”是推断且用词模糊，已删去因果外推，只保留数据来源一致这一可核对事实。",
+            "source_quote": "The critic $V _ { \\psi }$ is fit to generalized advantage estimation returns [25] computed backward in time over the imagined transitions only,\n\n"
+          },
+          {
+            "block_index": 19,
+            "source_quote_id": "s4:b19:p0",
+            "assessment": "核对：式 3 是 $V_t$ 与 $\\hat R_t$ 的平方误差，$\\hat R_t=\\hat r_{t+1}+\\gamma(1-\\hat d_{t+1})[(1-\\lambda)V_{t+1}+\\lambda\\hat R_{t+1}]$，批注对各项与 $\\lambda$ 作用描述无误，保留。",
+            "source_quote": "$$\n\\mathcal { L } _ { V } ( \\psi ) = \\mathbb { E } \\sum _ { t = 0 } ^ { H - 1 } \\big ( V _ { t } - \\hat { R } _ { t } \\big ) ^ { 2 } , \\qquad \\hat { R } _ { t } = \\hat { r } _ { t + 1 } + \\gamma \\big ( 1 - \\hat { d } _ { t + 1 } \\big ) \\big [ ( 1 - \\lambda ) V _ { t + 1 } + \\lambda \\hat { R } _ { t + 1 } \\big ] ,\\tag{3}\n$$\n\n"
+          },
+          {
+            "block_index": 20,
+            "source_quote_id": "s4:b20:p0",
+            "assessment": "核对：$V_t=V_\\psi(\\hat s_t,g_t,\\xi)$、递归起点 $\\hat R_H=V_H$、目标每个 rollout 计算一次后固定，均与原文一致，保留。",
+            "source_quote": "with $V _ { t } = V _ { \\psi } ( \\hat { \\pmb { s } } _ { t } , { \\pmb { g } } _ { t } , { \\pmb { \\xi } } )$ . The recursion starts from $\\hat { R } _ { H } = V _ { H }$ , the critic’s estimate of the return beyond the horizon. The targets $\\hat { R } _ { t }$ are computed once per rollout and remain fixed while $\\psi$ is fit.\n\n"
+          },
+          {
+            "block_index": 21,
+            "source_quote_id": "s4:b21:p0",
+            "assessment": "核对：SHAC 精神下的短视界 actor–critic；替代硬终止为存活权重 $\\hat c_t$、critic 无 EMA 目标网络；无 critic 的解析梯度方法训练回报相近但更近视，critic 在扰动后起作用（§4.3）——批注与原文一致，未把“无 critic”错挂到 SHAC 上，保留。",
+            "source_quote": "The policy and critic updates together form a short-horizon actor–critic in the spirit of SHAC [19], which backpropagates through a differentiable simulator. SuperMimic replaces SHAC’s hard episode termination with the survival weight $\\hat { c } _ { t } ^ { \\phantom { \\dagger } } ,$ , and its critic has no exponential-moving-average target network. Prior motion-tracking controllers trained with analytic gradients often omit a critic and optimize only the H-step reward sum [12, 6]. Without a critic, training can reach a similar nominal tracking return, but this unbootstrapped objective is more myopic. The critic matters after perturbations, where recovery or balance rewards can lie beyond the imagination window (§4.3).\n\n"
+          },
+          {
+            "block_index": 13,
+            "source_quote_id": "s4:b13:p0",
+            "assessment": "摘要核对：原文说“in practice 模型可无限长稳定滚动”，属经验陈述而非定量证据；摘要已注明作者未给 $H>k$ 的定量支撑，避免把该说法升格为已验证结论。",
+            "source_quote": "During each policy update, we hold the world-model weights $\\omega$ fixed and optimize $\\pi _ { \\theta }$ and $V _ { \\psi }$ on imagined rollouts of H=32 steps. The critic $V _ { \\psi }$ estimates the return beyond step $H ,$ , so the model must be accurate only within these H steps. This imagination horizon exceeds the k-step replay windows on which we fit the model (§3.2). In practice, the learned model remains stable over indefinitely long rollouts, because the k-step autoregressive fit trains it to correct its own prediction errors.\n\n"
+          },
+          {
+            "block_index": 21,
+            "source_quote_id": "s4:b21:p0",
+            "assessment": "摘要纠正：初稿写“相比 SHAC 等短视界方法引入 Critic”，与原文明示的差异不符（SHAC 本身也回传梯度并有 critic；省掉 critic 的是 [12,6] 这类方法），已改写为“与 SHAC 的差别是存活权重与无 EMA 目标网络”，并把 critic 作用单独归到无 critic 的对比方法上。",
+            "source_quote": "The policy and critic updates together form a short-horizon actor–critic in the spirit of SHAC [19], which backpropagates through a differentiable simulator. SuperMimic replaces SHAC’s hard episode termination with the survival weight $\\hat { c } _ { t } ^ { \\phantom { \\dagger } } ,$ , and its critic has no exponential-moving-average target network. Prior motion-tracking controllers trained with analytic gradients often omit a critic and optimize only the H-step reward sum [12, 6]. Without a critic, training can reach a similar nominal tracking return, but this unbootstrapped objective is more myopic. The critic matters after perturbations, where recovery or balance rewards can lie beyond the imagination window (§4.3).\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 5,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s5:b1:p0",
+            "assessment": "核对：H100（80 GB SXM5）、MuJoCo Warp、多种子稳定归因于密集动作跟踪奖励、图不报种子方差、归一化回报=未折扣总奖励÷理论最大值、早终止得分低——均与原文一致。初稿未提“本节要证明四件事”和 MuJoCo Warp，补上以便读者定位；保留原有指标口径。",
+            "source_quote": "We show that SuperMimic scales favorably relative to PPO pipelines, identify the world-model properties behind this scaling, demonstrate transfer on a real Unitree G1, and report a preliminary study of downstream goal interfaces. The simulator is MuJoCo Warp, a GPU implementation of MuJoCo [26]. All our reported costs are measured on NVIDIA H100 (80 GB SXM5) GPUs of Lambda on-demand instances. We ran several random seeds and found training very stable, which we attribute to the dense reward that motion tracking gives at every step. The figures therefore do not report seed variation. Normalized return, return for short, is the undiscounted sum of the per-step reward over the full episode, divided by the largest value this sum can take. A policy that terminates early therefore scores low.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s5:b3:p0",
+            "assessment": "纠正事实错误：初稿写“节省超过 50% 墙钟时间”，原文是 more than 50× less wall-clock time，即 50 倍而非 50%，量级判断会完全错。补充失败动作数 25/0/179 和“3 h 取法保守”的条件，回报与失败数两条都领先；>1000× GPU-hours 保留。",
+            "source_quote": "We compare against SONIC, a published PPO pipeline trained on a 128-GPU cluster. Both methods build on the BeyondMimic motion-tracking formulation [3], making SONIC the closest available published comparison. Within 3 h on one GPU, SuperMimic surpasses the normalized return of the released SONIC checkpoint (Figure 3(a)). On a shared benchmark of 129,514 motions, it also fails on fewer motions than SONIC: 25 after 3 h on one GPU and 0 after 9.8 h on two GPUs, against 179 for SONIC’s released checkpoint (Appendix F). We state the 3 h conservatively: from then on, every checkpoint is ahead of SONIC by at least half of the gap between SONIC and SuperMimic’s best result, in both return and failed motions. SuperMimic thus uses more than 50× less wall-clock time and more than 1000× fewer GPU-hours than SONIC.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s5:b4:p0",
+            "assessment": "核对数字：128 张 L40 × 7 天≈21,000 GPU-hours，56×（>50×）墙钟、7200×（>1000×）GPU-hours；数据 264.56 h 对 611 h 约 2.3×；H100 峰值 fp32 0.74×、张量核 5.5×，利用率未知。初稿“排除硬件红利，确认算法高效”偏强，改为按原文“不足以解释 1000×”，并补 3 h 不含检查点评测这一条件；其余判断保留。",
+            "source_quote": "Compute accounting. The ratios compare SONIC’s reported 128 NVIDIA L40 GPUs for 7 days (about 21,000 GPU-hours) with 3 h on one NVIDIA H100, within which SuperMimic surpasses the return of SONIC’s released checkpoint. They are about 56× (> 50×) in wall-clock time and about 7200× (> 1000×) in GPU-hours. The 3 h cover the full training loop; checkpoint evaluations run after training and are not counted. SuperMimic trains on 264.56 h of motion from BONES-SEED [27], the public subset of SONIC’s data, about 2.3× less than SONIC’s 611 h. The GPU models also differ: in peak throughput, an H100 delivers 0.74× the fp32 and 5.5× the tensor-core performance of an L40; how much of that peak either run used is unknown. Nonetheless, 2.3× in data and at most 5.5× in peak GPU throughput cannot account for a 1000× gap in GPU-hours.\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s5:b5:p0",
+            "assessment": "纠正含糊处：初稿“共享除梯度估计方式外的所有配置”不准确，PPO-Sim 还用 BeyondMimic 的 PPO 超参和 2 倍并行环境（8192/卡）。数字核对：0.82、1.2 h、18 h、0.60/0.70/0.72、四卡到八卡几乎无提升，均与原文一致。",
+            "source_quote": "Figure 4(a) gives a controlled comparison on LAFAN1 [28]. The baseline, PPO-Sim, is PPO trained in the simulator. PPO-Sim shares SuperMimic’s motions, observations, reward, termination, domain randomization, actor and critic network sizes, and evaluation protocol. It uses BeyondMimic’s PPO hyperparameters [3] and 8192 parallel environments per GPU, twice SuperMimic’s. PPO-Sim estimates its policy gradient from sampled simulator rollouts; SuperMimic backpropagates its imagined return through world-model rollouts. SuperMimic reaches a return of 0.82 in evaluation within 1.2 h on one GPU. Within the 18 h budget, PPO-Sim does not reach it. Its final return is 0.60 on one GPU, 0.70 on four, and 0.72 on eight, so going from four to eight GPUs barely helps.\n\n"
+          },
+          {
+            "block_index": 6,
+            "source_quote_id": "s5:b6:p0",
+            "assessment": "核对：GPU-hours 随数据长度增长缓慢、预测误差在同扫描上稳定、归因于一个世界模型摊销共享动力学、细节交 §4.2——均与原文一致，无需改动。",
+            "source_quote": "Figure 3(b, c) shows that, for SuperMimic, GPU-hours to the target return grow slowly as dataset length increases, while on the same sweep the world model’s prediction error stays stable; §4.2 traces both trends to one world model amortizing the dynamics shared across motions.\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s5:b7:p0",
+            "assessment": "原文只有子图标签与坐标轴文字（归一化回报、单卡墙钟 GPU-hours），初稿“曲线显示迅速超越”描述了未见到的图形；改为只说明坐标轴与应关注越过虚线这一读法，并声明曲线形态无法从文本确认。",
+            "source_quote": "(a) Normalized return  \n![](images/567a332ca942e8b27c4db24993c700f1c22d5860f6f69db5fb42a353145a8f4d.jpg)  \nGPU-hours (wall-clock on one GPU)\n\n"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s5:b8:p0",
+            "assessment": "该块仅为图片，无 caption 文字。初稿断言“Figure 3b 展示达到目标回报的 GPU 小时数随数据长度变化”，属于对无文本图片的过度确定判断；改为如实说明无法从文本判定子图归属，仅作上下文推断。",
+            "source_quote": "![](images/fae5a13b95ad1f4e4381af1a86f6aceef4e8e08480af3f8a2cdcb2873a1336f2.jpg)\n\n"
+          },
+          {
+            "block_index": 9,
+            "source_quote_id": "s5:b9:p0",
+            "assessment": "原文仅一条横轴文字“Dataset length (h)”，是 (b)(c) 共用轴；初稿把它定为 Figure 3c 并复述 0.007–0.011，来源应为 caption。改为横轴说明并注明数值来自 caption。",
+            "source_quote": "![](images/b0b29aaf22e091bd3006d9b5e562b66dbf03a43e48eadaf295fff142726cef14.jpg)  \nDataset length (h)\n\n"
+          },
+          {
+            "block_index": 10,
+            "source_quote_id": "s5:b10:p0",
+            "assessment": "核对 caption：同一 129,514 动作（264 h）基准确认；1→264 h、误差 0.007–0.011 确认；误差只计状态、按预设 nominal error 归一化、在线测量确认。初稿把 128-GPU 集群写进本 caption 依据不足（该信息在 block 3），并说“验证了实际分布下鲁棒性”超出 caption 表述；已改为按“适用范围”提示。",
+            "source_quote": "Figure 3: SuperMimic surpasses SONIC’s tracking return with far fewer GPU-hours. (a) SuperMimic on one and two H100 GPUs surpasses the return of the released SONIC checkpoint (dashed), all three scored on the same benchmark of 129,514 motions (264 h). Two budget rows compare SuperMimic (dot) with SONIC (diamond): SuperMimic reduces wall-clock time by more than 50× and GPU-hours by more than 1000×. (b, c) On a shared dataset-length sweep, GPU-hours to target return (b) grow slowly while the world model’s 8-step prediction error (c) stays within 0.007–0.011 as the dataset grows from 1 to 264 h, consistent with one world model amortizing shared body and contact dynamics across motions. The prediction error counts the state only, is normalized by a predefined nominal error, and is measured online on policy rollouts.  \n![](images/8a94f6e6aece2243c21c08664e1943b1bd320731abee761624c3eed8378d46ea.jpg)\n\n"
+          },
+          {
+            "block_index": 11,
+            "source_quote_id": "s5:b11:p0",
+            "assessment": "核对 caption：LAFAN1 40 clips、2.45 h；每点为存档检查点在 40 clips 上评分；训练回报因 return-based reset sampling 漂移、与 (a) 分数不可直接比；cross 标记 H=8 两变体与无 critic 的 H=16 未达 0.82，说明 critic 使 H=16 够用；默认 H=32 阴影带。初稿“Critic 允许更短视野”方向正确，补上 H=16 这一具体阈值与训练/评测回报不可比这一易误解点。",
+            "source_quote": "![](images/102c0d06d91d6cb1f27dde0e3cb0bffa016bb840f7f8157767ffb2effd4e620b.jpg)  \nFigure 4: In controlled comparisons, SuperMimic reaches a higher return sooner than PPO-Sim, and the critic enables shorter imagination horizons. All runs use LAFAN1 (40 clips, 2.45 h). (a) SuperMimic backpropagates its imagined return through its world model on one GPU; PPO-Sim runs PPO in the simulator on 1, 4, or 8 GPUs (§4.1). Each point on a curve is a saved checkpoint scored on all 40 clips. (b, c) Final training return (b) and wall-clock hours until the training return reaches 0.82 (c) for each imagination horizon H, with and without the critic. The dashed line in (a) and (b) marks this target return of 0.82. Training return is the return of training episodes. Their initial states follow return-based reset sampling (Appendix D.1) and shift during training, so training return differs from the checkpoint scores in (a). In (c), a cross marks a horizon at which return 0.82 is not reached: both variant"
+          },
+          {
+            "block_index": 13,
+            "source_quote_id": "s5:b13:p0",
+            "assessment": "核对：三条性质为精度随动作库增长保持、rollout 快、可微分——初稿概括准确，保留原意并明确其为后文证据的检验框架。",
+            "source_quote": "These results rest on three properties of the learned world model $f _ { \\omega } .$ : its accuracy holds as the motion library grows, and its rollouts are fast and differentiable.\n\n"
+          },
+          {
+            "block_index": 14,
+            "source_quote_id": "s5:b14:p0",
+            "assessment": "核对：误差 0.007–0.011、数据 1→264 h、同一人形带来共享身体与接触动力学的更多证据而非要求新容量、与 §4.1 算力缓慢增长一致，均与原文一致。“学习全新物理规律”属合理推断，但原文用 consistent with，属相关性表述，已注明推断边界。",
+            "source_quote": "One model amortizes the motion library. In Figure 3(c), the world model’s 8-step prediction error stays between 0.007 and 0.011 as the dataset grows from 1 to 264 h. Every motion is executed by the same humanoid, so added clips supply more evidence about the shared body and contact dynamics rather than demanding new capacity. This is consistent with the slow growth of the compute needed to reach the target return (§4.1).\n\n"
+          },
+          {
+            "block_index": 15,
+            "source_quote_id": "s5:b15:p0",
+            "assessment": "核对：rollout 速度决定更新成本；实用批量下 >10×，64k 并行环境最高 62×。初稿“作为模拟器替代品”是对用途的合理概括，数字与条件无误。",
+            "source_quote": "Imagination accelerates rollouts. During policy optimization, rollout speed sets the update cost. Figure 5(a) shows that the world model runs more than 10× faster than MuJoCo Warp at the batch sizes used in practice, and up to 62× at 64k parallel environments.\n\n"
+          },
+          {
+            "block_index": 16,
+            "source_quote_id": "s5:b16:p0",
+            "assessment": "仅为图片、无 caption。初稿“该图片应展示……吞吐量对比”已带“应”，但仍近于断言；改为明确说明无文本可确认，图 5(a) 与 10×–62× 为上下文推断，需看图核对。",
+            "source_quote": "![](images/18ed04f13bc3414232bb81788d8b9b2dd5a63ba9ab66145e0fb55384a02cb0ec.jpg)\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 5,
+        "part": 2,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 17,
+            "source_quote_id": "s5:b17:p0",
+            "assessment": "数字需限定条件：caption 说的是在实际使用的 2k–16k 批量区间“快 10 倍以上”，62 倍出现在 64k 且 MuJoCo Warp 已饱和，初稿写成“10–62 倍”范围会让人误以为整个区间可达 62 倍；另 caption 明确世界模型用 TF32、一步为 50 Hz 控制步（MuJoCo Warp 为 4 个 5 ms 子步），属速度比较的关键条件。caption 本身只说 SuperMimic 用 actor–critic 更新、步数少约 64 倍，未直接断言“一阶梯度优化带来提升”，该因果在正文下一段，故删去此因果表述，改为提醒 62× 在实际批量之外并列出精度/子步条件。1/64 由“about 64× fewer”倒推，可接受。",
+            "source_quote": "![](images/4cead535858636e6342a26635499860ce08cecc700ae551fc03565339449a9c6.jpg)  \nFigure 5: Imagined rollouts are fast and differentiable. (a) On an H100, over the batch sizes used in practice (shaded, 2k–16k parallel environments), the world model runs more than 10× faster than MuJoCo Warp; the gap widens to 62× at 64k, where MuJoCo Warp has flattened. One step is one 50 Hz control step, which MuJoCo Warp computes as four 5 ms substeps; the world model runs at the TF32 precision used in SuperMimic’s training. (b) On walk/run/sprint motions from LAFAN1 [28], SuperMimic, trained with its actor–critic update, reaches the best training return of PPO trained on world-model rollouts (PPO-WM) with about 64× fewer imagined steps. PPO-WM runs at four batch sizes (parallel rollouts × steps per rollout); $1 6 \\mathrm { k } \\times 3 2$ is the best. Each curve is a centered moving average over ±0.05 decade of imagined steps.\n\n"
+          },
+          {
+            "block_index": 18,
+            "source_quote_id": "s5:b18:p0",
+            "assessment": "核对：原文两句结论与初稿一致——Figure 5(b) 作为 mechanism ablation 隔离一阶策略更新的收益，SuperMimic 以约 64 倍更少想象步数达到 PPO-WM 最佳回报，故增益“不只是 rollout 速度”。初稿表述准确，逐字保留。仅补充一条推断边界：SuperMimic 与 PPO-WM 在 actor–critic 使用上亦不同，该对比非单因素隔离，属推断而非原文结论，已标注“推断”。",
+            "source_quote": "First-order gradients need fewer imagined steps. As a mechanism ablation, Figure 5(b) isolates the benefit of first-order policy updates: SuperMimic reaches the best PPO-WM return with about 64× fewer imagined steps, so the gain is not just rollout speed.\n\n"
+          },
+          {
+            "block_index": 20,
+            "source_quote_id": "s5:b20:p0",
+            "assessment": "初稿有两处不准确：(1) “无 Critic 时长视界训练慢”把两个不同现象混在一起——原文是 raising H from 64 to 128 使达到该回报的时间接近三倍并降低最终回报，这是视界效应，不是“无 critic 导致长视界训练慢”；无 critic 的实际后果是 H≤16 训练失败、抗扰时始终不稳。(2) 漏写 H=32 最快达到 return 0.82、H=128 是 H100 显存上限、推扰实验是在 matched return 与静态 T-pose 条件下做的。已按原文数字（0.5–4 m/s、0.5–2.4 s、H≤16/H=16/H=32/H=128）重写并保留“critic 兼顾可训练性与抗扰”的主旨。",
+            "source_quote": "Figure 4(b, c) sweeps H with and without the critic. Without the critic, training fails at $H \\leq 1 6$ With it, H=16 matches the critic-free H=32, and H=32 reaches a return of 0.82 fastest. Raising H from 64 to 128 nearly triples the time to that return and lowers the final return; H=128 is the longest horizon that fits on an H100. At matched return, the critic still changes behavior. Under 0.5–4 m/s velocity pushes while holding a static T-pose in simulation, the critic policy settles within 0.5–2.4 s. The critic-free policy never settles: it keeps stumbling even at 0.5 m/s and falls at 4 m/s.\n\n"
+          },
+          {
+            "block_index": 22,
+            "source_quote_id": "s5:b22:p0",
+            "assessment": "原文只说“without per-motion tuning”并在 Figure 6 展示四种动作（skipping jump、side roll、90° flip、in-place 360° flip），本段未给任何成功率或量化指标。初稿“零样本泛化能力”超出证据：无需逐动作调参≠零样本 sim-to-real 泛化；且“成功执行”缺乏本段数据支撑。已改为陈述部署方式与动作类别，并明确“零样本”属推断、本节无量化结果。",
+            "source_quote": "One general motion tracker deploys on a real Unitree G1 without per-motion tuning (Figure 6). The four motions cover locomotion (a skipping jump), contact-rich whole-body motion with the torso and limbs on the floor (a side roll), and acrobatics (a 90<sup>◦</sup> flip and an in-place 360<sup>◦</sup> flip).\n\n"
+          },
+          {
+            "block_index": 24,
+            "source_quote_id": "s5:b24:p0",
+            "assessment": "核对数字：672 条速度阶跃、RL 编码器 650 条稳态误差更低、蒸馏 15 条、仅蒸馏在 7 个缺动作库数据的快速转向中摔倒，均与原文一致。初稿说 RL 编码器“在数据稀疏的快速转向场景中表现不佳”方向相反——原文中摔倒的是蒸馏编码器，不是 RL 编码器，已改正。另补充 650+15=665 与 672 的差额原文未说明（可能为并列或未分类），并保留作者“研究尚属初步”的限定。",
+            "source_quote": "SuperMimic trains downstream goal encoders jointly with the motion-tracking interface, sharing one decoder and world model (Appendix B). Our study of downstream interfaces is preliminary. We train one velocity encoder on a velocity-tracking reward through the world model. We compare it with a distillation baseline: a velocity encoder trained on the motion-tracking reward, with commands read from the reference motions. Figure 7 evaluates both on 672 step responses spanning the velocity space (Appendix G). The RL encoder has the lower steady-state error on 650 of them, and the distillation encoder on 15. Only the distillation encoder falls, on seven fast turns with almost no motion-library data.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 6,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s6:b1:p0",
+            "assessment": "核对四点：原文写 backpropagation-through-time（BPTT），初稿笼统作“反向传播”，已改为“时间反向传播（BPTT）”；原文为 surpasses the return（回报），初稿写“性能”，已改为“回报（return）”；单 GPU、128-GPU 集群、真实 Unitree G1、成本随数据集长度扫描缓慢增长均与原文一致；无超出证据的推断。",
+            "source_quote": "SuperMimic removes compute as the bottleneck to scaling humanoid whole-body control. A single learned, differentiable world model captures the dynamics every motion shares, and backpropagation-through-time through it amortizes a whole dataset into one policy. The policy trains on a single GPU, surpasses the return of a policy trained on a 128-GPU cluster, and transfers to a real Unitree G1. Its training cost grows slowly over a controlled dataset-length sweep. The\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s6:b2:p0",
+            "assessment": "caption 只写“transfers to a real Unitree G1”并列出 (a) skipping jump、(b) side roll、(c) 90° flip、(d) in-place 360° flip，未提“零样本”，初稿的“零样本迁移”属证据外推断，已删除并改为逐一列出四类动作；另补充 caption 未给成功率/误差数字，防止读者误以为图中量化了迁移成功率。图像本身未获得视觉信息，批注未描述画面。",
+            "source_quote": "![](images/55bdd8b9e0e6ae1b192643f89071800b9cb4853629eb64ca71190f4d0bcff9ac.jpg)  \nFigure 6: One general motion tracker, trained through the learned world model, transfers to a real Unitree G1. (a) Skipping jump, (b) side roll, (c) 90<sup>◦</sup> flip, and (d) in-place 360<sup>◦</sup> flip.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s6:b3:p0",
+            "assessment": "标签为“(a) v_y vs. v_x (m/s)”，即纵轴 $v_y$、横轴 $v_x$，初稿“横向速度 v_x 与纵向速度 v_y 的关系平面”未指明轴对应关系，已改为明确的横纵轴；原文此处仅为轴标签加图片，未提供视觉信息，批注保留“无法描述”的限制且只声明一次。",
+            "source_quote": "(a) v<sub>y</sub> vs. v<sub>x</sub> (m/s)  \n![](images/4d825ef74879174a52935687b21f183db01ce7ccf93d91872ec3f9414da52d4c.jpg)\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s6:b4:p0",
+            "assessment": "标签为“(b) ω_z (rad/s) vs. v_x (m/s)”，即纵轴 $\\omega_z$、横轴 $v_x$，初稿表述正确但把“图表细节缺失”作标题且重复限制语，已改为明确的轴-量说明；与 block 3/5 构成三个正交平面的说法由 Figure 7 caption“each panel is a plane of the command space with the third component at zero”支持。",
+            "source_quote": "(b) ω<sub>z</sub> (rad/s) vs. v<sub>x</sub> (m/s)  \n![](images/2f3568e4eed18f886af6f56dc8a616e046ccb06457acdf6276b603fabe82831c.jpg)\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s6:b5:p0",
+            "assessment": "标签为“(c) ω_z (rad/s) vs. v_y (m/s)”，纵轴 $\\omega_z$、横轴 $v_y$，初稿“纵向速度 v_y”措辞含糊（$v_y$ 为侧向分量更贴切），已直接写变量名避免误标；误差量级指向 Appendix G 与 Figure 7 caption 一致，未编造数值。",
+            "source_quote": "(c) ω<sub>z</sub> (rad/s) vs. v<sub>y</sub> (m/s)  \n![](images/42978a02ff6f24a382292c6d0c7204827438de81bed00e1c9647f313804a7ada.jpg)\n\n"
+          },
+          {
+            "block_index": 6,
+            "source_quote_id": "s6:b6:p0",
+            "assessment": "逐项对照 caption：RL 速度编码器策略在阶跃命令上更准、每个环为一条命令、第三分量为零、外圆盘面积正比于较大相对稳态误差、内孔面积正比于较小者、颜色标记更优策略、细节见 Appendix G，均与原文一致，初稿表述准确未改实质；仅补一句 caption 未给具体误差数值，避免读者以为图中可直接读出量级。",
+            "source_quote": "![](images/1014972fbaf97dfff6aa87613fbbb0297f432f16a2b603355362ce9241e80b7d.jpg)  \nFigure 7: The policy with the RL-trained velocity encoder tracks step commands more accurately than the distillation baseline. Each panel is a plane of the command space with the third component at zero, and each ring is one command. The outer disc’s area is proportional to the larger of the two policies’ relative steady-state errors in the step response to that command, and the hole’s area to the smaller one; the color marks the better policy. Details in Appendix G.\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s6:b7:p0",
+            "assessment": "原文只说 same model can train a downstream velocity interface directly on the interface’s own task reward，初稿“无需额外中间层”属原文未有的添加，已删除；训练成本“at one GPU per run”对应“每次运行一块 GPU”无误；另标注该下游接口结论为作者展望、本段无定量结果，以区分作者说法与推断。",
+            "source_quote": "same model can train a downstream velocity interface directly on the interface’s own task reward.   \nMeasuring the scaling laws of motion tracking is now affordable, at one GPU per run.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 7,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s7:b1:p0",
+            "assessment": "核对因果链与顺序：原文说速度跟踪奖励只更新 velocity encoder 而不更新 shared decoder（附录 B），故并行训练“等同于在 motion tracker 之后训练速度编码器”，初稿的“先训跟踪器再训速度编码器”方向正确，保留。问题在末句：原文限定“Whether concurrent training helps once the velocity-tracking reward also updates the decoder is untested”，即未验证仅在奖励也更新解码器这一条件下成立；初稿写成“并发训练是否真正有益尚未验证”，去掉了条件，会让人误以为现行设置下的增益也未测（而作者已论证该设置下等价于串行）。已补出条件，并在摘要中同步修正。",
+            "source_quote": "• Multi-interface training is understudied. We train the velocity encoder concurrently with the motion tracker, but the velocity-tracking reward updates only the velocity encoder and not the shared decoder (Appendix B). Concurrent training is therefore the same as training the velocity encoder after the motion tracker, and might not be necessary. Whether concurrent training helps once the velocity-tracking reward also updates the decoder is untested.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s7:b2:p0",
+            "assessment": "核对模态与主张强度：原文“Real-robot data could refine it”与“its differentiability could support system identification”均为可能性表述，初稿用“作者认为……可优化/可利用……进行系统辨识”保留 could 的语气，准确；末句“这部分工作尚未开展”是对 future work 的合理归纳，且与原文 could 的未完成语气一致，可接受。“校准”是对 refine 的窄化措辞，但不构成事实错误，故不为此改写。",
+            "source_quote": "• Simulator-only dynamics. The world model learns only from simulator transitions. Real-robot data could refine it, and its differentiability could support system identification.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s7:b3:p0",
+            "assessment": "核对事实：原文“SuperMimic trains only on flat ground”，初稿“仅在平地条件下训练”一致；“Extending it to terrain and object interaction is ongoing work”对应“正在进行的后续工作”，未夸大为已完成。“非结构化场景”属概括性措辞，未超出“地形与物体交互”的范围，且论文名 SuperMimic 与原文一致。逐字保留。",
+            "source_quote": "• No terrain or object interaction. SuperMimic trains only on flat ground. Extending it to terrain and object interaction is ongoing work.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 8,
+        "part": 1,
+        "verdict": "pass",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s8:b1:p0",
+            "assessment": "逐项核对：被感谢的四位讨论/实验协助者姓名与原文一致；资助方 Komatsu、BAIR Center for Humanoid Intelligence、Apple、RAI Institute 四项与原文一致；Lambda 赞助算力与原文一致；Pieter Abbeel 与 Koushil Sreenath 的 UC Berkeley / Amazon Scholars 双重身份及“工作完成于 UC Berkeley、与 Amazon 无关”的免责声明均与原文相符。批注中“厘清利益关联”是对该免责声明作用的概括，未超出原文；摘要另记入 Bones Studio 提供动作数据这一原文事实，无编造数字或外部信息。",
+            "source_quote": "We thank Bike Zhang, Sangli Teng, Nima Rahmanian, and Songbo Hu for helpful discussions and help with the experiments. This work was supported in part by Komatsu, the BAIR Center for Humanoid Intelligence, Apple, and the RAI Institute. We thank Lambda for sponsoring compute for this project. Motion Data by Bones Studio (https://bones.studio/). Pieter Abbeel and Koushil Sreenath hold concurrent appointments as Professors at UC Berkeley and as Amazon Scholars. This paper describes work performed at UC Berkeley and is not associated with Amazon.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 9,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s9:b1:p0",
+            "assessment": "核对：Science Robotics, 11(117):eaed4592, 2026，标题确为 SONIC: Supersizing motion tracking for natural humanoid whole-body control。批注中“Science Robotics 2026”“超大规模动作追踪”“人形全身控制”与条目一致，保留原文；末句为条件式推断，未超出引用信息。",
+            "source_quote": "[1] Z. Luo, Y. Yuan, T. Wang, C. Li, F. Castaneda, S. Chen, Z.-A. Cao, J. Li, D. Minor, Q. Ben,˜ J. Park, D. Sami, Z. Wang, X. Da, R. Ding, C. Hogg, L. Song, E. Lim, E. Jeong, T. He, H. Xue, W. Xiao, S. Yuen, J. Kautz, Y. Chang, U. Iqbal, L. Fan, and Y. Zhu. SONIC: Supersizing motion tracking for natural humanoid whole-body control. Science Robotics, 11(117):eaed4592, 2026. doi:10.1126/scirobotics.aed4592.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s9:b2:p0",
+            "assessment": "核对：Peng, Abbeel, Levine, van de Panne，ACM TOG 37(4):143:1–143:14, 2018，标题含 Example-guided deep reinforcement learning of physics-based character skills，批注的年份、作者、方法定位均正确，保留。",
+            "source_quote": "[2] X. B. Peng, P. Abbeel, S. Levine, and M. van de Panne. DeepMimic: Example-guided deep reinforcement learning of physics-based character skills. ACM Transactions on Graphics, 37 (4):143:1–143:14, 2018. doi:10.1145/3197517.3201311.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s9:b3:p0",
+            "assessment": "核对：Science Robotics, 11(117):eadx8924, 2026，标题含 guided diffusion。批注关于期刊、年份、扩散引导的描述正确；原句“代表了生成式 AI 在机器人控制中的最新应用趋势”是引用信息无法支撑的趋势判断，改为“生成式模型进入人形控制的代表性引用”这类更贴条目的表述。",
+            "source_quote": "[3] Q. Liao, T. E. Truong, X. Huang, Y. Gao, G. Tevet, K. Sreenath, and C. K. Liu. BeyondMimic: From motion tracking to versatile humanoid control via guided diffusion. Science Robotics, 11(117):eadx8924, 2026. doi:10.1126/scirobotics.adx8924.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s9:b4:p0",
+            "assessment": "核对：arXiv:1707.06347, 2017，PPO 原文；批注对算法定位与使用条件（若本文用 RL）表述准确，保留。",
+            "source_quote": "[4] J. Schulman, F. Wolski, P. Dhariwal, A. Radford, and O. Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347, 2017. URL https://arxiv.org/abs/1707 .06347.\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s9:b5:p0",
+            "assessment": "核对：Merel 等，ICLR 2019，标题为 Neural probabilistic motor primitives for humanoid control。批注的 NPMP 名称与“技能可组合单元”的描述与标题相符，保留；分层控制为其常见用法，属合理背景说明。",
+            "source_quote": "[5] J. Merel, L. Hasenclever, A. Galashov, A. Ahuja, V. Pham, G. Wayne, Y. W. Teh, and N. Heess. Neural probabilistic motor primitives for humanoid control. In International Conference on Learning Representations, 2019. URL https://openreview.net/forum?id=BJl6TjRc Y7.\n\n"
+          },
+          {
+            "block_index": 6,
+            "source_quote_id": "s9:b6:p0",
+            "assessment": "核对：Yao, Song, Chen, Liu，ACM TOG 41(6):1–16, 2022，标题含 Model-based learning of generative controllers，批注“VAE/基于模型的生成式控制器”正确，保留。",
+            "source_quote": "[6] H. Yao, Z. Song, B. Chen, and L. Liu. ControlVAE: Model-based learning of generative controllers for physics-based characters. ACM Transactions on Graphics (TOG), 41(6):1–16, 2022. doi:10.1145/3550454.3555434.\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s9:b7:p0",
+            "assessment": "核对：Won, Gopinath, Hodgins，ACM TOG 41(4):1–12, 2022，标题含 conditional VAEs。批注对“条件输入约束生成”的解释与该标题一致，保留。",
+            "source_quote": "[7] J. Won, D. Gopinath, and J. Hodgins. Physics-based character controllers using conditional VAEs. ACM Transactions on Graphics (TOG), 41(4):1–12, 2022. doi:10.1145/3528223.3530 067.\n\n"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s9:b8:p0",
+            "assessment": "核对：Luo 等，ICLR 2024（proceedings 2024），标题为 Universal humanoid motion representations for physics-based control，批注的会议、年份、主题正确，保留。",
+            "source_quote": "[8] Z. Luo, J. Cao, J. Merel, A. Winkler, J. Huang, K. Kitani, and W. Xu. Universal humanoid motion representations for physics-based control. In International Conference on Learning Representations, volume 2024, pages 56766–56782, 2024. URL https://proceedings.ic lr.cc/paper\\_files/paper/2024/hash/fb19caf91f4966e426026685028cb73a-Abs tract-Conference.html.\n\n"
+          },
+          {
+            "block_index": 9,
+            "source_quote_id": "s9:b9:p0",
+            "assessment": "核对：Tessler, Guo, Nabati, Chechik, Peng，ACM TOG 43(6):1–21, 2024，标题含 masked motion inpainting。批注“遮挡部分信息、学习完整运动上下文”与 inpainting 语义相符，保留。",
+            "source_quote": "[9] C. Tessler, Y. Guo, O. Nabati, G. Chechik, and X. B. Peng. MaskedMimic: Unified physicsbased character control through masked motion inpainting. ACM Transactions On Graphics (TOG), 43(6):1–21, 2024. doi:10.1145/3687951.\n\n"
+          },
+          {
+            "block_index": 10,
+            "source_quote_id": "s9:b10:p0",
+            "assessment": "核对：Zhang 等，IROS 2026，arXiv:2603.12686，标题为 Learning athletic humanoid tennis skills from imperfect human motion data。原批注“提示本文可能也面临…并提供了处理方案”把对本文的推断写成了事实口吻，改为显式标注“推断”，保留其指向的问题（真实数据噪声）。",
+            "source_quote": "[10] Z. Zhang, H. Lu, Y. Lian, Z. Chen, Y. Liu, C. Lin, H. Xue, Z. Zeng, Z. Qi, S. Zheng, Q. Luan, J. Wang, J. Xing, H. Wang, and L. Yi. Learning athletic humanoid tennis skills from imperfect human motion data. In Proceedings of the IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS), 2026. URL https://arxiv.org/abs/2603.12686.\n\n"
+          },
+          {
+            "block_index": 11,
+            "source_quote_id": "s9:b11:p0",
+            "assessment": "核对：Luo, Cao, Winkler, Kitani, Xu，ICCV 2023，pages 10895–10904，标题含 Perpetual humanoid control for real-time simulated avatars，批注的会议、年份与“实时/长期控制”要点正确，保留。",
+            "source_quote": "[11] Z. Luo, J. Cao, A. Winkler, K. Kitani, and W. Xu. Perpetual humanoid control for real-time simulated avatars. In Proceedings of the IEEE/CVF International Conference on Computer Vision, pages 10895–10904, 2023. URL https://openaccess.thecvf.com/content/IC CV2023/html/Luo\\_Perpetual\\_Humanoid\\_Control\\_for\\_Real-time\\_Simulated\\_Avat ars\\_ICCV\\_2023\\_paper.html\n\n"
+          },
+          {
+            "block_index": 12,
+            "source_quote_id": "s9:b12:p0",
+            "assessment": "核对：Fussell, Bergamin, Holden，ACM TOG 40(6):1–13, 2021，标题明确 using supervised learning，批注“监督学习而非 RL”正确，保留。",
+            "source_quote": "[12] L. Fussell, K. Bergamin, and D. Holden. SuperTrack: Motion tracking for physically simulated characters using supervised learning. ACM Transactions on Graphics (TOG), 40(6):1–13, 2021. doi:10.1145/3478513.3480527.\n\n"
+          },
+          {
+            "block_index": 13,
+            "source_quote_id": "s9:b13:p0",
+            "assessment": "核对：Yao 等，ACM TOG 43(4):1–21, 2024，标题含 scalable discrete representations。批注中“VQ-VAE 类”为据方法名的合理括注，“压缩状态空间”一说属对该类表示的一般性说明，未与条目冲突，保留。",
+            "source_quote": "[13] H. Yao, Z. Song, Y. Zhou, T. Ao, B. Chen, and L. Liu. MoConVQ: Unified physics-based motion control via scalable discrete representations. ACM Transactions on Graphics (TOG), 43(4):1–21, 2024. doi:10.1145/3658137.\n\n"
+          },
+          {
+            "block_index": 14,
+            "source_quote_id": "s9:b14:p0",
+            "assessment": "核对：Lei 等，ICLR 2025 Workshop on World Models，标题为 Scalable humanoid whole-body control via differentiable neural network dynamics；批注的会议性质（Workshop）与主题正确。“端到端梯度传播”为该类方法的一般性质，保留。",
+            "source_quote": "[14] Y. Lei, Z. Luo, T. He, J. Cao, G. Shi, and K. Kitani. Scalable humanoid whole-body control via differentiable neural network dynamics. In ICLR 2025 Workshop on World Models: Understanding, Modelling and Scaling, 2025. URL https://openreview.net/pdf/b303199 0328dd52267a571b265c15328bf6d6120.pdf.\n\n"
+          },
+          {
+            "block_index": 15,
+            "source_quote_id": "s9:b15:p0",
+            "assessment": "核对：Hafner, Lillicrap, Ba, Norouzi，ICLR 2020，Dream to Control 即 Dreamer 首篇，批注“Dreamer 系列早期作品、潜在想象”正确，保留。",
+            "source_quote": "[15] D. Hafner, T. Lillicrap, J. Ba, and M. Norouzi. Dream to control: Learning behaviors by latent imagination. In International Conference on Learning Representations, 2020. URL https://openreview.net/forum?id=S1lOTC4tDS.\n\n"
+          },
+          {
+            "block_index": 16,
+            "source_quote_id": "s9:b16:p0",
+            "assessment": "核对：Nature, 640(8059):647–653, 2025，标题为 Mastering diverse control tasks through world models（DreamerV3）。批注年份、期刊与“多样化控制任务”表述与条目一致，保留。",
+            "source_quote": "[16] D. Hafner, J. Pasukonis, J. Ba, and T. Lillicrap. Mastering diverse control tasks through world models. Nature, 640(8059):647–653, 2025. doi:10.1038/s41586-025-08744-2.\n\n"
+          },
+          {
+            "block_index": 17,
+            "source_quote_id": "s9:b17:p0",
+            "assessment": "核对：Hansen, Wang, Su，ICML 2022（PMLR 162:8387–8406），标题含 Temporal difference learning for model predictive control，批注“TD 学习 + MPC”准确，保留。",
+            "source_quote": "[17] N. Hansen, X. Wang, and H. Su. Temporal difference learning for model predictive control. In K. Chaudhuri, S. Jegelka, L. Song, C. Szepesvari, G. Niu, and S. Sabato, editors, Proceedings of the 39th International Conference on Machine Learning, volume 162 of Proceedings of Machine Learning Research, pages 8387–8406. PMLR, 17–23 Jul 2022. URL https://pr oceedings.mlr.press/v162/hansen22a.html.\n\n"
+          },
+          {
+            "block_index": 18,
+            "source_quote_id": "s9:b18:p0",
+            "assessment": "改错：原批注称 DayDreamer 是“从仿真到现实迁移的重要案例”，与该文方法不符；DayDreamer 是在真实机器人上直接用世界模型在线学习。已改为强调真机在线学习与采样效率，并明确其不是 sim-to-real 案例。条目信息（CoRL，PMLR 205:2226–2240）核对无误。",
+            "source_quote": "[18] P. Wu, A. Escontrela, D. Hafner, K. Goldberg, and P. Abbeel. DayDreamer: World models for physical robot learning. In Proceedings of The 6th Conference on Robot Learning, volume 205 of Proceedings of Machine Learning Research, pages 2226–2240. PMLR, 2023. URL https://proceedings.mlr.press/v205/wu23c.html.\n\n"
+          },
+          {
+            "block_index": 19,
+            "source_quote_id": "s9:b19:p0",
+            "assessment": "核对：Xu 等，ICLR 2022，标题含 Accelerated policy learning with parallel differentiable simulation（Brax 系）。批注“并行可微仿真加速策略学习”与标题一致，保留。",
+            "source_quote": "[19] J. Xu, V. Makoviychuk, Y. Narang, F. Ramos, W. Matusik, A. Garg, and M. Macklin. Accelerated policy learning with parallel differentiable simulation. In International Conference on Learning Representations, 2022. URL https://openreview.net/forum?id=ZSKRQMvt tc.\n\n"
+          },
+          {
+            "block_index": 20,
+            "source_quote_id": "s9:b20:p0",
+            "assessment": "核对：Song, Kim, Scaramuzza，Proceedings of The 8th Conference on Robot Learning，PMLR 270:258–271, 2025 年出版。原批注“CoRL 2025”把出版年当作会议年，第八届 CoRL 为 2024 年，故改为只写会议名与 PMLR 卷号；同时把“方法论对人形有借鉴意义”明确标为推断。",
+            "source_quote": "[20] Y. Song, S. Kim, and D. Scaramuzza. Learning quadruped locomotion using differentiable simulation. In Proceedings of The 8th Conference on Robot Learning, volume 270 of Proceedings of Machine Learning Research, pages 258–271. PMLR, 2025. URL https: //proceedings.mlr.press/v270/song25a.html.\n\n"
+          },
+          {
+            "block_index": 21,
+            "source_quote_id": "s9:b21:p0",
+            "assessment": "核对：Li, Krause, Hutter，arXiv:2501.10100, 2025，标题含 Robotic world model 与 robust policy optimization，另有 NeurIPS 2025 Workshop 标注。批注对该文定位正确，保留。",
+            "source_quote": "[21] C. Li, A. Krause, and M. Hutter. Robotic world model: A neural network simulator for robust policy optimization in robotics. arXiv preprint arXiv:2501.10100, 2025. URL https://ar xiv.org/abs/2501.10100. Presented at the NeurIPS 2025 Workshop on Embodied World Models for Decision Making.\n\n"
+          },
+          {
+            "block_index": 22,
+            "source_quote_id": "s9:b22:p0",
+            "assessment": "核对：arXiv:2504.16680, 2025，标题为 Uncertainty-aware robotic world model makes offline model-based reinforcement learning work on real robots，批注“不确定性感知”“离线 MBRL 上真机”与标题一致，保留。",
+            "source_quote": "[22] C. Li, A. Krause, and M. Hutter. Uncertainty-aware robotic world model makes offline modelbased reinforcement learning work on real robots. arXiv preprint arXiv:2504.16680, 2025. URL https://arxiv.org/abs/2504.16680. Presented at the 2nd Workshop on World Models at ICLR 2026.\n\n"
+          },
+          {
+            "block_index": 23,
+            "source_quote_id": "s9:b23:p0",
+            "assessment": "核对：Sutton，ACM SIGART Bulletin 2(4):160–163, 1991，Dyna 为学习-规划-反应一体化架构，批注准确，保留。",
+            "source_quote": "[23] R. S. Sutton. Dyna, an integrated architecture for learning, planning, and reacting. ACM SIGART Bulletin, 2(4):160–163, 1991. doi:10.1145/122344.122377.\n\n"
+          },
+          {
+            "block_index": 24,
+            "source_quote_id": "s9:b24:p0",
+            "assessment": "核对：Janner, Fu, Zhang, Levine，NeurIPS 2019，标题 When to trust your model: Model-based policy optimization，批注“模型信任/误差与规划收益权衡”与标题一致，保留。",
+            "source_quote": "[24] M. Janner, J. Fu, M. Zhang, and S. Levine. When to trust your model: Model-based policy optimization. In Advances in Neural Information Processing Systems, volume 32, 2019. URL https://papers.nips.cc/paper\\_files/paper/2019/hash/5faf461eff3099671ad 63c6f3f094f7f-Abstract.html.\n\n"
+          },
+          {
+            "block_index": 25,
+            "source_quote_id": "s9:b25:p0",
+            "assessment": "核对：Schulman 等，ICLR 2016，GAE 原文。原批注“几乎所有现代深度 RL 算法都依赖 GAE”属过度概括，改为“PPO 等策略梯度方法中稳定价值学习的常用组件”，并把与本文的关系标为条件推断。",
+            "source_quote": "[25] J. Schulman, P. Moritz, S. Levine, M. I. Jordan, and P. Abbeel. High-dimensional continuous control using generalized advantage estimation. In International Conference on Learning Representations, 2016. URL https://arxiv.org/abs/1506.02438.\n\n"
+          },
+          {
+            "block_index": 26,
+            "source_quote_id": "s9:b26:p0",
+            "assessment": "核对：Todorov, Erez, Tassa，IROS 2012，pages 5026–5033，MuJoCo 原文。批注对该文定位正确，末句以“如果本文实验基于 MuJoCo”为条件，未越出证据，保留。",
+            "source_quote": "[26] E. Todorov, T. Erez, and Y. Tassa. MuJoCo: A physics engine for model-based control. In IEEE/RSJ International Conference on Intelligent Robots and Systems, pages 5026–5033, 2012.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 9,
+        "part": 2,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 27,
+            "source_quote_id": "s9:b27:p0",
+            "assessment": "核对条目内容：作者/机构为 Bones Studio，题名 BONES-SEED: Skeletal everyday embodiment dataset，年份 2026，URL 指向 huggingface.co/datasets/bones-studio/seed，批注中信息与原文一致。原文改动点：原批注把“可能用于训练或评估模型对真实人体运动的理解能力”写成近乎结论，但该条目仅为数据集引用，参考文献本身不提供任何用途证据，已将该用途改为需回正文确认，并保留“骨骼日常具身数据”的题名对应。未描述数据集规模、模态等条目未给出的信息。",
+            "source_quote": "[27] Bones Studio. BONES-SEED: Skeletal everyday embodiment dataset, 2026. URL https: //huggingface.co/datasets/bones-studio/seed.\n\n"
+          },
+          {
+            "block_index": 28,
+            "source_quote_id": "s9:b28:p0",
+            "assessment": "核对条目内容：作者 F. G. Harvey, M. Yurick, D. Nowrouzezahrai, C. Pal；题名 Robust motion in-betweening；出处 ACM Transactions on Graphics (Proceedings of ACM SIGGRAPH) 39(4):60:1–60:12, 2020；DOI 10.1145/3386569.3392480，批注逐项与原文一致，并补上了卷期页码与 DOI。原文改动点：删去原批注“常作为……经典基线或相关工作进行对比”这一无来源断言，改为显式标注“推断”的作者角色猜测，并说明文献条目本身未交代其在本文中的角色。",
+            "source_quote": "[28] F. G. Harvey, M. Yurick, D. Nowrouzezahrai, and C. Pal. Robust motion in-betweening. ACM Transactions on Graphics (Proceedings of ACM SIGGRAPH), 39(4):60:1–60:12, 2020. doi: 10.1145/3386569.3392480.\n\n"
+          }
+        ],
+        "summary_check": "原摘要中“暗示研究使用了该数据集进行训练或测试”“通常作为动作生成领域的早期重要工作或对比基线”均属条目未给出的推断，已删除；现摘要只陈述两条文献的作者、题名、出处、年份、DOI/URL，并注明正文用途需另查。",
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 10,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s10:b1:p0",
+            "assessment": "核对通过。原文确有：本附录具体化 §3.1 的 POMDP 共享空间、沿用 BeyondMimic [3]、改动在文中标注。批注未添加原文没有的结论，予以保留。",
+            "source_quote": "This appendix instantiates the shared spaces of the POMDP of §3.1. The motion-tracking interface follows the BeyondMimic formulation [3]; the changes we make are noted inline.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s10:b2:p0",
+            "assessment": "初稿称“各维度均施加特定分布的传感器噪声”，与表不符：表中共五行，只在前四项（关节位置、关节速度、基座角速度、重力投影）给出 $\\mathcal{U}[\\cdot]$ 噪声，上一动作 $\\delta_{a_{t-1}}$ 的噪声列为空。已改为明确 93 维、噪声只覆盖前四项，并把“最近 10 帧”改为原文的“last 10 observations”（观测堆叠，非帧数）。$q-q^0$、$\\dot q$、IMU 角速度、重力投影与 $\\delta_{a_{t-1}}$ 的构成与原文一致。",
+            "source_quote": "Observation. The proprioceptive observation $\\mathbf { } _ { o _ { t } }$ comprises the joint positions relative to the default pose ${ \\pmb q } - { \\pmb q } ^ { 0 }$ , the joint velocities $\\dot { \\mathbf { q } } ,$ the base angular velocity from the inertial measurement unit (IMU), the projected gravity in the base frame, and the previous action $\\mathbf { \\delta } _ { a _ { t - 1 } }$ (Table A.1); the policy receives the last 10 observations.\n<table><tr><td>Observation Term</td><td>Dim. Noise  $\\pmb { \\eta } _ { t }$ </td><td></td><td>Unit</td></tr><tr><td>Joint positions  ${ \\pmb q } - { \\pmb q } ^ { 0 }$ </td><td>29</td><td> $\\mathcal { U } [ - 0 . 0 1 , 0 . 0 1 ]$ </td><td>rad</td></tr><tr><td>Joint velocities À</td><td>29</td><td> $\\mathcal { U } [ - 0 . 5 , 0 . 5 ]$ </td><td> $\\mathrm { r a d } / \\mathrm { s }$ </td></tr><tr><td>Base angular velocity (IMU)</td><td>3</td><td> $\\mathcal { U } [ - 0 . 2 , 0 . 2 ]$ </td><td> $\\mathrm { r a d } / \\mathrm { s }$ </td></tr><tr><td>Pro"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s10:b3:p0",
+            "assessment": "caption 原文为“噪声列为逐维传感器噪声 $\\eta_t\\sim\\rho_\\eta$”，未解释空单元格的原因。初稿写“或噪声处理隐含在机制中”属推测且含糊，已删除该推测，只保留可从表直接读出的事实：上一动作不加噪，噪声区间例如重力投影 $\\mathcal{U}[-0.05,0.05]$。",
+            "source_quote": "Table A.1: Proprioceptive observation $\\mathbf { } o _ { t } .$ . The noise column gives the per-dimension sensor noise $\\eta _ { t } \\sim \\rho _ { \\eta }$\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s10:b4:p0",
+            "assessment": "核对通过。$K=10$ 未来参考序列替换单帧目标、其他接口换成对应命令表示（如目标速度命令，附录 B）均与原文一致。初稿的“接口通用性设计”是轻微概括，不影响事实，保留原样。",
+            "source_quote": "Goal. For the motion-tracking interface, the goal $\\mathbf { \\nabla } _ { \\mathbf { \\boldsymbol { g } } _ { t } }$ is read from the reference motion. Compared with BeyondMimic [3], we condition the encoder on a $K = 1 0$ future reference sequence rather than a single-frame target. Other goal interfaces replace $\\mathbf { \\nabla } _ { \\mathbf { \\boldsymbol { g } } _ { t } }$ with their corresponding command representation, such as target velocity commands (Appendix B).\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s10:b5:p0",
+            "assessment": "核对通过。$q^{\\mathrm{sp}}=\\alpha a_t+q^0$、低 PD 增益使设定点成为关节力矩代理而非期望位置、继承自 BeyondMimic，均与原文一致；批注未擅自补 $\\alpha$ 或增益数值。",
+            "source_quote": "Action. The action $\\mathbf { } \\mathbf { a } _ { t }$ maps to a joint setpoint $\\pmb q ^ { \\mathrm { s p } } = \\pmb { \\alpha } \\pmb { a } _ { t } + \\pmb q ^ { 0 }$ about the default pose $ { \\boldsymbol { q } } ^ { 0 }$ . Following BeyondMimic, the low PD gains make this setpoint a proxy for joint torque rather than a desired position.\n\n"
+          },
+          {
+            "block_index": 6,
+            "source_quote_id": "s10:b6:p0",
+            "assessment": "核对通过。-10 改为 -2 正确；自碰撞惩罚的机制（参考使两 body 无接触靠近时挤压可抑制动作噪声、抬高速度跟踪奖励）与作者给的理由（想象 rollout 中策略确定性、漏洞无收益）表述准确，初稿未把该理由说成实验结论。",
+            "source_quote": "Reward. We use BeyondMimic’s motion-tracking reward (Table A.2), removing its self-collision penalty. That penalty guards against reward hacking by a stochastic policy. When the reference brings two bodies close without contact, pressing them together suppresses the action noise and raises the velocity-tracking reward. Our policy is deterministic in imagined rollouts (§3.3), so the exploit has no payoff and the term is unnecessary. The joint-limit penalty is lowered from −10 to −2.\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s10:b7:p0",
+            "assessment": "阈值 $0.25$ m 与 $0.8$ 与 $78^\\circ$ 均正确。但初稿未说明 $e_{\\mathrm{tilt}}$ 是重力方向 z 分量之差、以及 $78^\\circ$ 仅对直立参考成立；且“放宽早期失败判定”属推断却未标注。已补充定义、把 $0.8$ 明确为无量纲并标明推断。",
+            "source_quote": "Termination. An episode terminates when the root body deviates from the reference beyond a height or tilt threshold $( | e _ { p , z } | > 0 . 2 5$ m or $e _ { \\mathrm { t i l t } } > 0 . 8 )$ . The tilt error $e _ { \\mathrm { t i l t } }$ is the absolute difference between the z-components of the gravity direction expressed in the reference and robot root (pelvis) frames. For an upright reference, $e _ { \\mathrm { t i l t } }$ reaches 0.8 at about $7 8 ^ { \\circ }$ of tilt. Unlike BeyondMimic, we do not terminate on end-effector deviation.\n\n"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s10:b8:p0",
+            "assessment": "核对通过。$\\xi$ 为逐 episode 收集、送入 §3.2 世界模型的域随机化参数，省略根速度扰动的两条理由（状态不连续、确定性模型无法刻画；仅物理参数随机化已够迁移）与原文一致。初稿的“关键工程权衡”是中性描述，保留。",
+            "source_quote": "Sim context and domain randomization. The per-episode sim context ξ collects the domainrandomization parameters fed to the world model (§3.2); Table A.3 lists them. We omit Beyond-Mimic’s root-velocity perturbations: such pushes inject state discontinuities that the deterministic world model cannot capture, and we find randomization over the physical parameters alone suffices for transfer to hardware.\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s10:b7:p0",
+            "assessment": "摘要修正点：初稿写“0.8 弧度/无量纲”不准确，$e_{\\mathrm{tilt}}$ 是重力方向 z 分量之差，无量纲而非弧度，已改正并注明 $78^\\circ$ 对应直立参考。另补入 93 维总维数、四项噪声区间、上一动作不加噪、Table A.2/A.3 引用等事实，并去掉“创新性”等评价性表述。",
+            "source_quote": "Termination. An episode terminates when the root body deviates from the reference beyond a height or tilt threshold $( | e _ { p , z } | > 0 . 2 5$ m or $e _ { \\mathrm { t i l t } } > 0 . 8 )$ . The tilt error $e _ { \\mathrm { t i l t } }$ is the absolute difference between the z-components of the gravity direction expressed in the reference and robot root (pelvis) frames. For an upright reference, $e _ { \\mathrm { t i l t } }$ reaches 0.8 at about $7 8 ^ { \\circ }$ of tilt. Unlike BeyondMimic, we do not terminate on end-effector deviation.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 11,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s11:b1:p1",
+            "assessment": "核对「每个接口独立 critic 与编码器、共享解码器」与原文一致，未改事实。但初稿用「策略网络主体」含糊，且漏掉作者给出的复用理由（body physics is shared）；改写为说明各接口 POMDP 四要素 + 编码器/解码器分工 + 共享依据。block 1 开头的 $\\sigma$ 连串为 OCR 噪声，无法还原原始 goal 符号，批注不引用该式。",
+            "source_quote": "et), each with its own goal space $\\mathcal { G } _ { i } .$ reward $r _ { i } ,$ and termination $d _ { i } ,$ and train each with its own critic $V _ { \\psi _ { i } }$ . A single policy network uses per-interface goal encoders $\\mathrm { e n c } _ { \\theta , i }$ and a shared decoder dec<sub>θ</sub>,\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s11:b2:p0",
+            "assessment": "逐项核对表中权重：body position/orientation/linear velocity/angular velocity 均 1.0，root position/orientation 0.5，action smoothness −0.1，joint limit −2，与批注一致；表中确实无 self-collision 行。批注为定性描述且数字无误，逐字保留，未作改写。",
+            "source_quote": "<table><tr><td>Reward Term</td><td>Equation</td><td>Weight</td></tr><tr><td>Task (tracking)</td><td></td><td></td></tr><tr><td>Body Position</td><td> $\\exp \\Big ( - \\big ( \\frac { 1 } { | \\mathcal { T } | } \\sum _ { b c \\mathcal { T } } \\| \\mathbf { p } _ { b } ^ { \\mathrm { d e s } } - \\mathbf { p } _ { b } \\| ^ { 2 } \\big ) / 0 . 3 ^ { 2 } \\Big )$ </td><td>1.0</td></tr><tr><td>Body Orientation</td><td> $\\mathrm { e x p } \\Big ( - \\big ( { \\textstyle \\frac { 1 } { | { \\cal T } | } } \\sum _ { h \\in { \\cal T } } ^ { \\sim } \\| \\log ( R _ { b } ^ { \\mathrm { d e s } } R _ { b } ^ { \\top } ) \\| ^ { 2 } \\big ) / 0 . 4 ^ { 2 } \\Big )$ </td><td>1.0</td></tr><tr><td>Body Linear velocity</td><td> $\\mathrm { e x p } \\Big ( - \\big ( { \\frac { 1 } { | \\mathcal { T } | } } \\sum _ { b \\in \\mathcal { T } } ^ { \\sim } \\| \\mathbf { v } _ { b } ^ { \\mathrm { d e s } } - \\mathbf { v } _ { b } \\| ^ { 2 } \\big ) / 1 . 0 ^ { 2 } \\Big )$ </td><td>1.0</td></tr><tr><td>Body Angular velocity</td><td> $\\mathrm {"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s11:b3:p0",
+            "assessment": "caption 明确「following BeyondMimic，移除 self-collision penalty，joint-limit 权重从 −10 降到 −2」，初稿这两点正确；但初稿「这一修改旨在平衡模拟环境的稳定性与真实物理约束的严格性」把作者未给的目的写成事实，属超出证据。已改为注明作者未解释动机，并以「推断：」给出可能的权衡，同时补上 −10→−2 的具体数字。",
+            "source_quote": "Table A.2: Motion-tracking interface reward, following BeyondMimic [3] with the self-collision penalty removed and the joint-limit weight lowered from −10 to −2 (§3.3). $\\tau$ is the set of tracked bodies.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s11:b4:p0",
+            "assessment": "核对摩擦系数 $\\mathcal{U}[0.3,1.2]$ 与关节校准偏移 $\\mathcal{U}[-0.01,0.01]$ rad 无误。表格第三行 Torso’s center-of-mass offset 只有行名、没有对应分布（OCR 仅两行分布），初稿未提这一点，复现会踩坑，已补。初稿「直接决定策略对环境不确定性的适应能力」为无依据的强因果，改为标注推断的弱表述。",
+            "source_quote": "<table><tr><td>Domain Randomization</td><td>Sampling Distribution</td></tr><tr><td>Friction coefficients Joint calibration offsets [rad] Torso&#x27;s center-of-mass offset [m]</td><td> $\\mu \\sim \\mathcal { U } [ 0 . 3 , 1 . 2 ]$   $\\Delta q _ { i } ^ { 0 } \\sim \\mathcal { \\dot { U } } [ - 0 . 0 \\dot { 1 } , 0 . 0 1 ]$ </td></tr></table>\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s11:b5:p0",
+            "assessment": "caption 关键信息为「构成 sim context $\\xi$」「following BeyondMimic」「移除 root-velocity perturbations」，初稿表述正确。仅调整两处：与 block 4 的重复内容收敛为指向上一张表，并把「用于增强 Sim-to-Real 鲁棒性」这一 caption 未写的目的改为标注推断。",
+            "source_quote": "Table A.3: Domain-randomization parameters that make up the sim context $\\xi ,$ following BeyondMimic [3] with the root-velocity perturbations removed. $( \\mathcal { U } [ \\cdot ] ;$ uniform distribution.)\n\n"
+          },
+          {
+            "block_index": 6,
+            "source_quote_id": "s11:b6:p0",
+            "assessment": "对照式 A.1：$z=\\mathrm{enc}_{\\theta,i}(g)\\in\\mathcal{Z}$，$a=\\mathrm{dec}_\\theta(z,o)$，$g\\in\\mathcal{G}_i$。初稿对符号含义与「共享解码器、独立编码器」的解读准确，未改；仅点明潜在空间 $\\mathcal{Z}$ 也是共用的。",
+            "source_quote": "$$\nz = \\mathrm { e n c } _ { \\theta , i } ( \\pmb { g } ) \\in \\mathcal { Z } , \\qquad \\pmb { a } = \\mathrm { d e c } _ { \\theta } ( z , \\pmb { o } ) , \\qquad \\pmb { g } \\in \\mathcal { G } _ { i } ,\\tag{A.1}\n$$\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s11:b7:p0",
+            "assessment": "核对 $\\max_\\theta \\mathbb{E}_{i\\sim p(\\mathcal{T})}[\\hat{J}_i(\\theta)]$、每个 $\\hat{J}_i$ 用 $\\mathcal{M}_i$ 的奖励与终止及 $V_{\\psi_i}$、全部经同一 $f_\\omega$ 且不按接口重训，初稿均正确。补上初稿遗漏的方法条件：velocity encoder 额外接收观测历史特征（Table A.4），这是接口间唯一的结构差异；初稿的「推断：」保留。",
+            "source_quote": "and training optimizes the lifted objective max<sub>θ</sub> $\\mathbb { E } _ { i \\sim p ( \\mathcal { T } ) } [ \\hat { J } _ { i } ( \\theta ) ]$ , where $p ( \\mathcal { T } )$ is a distribution over the set I of goal interfaces. Each interface i thus has its own policy $\\begin{array} { r } { \\pmb { a } = \\pi _ { i } ( \\pmb { o } , \\pmb { g } ) : = \\mathrm { d e c } _ { \\pmb { \\theta } } ( \\mathrm { e n c } _ { \\pmb { \\theta } , i } ( \\pmb { g } ) , \\pmb { o } ) ; } \\end{array}$ the velocity encoder also receives a feature of the observation history (Table A.4). Each ${ \\hat { J } } _ { i }$ is the objective of Eq. 2 with $\\pi _ { i }$ in place of $\\pi _ { \\theta }$ , the reward and termination of $\\mathcal { M } _ { i }$ , and the critic $V _ { \\psi _ { i } }$ Every interface trains through the same dynamics model $f _ { \\omega } ,$ , which is not retrained per interface.\n\n"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s11:b8:p0",
+            "assessment": "初稿称「RL 训练中」对解码器加 stop-gradient，范围过窄：原文是「On a downstream interface's rollouts」，同时覆盖蒸馏与 RL 两类下游训练，已改正。初稿「防止干扰主追踪目标」为作者未写的动机，改为陈述原文事实（解码器仍由运动追踪目标训练）并降级为推断。速度编码器 latent 对齐（附录 G）与蒸馏用 §3.3 奖励、命令取自参考运动，核对无误。",
+            "source_quote": "A downstream interface is trained by distillation or by RL, depending on its reward. Distillation uses the motion-tracking reward (§3.3), with the command read from the reference motion. The reward gradient then trains that interface to reproduce the reference motion from this command. RL optimizes the interface’s own task reward, such as velocity tracking, directly through the world model. On a downstream interface’s rollouts, the return gradient passes through the shared decoder to that interface’s encoder, with a stop-gradient on the decoder’s weights; the decoder is still trained by the motion-tracking objective. The RL-trained velocity encoder of §4.5 also has a latent-alignment los toward the motion encoder’s latent on rollouts with reference commands (Appendix G).\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 12,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s12:b1:p0",
+            "assessment": "原文只说 Table A.4 列出 §3.2 的动力学网络以及附录 B 的策略与 Critic 网络，批注的指认与表格职责描述一致，无数字或因果表述越界，保留原文。",
+            "source_quote": "Table A.4 lists the world-model dynamics network of §3.2 and the policy and critic networks of Appendix B.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s12:b2:p0",
+            "assessment": "初稿称 $\\xi$ 为“噪声”且“以增强鲁棒性”，原文表格只列了输入项 $\\xi$，未说明其性质与设计动机，属于超出证据的因果归因，已删去并改为只陈述输入项；同时核对各 MLP 宽度 (2048,2048,2048)/(2048,1024,512,256)/(256,256)/(2048,1024,512,256)/(256,128) 与 $K=10$、Velocity encoder 输入含最近 10 帧观测特征，均与表一致；Critic 每接口独立的依据同时来自表末“one critic per”与 Algorithm A.1 中的 $V_{\\psi_i}$。",
+            "source_quote": "<table><tr><td>Network</td><td>Input</td><td></td><td>Output Architecture</td></tr><tr><td>Dynamics  $f _ { \\omega }$ </td><td> $\\hat { \\textbf { \\textit { s } } } _ { t } , \\textbf { \\em a } _ { t } , \\xi$ </td><td> $\\hat { \\pmb { s } } _ { t + 1 }$ </td><td>MLP (2048, 2048, 2048)</td></tr><tr><td>Motion encoder encθ,motion</td><td> $K { = } 1 0$  future reference frames z</td><td></td><td>MLP (2048, 1024, 512, 256)</td></tr><tr><td>Velocity encoder encθ,vel (Appendix G)</td><td>normalized command  $\\left( { { v _ { x } } , { v _ { y } } , { \\omega _ { z } } } \\right)$  , feature of the last 10 frames of o</td><td>Z</td><td>MLP (256, 256)</td></tr><tr><td>Shared decoder decθ Critic  $V _ { \\psi _ { i } }$ </td><td>z, last 10 frames of o  $\\hat { \\textbf { \\textit { s } } } _ { t } , \\textbf { \\textit { g } } _ { t } , \\textbf { \\textit { \\xi } }$ </td><td> $\\mathbf { \\pmb { a } } _ { t }$  scalar</td><td>MLP (2048, 1024, 512, 256) MLP (256, 128); one critic per</td></tr></table>\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s12:b3:p0",
+            "assessment": "原文仅称 $z$ 为 32 维且由 tanh 有界，未给出效果结论。初稿“影响输入分布稳定性”属推断却未标注，已加“推断：”并明确文中无消融；tanh 实际开区间为 $(-1,1)$，据此修正初稿隐含的闭区间理解。",
+            "source_quote": "Table A.4: World-model, policy, and critic networks. MLP: multilayer perceptron, listed by hidden widths. The latent z is 32-dimensional and bounded by tanh.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s12:b4:p0",
+            "assessment": "初稿“交替更新”与原文冲突：原文明确 ω 与 θ 每次迭代都更新，ω 仅在策略反向传播内停梯度，已改正；核对采样已记录 k 步窗口、Eq.1/2/3 的对应关系以及“下游接口只更新自身 encoder enc_{θ,i}”一句（位于该段开头要求行），均可由原文逐字支持，并补入该条件以说明多接口共享策略时谁被更新。",
+            "source_quote": "```latex\nAlgorithm A.1 SuperMimic training. Both ω and θ update every iteration; ω is held fixed (stop\ngradient) only inside the policy’s backward pass. For a downstream interface, ${ \\hat { J } } _ { i }$ updates only its\nencoder $\\mathrm { e n c } _ { \\theta , i }$\nRequire: world model $f _ { \\omega } ;$ policy $\\pi \\theta$ shared across interfaces $\\{ \\mathcal { M } _ { i } \\} _ { i \\in \\mathbb { Z } } ;$ replay buffer B\n1: for each iteration do\n2: ▷ Collect. Roll out $\\pi _ { \\theta }$ with action noise in simulation; push transitions to $B ,$ replacing the oldest\n3: Draw reset start points by return-based sampling ▷ Appendix D.1\n4: ▷ Fit world model. Sample a logged k-step window from $B ,$ roll $f _ { \\omega }$ out autoregressively on the logged\nactions, and step ω $ \\omega - \\bar { \\alpha } _ { \\omega } \\nabla _ { \\omega } \\mathcal { L } _ { \\mathrm { W M } }$ ▷ Eq. 1\n5: ▷ Improve policy. Sample an interface $i \\sim p ( \\mathcal { T } )$ and a start state from B\n6: Imagine H ste"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 14,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s14:b1:p0",
+            "assessment": "原文核对：该句只做两件事——把 Algorithm A.1 定位为 §3.1 训练循环的汇总，并声明三步与 Figure 2 三面板一一对应；未描述任何步骤内容。初稿批注方向正确、无事实错误，但基本是原文复述，且“便于对照理解训练流程”是初稿自行添加的价值判断。为不超出证据，改为明确指出“本段未给出具体步骤内容、需与 Figure 2 并排对照”，其余保留原意。",
+            "source_quote": "Algorithm A.1 summarizes the SuperMimic training loop of §3.1; its three steps correspond one-toone to the panels of Figure 2.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s14:b2:p0",
+            "assessment": "逐项核对数字与条件：时间线分箱为 1 s ✓；“50% uniform over bins” ✓；“40% from softmax_b(-25 G_b/G_max)” ✓，负号与系数 25 均与原文一致，$G_{\\mathrm{max}}$ 定义为“largest attainable discounted return” ✓；“10% in proportion to each bin's past softmax weight” ✓；$G_b$ 为“running estimate of the discounted return from it, updated on the policy's own rollouts” ✓。初稿对 10% 分支给出“以防遗忘或过拟合其他部分”的原因，原文只有“so a hard motion keeps some practice after it is learned”，属于超出证据的推断，已删除并改为只保留原文理由；摘要在同一处同步修正。其余数字（50/40/10、1 s、-25）与“低回报优先”的因果方向无误，予以保留。",
+            "source_quote": "Return-based reset sampling. Simulator episodes reset to points of the motion library, favoring those where the policy currently earns low return. The motion timeline is divided into 1 s bins, and each bin b keeps a running estimate $G _ { b }$ of the discounted return from it, updated on the policy’s own rollouts. Resets mix three distributions: 50% uniform over bins, 40% from softmax<sub>b</sub> $( - 2 5 G _ { b } / G _ { \\mathrm { m a x } } )$ , where $G _ { \\mathrm { m a x } }$ is the largest attainable discounted return, and 10% in proportion to each bin’s past softmax weight, so a hard motion keeps some practice after it is learned.\n\n"
+          },
+          {
+            "block_index": 0,
+            "source_quote_id": "s14:b0:p0",
+            "assessment": "仅为小节标题 “## D.1 Algorithm”，按规范略过，不生成批注。",
+            "source_quote": "## D.1 Algorithm\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 15,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s15:b1:p0",
+            "assessment": "逐句对照：原文 'Table A.5 lists the hyperparameters' 与 'values are given for the one-GPU and the two-GPU run of Table A.8'。初稿批注的方向正确，但把 'the one-GPU and the two-GPU run of Table A.8' 概括为“对应 Table A.8 中的实验设置”，未点明差异值是分别对应 Table A.8 的单卡运行与双卡运行，读者据此可能误以为 Table A.8 只是被引用的实验表而非两套运行的来源；已改写为明确“分别列出两者数值，这两组运行对应 Table A.8”。初稿摘要末句“此信息旨在帮助复现者注意硬件规模对超参选择的影响，避免混淆不同配置下的性能表现”属于原文未陈述的目的推断，摘要规范要求不写评价与推断，已删除，替换为原文实际给出的信息。摘要中“正文或附录中 Table A.8”一处笼统表述已统一为 Table A.8。原文未提供超参数具体数值与搜索细节，摘要中已如实注明，未把 Table A.5 的内容当作本段内容转述。",
+            "source_quote": "Table A.5 lists the hyperparameters. Where they differ, values are given for the one-GPU and the two-GPU run of Table A.8.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 16,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s16:b1:p0",
+            "assessment": "核对数字：原文 142,220 条原始 clip、两轮过滤后保留 129,514 条，与批注一致；“两遍过滤”与“平地自由站立人形”的适用范围也在原文内。批注准确，逐字保留。",
+            "source_quote": "We train on the publicly available G1-retargeted BONES-SEED motion set [27]. The raw release contains 142,220 clips, but many interact with terrain or objects the robot cannot use (stairs, boxes, ladders, chairs) or carry retargeting artifacts that make them infeasible for a free-standing humanoid on flat ground. We remove these in two passes and keep 129,514 clips (Table A.7).\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s16:b2:p0",
+            "assessment": "原文此段只给出 stair、ladder、box、chair 等关键词，未提权重或其他细则；批注“第一轮快速筛选”是对“两遍过滤”顺序的合理概括。准确，保留。",
+            "source_quote": "Name filter. Each clip is named by its action. We drop any clip whose name contains a term denoting contact with terrain or an object the robot cannot use—e.g. stair, ladder, box, chair,\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s16:b3:p0",
+            "assessment": "逐项核对 Table A.5：k=8、H=32、γ=0.99、Adam 均对得上；学习率 LaTeX 中“1 GPU: 2×10^-4；2 GPUs: √2×2×10^-4”，原文未解释缩放依据。批注只说“不同 GPU 数量下有缩放规则”，未编造公式，保留。",
+            "source_quote": "<table><tr><td>Hyperparameter</td><td>Symbol</td><td>Value</td></tr><tr><td>World model</td><td></td><td></td></tr><tr><td>Window length</td><td>k</td><td>8</td></tr><tr><td>Optimizer</td><td></td><td>Adam</td></tr><tr><td>Learning rate</td><td> $\\alpha _ { \\omega }$ </td><td> $1 _ { \\mathrm { \\scriptsize ~ G P U : ~ 2 \\times 1 0 ^ { - 4 } ; 2 _ { \\mathrm { \\scriptsize ~ G P U s : ~ \\sqrt { 2 } } \\times 2 \\times 1 0 ^ { - 4 } } } }$ </td></tr><tr><td>Batch size Gradient clipping</td><td></td><td>10 batches of 2048 windows per update global norm 1.0</td></tr><tr><td></td><td></td><td></td></tr><tr><td>Imagination and policy Imagination horizon</td><td>H</td><td>32</td></tr><tr><td>Optimizer</td><td></td><td>Adam,  $\\beta = ( 0 . 9 , 0 . 9 5 )$ </td></tr><tr><td>Learning rate</td><td> $\\alpha \\theta$ </td><td>same as  $\\alpha _ { \\omega }$ </td></tr><tr><td>Batch size</td><td></td><td>4096 imagined rollouts per update</td></tr><tr><td>Gradient clipping</td><td></td><td>global norm 1.0, t"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s16:b4:p0",
+            "assessment": "该段仅为 Table A.5 的 caption“SuperMimic hyperparameters”。批注只做标题性说明，没有额外推断，保留。",
+            "source_quote": "Table A.5: SuperMimic hyperparameters.\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s16:b5:p0",
+            "assessment": "核对 Table A.6 权重：线速度 2.0、偏航 2.0、动作平滑 -0.3、关节限位 -2、躯干侧倾 -4、roll/pitch 速率 -0.05，符号与批注的“负权重”一致；批注未逐项抄公式，符合要求，保留。",
+            "source_quote": "<table><tr><td>Reward Term</td><td>Equation</td><td>Weight</td></tr><tr><td>Task (velocity tracking)</td><td></td><td></td></tr><tr><td>Linear velocity</td><td> $\\exp \\Big ( - \\| \\mathbf { v } _ { x y } - \\mathbf { v } _ { x y } ^ { \\mathrm { c m d } } \\| ^ { 2 } / 0 . 5 ^ { 2 } \\Big )$ </td><td>2.0</td></tr><tr><td>Yaw rate</td><td> $\\exp \\Big ( - ( \\omega _ { z } - \\omega _ { z } ^ { \\mathrm { c m d } } ) ^ { 2 } / 0 . 5 \\Big )$ </td><td>2.0</td></tr><tr><td>Regularization</td><td></td><td></td></tr><tr><td>Action smoothness</td><td> $\\| \\mathbf { a } _ { t } - \\mathbf { a } _ { t - 1 } \\| ^ { 2 }$ </td><td>-0.3</td></tr><tr><td>Joint limit</td><td> $\\begin{array} { r } { \\sum _ { j } \\left[ \\operatorname* { m a x } ( 0 , q _ { j } - q _ { j } ^ { \\operatorname* { m a x } } ) + \\operatorname* { m a x } ( 0 , q _ { j } ^ { \\operatorname* { m i n } } - q _ { j } ) \\right] } \\end{array}$ </td><td>-2</td></tr><tr><td>Torso sideways lean</td><td> $\\sin ^ { 2 } \\phi _ { \\mathrm { t o r s o"
+          },
+          {
+            "block_index": 6,
+            "source_quote_id": "s16:b6:p0",
+            "assessment": "核对 caption：φ_torso 是躯干 z 轴的侧向倾斜（前倾不罚）、h_root 为根高、u_z 为根部系重力方向 z 分量，1+u_z 直立 0、倒置 2，约 73° 触发；所有项乘 Δt=0.02 s。批注各点均可在原文找到依据，未超出证据，保留。",
+            "source_quote": "Table A.6: Velocity-tracking reward and termination used to train the RL encoder. $\\mathbf { v } _ { x y }$ is the planar root velocity in the heading frame, $\\omega _ { z }$ the world yaw rate, and $( \\mathbf { v } _ { x y } ^ { \\mathrm { c m d } } , \\omega _ { z } ^ { \\mathrm { c m d } } )$ the command. $\\phi _ { \\mathrm { t o r s o } }$ is the sideways lean of the torso z-axis (forward lean is not penalized) and $\\omega _ { \\mathrm { r o l l } } , \\omega _ { \\mathrm { p i t c h } }$ the torso roll and pitch rates, all in the heading frame. $h _ { \\mathrm { r o o t } }$ is the root height and $u _ { z }$ the z-component of the unit gravity direction in the root frame, so $1 + u _ { z }$ is 0 upright and 2 upside down, and the tilt condition triggers at about $7 3 ^ { \\circ }$ . Every term, here and in Table A.2, is multiplied by the control period $\\Delta t = 0 . 0 2 \\mathrm { s }$\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s16:b7:p0",
+            "assessment": "Table A.7 三行数字为 142,220 / 129,667 / 129,514，批注一致。“名称过滤移除大部分、可行性过滤进一步精修”可由两阶段减量（12,553 vs 153）直接推出，属允许的推断且有数据支撑，保留。",
+            "source_quote": "<table><tr><td>Stage</td><td>Clips</td></tr><tr><td>Raw BONES-SEED (G1 retarget)</td><td>142,220</td></tr><tr><td>After name filter After feasibility filter</td><td>129,667 129,514</td></tr></table>\n\n"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s16:b8:p0",
+            "assessment": "仅为 Table A.7 caption，批注内容（各步过滤后剩余片段数）与 caption 语义相符，保留。",
+            "source_quote": "Table A.7: Number of BONES-SEED clips before filtering and after each filter.\n\n"
+          },
+          {
+            "block_index": 9,
+            "source_quote_id": "s16:b9:p0",
+            "assessment": "原文“removes 12,553 clips”，12,553/142,220=8.8%，与批注一致；关键词例外自 SONIC 代码 [1] 并补充遗漏词的说法也来自原文。保留。",
+            "source_quote": "sit, climb, jump off 50cm, look over fence. This pass (adapted from the keyword list in SONIC’s released data-processing code [1], plus a few terms it misses) removes 12,553 clips.\n\n"
+          },
+          {
+            "block_index": 10,
+            "source_quote_id": "s16:b10:p0",
+            "assessment": "核对方法条件：名称过滤漏掉的片段由 MuJoCo 正向运动学跑出人体链接与足部几何轨迹，指标 $z_{min}(t)=\\min_b z_b(t)$，地板 z=0。批注表述准确，保留。",
+            "source_quote": "Feasibility filter. The name filter misses clips whose names do not reveal the problem (e.g. a routine that walks onto a box). We run each motion through MuJoCo forward kinematics and flag it from the resulting body-link and foot-geometry trajectories, writing $z _ { \\mathrm { m i n } } ( t ) = \\mathrm { m i n } _ { b } z _ { b } ( t )$ for the height of the lowest body link at time t with the floor at z = 0:\n\n"
+          },
+          {
+            "block_index": 11,
+            "source_quote_id": "s16:b11:p0",
+            "assessment": "原文阈值为“above 0.20 m for at least 0.6 s”，批注写“高于 0.20m 超过 0.6s”，阈值与持续时间方向一致，无实质偏差；括号内“站在或爬上物体”来自原文。保留。",
+            "source_quote": "• Elevated support. $z _ { \\mathrm { m i n } }$ holds above 0.20 m for at least 0.6 s (standing or climbing on a box).\n\n"
+          },
+          {
+            "block_index": 12,
+            "source_quote_id": "s16:b12:p0",
+            "assessment": "核对双阈值：低于 -0.12 m，或低于 -0.08 m 占 clip 时长 80% 以上；括号中“重定向错误导致腿穿地板”为原文理由。批注与原文一致，保留。",
+            "source_quote": "• Ground penetration. $z _ { \\mathrm { m i n } }$ falls below −0.12 m, or below −0.08 m for over 80% of the clip (legs driven through the floor by a faulty retarget).\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s16:b3:p1",
+            "assessment": "摘要原稿把双卡学习率写成“√2/2 × 2×10^-4”并加“推测线性缩放”，与 LaTeX 不符且属无据推测；已改为单卡 2×10^-4、双卡 √2×2×10^-4，并注明原文未给缩放依据。",
+            "source_quote": "hen element-wise 0.1</td></tr><tr><td>Discount</td><td>γ</td><td>0.99</td></tr><tr><td>Sensor noise</td><td></td><td>Table A.1</td></tr><tr><td></td><td> $\\eta _ { t } \\sim \\rho _ { \\eta }$ </td><td></td></tr><tr><td>Critic</td><td></td><td></td></tr><tr><td>GAE parameter</td><td>λ</td><td>0.95</td></tr><tr><td>Optimizer</td><td></td><td>Adam</td></tr><tr><td>Learning rate</td><td></td><td>same as  $\\alpha _ { \\omega }$ </td></tr><tr><td>Gradient clipping</td><td></td><td>global norm 1.0</td></tr><tr><td>Critic epochs per update</td><td></td><td>5, each over 4 shuffled minibatches</td></tr><tr><td>Data collection</td><td></td><td></td></tr><tr><td>Simulator environments per GPU</td><td></td><td>4096</td></tr><tr><td>Action noise</td><td> $\\epsilon _ { t } \\sim \\rho _ { \\epsilon }$ </td><td> $\\mathcal { N } ( 0 , 0 . 1 ^ { 2 } )$  per action dimension</td></tr><tr><td>Replay-buffer size</td><td></td><td>1000 steps per environment</td></tr><tr><td>Schedule</td><td></td><td></td></tr><tr>"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s16:b7:p0",
+            "assessment": "摘要在数据部分补入可行性过滤仅再移除 153 条（129,667−129,514），该差值与 Table A.7 一致，用于说明两阶段减量极不均衡。",
+            "source_quote": "<table><tr><td>Stage</td><td>Clips</td></tr><tr><td>Raw BONES-SEED (G1 retarget)</td><td>142,220</td></tr><tr><td>After name filter After feasibility filter</td><td>129,667 129,514</td></tr></table>\n\n"
+          },
+          {
+            "block_index": 6,
+            "source_quote_id": "s16:b6:p0",
+            "assessment": "摘要原稿把终止写成“1+u_z 接近 2（即倒置）或超过约 73° 时触发”，混淆了两件事，且 Table A.6 中终止项公式在 OCR 里缺失；已改为陈述 h_root、u_z 与 1+u_z 的定义、73° 触发点，并说明公式缺失，同时补上“前倾不罚”。",
+            "source_quote": "Table A.6: Velocity-tracking reward and termination used to train the RL encoder. $\\mathbf { v } _ { x y }$ is the planar root velocity in the heading frame, $\\omega _ { z }$ the world yaw rate, and $( \\mathbf { v } _ { x y } ^ { \\mathrm { c m d } } , \\omega _ { z } ^ { \\mathrm { c m d } } )$ the command. $\\phi _ { \\mathrm { t o r s o } }$ is the sideways lean of the torso z-axis (forward lean is not penalized) and $\\omega _ { \\mathrm { r o l l } } , \\omega _ { \\mathrm { p i t c h } }$ the torso roll and pitch rates, all in the heading frame. $h _ { \\mathrm { r o o t } }$ is the root height and $u _ { z }$ the z-component of the unit gravity direction in the root frame, so $1 + u _ { z }$ is 0 upright and 2 upside down, and the tilt condition triggers at about $7 3 ^ { \\circ }$ . Every term, here and in Table A.2, is multiplied by the control period $\\Delta t = 0 . 0 2 \\mathrm { s }$\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 16,
+        "part": 2,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 13,
+            "source_quote_id": "s16:b13:p0",
+            "assessment": "核对原文：距离是“MuJoCo 的精确 geom-to-plane 距离（mj geomDistance），来自脚部碰撞几何体，而非 link-origin 代理”。初稿写成“而非关节原点”，把 link-origin 误作关节原点，属术语错误，已改为“连杆原点（link-origin）”。初稿对“-0.004±0.004 m 故 0.02 m 阈值足够”的表述方向正确，但原文只说“several σ clear of the floor”，故改为“高出地面数个 σ”，未夸大。静止门控排除弹道跳跃、成因三类（低平台、retarget 浮空、缓慢起身）均与原文一致。推断未越界。",
+            "source_quote": "• Floating feet. For at least 0.5 s both feet stay more than 0.02 m above the floor—measured as MuJoCo’s exact geom-to-plane distance (mj geomDistance) from the foot collision geometry, not a link-origin proxy—while the pelvis is upright and at standing height and the body is nearly stationary. A free-standing humanoid cannot hold both feet off the floor while standing still, so this is infeasible on flat ground whatever the cause (a low platform, a retarget float, or a slow rise; a ballistic jump is excluded by the stationary gate). The clean ground stance sits at $- 0 . 0 0 4 \\pm 0 . 0 0 4 \\mathrm { m }$ , so the 0.02 m gate is several σ clear of the floor.\n\n"
+          },
+          {
+            "block_index": 14,
+            "source_quote_id": "s16:b14:p0",
+            "assessment": "核对数字：原文为“a further 153 clips”，初稿“额外剔除 153 个片段”准确。原文只写“tuned for the G1 retarget at 50 Hz”，未出现厂商名 Unitree，初稿添加“Unitree”属原文未给的外部信息，已删去。初稿把“不能直接照搬”标为推断，边界正确，保留。",
+            "source_quote": "This pass removes a further 153 clips. All thresholds are tuned for the G1 retarget at 50 Hz.\n\n"
+          }
+        ],
+        "correction_attempts": 1
+      },
+      {
+        "section_index": 18,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s18:b1:p0",
+            "assessment": "逐项核对数字与条件：129,514 条动作、摩擦 1.0、无域随机化/观测噪声/确定性物理、各策略自用执行器增益与动作缩放及观测构建、SuperMimic 终止条件（附录 A）、SONIC 判据 0.25 m 且无朝向项，均与原文一致。原批注未写错任何事实，但漏掉‘每条动作从首帧播放一次’和 0.25 m 这一关键阈值，属于可补足的含糊处，故在其基础上补入这两点，其余措辞保持。摘要做了两处修正：其一，原文将 SONIC 判据标注为引文 [1]，并未说明该判据专属于 v1.1 checkpoint，原摘要写成‘依据其 v1.1 版本的标准’属于超出原文的归因，改为‘SONIC 自身判据（引文 [1]）’；其二，原摘要‘引入非完全公平的变量’‘可能影响比较的严谨性’是批读者推断而非原文内容，摘要体例不写评价，改为陈述原文未说明判据如何合并、未做校正这一事实性空白。",
+            "source_quote": "We evaluate SONIC and SuperMimic on the same filtered BONES-SEED training-set benchmark, containing 129,514 evaluated motions. For SONIC we evaluate its released checkpoint and its v1.1 checkpoint [1]. Each motion plays once from its first frame, with the same simulation for every policy: foot friction 1.0, no domain randomization or observation noise, and deterministic physics. Each policy uses its own actuator gains and action scale, and receives its observations as its training environment builds them. A motion is marked as failed if the rollout triggers SuperMimic’s training termination (Appendix A). SONIC’s own success criterion fails a motion on root and end-effector height deviations above 0.25 m, without an orientation term [1].\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 19,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s19:b1:p0",
+            "assessment": "逐项核对：44 flips、22 side rolls、8 dance、15/24 broad jumps 与原文一致；v1.1 checkpoint 失败 239 个、其中含 22 个 side rolls 中的 19 个，原文明确，而摘要初稿把 239 误当作表格中的 SONIC 总数。SuperMimic 前五组 195 个动作含 25 个失败中的 14 个，初稿未提，已补入批注。原文限制“benchmark motions are training motions”是覆盖度而非泛化，已保留。",
+            "source_quote": "Table A.8 counts failed motions per motion group. SONIC fails whole groups (all 44 flips, all 22 side rolls, and all 8 motions of one dance routine) and 15 of the 24 broad jumps. Its v1.1 checkpoint fails 239 motions, among them the same flips and dance motions and 19 of the 22 side rolls. After 3 h on one GPU, SuperMimic’s failures concentrate in a few small groups of hard motions: the first five groups of Table A.8, 195 motions, hold 14 of its 25 failures. In no group does it fail more motions than SONIC. After 9.8 h on two GPUs, SuperMimic fails on none. Figure A.1 shows the count over training. The benchmark motions are training motions for both methods, so the counts measure how fully each policy covers these training motions, not generalization to new motions.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s19:b2:p0",
+            "assessment": "表格数字核对：SONIC 179、SuperMimic 25 与 0，side rolls 22/2/0，flips 44/1/0，其余组别数字一致。初稿“随算力投入显著提升”把两种同时改变时长和 GPU 数的设置当作单变量因果，属超出证据的推断，已改为提示混杂并注明是训练集失败计数。",
+            "source_quote": "<table><tr><td></td><td></td><td colspan=\"2\">SuperMimic</td></tr><tr><td>Motion group (motions)</td><td>SONIC</td><td>1 GPU × 3 h</td><td>2 GPUs × 9.8 h</td></tr><tr><td>side rolls (22)</td><td>22</td><td>2</td><td>0</td></tr><tr><td>flips:  $3 6 0 ^ { \\circ } , 1 8 0 ^ { \\circ } , 9 0 ^ { \\circ } ( 4 4 )$ </td><td>44</td><td>1</td><td>0</td></tr><tr><td>fire-in-the-hole turns (20)</td><td>3</td><td>3</td><td>0</td></tr><tr><td>crossed legs (10)</td><td>9</td><td>0</td><td>0</td></tr><tr><td>lying, resting and standing up (99)</td><td>28</td><td>8</td><td>0</td></tr><tr><td>broad jumps (24)</td><td>15</td><td>0</td><td>0</td></tr><tr><td>dance routine (8)</td><td>8</td><td>0</td><td>0</td></tr><tr><td>all other motions (129,287)</td><td>50</td><td>11</td><td>0</td></tr><tr><td>total (129,514)</td><td>179</td><td>25</td><td>0</td></tr></table>\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s19:b3:p0",
+            "assessment": "caption 写明基础为 filtered BONES-SEED training-set benchmark、SONIC 为 released checkpoint、加粗表示整组全失败。初稿关于训练集即“记忆/拟合”的判断与 block 1 末句一致，可保留；对照基线定位不违背原文。",
+            "source_quote": "Table A.8: Failed motions per motion group on the filtered BONES-SEED training-set benchmark. SONIC: released checkpoint. Bold: the policy fails every motion in the group.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s19:b4:p0",
+            "assessment": "caption 仅说明每 4000 次迭代评分、对应 Figure 3(a) 的运行、SONIC 为发布检查点；未提供图像视觉信息。初稿“直观呈现收敛速度差异”是原文没有的推断，已删改为如实说明无法核对图像内容。",
+            "source_quote": "![](images/8c549d56fc9e15e64ab380fb313b1d08dbc209d93de9af9024155fa43cb9bf53.jpg)  \nFigure A.1: Failed motions during training on the filtered BONES-SEED training-set benchmark. Checkpoints are scored every 4000 iterations, for the runs of Figure 3(a). SONIC: released checkpoint.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 20,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s20:b1:p0",
+            "assessment": "逐项核对 caption：训练数据为过滤后的 BONES-SEED 集（指向附录 E），(b)(c) 的数据长度扫描使用 1、7、40、264 h 子集——初稿这两处数字与条件无误。两处需修正：(1) 初稿称该图“展示训练表现/性能的变化趋势”，但 caption 只说明训练所用数据集和扫描规模，未提任何性能指标，属于推断超出证据，改为明示 caption 未给指标、需回正文确认；(2) 摘要把“主要展示数据集长度扫描”当作 Figure 3 的整体内容，而 caption 只把扫描限定在 (b)(c)，已改为限定表述，并删去“关键证据”这类评价性措辞，补注来源为 F.3 的 caption。",
+            "source_quote": "Figure 3. SuperMimic trains on the filtered BONES-SEED set (Appendix E). The dataset-length sweep in (b, c) uses subsets of 1, 7, 40, and 264 h.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 22,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s22:b1:p0",
+            "assessment": "核对输入构成：原文为 command $(v_x,v_y,\\omega_z)$ 加 'a feature of the last 10 frames of o'，批注把“最近 10 帧特征”与指令并列，准确；'§4.5' 交叉引用也对。原文未说“多模态”一词，但指令+观测特征确实来自两类信号，措辞可接受。仅做文句顺写，未改事实。",
+            "source_quote": "The velocity encoder of §4.5 maps the command $( v _ { x } , v _ { y } , \\omega _ { z } )$ and a feature of the last 10 frames of o to the shared latent.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s22:b2:p0",
+            "assessment": "改正两处：初稿写“训练独立于运动追踪接口”（摘要）与原文字面相反，原文为 'jointly with the motion-tracking interface'，已改为联合训练；初稿写“模拟器环境均匀分配给速度接口”，原文是 'Half of the 4096 simulator environments and half of each imagined batch'，应为“一半”，'p(T) uniform' 是对接口分布均匀的表述而非环境全部均分。100,000 次迭代、LAFAN1/BONES-SEED 过滤库、与 Algorithm A.1 的差别（批次内混合 vs 每次更新采一种）均核对无误。",
+            "source_quote": "Each encoder is trained from scratch in its own run, jointly with the motion-tracking interface, for 100,000 iterations. Both runs use a walking and running library filtered from LAFAN1 and BONES-SEED. Half of the 4096 simulator environments and half of each imagined batch use the velocity interface, so $p ( \\mathcal { T } )$ is uniform; unlike Algorithm A.1, which samples one interface per update, each imagined batch mixes both.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s22:b3:p0",
+            "assessment": "核对全部数值：$v_x\\in[-1.5,2]$、$v_y\\in[-1.32,1.32]$ m/s、$\\omega_z\\in[-3.35,3.35]$ rad/s、0.5 概率读参考、0.1 置零、250 控制步=5 s、25 帧均值，均与原文一致。初稿只写“以 0.5 概率跟随参考片段”而未交代 250 步/5 s 的重采样节律，且把 0.1 置零笼统写成“包含 10% 静止状态”，未标明它属于非参考来源分支；已补齐并明确条件。原文该处 0.1 的归属在句法上依附于 'otherwise' 分支，属合理读法，未替作者扩大。",
+            "source_quote": "Commands. The command $\\mathbf { \\nabla } \\mathbf { g } _ { t } = ( v _ { x } , v _ { y } , \\omega _ { z } )$ stacks the target planar root velocity in the heading (yaw-only) frame and the target world-frame yaw rate. A reference command is the centered $2 5 -$ frame mean of the reference root velocity in the reference’s heading frame. For the RL encoder, each environment resamples its command source at every reset and every 250 control steps (5 s): with probability 0.5 it reads the command from the reference clip at every step, and otherwise it holds a command drawn uniformly from $v _ { x } \\in [ - 1 . 5 , 2 ] \\mathrm { m } / \\mathrm { s } , v _ { y } \\in [ - 1 . 3 2 , 1 . 3 2 ] \\mathrm { m } / \\mathrm { s }$ and $\\omega _ { z } \\in$ $[ - 3 . 3 5 , 3 . 3 5 ] \\mathrm { r a d / s } .$ , zeroed (standing) with probability 0.1.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s22:b4:p0",
+            "assessment": "核对损失：weight 0.1 的 mean-squared loss、作用于带参考指令的 rollout、目标是同一步运动编码器 latent、运动侧 stop-gradient，全部与原文一致，方向（速度 latent 被拉向运动 latent）未写反。补了一句梯度只更新速度侧的解释，属对 stop-gradient 的标准含义说明，非新增实验事实。",
+            "source_quote": "Encoder. On rollouts with reference commands, a mean-squared loss of weight 0.1 pulls the velocity latent toward the motion encoder’s latent at the same step, with a stop-gradient on the motion latent.\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s22:b5:p0",
+            "assessment": "核对：rollout 起点为各接口自己模拟器记录的状态；RL 编码器速度 rollout 用速度跟踪奖励 + fall-only 终止并引 Table A.6；蒸馏基线用附录 A 的运动跟踪奖励与终止。原批注准确，仅补一句提醒两者奖励不同（训练目标差异），该判断直接由原文两句对比得出，未超出证据。",
+            "source_quote": "Rollouts, reward, and termination. Each interface’s imagined rollouts start from states logged by its own simulator environments. Velocity rollouts of the RL encoder use the velocity-tracking reward and a fall-only termination (Table A.6); those of the distillation baseline use the motiontracking reward and termination of Appendix A.\n\n"
+          },
+          {
+            "block_index": 0,
+            "source_quote_id": "s22:b0:p0",
+            "assessment": "纯小节标题 '## G.1 Training setup'，无需批注；作为摘要的节号来源记录。",
+            "source_quote": "## G.1 Training setup\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 23,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s23:b1:p0",
+            "assessment": "原文为 “root velocity measured in the heading frame”，是航向系而非“机体系”，初稿此处术语不准，已改为航向系。其余数字核对无误：5 s 指令、每指令 4 次试验、最后 2 s 平均速度误差的模除以指令模、未摔倒试次取中位数、672 个 step 响应为三个平面各 15×15 网格（225×3−3=672，与原文一致）、Figure 7 中 >0.9 与全摔均画在上限。初稿“672 种步态组合”改回原文的“step 响应”，因为原文并未使用步态组合这一说法。",
+            "source_quote": "Protocol. From standing, the policy receives a fixed command for 5 s; each command is tested in four trials. The relative steady-state error is the norm of the mean velocity error over the last 2 s, divided by the norm of the command, with the root velocity measured in the heading frame. The per-command value is the median over the trials that did not fall. The 672 step responses form a 15 × 15 grid on each of three planes, spanning the uniform command range above, with the standing command left out. In Figure 7, errors above 0.9 are drawn at 0.9, and a policy that fell in all four trials is drawn at the cap.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s23:b2:p0",
+            "assessment": "数字核对：RL encoder 在 650/672 上误差更低、distillation 15 个、中位相对误差 0.16 与 0.49、蒸馏在 7 条指令上全摔且均为平移配合至少 2.8 rad/s 转向、每策略一个训练 seed，均与原文一致。初稿“显著优于”超出证据：原文仅单 seed、无统计检验，已删“显著”并补出这一限制。初稿“高速转向”“频繁摔倒”过于笼统，已改为原文的“7 条指令上四次全摔”及具体转向阈值；失败原因保留为作者所述“运动库几乎无数据”，不额外加推断。",
+            "source_quote": "Results. The RL encoder has the lower error on 650 of the 672 step responses, and the distillation encoder on 15. Their median relative errors are 0.16 and 0.49. Distillation falls in every trial on seven commands, all combining translation with a turn of at least 2.8 rad/s, where the motion library has almost no data. Each policy has one training seed."
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s23:b2:p0",
+            "assessment": "段组摘要核对：初稿“蒸馏编码器仅为 0.49”用词暗示数值低，与 0.16 的对比关系相反，已改为“分别为 0.16 与 0.49”。“15×15 网格共 672 种”补齐为三个平面各一网格、去掉站立指令后合计 672；并补出 650+15 之外的 7 个响应即全摔指令，避免读者误算为总数不符。摘要仅陈述原文事实，未加评价。",
+            "source_quote": "Results. The RL encoder has the lower error on 650 of the 672 step responses, and the distillation encoder on 15. Their median relative errors are 0.16 and 0.49. Distillation falls in every trial on seven commands, all combining translation with a turn of at least 2.8 rad/s, where the motion library has almost no data. Each policy has one training seed."
+          }
+        ],
+        "correction_attempts": 0
+      }
+    ],
+    "final": {
+      "verdict": "corrected",
+      "checks": [
+        {
+          "target": "readme",
+          "claim": "GPU-hours 减少 >1000×；129,514 个基准动作中失败 25 个，双卡 9.8 小时零失败（§4.1, Appendix F）。",
+          "section_index": 1,
+          "block_index": 3,
+          "source_quote_id": "s1:b3:p0",
+          "assessment": "原文明确：单 GPU 3 h 内超过 SONIC 发布检查点的归一化回报、GPU-hours 减少超过 1000×（§4.1），129,514 动作基准上 3 h 单卡失败 25 个、9.8 h 双卡为 0（Appendix F）。数字与硬件条件（单卡 H100）一致；§4.1 另给出换算约 7200×，README 采用原文保守表述 >1000×，无需改动。",
+          "source_quote": "On one GPU, SuperMimic surpasses the normalized return of SONIC’s released checkpoint within 3 h and reduces GPU-hours by more than 1000× (§4.1). On a 129,514-motion benchmark, Super-Mimic fails on 25 motions after 3 h on one GPU and on none after 9.8 h on two GPUs, against 179 for SONIC’s released checkpoint (Appendix F). Across a 264× increase in dataset length, the world model’s prediction error stays stable and SuperMimic’s compute to a fixed return grows slowly. The learned policy transfers to a physical Unitree G1. In a preliminary study of downstream interfaces, an RL-trained velocity encoder outperforms a distillation baseline.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "数据量扩大 264× 时 8 步预测误差稳定在 0.007–0.011；世界模型 rollout 比 MuJoCo Warp 快 >10×（64k 环境达 62×）",
+          "section_index": 5,
+          "block_index": 14,
+          "source_quote_id": "s5:b14:p0",
+          "assessment": "误差区间 0.007–0.011 与数据集 1→264 h（即 264×）的直接依据是 Figure 3(c) 及其在 §4.2 的复述，故关键数字表把出处由 §4.1 改为 §4.2。10×/62× 出自同节 s5:b15:p0（2k–16k 批 >10×，64k 达 62×），两条事实均属原文陈述。",
+          "source_quote": "One model amortizes the motion library. In Figure 3(c), the world model’s 8-step prediction error stays between 0.007 and 0.011 as the dataset grows from 1 to 264 h. Every motion is executed by the same humanoid, so added clips supply more evidence about the shared body and contact dynamics rather than demanding new capacity. This is consistent with the slow growth of the compute needed to reach the target return (§4.1).\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "解析梯度使达到同等回报所需想象步数降至 PPO-WM 的约 1/64（§4.1–4.2）。",
+          "section_index": 5,
+          "block_index": 18,
+          "source_quote_id": "s5:b18:p0",
+          "assessment": "原文为“reaches the best PPO-WM return with about 64× fewer imagined steps”，即以约 1/64 想象步数达到 PPO-WM 的最佳（非任意“同等”）回报；表述已限定为 PPO-WM 的最佳回报水平，属作者在 LAFAN1 walk/run/sprint 上的机制消融结论。",
+          "source_quote": "First-order gradients need fewer imagined steps. As a mechanism ablation, Figure 5(b) isolates the benefit of first-order policy updates: SuperMimic reaches the best PPO-WM return with about 64× fewer imagined steps, so the gain is not just rollout speed.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "想象视界受 H100 显存限制：H=128 是能装下的最长视界，且从 64 升到 128 使达标时间近三倍、最终回报更低（§4.3）。",
+          "section_index": 5,
+          "block_index": 20,
+          "source_quote_id": "s5:b20:p0",
+          "assessment": "初稿写作“H=32 受 H100 显存限制”，与原文不符：H=32 是默认值且最快达到 0.82，显存限制只决定 H=128 为可容纳的最长视界（“H=128 is the longest horizon that fits on an H100”）。已改为限定 H=128，并保留 64→128 时间近三倍、最终回报更低的原文事实。",
+          "source_quote": "Figure 4(b, c) sweeps H with and without the critic. Without the critic, training fails at $H \\leq 1 6$ With it, H=16 matches the critic-free H=32, and H=32 reaches a return of 0.82 fastest. Raising H from 64 to 128 nearly triples the time to that return and lowers the final return; H=128 is the longest horizon that fits on an H100. At matched return, the critic still changes behavior. Under 0.5–4 m/s velocity pushes while holding a static T-pose in simulation, the critic policy settles within 0.5–2.4 s. The critic-free policy never settles: it keeps stumbling even at 0.5 m/s and falls at 4 m/s.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "142,220→129,514：名称过滤＋可行性过滤（高架支撑、地面穿透、悬浮脚）",
+          "section_index": 16,
+          "block_index": 1,
+          "source_quote_id": "s16:b1:p0",
+          "assessment": "原文为两轮过滤（“We remove these in two passes”）：原始 142,220 条，名称过滤后 129,667，可行性过滤后再移除 153 条至 129,514（Table A.7）。初稿写“三轮过滤”有误，已改。可行性过滤的三项判据见 s16:b11–b13。",
+          "source_quote": "We train on the publicly available G1-retargeted BONES-SEED motion set [27]. The raw release contains 142,220 clips, but many interact with terrain or objects the robot cannot use (stairs, boxes, ladders, chairs) or carry retargeting artifacts that make them infeasible for a free-standing humanoid on flat ground. We remove these in two passes and keep 129,514 clips (Table A.7).\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "策略无需逐动作调参即迁移到物理 Unitree G1，完成跳跃、侧滚、空翻等杂技动作（§4.4, Figure 6）。",
+          "section_index": 5,
+          "block_index": 22,
+          "source_quote_id": "s5:b22:p0",
+          "assessment": "原文为“deploys on a real Unitree G1 without per-motion tuning”，动作包含 skipping jump、side roll、90° flip、原地 360° flip。初稿的“零调参”易被读成全流程无任何调参，已改为“无需逐动作调参”。原文未报告真机成功率，README 未声称有。",
+          "source_quote": "One general motion tracker deploys on a real Unitree G1 without per-motion tuning (Figure 6). The four motions cover locomotion (a skipping jump), contact-rich whole-body motion with the torso and limbs on the floor (a side roll), and acrobatics (a 90<sup>◦</sup> flip and an in-place 360<sup>◦</sup> flip).\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "基准以“回放触发 SuperMimic 的训练终止”判失败，并注明 SONIC 自身的成功判据是根与末端高度偏差超过 0.25 m、不含朝向项，两套判据的差异未做校正。",
+          "section_index": 18,
+          "block_index": 1,
+          "source_quote_id": "s18:b1:p0",
+          "assessment": "F.1 写“A motion is marked as failed if the rollout triggers SuperMimic's training termination”，随后另述 SONIC 自身判据（root 与 end-effector 高度偏差 >0.25 m、无朝向项）。初稿称两种方法“分别按各自的训练终止条件”判分，超出原文；已改为同一判据打分并注明 SONIC 判据差异，且保留“未做校正”的判断。",
+          "source_quote": "We evaluate SONIC and SuperMimic on the same filtered BONES-SEED training-set benchmark, containing 129,514 evaluated motions. For SONIC we evaluate its released checkpoint and its v1.1 checkpoint [1]. Each motion plays once from its first frame, with the same simulation for every policy: foot friction 1.0, no domain randomization or observation noise, and deterministic physics. Each policy uses its own actuator gains and action scale, and receives its observations as its training environment builds them. A motion is marked as failed if the rollout triggers SuperMimic’s training termination (Appendix A). SONIC’s own success criterion fails a motion on root and end-effector height deviations above 0.25 m, without an orientation term [1].\n\n"
+        },
+        {
+          "target": "insight.method",
+          "claim": "对短程想象rollout（H=32步）做BPTT为确定性策略提供解析梯度，critic用GAE引导超出视界部分",
+          "section_index": 4,
+          "block_index": 13,
+          "source_quote_id": "s4:b13:p0",
+          "assessment": "§3.3 明确：策略更新时固定世界模型权重 ω，在 H=32 步想象轨迹上优化 π_θ 与 V_ψ，critic 估计超出 H 步的回报；GAE 目标与末端 bootstrap 见 s4:b19:p0、s4:b20:p0。BPTT 经世界模型雅可比得到一阶梯度见 s4:b17:p0。",
+          "source_quote": "During each policy update, we hold the world-model weights $\\omega$ fixed and optimize $\\pi _ { \\theta }$ and $V _ { \\psi }$ on imagined rollouts of H=32 steps. The critic $V _ { \\psi }$ estimates the return beyond step $H ,$ , so the model must be accurate only within these H steps. This imagination horizon exceeds the k-step replay windows on which we fit the model (§3.2). In practice, the learned model remains stable over indefinitely long rollouts, because the k-step autoregressive fit trains it to correct its own prediction errors.\n\n"
+        },
+        {
+          "target": "insight.findings",
+          "claim": "129,514个基准动作中失败25个（双卡9.8h零失败，基线179个）",
+          "section_index": 19,
+          "block_index": 1,
+          "source_quote_id": "s19:b1:p0",
+          "assessment": "F.2 与 Table A.8 给出：SONIC 发布检查点 179、SuperMimic 1 GPU×3 h 为 25、2 GPUs×9.8 h 为 0。原文同时说明基准动作是两者的训练动作，计数衡量训练动作覆盖度而非泛化；数字使用正确。",
+          "source_quote": "Table A.8 counts failed motions per motion group. SONIC fails whole groups (all 44 flips, all 22 side rolls, and all 8 motions of one dance routine) and 15 of the 24 broad jumps. Its v1.1 checkpoint fails 239 motions, among them the same flips and dance motions and 19 of the 22 side rolls. After 3 h on one GPU, SuperMimic’s failures concentrate in a few small groups of hard motions: the first five groups of Table A.8, 195 motions, hold 14 of its 25 failures. In no group does it fail more motions than SONIC. After 9.8 h on two GPUs, SuperMimic fails on none. Figure A.1 shows the count over training. The benchmark motions are training motions for both methods, so the counts measure how fully each policy covers these training motions, not generalization to new motions.\n\n"
+        },
+        {
+          "target": "insight.research_question",
+          "claim": "核心瓶颈在于现有无模型RL未显式建模所有动作共享的混合刚体动力学，导致扩展动作量等价于扩展算力。",
+          "section_index": 1,
+          "block_index": 1,
+          "source_quote_id": "s1:b1:p1",
+          "assessment": "第 1 节原文：参考动作虽不同却共享同一 humanoid hybrid rigid-body dynamics，model-free RL 不显式建模该结构，因此“Scaling to more motions therefore amounts to scaling up compute”。属作者对问题动机的直接表述，非推断。",
+          "source_quote": " estimating action consequences from noisy simulator rollouts. Scaling to more motions therefore amounts to scaling up compute.\n\n"
+        },
+        {
+          "target": "insight.data",
+          "claim": "BONES-SEED经两轮过滤保留129,514条clip（总长264.56h）",
+          "section_index": 5,
+          "block_index": 4,
+          "source_quote_id": "s5:b4:p0",
+          "assessment": "264.56 h 出自 §4.1 的 compute accounting（BONES-SEED 为 SONIC 数据的公开子集，约为 SONIC 611 h 的 1/2.3）。过滤到 129,514 条的两轮流程见 Appendix E（s16:b1:p0、Table A.7）；两处数字相互一致。",
+          "source_quote": "Compute accounting. The ratios compare SONIC’s reported 128 NVIDIA L40 GPUs for 7 days (about 21,000 GPU-hours) with 3 h on one NVIDIA H100, within which SuperMimic surpasses the return of SONIC’s released checkpoint. They are about 56× (> 50×) in wall-clock time and about 7200× (> 1000×) in GPU-hours. The 3 h cover the full training loop; checkpoint evaluations run after training and are not counted. SuperMimic trains on 264.56 h of motion from BONES-SEED [27], the public subset of SONIC’s data, about 2.3× less than SONIC’s 611 h. The GPU models also differ: in peak throughput, an H100 delivers 0.74× the fp32 and 5.5× the tensor-core performance of an L40; how much of that peak either run used is unknown. Nonetheless, 2.3× in data and at most 5.5× in peak GPU throughput cannot account for a 1000× gap in GPU-hours.\n\n"
+        },
+        {
+          "target": "insight.limitations",
+          "claim": "仅在平地训练，未覆盖地形与物体交互；世界模型仅从仿真transition学习，未用真机数据改进",
+          "section_index": 7,
+          "block_index": 3,
+          "source_quote_id": "s7:b3:p0",
+          "assessment": "第 6 节自述三项局限：仅平地训练、扩展到地形与物体交互为进行中工作（s7:b3:p0）；世界模型只学仿真 transition、真机数据可望改进（s7:b2:p0）；多接口并行训练必要性未测（s7:b1:p0）。均为作者陈述，非推断。",
+          "source_quote": "• No terrain or object interaction. SuperMimic trains only on flat ground. Extending it to terrain and object interaction is ongoing work.\n\n"
+        },
+        {
+          "target": "insight.relevance",
+          "claim": "其共享解码器+独立编码器的多接口架构对需要速度、末端位姿等多目标切换的系统有参考价值",
+          "section_index": 11,
+          "block_index": 1,
+          "source_quote_id": "s11:b1:p1",
+          "assessment": "附录 B 给出每接口独立 goal encoder enc_{θ,i} 与共享 decoder dec_θ 的架构，并为每个接口配独立 critic；这是“多目标切换系统可参考”的事实基础。对读者研究的价值判断属于推断，已在正文以“推断：”标注，未冒充作者结论。",
+          "source_quote": "et), each with its own goal space $\\mathcal { G } _ { i } .$ reward $r _ { i } ,$ and termination $d _ { i } ,$ and train each with its own critic $V _ { \\psi _ { i } }$ . A single policy network uses per-interface goal encoders $\\mathrm { e n c } _ { \\theta , i }$ and a shared decoder dec<sub>θ</sub>,\n\n"
+        }
+      ],
+      "correction_attempts": 0
+    }
+  },
+  "source_sha256": "b7abc9c15655e510d8bea7a89c4121f56cf040308b69247cfc5227a5d2df2bde",
+  "source_chars": 76789,
+  "read_chars": 76789,
+  "sections": [
+    {
+      "title": "SuperMimic: Scaling Humanoid Whole-Body Control with One Differentiable World Model",
+      "path": "sections/00-section.md"
+    },
+    {
+      "title": "1 Introduction",
+      "path": "sections/01-section.md"
+    },
+    {
+      "title": "Contributions.",
+      "path": "sections/02-section.md"
+    },
+    {
+      "title": "2 Related Work",
+      "path": "sections/03-section.md"
+    },
+    {
+      "title": "3 Method",
+      "path": "sections/04-section.md"
+    },
+    {
+      "title": "4 Experimental Results",
+      "path": "sections/05-section.md"
+    },
+    {
+      "title": "5 Conclusion",
+      "path": "sections/06-section.md"
+    },
+    {
+      "title": "6 Limitations and Future Work",
+      "path": "sections/07-section.md"
+    },
+    {
+      "title": "Acknowledgments",
+      "path": "sections/08-section.md"
+    },
+    {
+      "title": "References",
+      "path": "sections/09-section.md"
+    },
+    {
+      "title": "A Instantiation: observation, action, reward, and sim context",
+      "path": "sections/10-section.md"
+    },
+    {
+      "title": "B Joint training across goal interfaces",
+      "path": "sections/11-section.md"
+    },
+    {
+      "title": "C Network architectures",
+      "path": "sections/12-section.md"
+    },
+    {
+      "title": "D Training loop and hyperparameters",
+      "path": "sections/13-section.md"
+    },
+    {
+      "title": "D.1 Algorithm",
+      "path": "sections/14-section.md"
+    },
+    {
+      "title": "D.2 Hyperparameters",
+      "path": "sections/15-section.md"
+    },
+    {
+      "title": "E Motion data filtering",
+      "path": "sections/16-section.md"
+    },
+    {
+      "title": "F Evaluation",
+      "path": "sections/17-section.md"
+    },
+    {
+      "title": "F.1 Benchmark metrics",
+      "path": "sections/18-section.md"
+    },
+    {
+      "title": "F.2 Failed motions",
+      "path": "sections/19-section.md"
+    },
+    {
+      "title": "F.3 Experiment protocols",
+      "path": "sections/20-section.md"
+    },
+    {
+      "title": "G Velocity-command task",
+      "path": "sections/21-section.md"
+    },
+    {
+      "title": "G.1 Training setup",
+      "path": "sections/22-section.md"
+    },
+    {
+      "title": "G.2 Step test",
+      "path": "sections/23-section.md"
+    }
+  ],
+  "skill_sha256": "98afec5114549df90ffec1aa60a6ba484b19700b0741b15f2a14a92b546674b7",
+  "extracted_metadata": {
+    "title": "SuperMimic: Scaling Humanoid Whole-Body Control with One Differentiable World Model",
+    "year": "2026"
+  },
+  "input_metadata": {
+    "arxiv_id": "2610.28480",
+    "authors": "",
+    "source_url": "https://arxiv.org/abs/2610.28480",
+    "title": "(AI 精读中…)",
+    "year": ""
+  },
+  "pipeline_version": 4,
+  "reading_fingerprint": "1b158a805aadb6f0732d7a0805268055a1c079dada2b2609993ee06ac66c282c"
+}
