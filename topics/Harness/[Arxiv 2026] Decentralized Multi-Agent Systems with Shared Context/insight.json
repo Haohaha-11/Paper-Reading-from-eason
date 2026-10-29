@@ -1,0 +1,36 @@
+{
+  "research_question": "多智能体语言模型系统中，如何消除因等待同伴或重复工作导致的计算“气泡”，在长时程任务上同时提升准确率与墙钟速度？",
+  "method": "提出 DELM 框架：n 个并行 agent 各自维护会话与工作区，通过只追加的共享上下文（FACT/FAIL 条目）和排他认领的任务队列异步协作；agent 即时发布紧凑发现，同伴可 expand 审查或 apply 导入，纠错以新条目追加，无中心调度者。",
+  "data": "Terminal-Bench 4.0 与 DeepSWE v1.1 各 10 个长时程任务、SWE-bench Verified、ProgramBench（ctags/pandoc，120 分钟预算）、LongBench-v2（125 样本）、OOLONG；底座模型含 GPT-6-Astra、Claude Opus 5.5、Gemini 3 Flash、DeepSeek-V4.1-Flash，DELM 以 n∈{2,4} 评估。",
+  "findings": "DELM 在 Terminal-Bench 4.0 与 DeepSWE v1.1 上同时更准更快：准确率最多高 17.5 点（DeepSWE，Claude Opus 5.5，n=4），比所基于 harness 最快 2.49×（Terminal-Bench，n=4）；SWE-bench Verified 上 DELM (n=4) 达 66.08%（+10.8 点，比 Claude Code 快 2.12×）；ProgramBench 120 分钟通过率最高 +19.91 点。消融显示去掉 early sharing、peer-status 或 shared context 任一机制，双 agent 即退回单 agent 速度（0.82–1.09×）。",
+  "limitations": "部分设置下更低的延迟与 Cost/Submission 以更高 Cost/Task 为代价；自然语言共享上下文不适合精确聚合（OOLONG 上单独 DELM 53.3% 低于 RLM 56.0%），作者建议结合代码中介执行。Terminal-Bench 上 n=4 准确率较 n=2 降 3–4 点（归因于集成错误与缺陷扩散），DeepSWE 上该关系随模型而异。",
+  "relevance": "推断：对研究 LLM agent 并行协作、软件工程自动化或测试时计算的读者，本文提供去中心化协调的可复现范式及消融证据，其共享上下文+任务队列设计可迁移至其他多 agent 场景。",
+  "method_type": "去中心化协调",
+  "themes": [
+    "多智能体系统",
+    "去中心化协调",
+    "共享上下文",
+    "任务队列",
+    "Agentic coding",
+    "测试时计算扩展"
+  ],
+  "citation_refs": [
+    "CAMEL",
+    "MetaGPT",
+    "AOrchestra",
+    "SWE-agent",
+    "Claude Code",
+    "Codex",
+    "Hearsay-II",
+    "MapReduce",
+    "GPipe",
+    "Self-Consistency",
+    "Tree of Thoughts",
+    "Graph of Thoughts",
+    "RecursiveMAS",
+    "ReadAgent",
+    "RLM"
+  ],
+  "evidence_level": "full_text",
+  "core_rank": 0
+}

@@ -1,0 +1,1812 @@
+{
+  "provider": "bailian",
+  "model": "qwen3.8-flash",
+  "kind": "paper",
+  "stage_models": {
+    "annotations": "qwen3.8-flash",
+    "synthesis": "qwen3.8-max",
+    "verifier": "deepseek-v4.1-flash"
+  },
+  "verification": {
+    "status": "reviewed",
+    "model": "deepseek-v4.1-flash",
+    "scope": "模型对照原文的独立复核；引文位置由程序校验，不代表外部事实得到独立证实",
+    "batches": [
+      {
+        "section_index": 0,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s0:b1:p0",
+            "assessment": "逐字核对作者行：共 6 个姓名，与初稿“六人”一致；姓名拼写 Yuzhen Mao、Jerry Gu、Aadi Chauhan、Qizheng Zhang、Hangoo Kang、Azalia Mirhoseini 全部匹配。Yuzhen Mao 后带上标 ∗，原文本段未解释该星号含义（通常为通讯作者或同等贡献），批注未做此推断，边界正确。初稿称“主要贡献者”略超出原文（原文只给署名），但因未具体化贡献内容，不构成事实错误，故原样保留该批注。",
+            "source_quote": "Yuzhen Mao<sup>∗</sup>, Jerry Gu, Aadi Chauhan, Qizheng Zhang, Hangoo Kang, Azalia Mirhoseini\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s0:b2:p0",
+            "assessment": "原文机构行仅“Stanford University”，初稿批注“研究团队来自斯坦福大学”准确、无多余推断，逐字保留。摘要中初稿写“所有作者均隶属于 Stanford University”，属由单行机构署名推出的全体归属，原文并未逐人标注单位，已改为“署名机构为斯坦福大学”以收窄断言。",
+            "source_quote": "Stanford University\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 1,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s1:b1:p1",
+            "assessment": "数字本身正确（17.5 points、2.49×、19.9 points），但初稿把 2.49× 写成“相比 Codex/Claude Code”，原文是 “running up to 2.49× faster than the harness it builds on”，参照系与 17.5 分的 “strongest baseline” 不同，已改为区分两个参照。另补上第三条基准 SWE-bench Verified 的“every setting”表述来源，并保留“作者报告”的归属，避免读成独立验证。",
+            "source_quote": "s both more accurate and faster than Codex, Claude Code, their native subagents, and AOrchestra in every setting, improving accuracy by up to 17.5 points over the strongest baseline and running up to 2.49× faster than the harness it builds on. On ProgramBench, where agents rebuild programs from scratch, DELM makes faster progress than Claude Code and finishes a 120-minute budget up to 19.9 points higher in test pass rate. The code is available on our project website at https://yuzhenmao.github.io/DeLM/.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s1:b2:p0",
+            "assessment": "本块内容仅为图题加图片路径，初稿称其为“Figure 1左半部分”，但左右位置与面板归属在文本中没有依据；caption 在下一块才出现，故改为“按 caption 推断为 Figure 1 的一个面板”。同时明确未获得图像视觉信息，不描述图中曲线。",
+            "source_quote": "Terminal-Bench 4.0  \n![](images/76b89e49adb4998963770e5c90ebe07d9f95d661269e5cf2793322e6cc0e0782.jpg)\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s1:b3:p0",
+            "assessment": "核对 caption：1.78×/12.5 points（Terminal-Bench 4.0）、1.38×/13.3 points（DeepSWE v1.1）、n=2、每基准 10 个 long-horizon 任务，均与初稿一致。改动两点：初稿“两个模型平均下”含义易混，明确为“对两个模型取平均”；“证实”改为“作者自报”，因该处只有 caption 与图，未作视觉核验。",
+            "source_quote": "DeepSWE v1.1  \n![](images/4cb460d3c9de5b1295fe093a7bb6bca16b65cb31145eed2d38ce884e8e0a28ee.jpg)  \nSpeedup (×)  \nFigure 1: DeLM is both faster and more accurate than existing multi-agent coding systems. Averaged over the two models, DeLM (n=2) is 1.78× faster and 12.5 points more accurate than Codex/Claude Code (dashed line, 1×) on Terminal-Bench 4.0, and 1.38× faster and 13.3 points more accurate on DeepSWE v1.1. Each benchmark uses 10 long-horizon tasks (§3).\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s1:b4:p0",
+            "assessment": "对照 caption：中心化 MAS 由主 agent 分配 subcontext、派生 subagent、整合结果，subagent 彼此不知情；DELM 用并行 agent、共享上下文、任务队列，异步认领、增量发布、互相构建或纠错。初稿概括与之一致，“导致阻塞”与“无需主代理介入”分别有 Abstract 与 caption 支持，未超出证据，逐字保留。",
+            "source_quote": "![](images/a779c464633aeecde322343b8418bba177a4cfecdb1fda2e4df81dd187494532.jpg)  \nFigure 2: Centralized vs. decentralized multi-agent systems. Centralized MAS relies on a main agent to assign subcontexts, spawn sub-agents, and integrate their results, so progress is shared mainly through the main agent and sub-agents remain unaware of one another’s work. In contrast, DELM decentralizes coordination through parallel agents, a shared context, and a task queue: agents asynchronously claim ready tasks, publish findings incrementally to a shared context, and build on or correct each other’s progress without a main agent in the loop.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 2,
+        "part": 1,
+        "verdict": "pass",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s2:b1:p0",
+            "assessment": "核对动机表述：原文明确“value of MAS lies not in issuing more model calls, but in converting additional test-time compute into useful parallel progress, reducing wall-clock time and improving success rates without a proportional increase in cost”，批注“而非单纯增加调用次数”“降低墙钟时间并提升成功率”与之一致；两类场景（repository-level SWE、interactive terminal）也见于原文，未超出证据。",
+            "source_quote": "Multi-agent systems (MAS) offer a natural way to scale large language model reasoning at test time: instead of solving a complex task in a single trajectory, they decompose it into subtasks, dispatch agents in parallel, and aggregate their progress (Anthropic, 2026, Feng et al., 2026, Hong et al., 2023, Kimi et al., 2026, OpenAI, 2025, Ruan et al., 2026, Zhang et al., 2025). This paradigm is increasingly important in agentic coding, both in repository-level software engineering (e.g., SWE-bench (Jimenez et al., 2024), DeepSWE (Huang and Jiang, 2026)), where agents can investigate different files, root causes, or fixes concurrently, and in interactive terminal tasks (e.g., Terminal-Bench (Merrill et al., 2026)), where agents can explore alternative solution paths while sharing what they learn about the environment. In both settings, the value of MAS lies not in issuing more model calls, but in converting additional test-time compute into useful parallel progress, reducing wall-clock tim"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s2:b2:p0",
+            "assessment": "核对 bubble 定义：原文为“agent time that does not advance the solution”，包含“waiting on others”与“redoing work a peer has already done”两种来源，批注的“等待或重复工作时间”准确；“三类架构各自产生”也有原文“each of the three dominant families … creates them in its own way”支撑。术语借自 pipeline parallelism，批注未误称其为本文明确定义之外的东西。",
+            "source_quote": "Realizing this potential requires keeping every agent productive. Borrowing a term from pipeline parallelism (Huang et al., 2019), we call agent time that does not advance the solution a bubble: time an agent spends waiting on others, or redoing work a peer has already done. Bubbles waste compute and stretch wall-clock time, and each of the three dominant families of MAS creates them in its own way.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s2:b3:p0",
+            "assessment": "核对独立代理段：原文“never wait, but they share nothing”，气泡是“redundant work”，“adding agents adds compute, but much of it repeats exploration another agent has already done”。批注“无等待、缺共享、冗余”“新增算力主要被用于重复探索”是近似但正确的转述，未把作者未说的成本数字写入。",
+            "source_quote": "Independent agents run in parallel and select among their outputs, as in self-consistency (Wang et al., 2022), repeated sampling (Brown et al., 2024), and best-of-n sampling (Cobbe et al., 2021, Lightman et al., 2024). They never wait, but they share nothing while they run, so each agent must rediscover the same faults, fixes, and dead ends on its own. Their bubbles are redundant work: adding agents adds compute, but much of it repeats exploration another agent has already done.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s2:b4:p0",
+            "assessment": "核对对等通信段：straggler 来源表述（每轮由最慢代理决定、早完成者空闲）与原文一致；原文给出“n(n−1) messages per round”于全连接设置，批注概括为 $O(n^2)$ 属于同一量级的不同写法，不算错误；上下文膨胀亦有“each agent's context fills with peer responses it must read and reconcile”支撑。",
+            "source_quote": "Peer-communicating agents exchange responses over synchronous rounds, as in multi-agent debate (Chen et al., 2024, Du et al., 2023, Liang et al., 2023). Seeing peers’ answers lets agents correct one another, but each round is a barrier: its duration is set by the slowest agent, so agents that finish early sit idle. These barrier waits are the straggler problem familiar from bulk-synchronous parallel computing (Dean and Ghemawat, 2008, Valiant, 1990). Communication cost also grows with the number of agents: in the fully connected setting (Du et al., 2023), each agent ingests all n − 1 peer responses every round, for n(n − 1) messages per round, so each agent’s context fills with peer responses it must read and reconcile on its own.\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s2:b5:p0",
+            "assessment": "逐项核对 Figure 3 caption 数字：主代理 73% 时间等待、全部代理时间 44% 用于等待、DELM 等待 2%、完成快 5.5×；批注四个数字均与 caption 一致，且未描述图像视觉细节（颜色/曲线形状），仅依据 caption 中的“(yellow)”等文字信息。caption 另提及 Claude Opus 5.5 与四个代理，批注省略不构成错误。",
+            "source_quote": "![](images/b7a6c1db33458737a3598cd04040c763f94c1e4b05a891fa8740f360169d6d56.jpg)  \nFigure 3: Centralized orchestration creates bubbles; DELM squeezes them out. Execution timelines on Terminal-Bench 4.0’s retro-console-soc task with Claude Opus 5.5 and four agents. With Claude Code’s centralized native subagents, the main agent spends 73% of its time waiting on delegated work (yellow), and 44% of all agent time is spent waiting. DELM agents build on one another’s intermediate results, spend 2% of their time waiting, and finish 5.5× sooner.\n\n"
+          },
+          {
+            "block_index": 6,
+            "source_quote_id": "s2:b6:p0",
+            "assessment": "核对集中式段：relay bubble（主代理空闲、子代理互不可见不能互相搭便车）、信息在总结中丢失、纠错需再次 delegation，均见原文；73% 等待数字与原文一致。批注末句“效率低下”是轻度评价性收束，未引入新数字或因果断言，可接受。",
+            "source_quote": "Centralized orchestration underlies structured reasoning methods (Besta et al., 2024, Ning et al., 2024, Yao et al., 2023), SPRINT (Biju et al., 2026), the native subagents of Claude Code (Anthropic, 2026) and Codex (OpenAI, 2025), AOrchestra (Ruan et al., 2026), and blackboard-style systems with a control agent (Han and Zhang, 2025, Salemi et al., 2025). A main agent decomposes the task, dispatches subtasks, waits for their outputs, and integrates the results (Figure 2, left). This parallelizes sub-agent execution but not the coordination around it, creating relay bubbles: the main agent idles while delegated work runs, and sub-agents, unaware of one another, cannot build on each other’s progress until the main agent relays it. On Terminal-Bench 4.0’s retro-console-soc task (Figure 3), Claude Code’s main agent spends 73% of its time waiting on its subagents. Relaying can also lose information. Because progress lives in the main agent’s context, details can be dropped in summarization,"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s2:b7:p0",
+            "assessment": "核对方法段三组件（parallel agents、shared context、task queue）与四类机制：异步领取任务、即时发布紧凑发现、避免重做、修正作为新条目追加，全部一一对应原文；未把 Table 1 或 Figure 3 的结论提前当作已证事实，只作方法陈述。",
+            "source_quote": "We propose Decentralized Language Models (DELM), a MAS framework that squeezes out these bubbles by replacing the main agent with a shared problem state (Figure 2, right). DELM consists of parallel agents, a shared context, and a task queue, and each component targets one kind of bubble. Agents claim tasks from the queue asynchronously, so no agent waits at a round barrier or for a main agent to assign work. They publish compact findings to the shared context as soon as results are available, so peers build on intermediate progress instead of waiting for a relay. The queue and shared context also show what each agent is working on and which approaches have failed, so agents avoid redoing a peer’s work. Finally, corrections are appended as new entries rather than relayed through a main agent, so a fix reaches every agent without another round of delegation. Table 1 contrasts these mechanisms with those of the systems we compare against. On Terminal-Bench 4.0’s retro-console-soc task (Fi"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s2:b8:p0",
+            "assessment": "核对 Table 1：六列机制与批注列举一致；Isolated agents 全为 X，AOrchestra 仅并行执行列为 X，Codex/Claude Code 在 peer-status awareness 与 stateful shared context 为 X，DELM 六列均为勾（表中 cross-agent work reuse 处 OCR 作“J”，应视为勾选）。故“现有系统均缺失部分机制”“DELM 唯一全支持”成立。",
+            "source_quote": "Table 1: Collaboration and coordination mechanisms in the compared multi-agent systems. A checkmark means the system provides the mechanism while a cross means that it does not.\n<table><tr><td rowspan=\"2\">System</td><td colspan=\"3\">General collaboration capabilities</td><td colspan=\"3\">Explicit coordination mechanisms</td></tr><tr><td>Parallel subtask execution</td><td>Cross-agent work reuse</td><td>Feedback &amp; correction</td><td>Intermediate-results sharing</td><td>Peer-status awareness</td><td>Stateful shared context</td></tr><tr><td>Isolated agents</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td></tr><tr><td>AOrchestra</td><td>X</td><td>√</td><td>√</td><td>X</td><td>X</td><td>X</td></tr><tr><td>Codex</td><td>√</td><td>√</td><td>√</td><td>√</td><td>X</td><td>X</td></tr><tr><td>Claude Code</td><td>√</td><td>√</td><td>√</td><td>√</td><td>X</td><td>X</td></tr><tr><td>DELM</td><td>√</td><td>J</td><td>√</td><td>√</td><td>√</td><td>√</td></tr></table>\n\n"
+          },
+          {
+            "block_index": 9,
+            "source_quote_id": "s2:b9:p0",
+            "assessment": "核对 Key idea：三类浪费（redo、synchronous rounds、wait on main agent to relay）与“asynchronously through a shared context and a task queue, with no main agent”完全对应；批注“去除主代理瓶颈”是原文“no main agent in the loop”的等价表述，未夸大实验效果。",
+            "source_quote": "Key idea. Existing MAS waste parallelism in bubbles because of how their agents communicate: independent agents redo one another’s work, peer-communicating agents wait at synchronous rounds, and centralized systems wait on a main agent to relay progress. DELM squeezes out these bubbles by letting agents coordinate asynchronously through a shared context and a task queue, with no main agent in the loop.\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s2:b7:p1",
+            "assessment": "核对摘要中的量化句：原文末尾“four DELM agents spend only 2% of their time waiting and finish 5.5× sooner than Claude Code with native subagents”，摘要写作“2% 的时间等待”“快 5.5 倍完成”准确；模型名 Claude Opus 5.5 来自 Figure 3 caption 的实验设置描述，未虚构。",
+            "source_quote": "gure 3), four DELM agents spend only 2% of their time waiting and finish 5.5× sooner than Claude Code with native subagents.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 2,
+        "part": 2,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 10,
+            "source_quote_id": "s2:b10:p0",
+            "assessment": "基准四个、对比对象均与原文一致。初稿只写“等主流基线”，遗漏了 mini-SWE-agent 仅在 SWE-bench Verified 上使用这一条件限制；这属于概括表述，不算错误，但补上更便于读者判断比较是否公平，故修正。",
+            "source_quote": "We evaluate DELM on four agentic coding benchmarks: Terminal-Bench 4.0 (Merrill et al., 2026), where agents share discovered environment state and failed attempts in live terminals; DeepSWE v1.1 (Huang and Jiang, 2026), where agents reuse each other’s debugging progress on long-horizon software engineering tasks; SWE-bench Verified (Jimenez et al., 2024), where agents explore alternative root causes and fixes for real GitHub issues; and ProgramBench (Yang et al., 2026a), where agents rebuild entire programs from scratch. We compare against Codex and Claude Code, with and without native subagents, AOrchestra (Ruan et al., 2026), and, on SWE-bench Verified, mini-SWE-agent (Yang et al., 2024). Our key findings are:\n\n"
+          },
+          {
+            "block_index": 11,
+            "source_quote_id": "s2:b11:p0",
+            "assessment": "数字 93.33%、98.33%、17.5、2.49× 与原文一致。两处需修正：原文是“up to”，初稿写成“分别达到”会被误读为确定值，应保留“最高/最多”；2.49× 的参照是“the harness it builds on”，不是最强基线，初稿未说明参照对象，容易误解，已补。",
+            "source_quote": "• DELM is both faster and more accurate on long-horizon coding. Across two frontier models, DELM reaches up to 93.33% on 10 long-horizon tasks of Terminal-Bench 4.0 and 98.33% on 10 long-horizon tasks of DeepSWE v1.1, improving over the strongest baseline by up to 17.5 points while running up to 2.49× faster than the harness it builds on (Figure 1, §3.1, §3.2).\n\n"
+          },
+          {
+            "block_index": 12,
+            "source_quote_id": "s2:b12:p0",
+            "assessment": "66.08%、10.8 分、Gemini 3 Flash、成本为 AOrchestra 一半均正确。初稿把 2.12× 写成“快于 Claude Code”，丢掉了具体倍数这一关键量，已改为“2.12×”；“成本减半”也明确为单次提交成本。",
+            "source_quote": "• The gains also hold with a lightweight model on a standard benchmark. On SWE-bench Verified with Gemini 3 Flash, DELM reaches 66.08%, 10.8 points above the strongest baseline, while running 2.12× faster than Claude Code at half of AOrchestra’s cost per submission (§3.3).\n\n"
+          },
+          {
+            "block_index": 13,
+            "source_quote_id": "s2:b13:p0",
+            "assessment": "120 分钟、19.91 分、一半时间追平通过率均与原文相符。初稿“高出近 20 分”是四舍五入且未标明“最多”，已恢复为“最多 19.91 分”；“从零构建”对应 rebuild entire programs，无误。",
+            "source_quote": "• DELM provides an effective way for scaling agents, enabling more agents to make more progress under a fixed time budget. On ProgramBench, where agents rebuild entire programs from scratch, DELM ends a 120-minute budget up to 19.91 points above Claude Code, and matches Claude Code’s final pass rate in half the time (§3.4).\n\n"
+          },
+          {
+            "block_index": 14,
+            "source_quote_id": "s2:b14:p0",
+            "assessment": "原文只说明移除任一协调机制会让双代理回到约单代理速度，未给出精度变化。初稿“证明共享上下文与状态同步的关键作用”超出证据范围，已删去，并把结论限定为速度层面；对精度贡献标注为推断。",
+            "source_quote": "• The gains come from coordination, not parallelism alone. Removing any single coordination mechanism brings two agents back to roughly single-agent speed (§3.5).\n\n"
+          },
+          {
+            "block_index": 15,
+            "source_quote_id": "s2:b15:p0",
+            "assessment": "机制描述（预置准备子任务、异步领取、gist 压缩写回共享上下文、无中央协调者与审查者、各代理自行提交完整解）均可在 caption 中逐条对应。初稿未提及提交条件是“证据覆盖全部任务要求”，已补；并按规范声明未获得图片视觉信息，仅依据 caption，不描述图中未提供的视觉细节。",
+            "source_quote": "![](images/077923f74c01d6b9dc0da26c40a58d2b3e6146e797d87b06b95b4b7b0ebf8fd1.jpg)  \nFigure 4: Overview of DELM. The shared task queue is initialized with a set of predefined, general preparation subtasks. Parallel agents asynchronously claim subtasks $\\{ T _ { i } \\}$ , read the shared context, and implement $\\left\\{ T _ { i } \\right\\}$ locally. Each agent’s update is compressed and appended to the shared context as a gist $G _ { i } ,$ making reusable progress visible to all agents. There is no central coordinator or reviewer: any agent may add required work at any time, and each agent submits its own complete solution once its evidence covers all task requirements.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 3,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s3:b1:p0",
+            "assessment": "核对并发数量 $n$、共享结构与“每个 agent 产出完整解”三处均有原文支撑，'持久会话与工作区'对应 persistent session and workspace；结尾关于协调成本位置的表述已标为推断，未越出原文。",
+            "source_quote": "Given a task D, DELM runs n agents concurrently, each with its own persistent session and workspace. Agents coordinate through two shared structures, a shared context C and a task queue T, and each agent produces its own complete solution.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s3:b2:p0",
+            "assessment": "五步操作的顺序与编号已逐条对照原文一致，异步的判据（一方发布时他人继续工作并可立即复用）也准确；原批注末句“最大化并行效率”是原文未给的目标函数式断言，已删除，改为不依赖全局同步这一可核对事实。",
+            "source_quote": "Figure 4 and Algorithm 1 summarize five operations: 1 initialize the task queue, 2 execute subtasks in parallel, 3 summarize and publish intermediate results, 4 update the task queue as work progresses, and 5 finalize each agent’s solution. These operations proceed asynchronously rather than in lockstep: while one agent publishes a result, others keep working and can reuse it as soon as it appears.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s3:b4:p0",
+            "assessment": "核对三类条目、FACT/FAIL 的 scope 与 evidence 字段、'keep entries brief' 与'state unfinished parts and known limitations'、附件与 conflict protection 合并，均与原文一致，未添加原文没有的条目类型。",
+            "source_quote": "The shared context C is an append-only log of reusable findings and contributions from all agents. Agents write to it through compact entries $G _ { i }$ of a declared type: a FACT records a finding supported by observations, a FAIL records an approach or hypothesis that was contradicted, and a completion summary records the result of a finished subtask. FACT and FAIL entries carry explicit scope and evidence fields; agents are instructed to keep entries brief and to state unfinished parts and known limitations, so that other agents can judge whether an entry applies to their own work. Any entry may attach files, which peers can inspect as diffs or merge into their own workspaces with conflict protection. Agents publish an entry as soon as a result is usable and then continue with their own work.\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s3:b5:p0",
+            "assessment": "核对附件与摘要分开存储、发布时快照、expand 显示为相对原始任务文件的 diff、apply 拒绝覆盖无法解释的本地改动并留给接收方协调、读 C 只返回增量、按需分页类比指向附录 A.1，全部对得上；'条目正文'对应原文的 summary，措辞可接受。",
+            "source_quote": "Summaries with files by reference. An entry can attach files, which are stored separately from its summary and snapshotted at publication time. Agents inspect these files with expand, which shows them as diffs against the original task files, and copy selected files into their own workspace with apply. apply refuses to overwrite local changes it cannot account for, leaving reconciliation to the receiving agent. A read of C shows only what is new since that agent’s last read, namely new entries and changed work status, while older entries remain retrievable on demand. This design resembles demand paging in an operating system: agents follow progress through compact summaries and fetch detailed content from backing storage only when they need it (Appendix A.1).\n\n"
+          },
+          {
+            "block_index": 6,
+            "source_quote_id": "s3:b6:p0",
+            "assessment": "核对检查项来源（原始任务而非子任务摘要）、复用同伴证据且不重复、聚焦未覆盖的需求与组件交互、条目不可变因而追加 FAIL、修正以新条目或修复子任务出现、提交前须解决相关未决失败，均与原文吻合，无额外主张。",
+            "source_quote": "Distributed verification and correction. Verification is left to the agents rather than to a central checker: each agent derives the checks for its own solution from the original task rather than from subtask summaries, reuses applicable evidence from its peers without repeating it, and directs additional checks at requirements and component interactions that existing evidence does not cover. Because entries are immutable, an agent that finds a defect in a shared result does not edit it. Instead, it appends a FAIL entry stating the conditions under which the defect occurs, and a correction follows as a new entry or a repair subtask. A FAIL stays open until it is addressed, and before submitting, each agent reads the shared context and resolves any published failure relevant to its own solution.\n\n"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s3:b8:p0",
+            "assessment": "核对条目结构、四类需声明信息、建条目的三种许可情形、首个 agent 划范围与交接接管、此后任意 agent 可添加或认领、无特权规划者与无计划收尾。原批注把 'a concrete open question the solution depends on' 译为“有明确答案的开放问题”，与 concrete（具体）和 depends on 的含义不符，已改为“方案所依赖的具体开放问题”。",
+            "source_quote": "The task queue T divides the work among agents. Each item consists of a subject and a free-text detail, in which agents are instructed to state the intended output, its available inputs, the interface it shares with other work, and the earliest partial result it depends on. Agents are instructed to create items only for required implementation, repair of a demonstrated defect, or a concrete open question the solution depends on. At startup, the first agent reserves its own scope and publishes complementary items for its peers, or states the dependency that prevents a split; if it ends before this handoff, the next running agent takes over. After that, any agent can add items or claim open ones at any time. There is no privileged planner and no plan-closure step.\n\n"
+          },
+          {
+            "block_index": 9,
+            "source_quote_id": "s3:b9:p0",
+            "assessment": "核对排他认领与先到先得、每 agent 至多一个未完成认领、open/claimed/done 与 owner、会话状态由框架追踪而非 agent 上报、依赖方活跃时先做独立工作仅有界等待、依赖方已结束时自建结果，均与原文一致。",
+            "source_quote": "Claims and status. The queue enforces exclusive claims: the first claim wins, and each agent holds at most one unfinished claim. Every item is marked open, claimed, or done, together with its owner, so each agent can see who is responsible for what and how much remains. Each read also shows every agent’s session state (starting, running, or ended), tracked by the framework rather than reported by the agents. Agents use this state to choose complementary work and to handle dependencies. If a dependency’s owner is starting or running, an agent continues with independent work and waits only when nothing else remains, using a bounded wait that returns as soon as a peer publishes or ends. If the owner of an item has ended without completing it, this does not block progress: an agent that needs the result builds it in its own workspace, reusing anything the owner already shared, instead of waiting.\n\n"
+          },
+          {
+            "block_index": 10,
+            "source_quote_id": "s3:b10:p0",
+            "assessment": "核对除会话状态外内容全部来自 agent、框架不代发、发布以解锁同伴为判据且不必先跑新检查、避免例行状态更新与重复证据、四类读取触发点、频率由自身进度而非同伴数量驱动。原批注漏掉“框架绝不代发”这一限定，并把“减少冗余通信与同步开销”当作作者结论，实为推断，已补入原文事实并把因果改为显式推断。",
+            "source_quote": "When agents publish and read. Apart from session state, which the framework tracks automatically, all content in the shared context and task queue comes from the agents themselves: the framework never publishes on an agent’s behalf. Agents decide when to publish and read under the instructions in Appendix E. An agent publishes when a result can unblock a peer, without needing to run new checks first, and avoids routine status updates and repeated evidence. It reads the shared context at startup, before starting a new subproblem or diagnostic hypothesis, before final integration, and before submitting. How often an agent publishes and reads is therefore driven mainly by its own progress rather than by the number of peers.\n\n"
+          }
+        ],
+        "correction_attempts": 1
+      },
+      {
+        "section_index": 4,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s4:b1:p0",
+            "assessment": "四个基准名称与顺序正确；ProgramBench 的分数来自隐藏行为测试、题量为 ctags 与 pandoc、120 分钟预算均在原文第 2 段末句，数字核对无误。初稿“从二进制重实现”略窄，原文是给出编译后的可执行文件及其文档并要求从零重实现，已改为“依据可执行文件和文档”。",
+            "source_quote": "Benchmarks. We evaluate DELM on four agentic coding benchmarks. (1) Terminal-Bench 4.0 (Merrill et al., 2026). The benchmark consists of tasks that agents solve in live terminal environments, such as configuring systems, installing dependencies, and debugging failures. The tasks require long sequences of shell commands and agents benefit from sharing discovered environment state and failed attempts. (2) DeepSWE v1.1 (Huang and Jiang, 2026). The benchmark contains long-horizon software-engineering tasks. Agents must localize faults, understand interdependent modules, and debug across large codebases. It tests whether agents can reuse each other’s localization and debugging progress instead of repeating it. (3) SWE-bench Verified (Jimenez et al., 2024). The benchmark is built from real-world GitHub issues, with human-verified task specifications and tests. Agents inspect the repository, identify the relevant files, implement a fix, and validate it through tests. (4) ProgramBench (Yang et"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s4:b2:p0",
+            "assessment": "Terminal-Bench 取延迟 15 分钟至 1 小时的 10 题、DeepSWE 取 ≥10 分钟的 10 题、筛选基准为 Codex+GPT-6-Astra、清单在附录 B，均与原文一致，保留原批注。注意 15-60 分钟这一区间是筛选条件而非任务实际耗时统计。",
+            "source_quote": "Because DELM targets long-horizon tasks where coordination matters, we evaluate on a subset of long-running tasks from Terminal-Bench 4.0 and DeepSWE v1.1. We select tasks based on the wall-clock latency of Codex with GPT-6-Astra: for Terminal-Bench 4.0, we select 10 tasks with latency between 15 minutes and 1 hour; for DeepSWE v1.1, we select 10 tasks with latency of at least 10 minutes. The full list of selected tasks is provided in Appendix B.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s4:b3:p0",
+            "assessment": "基线构成、subagent 模式仅在提示末尾追加一句指令、AOrchestra 为集中式多智能体、mini-SWEagent 仅在 SWE-bench Verified 上对比，均核对无误；补充版本号不影响准确性，保留。",
+            "source_quote": "Baselines. We compare DELM with production coding agent harnesses, both in their default mode and with their native subagents enabled, as well as with a research centralized multi-agent system. Codex (v0.153.4) (OpenAI, 2025) and Claude Code (v2.1.280) (Anthropic, 2026) are agentic coding harnesses that enable language models to work on coding tasks using tools for file editing and shell execution. Codex (subagent) and Claude Code (subagent) use the same harnesses, with one addition: the task prompt ends with the instruction “Use [Codex/Claude Code]’s native subagents to help solve this task.” This lets the main agent spawn and coordinate sub-agents through each harness’s built-in mechanism. AOrchestra (Ruan et al., 2026) is a centralized multi-agent system. Its main orchestrator creates specialized sub-agents on demand and instantiates each one as a tuple of instruction, context, tools, and model. On SWE-bench Verified, we also compare with mini-SWEagent (Yang et al., 2024), a lightwe"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s4:b4:p0",
+            "assessment": "初稿写“所有方法固定 $n\\in\\{2,4\\}$ 并行代理数以隔离协调机制差异”与原文不符：原文只说 “we evaluate DELM with $n\\in\\{2,4\\}$ parallel agents”，n 仅适用于 DELM。已改为只针对 DELM，并保留“基线使用同一 base model、差异只在协调方式”这一有原文支持的部分。其余（xhigh reasoning、DELM 分别基于 Codex/Claude Code、SWE-bench 用 Gemini 3 Flash 经 OpenRouter 默认参数）核对无误。",
+            "source_quote": "Models and implementation. On Terminal-Bench 4.0 and DeepSWE v1.1, we use two frontier base models: GPT-6-Astra (OpenAI, 2026b) and Claude Opus 5.5 (Anthropic, 2026), both with xhigh reasoning effort. We build DELM on top of Codex for GPT-6-Astra and on top of Claude Code for Claude Opus 5.5. Every baseline uses the same base model as DELM in its setting, so the only difference between them is how agents coordinate. On SWE-bench Verified, all methods use Gemini 3 Flash (Doshi, 2025), accessed through OpenRouter with default reasoning and sampling parameters. For this setting, we route the Claude Code CLI through OpenRouter to support the non-Anthropic model. For every task, we evaluate DELM with $n \\in \\{ 2 , 4 \\}$ parallel agents.\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s4:b5:p0",
+            "assessment": "墙钟延迟的定义（首次 API 调用到最后生成 token）、Cost/Task 与 Cost/Submission 的分母含义、三次运行均值±标准差均与原文一致；补上“每个 DELM 代理独立提交并计分”这一原文限定条件，避免读者误以为所有基线也各自提交。",
+            "source_quote": "Metrics. We report task accuracy, wall-clock latency, and cost. Wall-clock latency is the time from the first API call to the last generated token. We use two cost measures: Cost/Task is the total API cost of all agents in a single run, and Cost/Submission divides this total by the number of agents, since each DELM agent produces its own submission that is scored independently. All results are averaged over three runs and reported as mean ± standard deviation.\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s4:b7:p0",
+            "assessment": "数字逐项核对：85.00% 与 71.67% 差 13.33 点（约 13.3）；93.33% 与 81.67% 差 11.66 点（约 11.7）；130.75→64.77 分钟为 2.02×；$13.65/$9.01、$6.83、$17.91/$20.31 均与原文一致。初稿“延迟降低 1.54×”表述有误，原文是 “runs 1.54× faster”（速度快 1.54 倍），已改为“运行速度快 1.54×”。",
+            "source_quote": "We evaluate on the 10 long-horizon Terminal-Bench 4.0 tasks described in Appendix B. Table 2 shows that DELM improves both accuracy and latency under both base models. With GPT-6-Astra, DELM (n = 2) reaches 85.00% accuracy, 13.3 points higher than the strongest baseline (Codex and Codex with subagents, both 71.67%), and runs 1.54× faster than Codex, at a higher Cost/Task (\\$13.65 vs. \\$9.01) but a lower Cost/Submission (\\$6.83). With Claude Opus 5.5, DELM $( n = 2 )$ reaches 93.33%, 11.7 points above Claude Code, while cutting latency from 130.75 to 64.77 minutes (2.02×) at a lower Cost/Task (\\$17.91 vs. \\$20.31).\n\n"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s4:b8:p0",
+            "assessment": "2.05× 与 2.49× 加速、最低 Cost/Submission、较 $n=2$ 降 3–4 点、仍高于所有基线，均核对无误。作者给出的机制（每个代理仍提交完整方案但自建更少、集成错误与共享缺陷扩散风险上升）在原文明确写出，批注未超出证据；补全该机制使因果更清楚。",
+            "source_quote": "Increasing to n=4 gives the largest speedups (2.05× and 2.49×): more work proceeds in parallel, and findings reach peers earlier. It also gives the lowest Cost/Submission, since each agent does a smaller share of the work and total cost grows more slowly than the number of submissions. Accuracy drops by 3–4 points relative to $n { = } 2 ,$ , because each agent still submits a complete solution while building less of it itself. More of each solution is assembled from peers’ components, which raises the risk of integration errors and lets a defect in one shared result affect several submissions. n=4 nonetheless remains above every baseline.\n\n"
+          },
+          {
+            "block_index": 9,
+            "source_quote_id": "s4:b9:p0",
+            "assessment": "Codex 子代理准确率持平、快 1.34×、成本 2.9×（$25.80 vs $9.01）；Claude Code 加子代理 81.67%→80.00%、延迟上升、成本 1.5×（$30.88 vs $20.31）；DELM $n=2$ 单任务成本 $13.65 与 $17.91 低于两基线，全部核对无误。初稿“虽可能提速”含糊，已按原文拆成 Codex 加速、Claude Code 反而更慢，并补上作者基于轨迹给出的解释（委派增加工作而非分摊工作）。",
+            "source_quote": "Native subagent baselines give model-dependent trade-offs in accuracy and latency, but they consistently raise cost. Codex (subagent) matches vanilla Codex in accuracy and runs 1.34× faster, but at 2.9× the cost (\\$25.80 vs. \\$9.01). Claude Code with subagents lowers accuracy from 81.67% to 80.00% while increasing latency and raising cost by 1.5× (\\$30.88 vs. \\$20.31). The trajectories show that delegation adds work rather than dividing it. Subagents unaware of one another repeat parts of the same investigation; and the main agent adds further rounds of testing and review while remaining responsible for integration and final delivery. In contrast, DELM $\\scriptstyle ( n = 2 )$ costs less per task than either subagent baseline (\\$13.65 and \\$17.91) because it keeps communication cheap and makes knowledge reuse direct.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 4,
+        "part": 2,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 10,
+            "source_quote_id": "s4:b10:p0",
+            "assessment": "caption 定义 Cost/Task 为单次 run 中所有 agent 成本之和，Cost/Submission 为再除以 agent 数（每个 agent 独立评分一个提交）；初稿未提这一定义，但表述“成本数据格式异常”有据：表中确有 3 处 $123,456,7。批注准确，逐字保留。",
+            "source_quote": "Table 2: Comparison on Terminal-Bench 4.0 across two base models. Best mean values within each model are bolded. Cost/Task sums the costs of all agents in a single run. Cost/Submission divides this total by the number of agents, as each agent produces one submission that is scored independently.\n<table><tr><td>Method</td><td>Avg. Acc (%)</td><td>Avg. Latency</td><td>Cost/Task</td><td>Cost/Submission</td></tr><tr><td colspan=\"5\">GPT-6-Astra</td></tr><tr><td>Codex</td><td> $7 1 . 6 7 \\pm 1 1 . 5 5$ </td><td> $2 6 . 9 1 \\pm 0 . 9 1 \\mathrm { m i n } \\left( 1 . 0 0 \\times \\right)$ </td><td> $\\$ 9.01\\pm \\$ 90.71$ </td><td> $\\$ 9.01\\pm \\$ 90.71$ </td></tr><tr><td>Codex (subagent)</td><td> $7 1 . 6 7 \\pm 1 1 . 6 9$ </td><td> $2 0 . 0 4 \\pm 1 . 9 4 \\operatorname* { m i n } { \\left( 1 . 3 4 \\times \\right) }$ </td><td> $\\$ 25.80\\pm \\$ 92.21$ </td><td> $\\$ 25.80\\pm \\$ 92.21$ </td></tr><tr><td>AOrchestra</td><td> $7 0 . 0 0 \\pm 5 . 0 0$ </td><td> $2 5 . 7 8 \\pm 1 . 1 5 \\operatorname* { m i n } { \\"
+          },
+          {
+            "block_index": 10,
+            "source_quote_id": "s4:b10:p1",
+            "assessment": "核对 GPT-6-Astra 各行：Codex 71.67±11.55（26.91 min，1.00×，$9.01）、Codex (subagent) 71.67±11.69（20.04 min，1.34×，$25.80）、AOrchestra 70.00±5.00、DELM (n=2) 85.00±13.23（加粗最优）、DELM (n=4) 81.67±12.33 且 13.16±1.43 min（加粗最快，2.05×）。初稿“85.00%”“最快 13.16 min”与原文一致。",
+            "source_quote": "left( 1 . 0 4 \\times \\right) }$ </td><td> $\\$ 123,456,7$ </td><td> $\\$ 123,456,7$ </td></tr><tr><td>DELM (n = 2)</td><td> ${ \\bf 8 5 . 0 0 \\pm 1 3 . 2 3 }$ </td><td> $1 7 . 4 7 \\pm 1 . 8 2$  min (1.54×)</td><td> $\\$ 13.45\\pm91.49$ </td><td> $\\$ 6.83\\pm \\$ 90.74$ </td></tr><tr><td>DELM (n = 4)</td><td> $8 1 . 6 7 \\pm 1 2 . 3 3$ </td><td> ${ \\bf 1 3 . 1 6 \\pm 1 . 4 3 }$  min (2.05×)</td><td> $\\$ 23.90\\pm \\$ 92.27$ </td><td> $\\$ 5.97\\pm90.57$ </td></tr><tr><td colspan=\"5\">Claude Opus 5.5</td></tr><tr><td>Claude Code</td><td> $8 1 . 6 7 \\pm 2 . 8 9$ </td><td> $1 3 0 . 7 5 \\pm 6 . 2 7 \\mathrm { m i n } \\left( 1 . 0 0 \\times \\right)$ </td><td> $\\$ 20.31\\pm \\$ 90.23$ </td><td> $\\$ 20.31\\pm \\$ 90.23$ </td></tr><tr><td>Claude Code (subagent)</td><td> $8 0 . 0 0 \\pm 5 . 0 0$ </td><td> $1 3 8 . 5 8 \\pm 1 0 . 1 7 \\operatorname* { m i n } { ( 0 . 9 4 \\times ) }$ </td><td> $\\$ 30.88\\pm \\$ 3.17$ </td><td> $\\$ 30.88\\pm \\$ 3.17$ </td></tr><tr><td>AOrchestra</td><td> $7 6 . 6 7 \\pm 5 . 7 7$ </td><td> $1"
+          },
+          {
+            "block_index": 10,
+            "source_quote_id": "s4:b10:p2",
+            "assessment": "核对 Claude Opus 5.5 各行：Claude Code 81.67±2.89（130.75 min）、子代理版 80.00±5.00、AOrchestra 76.67±5.77、DELM (n=2) 93.33±3.33（加粗）、DELM (n=4) 89.17±5.20 且 52.51±4.43 min（加粗最快，2.49×）。“两个基座下均最高准确率”成立，无越界推断。",
+            "source_quote": " 5 7 . 2 1 \\pm 9 . 0 3 \\mathrm { m i n } ( 0 . 8 3 \\times )$ </td><td> $\\$ 24.22\\pm \\$ 1.05$ </td><td> $\\$ 24.22\\pm \\$ 1.05$ </td></tr><tr><td>DELM (n = 2)</td><td> ${ \\bf 9 3 . 3 3 \\pm 3 . 3 3 }$ </td><td> $6 4 . 7 7 \\pm 5 . 0 3 \\mathrm { m i n } \\ : ( 2 . 0 2 \\times )$ </td><td> $\\$ 123,456,7$ </td><td> $\\$ 8.96\\pm \\$ 50.59$ </td></tr><tr><td> $\\mathbf { D } \\mathbf { E } \\mathbf { L } \\mathbf { M } \\left( n = 4 \\right)$ </td><td> $8 9 . 1 7 \\pm 5 . 2 0$ </td><td> ${ \\bf 5 2 . 5 1 \\pm 4 . 4 3 \\operatorname* { m i n } { ( { \\bf 2 . 4 9 \\times } ) } }$ </td><td> $\\$ 29.98\\pm \\$ 90.91$ </td><td> $\\$ 7.50\\pm \\$ 90.23$ </td></tr></table>\n\n"
+          },
+          {
+            "block_index": 12,
+            "source_quote_id": "s4:b12:p0",
+            "assessment": "逐项核对：98.33%、+8.3pp、最强基线为“Codex with subagents (90.00%)”而非笼统的 Codex、1.25× 快于 Codex、$16.83 vs $24.97；Claude 侧 90.83%、比 AOrchestra (73.33%) 高 17.5pp、1.57× 快于 Claude Code、n=2 88.33% 与 Claude Code 成本接近（$12.15 vs $12.01）。初稿把比较对象写成“Codex”不够精确，已改为 Codex with subagents 并补上成本与 1.57× 两项数字；删去初稿“验证泛化优势”这一超出原文的推论，改为原文自身的“两个基座下最优”表述。",
+            "source_quote": "We evaluate on the 10 long-horizon DeepSWE v1.1 tasks listed in Appendix B. Table 3 shows that DELM again achieves the best accuracy and latency under both base models. With GPT-6-Astra, DELM (n=2) reaches 98.33% accuracy, 8.3 points above the strongest baseline, Codex with subagents (90.00%), and runs 1.25× faster than Codex. It also costs less per task than Codex with subagents (\\$16.83 vs. \\$24.97). With Claude Opus 5.5, the gains are larger: DELM (n=4) reaches 90.83%, 17.5 points above the strongest baseline, AOrchestra (73.33%), and runs 1.57× faster than Claude Code. DELM $\\scriptstyle ( n = 2 )$ reaches 88.33% at roughly the same Cost/Task as Claude Code (\\$12.15 vs. \\$12.01).\n\n"
+          },
+          {
+            "block_index": 13,
+            "source_quote_id": "s4:b13:p0",
+            "assessment": "原文数字：71.67%→50.00%，延迟 +15.9%、成本 +65.1%；Table 2 中 Claude Code 与其子代理版为 81.67%→80.00%，故该组数字对应 DeepSWE（Table 3）。初稿未标数据集，读者易与 Table 2 混淆，已补条件说明并加“两处不要混”的提示。失败机制（空 patch/超时、主代理持最终提交等待被 CLI idle limit 截断的子代理或额外评审轮次）与共享上下文使 findings 与失败尝试对 peer agents 可见，均与原文一致，未额外归因。",
+            "source_quote": "Native subagents hurt Claude Code most: accuracy falls from 71.67% to 50.00%, while latency and cost increase by 15.9% and 65.1%, respectively. Trajectory analysis shows that most of its failed runs ended with an empty patch or a benchmark timeout, often because the main agent held the final commit while waiting on subagents that were cut off by the CLI’s idle limit<sup>1</sup> or that prolonged integration with extra review rounds. By comparison, DELM (n=2) achieves higher accuracy and lower latency and cost than the corresponding native subagent baselines. Its shared context makes recorded findings and failed attempts directly accessible to peer agents. These results highlight that the value of parallel work depends on how effectively it is reused and converted into completed submissions, rather than on delegation alone.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 4,
+        "part": 3,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 14,
+            "source_quote_id": "s4:b14:p0",
+            "assessment": "核对 Table 3 表注与成本口径：Cost/Task 为一次运行中所有 agent 成本之和，Cost/Submission 再除以 agent 数。原批注“总任务成本略高于单 Agent 基线”表述含糊，实际 GPT 组从 $9.40 增至 $16.83/$30.87，Claude 组约 $12.01 增至 $12.15/$24.49，n=4 已接近或超过两倍，不能算“略高”；且原批注未提延迟列。已改写为给出具体数值，并把 Cost/Task 与 Cost/Submission 分开表述。",
+            "source_quote": "Table 3: Comparison on DeepSWE v1.1 across two base models. Best mean values within each model are bolded. Cost/Task sums the costs of all agents in a single run. Cost/Submission divides this total by the number of agents, as each agent produces one submission that is scored independently.\n<table><tr><td>Method</td><td>Avg. Acc (%)</td><td>Avg. Latency</td><td>Cost/Task</td><td>Cost/Submission</td></tr><tr><td colspan=\"5\">GPT-6-Astra</td></tr><tr><td>Codex</td><td> $8 8 . 3 3 \\pm 2 . 8 9$ </td><td> $1 6 . 5 7 \\pm 0 . 3 9 \\operatorname* { m i n } { \\left( 1 . 0 0 \\times \\right) }$ </td><td> $\\$ 9.40\\pm \\$ 90.18$ </td><td> $\\$ 9.40\\pm \\$ 90.18$ </td></tr><tr><td>Codex (subagent)</td><td> $9 0 . 0 0 \\pm 0 . 0 0$ </td><td> $1 5 . 7 6 \\pm 2 . 0 5 \\operatorname* { m i n } { \\left( 1 . 0 5 \\times \\right) }$ </td><td> $\\$ 24.97\\pm \\$ 3.15$ </td><td> $\\$ 24.97\\pm \\$ 3.15$ </td></tr><tr><td>AOrchestra</td><td> $8 3 . 3 3 \\pm 7 . 6 4$ </td><td> $1 8 . 3 1 \\pm 1 . 0 8 \\operatorname* { m i n } { ( "
+          },
+          {
+            "block_index": 14,
+            "source_quote_id": "s4:b14:p2",
+            "assessment": "用 Claude Opus 5.5 段交叉核对：DELM n=2 88.33、n=4 90.83 为组内最高，延迟 32.98/31.61 min（1.50×/1.57×），Cost/Submission $6.07/$6.12 低于 Claude Code 约 $12.01，支持批注中“n=2 的 Cost/Submission 更低、延迟更快”的说法。GPT 组 n=4 的 Cost/Submission OCR 显示“$ 72”，与 Cost/Task $30.87、4 个 agent 的换算不符，推断为 $7.72，批注未把它当作确定值断言；OCR 中“$ 123,456,7”同样明显残缺。",
+            "source_quote": "/td></tr><tr><td>AOrchestra</td><td> $7 3 . 3 3 \\pm 5 . 7 7$ </td><td> $4 7 . 3 2 \\pm 2 . 8 6 \\operatorname* { m i n } { \\left( 1 . 0 5 \\times \\right) }$ </td><td> $\\$ 12.11\\pm90.52$ </td><td> $\\$ 12.11\\pm90.52$ </td></tr><tr><td> $\\mathbf { D } \\mathbf { E } \\mathbf { L } \\mathbf { M } \\left( n = 2 \\right)$ </td><td> $8 8 . 3 3 \\pm 2 . 8 9$ </td><td> $3 2 . 9 8 \\pm 2 . 4 7 \\operatorname* { m i n } \\left( 1 . 5 0 \\times \\right)$ </td><td> $\\$ 12.15\\pm \\$ 50.57$ </td><td> $\\$ 6.07\\pm \\$ \\$ 90.28$ </td></tr><tr><td> $\\mathbf { D } \\mathbf { E } \\mathbf { L } \\mathbf { M } \\left( n = 4 \\right)$ </td><td> ${ \\bf 9 0 . 8 3 \\pm 8 . 7 8 }$ </td><td> $\\mathbf { 3 1 . 6 1 \\pm 0 . 9 6 } \\operatorname* { m i n } \\left( \\mathbf { 1 . 5 7 } \\times \\right)$ </td><td> $\\$ 24.49\\pm \\$ 80.67$ </td><td> $\\$ 6.12\\pm \\$ 90.17$ </td></tr></table>\n\n"
+          },
+          {
+            "block_index": 15,
+            "source_quote_id": "s4:b15:p0",
+            "assessment": "正文原文为“improves mean accuracy from 76.67% to 88.33% (+11.7 points)”“reduces mean latency from 27.67 to 22.25 minutes (1.24× faster)”“matches the mean accuracy of vanilla Codex with GPT-6-Astra (88.33%) at approximately 1/28 of its total cost per task ($0.33 vs. $9.40)”“remains slower (22.25 vs. 16.57 minutes)”。原批注把 1/28 写成“单位提交成本”，口径错误：1/28 是每任务总成本（Cost/Task），Table 4 中 Cost/Submission 为 $0.17 vs $0.19，约 1/1.1。已改正，并说明 $9.40 来自 GPT-6-Astra 组而非同表基线，避免读者误读为同模型对比。",
+            "source_quote": "Coordination with a low-cost model. We additionally evaluate DeepSeek-V4.1-Flash (DeepSeek-AI, 2026b) with Codex on the same 10 long-horizon DeepSWE tasks. Table 4 shows that DELM $( n = 2 )$ improves mean accuracy from 76.67% to 88.33% (+11.7 points) and reduces mean latency from 27.67 to 22.25 minutes (1.24× faster). Notably, DELM with DeepSeek-V4.1-Flash matches the mean accuracy of vanilla Codex with GPT-6-Astra (88.33%) at approximately 1/28 of its total cost per task (\\$0.33 vs. \\$9.40), though it remains slower (22.25 vs. 16.57 minutes), consistent with the more frequent revisions and failed attempts observed in its trajectories. These results suggest that decentralized coordination can make a low-cost model more competitive on long-horizon tasks.\n\n"
+          },
+          {
+            "block_index": 16,
+            "source_quote_id": "s4:b16:p0",
+            "assessment": "Table 4 与正文一致：76.67→88.33（差 11.66，正文写 +11.7）、27.67→22.25 min（1.24×）；Codex 行 Cost/Task 与 Cost/Submission OCR 为“$19”“$17”，结合正文 $0.33 与量级判断应为 $0.19、$0.17。原批注“保持极低的每任务成本 ($0.33)”易被误读为与基线持平，实际高于基线约 1.7 倍，只有按提交平摊才更低；已补上两个成本口径与“10 个长程任务、三次重复”的条件。",
+            "source_quote": "Table 4: Comparison of Codex and DELM with DeepSeek-V4.1-Flash on the same 10 long-horizon DeepSWE v1.1 tasks. Results are mean ± standard deviation across three repeats.\n<table><tr><td>Method</td><td>Avg. Acc (%)</td><td>Avg. Latency</td><td>Cost/Task</td><td>Cost/Submission</td></tr><tr><td>DeepSeek-V4.1-Flash</td><td></td><td></td><td></td><td></td></tr><tr><td>Codex</td><td> $7 6 . 6 7 \\pm 1 1 . 5 5$ </td><td> $2 7 . 6 7 \\pm 2 . 1 7 \\operatorname* { m i n } { \\left( 1 . 0 0 \\times \\right) }$ </td><td> $\\$ 19\\pm \\$ 0.01$ </td><td> $\\$ 0.19\\pm \\ S 0.01$ </td></tr><tr><td> $\\mathbf { D } \\mathbf { E } \\mathbf { L } \\mathbf { M } \\left( n = 2 \\right)$ </td><td> ${ \\bf 8 8 . 3 3 \\pm 7 . 6 4 }$  </td><td> $\\mathbf { 2 2 . 2 5 \\pm 0 . 9 0 \\operatorname* { m i n } { ( \\mathbf { 1 . 2 4 } \\times } ) }$ </td><td> $\\$ 0.33\\pm \\ S 0.01$ </td><td> $\\$ 17\\pm \\$ 0.01$  </td></tr></table>\n\n"
+          },
+          {
+            "block_index": 17,
+            "source_quote_id": "s4:b17:p1",
+            "assessment": "Table 5 数值核对：Claude Code 49.32%/129.13 s(1.00×)/$1.00^a；mini-SWE-agent 54.73%/91.78 s/$0.26；AOrchestra 55.26%/89.94 s/$0.24；DELM n=2 63.72%/71.86 s(1.80×)/$0.24/$0.12；n=4 66.08%/61.01 s(2.12×)/$0.47/$0.12。原批注“延迟仅为基线的 2.12 倍倒数（即更快）”表述错误且含混：2.12× 是加速倍数（129.13/61.01≈2.12），不是“倍数倒数”；另原批注漏掉 n=4 的 Cost/Task 翻倍这一代价。已改写为准确的加速倍数，并补上成本代价。",
+            "source_quote": "imes \\right)$ </td><td> $\\$ 0.24\\pm \\$ 90.04$ </td><td> $\\$ 0.24\\pm \\$ 90.04$ </td></tr><tr><td>DELM (n = 2)</td><td> $6 3 . 7 2 \\pm 2 . 2 9$ </td><td> $7 1 . 8 6 \\pm 2 . 8 8 \\mathrm { s } ( 1 . 8 0 \\times )$ </td><td> $\\$ 0.24\\pm \\$ \\$ 0.05$ </td><td> $\\$ 0.12\\pm \\$ 90.03$ </td></tr><tr><td>DELM (n = 4)</td><td> ${ \\bf 6 6 . 0 8 \\pm 1 . 8 6 }$ </td><td> $6 1 . 0 1 \\pm 2 . 6 3 \\mathrm { ~ s ~ } ( \\mathbf { 2 . 1 2 } \\times )$ </td><td> $\\$ 0.47\\pm \\$ 90.07$ </td><td> $\\$ 0.12\\pm \\$ 90.02$ </td></tr></table>\n\n"
+          },
+          {
+            "block_index": 18,
+            "source_quote_id": "s4:b18:p0",
+            "assessment": "脚注原文：Claude Code CLI 以 Anthropic API 格式发送 cache_control 块，缓存复用取决于上游是否支持；对 Gemini-3-Flash 无缓存复用时真实成本约 $1/task。原批注称“而非表格显示的数值”，与表冲突——表格该行本就标 $1.00^a，脚注解释的正是这个 $1.00 的来源，并非纠正另一个数字。已改为说明该标注的含义与量级差异（其余方法为 $0.12–$0.26）。",
+            "source_quote": "<sup>a</sup> The Claude Code CLI sends cache\\_control blocks in the Anthropic API format, so cache reuse only works if the upstream provider honors those blocks. For Gemini-3-Flash the real cost without cache reuse is therefore around \\$1 per task.\n\n"
+          }
+        ],
+        "correction_attempts": 1
+      },
+      {
+        "section_index": 4,
+        "part": 4,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 20,
+            "source_quote_id": "s4:b20:p0",
+            "assessment": "数字核对无误（66.08%、10.8 点、55.26%、8.5 点、$0.24）。初稿“速度快 1.47 倍”未指明对象：原文为比 AOrchestra 快 1.47×、比 Claude Code 快 2.12×，已补全；并补上 $0.12 的 Cost/Submission 减半事实。",
+            "source_quote": "SWE-bench Verified tests whether DELM still helps on a widely used software-engineering benchmark with a lightweight base model. We build DELM based on AOrchestra’s harness and compare it with Claude Code, mini-SWE-agent, and AOrchestra, all using Gemini 3 Flash. Table 5 shows that DELM outperforms all baselines in both accuracy and latency. With n = 4, DELM reaches 66.08% accuracy, 10.8 points higher than the strongest baseline, AOrchestra (55.26%). It is also 2.12× faster than Claude Code and 1.47× faster than AOrchestra. With n = 2, DELM still improves accuracy by 8.5 points over AOrchestra at the same Cost/Task (\\$0.24), which halves the cost per submission. Going from n = 2 to n = 4 roughly doubles Cost/Task but leaves Cost/Submission unchanged at \\$0.12, and it further improves both accuracy and latency.\n\n"
+          },
+          {
+            "block_index": 21,
+            "source_quote_id": "s4:b21:p0",
+            "assessment": "机制描述与原文一致（并行探索、共享已学结果、跳过死胡同/利用定位结论），未超出作者说法；保留原样。",
+            "source_quote": "These results show that multiple agents help even on largely sequential tasks. A single agent rarely completes every step correctly on its first attempt. It often inspects irrelevant files, pursues a wrong root cause, or submits a patch that fails the tests before it recovers. Each such detour costs time, and a single agent can only discover it by paying that cost itself. In DELM, agents explore different paths in parallel and record what they learn in the shared context. Once one agent has hit a dead end, the others can skip it, and once one has localized a fault, the others can build on that finding. This shortens the path to a correct fix, which explains why DELM is both faster and more accurate. A more detailed analysis is provided in Appendix D.\n\n"
+          },
+          {
+            "block_index": 23,
+            "source_quote_id": "s4:b23:p0",
+            "assessment": "设定核对无误：120 分钟预算、Claude Opus 5.5（xhigh）、ctags 与 pandoc 两个难任务、隐藏测试通过率随时间。保留原样。",
+            "source_quote": "ProgramBench asks agents to rebuild an entire program from its compiled executable and documentation. There is no natural stopping point: the pass rate keeps rising for as long as agents keep implementing. We therefore use it to ask a different question from the preceding sections: given a fixed wall-clock budget, how much progress does each system make, and how quickly? We run Claude Code and DELM, built on top of Claude Code, with Claude Opus 5.5 (xhigh reasoning effort) on two hard tasks, ctags and pandoc. Each run has a 120-minute budget, and we track the hidden-test pass rate over time (Figure 5).\n\n"
+          },
+          {
+            "block_index": 24,
+            "source_quote_id": "s4:b24:p0",
+            "assessment": "此处为无图号的图片。初稿以“该图展示的实验结果类型”追问读者，易被误解为图有可读信息；改为只说明图像视觉信息不可得并指向 Figure 5，不描述曲线。",
+            "source_quote": "![](images/a4baac7652a2c920c55ba126d581583cc6b111619edad5a971d10cafb1246596.jpg)\n\n"
+          },
+          {
+            "block_index": 25,
+            "source_quote_id": "s4:b25:p0",
+            "assessment": "初稿写曲线“始终有序”，caption 限定为 60 分钟之后才保持排序，属过度概括，已改为“60 分钟之后才稳定”。其余（更早达到给定通过率、结束时更高）与 caption 一致。",
+            "source_quote": "![](images/2bc563cdedeb95d67c2024492a281996dc73909c60d839837081b5674029de91.jpg)  \nFigure 5: DELM makes more progress within the same time budget. Test pass rate over time on two ProgramBench tasks with Claude Opus 5.5 under a 120-minute budget. DELM uses Claude Code as its per-agent harness. From 60 minutes onward, the curves stay ordered (n=4 above n=2 above Claude Code), so DELM reaches any given pass rate sooner and ends the budget higher.\n\n"
+          },
+          {
+            "block_index": 26,
+            "source_quote_id": "s4:b26:p0",
+            "assessment": "数字核对无误（6.73、8.17、18.96/19.91、53.28%/50.00%），且原文同句给出“同一 harness 与模型”的条件，归因说明与原意一致；保留原样。",
+            "source_quote": "Higher pass rates under the same budget. At the end of the budget, DELM (n=2) improves over Claude Code by 6.73 points on ctags (41.05% vs. 34.32%) and by 8.17 points on pandoc (38.26% vs. 30.09%). With $n { = } 4 ,$ the gains grow to 18.96 and 19.91 points (53.28% and 50.00%). Each DELM agent runs the same Claude Code harness and model as the baseline. The gains therefore come from the coordination layer, not from a stronger individual agent.\n\n"
+          },
+          {
+            "block_index": 27,
+            "source_quote_id": "s4:b27:p0",
+            "assessment": "核对：ctags 上 Claude Code 到预算末才达 34.32%，DELM n=2 约 95 分钟、n=4 约 60 分钟追平（为一半预算）；初稿引用的是 n=4 的时间点，正确。保留原样。",
+            "source_quote": "Faster progress toward the same result. The advantage is not limited to the final checkpoint. From 60 minutes onward, the curves stay ordered on both tasks, with $n { = } 4$ above $n { = } 2$ above Claude Code, so DELM reaches any given pass rate sooner. On ctags, Claude Code reaches its final 34.32% only at the end of the budget. DELM matches it after about 95 minutes with $n { = } 2$ and after about 60 minutes with $n { = } 4$ , which is half the budget. Decentralized coordination thus turns each additional agent into faster progress, not only a better final result.\n\n"
+          },
+          {
+            "block_index": 29,
+            "source_quote_id": "s4:b29:p0",
+            "assessment": "三个消融项与设置（Terminal-Bench 4.0、n=2、一次移除一个、其余固定）与原文一致；保留原样。",
+            "source_quote": "To isolate the contribution of each coordination mechanism in Table 1, we remove one mechanism at a time from DELM $( n = 2 )$ on Terminal-Bench 4.0 and keep everything else fixed. w/o early sharing lets agents publish results only after they complete their claimed subtask. w/o peer-status hides item owners and session status, so agents cannot see what their peers are currently working on. w/o shared context removes the shared context entirely, and agents coordinate by sending messages directly to each other. Figure 6 shows the results.\n\n"
+          },
+          {
+            "block_index": 30,
+            "source_quote_id": "s4:b30:p0",
+            "assessment": "数字核对无误（1.54×、2.02×、0.82–1.09×）。注意 block 30/31 原为同一句被断开，初稿批注已覆盖整句，不构成错误；保留原样。",
+            "source_quote": "The most striking effect is on latency. With the full system, the two agents run 1.54× (GPT-6-Astra) and 2.02× (Claude Opus 5.5) faster than the single-agent harness, whereas every ablation falls to\n\n"
+          },
+          {
+            "block_index": 31,
+            "source_quote_id": "s4:b31:p0",
+            "assessment": "初稿末句“优化了信息流动和工作分配”是原文未明说的推断且表述含糊；改为直接引用原文结论（加速来自协调而非并行本身）并补上 0.82–1.09× 这一证据数字。",
+            "source_quote": "0.82–1.09×. Two parallel agents are thus no faster than one unless they coordinate effectively, so the speedup of DELM comes from coordination rather than from parallelism alone.\n\n"
+          },
+          {
+            "block_index": 32,
+            "source_quote_id": "s4:b32:p0",
+            "assessment": "初稿漏掉模型限定：peer-status 最大精度跌幅 −3.3 只出现在 Claude Opus 5.5；直接消息替代共享上下文造成的最大跌幅 −3.0 只出现在 GPT-6-Astra。已补全数字与模型，并保留原文给出的原因（重叠认领、等待整段子任务、消息不沉淀）。",
+            "source_quote": "Removing peer-status awareness causes the largest slowdown under both models (0.87× and 0.82×), and with Claude Opus 5.5 it also causes the largest accuracy drop (−3.3 points). Without knowing what their peers are working on, agents tend to claim overlapping work and discover the duplication only after both have spent time on it. Removing early sharing brings the speedup back to about 1× (0.98× and 0.93×), because an agent whose work depends on a peer’s output must wait until the peer finishes its entire subtask instead of starting from partial results. Replacing the shared context with direct messaging retains slightly more speed than the other ablations (1.09× and 1.03×) but causes the largest accuracy drop with GPT-6-Astra (−3.0 points). Direct messages still let agents exchange information, but they do not accumulate into a persistent record that agents can revisit, build on, or correct, so findings and fixes are more easily missed.\n\n"
+          },
+          {
+            "block_index": 33,
+            "source_quote_id": "s4:b33:p0",
+            "assessment": "caption 只说明箭头从 DELM(n=2) 指向各消融变体，未说明图里画了哪些指标；初稿断言“延迟指标在所有消融下均显著恶化”属于对未见图像内容的过度推断，已改为引用正文数字并声明无视觉信息。",
+            "source_quote": "![](images/d71a6f25727c21a15dc288ccd3d159e411d79c38a108931d07bbdc7623508f01.jpg)  \nFigure 6: Ablation on Terminal-Bench 4.0. Arrows point from DELM (n = 2) to each variant with one mechanism removed.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 5,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s5:b1:p0",
+            "assessment": "四个机制的对应关系与原文一致：并行执行、中间结果共享、状态感知（避免重复搜索）、有状态上下文（纠错传播且读取便宜）。原文的'staying small enough to read cheaply'被概括为'低成本纠错'略偏向纠错而弱化读取成本，但第4.4节正文确实同时讲两者，可接受，保留原文。",
+            "source_quote": "To understand how the coordination mechanisms in Table 1 squeeze out bubbles, we analyze all DELM runs on Terminal-Bench 4.0 and DeepSWE v1.1. Parallel subtask execution lets agents build components concurrently (§4.1). Intermediate-results sharing lets agents start dependent work before a peer finishes, avoiding relay waits (§4.2). Peer-status awareness keeps agents from duplicating a peer’s search, avoiding redundant work (§4.3). Finally, a stateful shared context lets corrections reach every agent without another round of delegation, while staying small enough to read cheaply (§4.4).\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s5:b3:p0",
+            "assessment": "核对方法条件：认领互斥组件、经共享上下文共享代码、各自把同伴组件集成进自己的解，'细化分工缩短关键路径'均与原文一致。批注未提集成步骤，属可容忍省略，不改。",
+            "source_quote": "Parallel agents speed up a task only if the work is divided so that no agent idles or duplicates a peer. DELM agents claim distinct components from the task queue, share their code through the shared context, and each integrates its peers’ components into its own solution. Adding agents makes this division finer and shortens the critical path.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s5:b4:p0",
+            "assessment": "数字全部复核：单智能体27.0分钟、n=2为20.9分钟（27.0/20.9≈1.29×）、n=4为7.5分钟（≈3.6×），GPT-6-Astra平均加速1.54×→2.05×、Claude Opus 5.5 2.02×→2.49×，均与原文相同。原文的n=2/1.29×细节及GPT全基准数字被省略，补充后更便于读者核对加速倍数的来源；未引入原文之外的数字。",
+            "source_quote": "Figure 7 shows this on Terminal-Bench’s retro-console-soc task with GPT-6-Astra. A single agent builds the CPU, graphics, and audio in sequence and finishes in 27.0 minutes. With n=2, one agent builds the graphics and system components while its peer builds the CPU and then the audio, finishing in 20.9 minutes (1.29×). With $n { = } 4 ,$ , separate agents build the system, graphics, CPU, and audio concurrently, and the task finishes in 7.5 minutes (3.6×). The same pattern appears across Terminal-Bench 4.0: moving from n=2 to n=4 raises the average speedup from 1.54× to 2.05× with GPT-6-Astra and from 2.02× to 2.49× with Claude Opus 5.5 (§3.1).\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s5:b5:p0",
+            "assessment": "caption只说'更多智能体并行构建更多组件'与'执行时间线'，未给出曲线形状。原批注'从串行到并行的转变过程'是合理但未直述的推断，改为可对照正文具体分钟数的读法，并明确未查看图像本身，避免把推断写成观测。",
+            "source_quote": "![](images/e4499cef8eecfe1a323335f161c5987293773e2d8b7e9aac7de815eeda14334b.jpg)  \nFigure 7: More agents build more components in parallel. Execution timelines on Terminal-Bench 4.0’s retro-console-soc task with GPT-6-Astra.\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s5:b7:p0",
+            "assessment": "因果链核对无误：集中式需等生产者完成并经主智能体转发，DELM一可用即发布，使依赖工作与集成测试和实现重叠。批注与原文语义一致，逐字保留。",
+            "source_quote": "When one component depends on another, centralized orchestration makes the consumer wait until the producer finishes its subtask and the main agent relays the result. DELM agents instead publish partial results as soon as they are usable, so dependent work and integration testing overlap with implementation rather than following it.\n\n"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s5:b8:p0",
+            "assessment": "案例细节核对：Agent 2的household-separation消费Agent 1的record matcher聚类；Agent 1在matcher刚跑通、阈值尚未调优时就共享。批注原写'未调优的初步聚类结果'已准确，仅按原文补'阈值'一词使条件更明确，事实未变。",
+            "source_quote": "In Terminal-Bench’s telecom-entity-resolution task, Agent 2’s household-separation step consumes the clusters produced by Agent 1’s record matcher. Agent 1 shared the matcher as soon as it ran, before its thresholds were tuned, so Agent 2 developed its step on real clusters while the matcher was still being refined.\n\n"
+          },
+          {
+            "block_index": 10,
+            "source_quote_id": "s5:b10:p0",
+            "assessment": "原文强调集中式下子智能体只看到被分配的subcontext、重叠要等主智能体汇总才被发现；DELM暴露claims/status/scope使智能体在搜索进行中即可改道。原批注把'声明和范围'概括为意图，方向对但弱化了subcontext这一对照条件，补充后因果关系更清楚。",
+            "source_quote": "Parallel agents that cannot see each other’s work tend to converge on the same promising direction. In centralized systems, each sub-agent sees only the subcontext the main agent assigned it, so overlapping work goes unnoticed until the main agent collects the results. DELM exposes every agent’s claims, status, and stated scope through the task queue and shared context, so an agent can notice an overlap while its search is still running and redirect.\n\n"
+          },
+          {
+            "block_index": 11,
+            "source_quote_id": "s5:b11:p0",
+            "assessment": "原文明确是'one four-agent run'中Agents 1和3各自开始调优相同的端口宽度与位置。原批注写成'两个智能体独立尝试'，抹掉了四智能体运行这一设置，属条件表述不准，已改为四智能体运行中的Agent 1与Agent 3；同时删去原文未说的'计算资源浪费'评价。",
+            "source_quote": "In Terminal-Bench’s wdm-design task, agents optimize an optical device by changing its port geometry and material pattern. In one four-agent run, Agents 1 and 3 independently began tuning the same port widths and positions. Agent 1 then saw Agent 3’s claim through the shared context:\n\n"
+          },
+          {
+            "block_index": 12,
+            "source_quote_id": "s5:b12:p0",
+            "assessment": "逐条核对日志：agent-3/FACT声明只调五个参数，agent-1/FACT称经cavity artifact发现agent-3已认领同样的五参数端口调优，随后agent-1执行kill -TERM 770与另一脚本。批注中的五个参数、终止进程、切换脚本均与原文一致，保留。",
+            "source_quote": "[agent-3/FACT] [...] I will tune only w\\_in,w\\_long,w\\_short,y\\_long,y\\_short [...]   \n[agent-1/FACT] [...] applying the cavity artifact revealed agent-3 had just claimed   \nthe same five-parameter port tuning. [...]   \n[agent-1/EXEC] kill -TERM 770   \n[agent-1/EXEC] python binary\\_refine.py [...]\n\n"
+          },
+          {
+            "block_index": 13,
+            "source_quote_id": "s5:b13:p0",
+            "assessment": "核对结果：Agent 1放弃端口搜索回到此前候选的材料模式精修，Agent 3继续端口调优，重叠在任一搜索结束前由智能体自行解决且无需主智能体重规划。批注准确，逐字保留。",
+            "source_quote": "Agent 1 terminates its own port search and returns to refining the material pattern of its earlier candidate, while Agent 3 continues port tuning. The agents resolve the overlap themselves, before either search finishes, without a main agent having to detect the duplication and re-plan.\n\n"
+          },
+          {
+            "block_index": 14,
+            "source_quote_id": "s5:b14:p0",
+            "assessment": "逐格复核Table 6：Terminal-Bench上GPT-6-Astra n=2为7.31k/9.17%、n=4为12.88k/17.68%；Claude Opus 5.5 n=2为6.62k/1.92%、n=4为14.48k/3.66%；DeepSWE上GPT为7.54k/7.71%与13.03k/14.56%，Claude为4.67k/1.69%与10.43k/3.04%。原批注把'12.88k'单独举为最高值欠妥，最大上下文其实是Claude n=4的14.48k；且1.7–17.7%跨模型合并表述会掩盖模型间差异，已按模型拆开并给出n=2→n=4的具体数值。",
+            "source_quote": "Table 6: Final shared-context size (thousands of tokens) and the cost of reading it as a percentage of total task cost.\n<table><tr><td colspan=\"2\"></td><td colspan=\"2\">Terminal-Bench 4.0</td><td colspan=\"2\">DeepSWE v1.1</td></tr><tr><td>Model</td><td>Agents</td><td>Context (k)</td><td>Cost (%)</td><td>Context (k)</td><td>Cost (%)</td></tr><tr><td rowspan=\"2\">GPT-6-Astra</td><td> $n = 2$ </td><td> $7 . 3 1 \\pm 0 . 4 2$ </td><td> $9 . 1 7 \\pm 0 . 3 8$ </td><td> $7 . 5 4 \\pm 0 . 2 1$ </td><td> $7 . 7 1 \\pm 0 . 1 8$ </td></tr><tr><td> $n = 4$ </td><td> $1 2 . 8 8 \\pm 0 . 9 7$ </td><td> $1 7 . 6 8 \\pm 0 . 2 5$ </td><td> $1 3 . 0 3 \\pm 0 . 9 6$ </td><td> $1 4 . 5 6 \\pm 0 . 3 7$ </td></tr><tr><td rowspan=\"2\">Claude Opus 5.5</td><td> $n = 2$ </td><td> $6 . 6 2 \\pm 0 . 3 4$ </td><td> $1 . 9 2 \\pm 0 . 1 1$ </td><td> $4 . 6 7 \\pm 0 . 1 1$ </td><td> $1 . 6 9 \\pm 0 . 0 6$ </td></tr><tr><td> $n = 4$ </td><td> $1 4 . 4 8 \\pm 0 . 4 7$ </td><td> $3 . 6 6 \\pm 0 . 2 9$ </td><td> $1 0 . 4 3 \\pm 0 . 5 3$ <"
+          },
+          {
+            "block_index": 16,
+            "source_quote_id": "s5:b16:p0",
+            "assessment": "关键量纲纠错：原文是'720 agent trajectories'中导入5,237次、'80.3% of trajectories'后来导入已导入文件的修订版，单位是轨迹而非智能体。原批注写成'80.3%的智能体'属口径错误，已改为轨迹并补上720与5,237，机制描述（追加引用而非覆盖）与原文一致。",
+            "source_quote": "Shared results help only if later improvements reach the agents that already used them. Because updates and corrections are appended as new entries that reference revised files, rather than overwriting old ones (§2.1), an agent can re-import a peer’s updated work at any time. Agents rely on this heavily. Across 720 agent trajectories on Terminal-Bench 4.0 and DeepSWE v1.1, agents imported shared files 5,237 times, and 80.3% of trajectories later imported a revised version of a file they had already imported. Agents thus track their peers’ work as it improves, and fixes reach every agent that depends on them without re-planning. In centralized systems, by contrast, correcting a result that has already been summarized and relayed requires another round of delegation.\n\n"
+          },
+          {
+            "block_index": 17,
+            "source_quote_id": "s5:b17:p0",
+            "assessment": "数字核对：任务完成时共享上下文平均低于15K tokens（与Table 6最大值14.48k相容），读取只返回新增内容，读取占GPT-6-Astra总成本7.7–17.7%、Claude Opus 5.5为1.7–3.7%。原批注'保持在15K token以内'未体现原文的average限定，已补'平均'并写明两个模型各自的区间，避免读者误以为所有设置都必然低于15K。",
+            "source_quote": "This reuse is inexpensive. Because agents publish short summaries and attach files by reference (§2.1), the shared context averages under 15K tokens at task completion (Table 6). Each read also returns only what is new since the agent’s last read, so most of this content enters an agent’s session once. Accounting for all reads by all agents, including this cached reuse, reading the shared context accounts for 1.7–3.7% of total task cost with Claude Opus 5.5 and 7.7–17.7% with GPT-6-Astra.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 6,
+        "part": 1,
+        "verdict": "pass",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s6:b1:p0",
+            "assessment": "核对多智能体协调段的核心事实：CAMEL 是角色扮演型协作、MetaGPT/Chat-Dev 是软件工程角色与标准工作流、AOrchestra 按需生成子代理、ToolOrchestra 训练轻量编排器、Squeeze Evolve 按成本/能力路由阶段、RecursiveMAS 用隐状态传递替代文本通信。批注归纳为“固定角色→自适应编排”的演进，并指出当前系统仍靠固定工作流或中心编排器（原文 'coordinate through either a fixed workflow or a central orchestrator'），与原文一致，无推断越界。",
+            "source_quote": "Multi-agent coordination. Recent LLM-based multi-agent systems improve performance by decomposing tasks across specialized or interacting agents. CAMEL (Li et al., 2023) instantiates role-playing agents to study autonomous cooperation, while MetaGPT (Hong et al., 2023) and Chat-Dev (Qian et al., 2024) organize collaboration through software-engineering roles and standardized workflows. More recent systems make orchestration adaptive. AOrchestra (Ruan et al., 2026) creates task-specific sub-agents on demand, ToolOrchestra (Su et al., 2025) trains a lightweight orchestrator to coordinate models and tools, Squeeze Evolve (Maheswaran et al., 2026) routes the stages of evolutionary inference to models of different cost and capability, and RecursiveMAS (Yang et al., 2026b) replaces text-level communication with recursive latent-state transfer. These systems coordinate through either a fixed workflow or a central orchestrator that decides what each agent sees and when progress is merged. Comb"
+          },
+          {
+            "block_index": 1,
+            "source_quote_id": "s6:b1:p1",
+            "assessment": "Combee 的表述核对：原文说它同样把集中式聚合视为高并行下的瓶颈，但针对的是 parallel prompt learning 而非 agent coordination。批注“场景不同”与原文 'rather than agent coordination' 相符，未夸大对比强度。",
+            "source_quote": "ee (Li et al., 2026) likewise identifies centralized aggregation as a bottleneck under high parallelism, but addresses it for parallel prompt learning rather than agent coordination.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s6:b2:p0",
+            "assessment": "核对黑板段落的三点：传统黑板（Erman 1980, Nii 1986）通过共享工作区协调求解器；LLM 变体（Han and Zhang 2025 用于通用推理；Salemi et al. 2025 用于数据发现中的信息自愿提供）仍依赖控制代理选择行动者或发布哪条请求，且把黑板主要当作消息通道（'treat the board mainly as a message channel'）。批注准确；对 DELM 的描述（移除控制器、异步任务队列认领、有状态共享上下文追加修正、面向长周期编码并含仓库/环境状态）均可在原文逐项对应，未添加原文没有的机制。",
+            "source_quote": "Blackboard and shared-memory architectures. Blackboard architectures coordinate problem solvers through a shared workspace (Erman et al., 1980, Nii, 1986). Recent LLM variants use a blackboard on which agents post messages for general reasoning (Han and Zhang, 2025) or to which agents volunteer information in response to requests for data discovery (Salemi et al., 2025). However, these systems still rely on a control agent to select which agent acts or which request is posted, and they treat the board mainly as a message channel. DELM removes the controller from the loop entirely. Agents claim work asynchronously from a task queue, see what their peers are working on, and build on or correct earlier findings by appending to a stateful shared context (Table 1). We further target long-horizon agentic coding, where shared progress includes repository and environment state rather than only textual messages.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s6:b3:p0",
+            "assessment": "核对该段：SWE-agent 与 mini-SWE-agent 证明良好的 agent-computer interface 提升软件工程表现；Claude Code、Codex 属生产级 harness，可读仓库、改文件、执行命令并委派给原生子代理；Recursive Language Models 把 prompt 当作外部环境做代码中介循环。批注称 DELM 不替换单智能体循环而是叠加协调层，且原文明确 'we instantiate it on both Codex and Claude Code'，与批注一致。批注中“支持并行协作”是对 DELM 协调层用途的概括，原文此处未直接用 'parallel' 一词修饰 DELM，但结合上段任务队列并发认领的设定属合理概括，不构成事实错误。",
+            "source_quote": "Agentic coding harnesses. Language models become far more capable when coupled with executable environments that let them inspect state, invoke tools, and act on feedback. SWE-agent (Yang et al., 2024) and its lightweight variant mini-SWE-agent show that a well-designed agent-computer interface substantially improves software-engineering performance. Production harnesses such as Claude Code (Anthropic, 2026) and Codex (OpenAI, 2025) let models read repositories, edit files, execute commands, and increasingly delegate work to native subagents. Recursive Language Models (Zhang et al., 2025) apply a similar code-mediated loop to long-context reasoning by treating the prompt as an external environment. DELM complements these harnesses: rather than replacing the single-agent loop, it adds a coordination layer on top of it, and we instantiate it on both Codex and Claude Code.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 7,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s7:b1:p0",
+            "assessment": "逐项对照：DELM 为去中心化框架、经共享上下文与任务队列协调、非主智能体，均与原文一致；三类 bubbles 为冗余工作、屏障等待、中继等待，一致。初稿把三基准上的“更准更快”与 ProgramBench 上的“进展更大”合并成“多个基准测试中准确率更高且速度更快”，属含糊且可能过度概括（ProgramBench 只比较进展），故改为分列两组基准与各自比较对象。消融结论“移除任一机制使两个智能体大致回单智能体速度”与原文 roughly single-agent speed 一致，保留并补出“大致”。原文未给具体加速倍数或延迟数字，未添加。",
+            "source_quote": "Conclusion. We introduced DELM, a decentralized multi-agent framework in which agents coordinate through a shared context and a task queue rather than through a main agent. By letting agents claim work asynchronously, publish findings as soon as they are usable, and see what every peer is doing, DELM squeezes out the bubbles that existing designs create: redundant work among independent agents, barrier waits among peer-communicating agents, and relay waits under centralized orchestration. Across Terminal-Bench 4.0, DeepSWE v1.1, and SWE-bench Verified, DELM is both more accurate and faster than single-agent harnesses, their native subagents, and AOrchestra, and on ProgramBench it makes more progress than Claude Code under the same time budget. Our ablation shows that these gains come from coordination rather than parallelism alone: removing any single mechanism brings two agents back to roughly single-agent speed. These results suggest that scaling multi-agent systems requires not only"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s7:b2:p0",
+            "assessment": "核对两点：其一，原文称在 certain settings 下更低 latency 与 Cost/Submission 伴随更高 Cost/Task，初稿“降低延迟和单次提交成本，但可能增加单任务总成本”与该限定相符，“可能”略软化但未歪曲，保留原样；其二，自然语言共享上下文不适合结构化数据精确聚合、可结合代码中介执行（Appendix C.1），与原文一致，未添加原文没有的定量结论。",
+            "source_quote": "Limitations. In certain settings, lower latency and Cost/Submission for DELM come with higher Cost/Task. A natural-language shared context is also less suited to exact aggregation over structured data, where DELM can be enhanced when combined with code-mediated execution (Appendix C.1).\n\n"
+          },
+          {
+            "block_index": 1,
+            "source_quote_id": "s7:b1:p1",
+            "assessment": "段尾主张为“扩展多智能体系统不仅需要更多智能体，还需要保持各智能体产出并压低通信成本的协调基底”，初稿概括为“低通信成本的高效协调对扩展至关重要”，方向一致；修订后的批注未把该主张写成已被实验直接证明的定量结论，边界适当。",
+            "source_quote": " more agents, but a coordination substrate that keeps every agent productive while keeping the cost of communication among them low.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 8,
+        "part": 1,
+        "verdict": "pass",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s8:b1:p0",
+            "assessment": "核对无误。原文列举具名致谢者，致谢 SAIL 与 Stanford HAI 合作者，并说明 Justin Oh 提供 generous financial support of this research；批注“财务支持”与原文“financial support”一致，未把资金支持夸大为项目资助。批注仅作一句话概括，符合致谢类段落从简的要求。",
+            "source_quote": "We thank Shayan Talaei, Jon Saad-Falcon, Jacky Kwok, Hermann Kumbong, Ishan Khare, Miria Feng, Swapnil Gandhi, Michael Y. Li, Chun Deng, Chong Zeng, Rui Li, Ke Li, Marquita Ellis, Adrian Gamarra Lafuente, Charles Ding, Tarun Suresh, Ziyu Chen, Zhuohan Gu, Yize Liu, and Ligeng Zhu. We would like to thank our collaborators at the Stanford Artificial Intelligence Laboratory (SAIL) and Stanford HAI. We are also grateful to Justin Oh for his generous financial support of this research.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s8:b2:p0",
+            "assessment": "核对无误。原文编号为 NSF No. 24-554 (AIMing) 与 DARPA No. HR00112520038 (Fallingwater)，另列 Stanford HAI、IBM (Code Generation)、Lightspeed、Google、Google DeepMind。批注用“企业/机构（IBM, Google 等）”概括，未错标编号，也未把 IBM 的括号标注误写成独立资助方；摘要列全了五家机构与两个联邦项目编号，与原文逐项一致。",
+            "source_quote": "We gratefully acknowledge support from federal sources: NSF under No. 24-554 (AIMing) and DARPA under No. HR00112520038 (Fallingwater). We also gratefully acknowledge support from Stanford HAI, IBM (Code Generation), Lightspeed, Google, and Google DeepMind.\n\n"
+          },
+          {
+            "block_index": 0,
+            "source_quote_id": "s8:b0:p0",
+            "assessment": "仅为章节标题，按规则略过批注。摘要中“本节为第 7 章 Acknowledgements”与该标题一致。",
+            "source_quote": "## 7 Acknowledgements\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 9,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s9:b1:p0",
+            "assessment": "原文为 Claude Sonnet 4.6 发布页，注明 2025 与访问日期 2026-05-06。初稿称“表明实验可能基于该特定版本”，属无据推断，已删去模型能力结论，改为客观描述引文类型。",
+            "source_quote": "Anthropic. Claude Sonnet 4.6. https://www.anthropic.com/news/claude-sonnet-4-6, 2025. Accessed: 2026-05-06.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s9:b2:p0",
+            "assessment": "原文为 Opus 5.5 公告，September 2026 与 Accessed: 2026-09-25，与初稿“最新高性能模型”一致但“最新”为评价，已改为标注日期事实。",
+            "source_quote": "Anthropic. Introducing Claude Opus 5.5. https://www.anthropic.com/claude-opus-5-5, September 2026. Accessed: 2026-09-25.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s9:b3:p0",
+            "assessment": "原文只有“Claude code, https://claude.ai/, 2026”，初稿“暗示方法或实验流程中使用了官方编码代理工具”超出证据，已删除该推断。",
+            "source_quote": "Anthropic. Claude code. https://claude.ai/, 2026.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s9:b4:p0",
+            "assessment": "原文标题为 Run Claude Code programmatically: Background tasks at exit，n.d.。初稿“关注代码执行的生命周期管理”方向正确，已改为更精确的“退出时的后台任务”表述。",
+            "source_quote": "Anthropic. Run Claude Code programmatically: Background tasks at exit. Claude Code Docs, n.d. URL https://code.claude.com/docs/en/headless#background-tasks-at-exit. Accessed: 2026-09-27.\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s9:b5:p0",
+            "assessment": "LongBench v2，ACL 2025，pages 3639–3664，定位“deeper understanding and reasoning on realistic long-context multitasks”。初稿称其为“主要对比基准之一”无证据，已改为只描述基准本身。",
+            "source_quote": "Yushi Bai, Shangqing Tu, Jiajie Zhang, Hao Peng, Xiaozhi Wang, Xin Lv, Shulin Cao, Jiazheng Xu, Lei Hou, Yuxiao Dong, et al. Longbench v2: Towards deeper understanding and reasoning on realistic long-context multitasks. In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 3639–3664, 2025.\n\n"
+          },
+          {
+            "block_index": 6,
+            "source_quote_id": "s9:b6:p0",
+            "assessment": "Oolong 原文为 assessing long context reasoning and aggregation，2025 预印本。初稿“补充特定场景性能指标”为推断，已删。",
+            "source_quote": "Amanda Bertsch, Adithya Pratapa, Teruko Mitamura, Graham Neubig, and Matthew R Gormley. Oolong: Evaluating long context reasoning and aggregation capabilities. arXiv preprint arXiv:2511.02817, 2025.\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s9:b7:p0",
+            "assessment": "GoT 属 AAAI 2024，volume 38, pages 17682–17690，核心是图结构组织 LLM 思维，初稿表述成立，已去掉“方法参考”一类归因。",
+            "source_quote": "Maciej Besta, Nils Blach, Ales Kubicek, Robert Gerstenberger, Michal Podstawski, Lukas Gianinazzi, Joanna Gajda, Tomasz Lehmann, Hubert Niewiadomski, Piotr Nyczyk, et al. Graph of thoughts: Solving elaborate problems with large language models. In Proceedings of the AAAI conference on artificial intelligence, volume 38, pages 17682–17690, 2024.\n\n"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s9:b8:p0",
+            "assessment": "Sprint 原文题名含 interleaved planning and parallelized execution in reasoning models，NeurIPS 38:96393–96433, 2026。初稿“为本文并发设计提供依据”是归因推断，已删。",
+            "source_quote": "Emil Biju, Shayan Talaei, Zhemin Huang, Mohammadreza Pourreza, Azalia Mirhoseini, and Amin Saberi. Sprint: Enabling interleaved planning and parallelized execution in reasoning models. Advances in Neural Information Processing Systems, 38:96393–96433, 2026.\n\n"
+          },
+          {
+            "block_index": 9,
+            "source_quote_id": "s9:b9:p0",
+            "assessment": "Large Language Monkeys 即 repeated sampling 扩展推理算力，arXiv 2407.21787。初稿准确，已合并为一句。",
+            "source_quote": "Bradley Brown, Jordan Juravsky, Ryan Ehrlich, Ronald Clark, Quoc V Le, Christopher Ré, and Azalia Mirhoseini. Large language monkeys: Scaling inference compute with repeated sampling. arXiv preprint arXiv:2407.21787, 2024.\n\n"
+          },
+          {
+            "block_index": 10,
+            "source_quote_id": "s9:b10:p0",
+            "assessment": "Reconcile，ACL 2024，多模型圆桌共识。初稿准确；OCR 中 Associationfor 缺空格属原文形态，不影响语义判断。",
+            "source_quote": "Justin Chen, Swarnadeep Saha, and Mohit Bansal. Reconcile: Round-table conference improves reasoning via consensus among diverse llms. In Proceedings of the 62nd Annual Meeting of the Associationfor Computational Linguistics (Volume 1: Long Papers), pages 7066–7085, 2024.\n\n"
+          },
+          {
+            "block_index": 11,
+            "source_quote_id": "s9:b11:p0",
+            "assessment": "Cobbe 等 2021 的 Training verifiers to solve math word problems 即 GSM8K 与验证器训练。初稿“可能影响本文评估逻辑”无据，已删，只保留该工作的定位。",
+            "source_quote": "Karl Cobbe, Vineet Kosaraju, Mohammad Bavarian, Mark Chen, Heewoo Jun, Lukasz Kaiser, Matthias Plappert, Jerry Tworek, Jacob Hilton, Reiichiro Nakano, et al. Training verifiers to solve math word problems. arXiv preprint arXiv:2110.14168, 2021.\n\n"
+          },
+          {
+            "block_index": 12,
+            "source_quote_id": "s9:b12:p0",
+            "assessment": "MapReduce, CACM 51(1):107–113, 2008。初稿“可能用于类比分布式处理”为推断且未标注，已改为只说明其经典范式定位。",
+            "source_quote": "Jeffrey Dean and Sanjay Ghemawat. Mapreduce: simplified data processing on large clusters. Communications of the ACM, 51(1):107–113, 2008.\n\n"
+          },
+          {
+            "block_index": 13,
+            "source_quote_id": "s9:b13:p0",
+            "assessment": "DeepSeek-V4 题名为百万 token 上下文智能，编号 2026a。初稿称其“是重要对比对象”无证据，已删。",
+            "source_quote": "DeepSeek-AI. Deepseek-v4: Towards highly efficient million-token context intelligence, 2026a.\n\n"
+          },
+          {
+            "block_index": 14,
+            "source_quote_id": "s9:b14:p0",
+            "assessment": "DeepSeek-V4.1-flash 题名含 kv cache compression，arXiv 2609.19969，2026b。初稿“提示本文涉及显存优化”属过度归因，已改为描述该报告主题。",
+            "source_quote": "DeepSeek-AI. Deepseek-v4.1-flash: Pushing the limits of kv cache compression, 2026b. URL https://arxiv.org/abs/2609.19969.\n\n"
+          },
+          {
+            "block_index": 15,
+            "source_quote_id": "s9:b15:p0",
+            "assessment": "Gemini 3 Flash 为 Google 博客（December 2025，访问 2026-06-01），标题 Frontier Intelligence Built for Speed。初稿“作为高性能低延迟模型参照”含推断，已改为题名事实。",
+            "source_quote": "Tulsee Doshi. Gemini 3 Flash: Frontier Intelligence Built for Speed. Google — The Keyword, December 2025. URL https://blog.google/products-and-platforms/products/gemini/ gemini-3-flash/. Accessed: 2026-06-01.\n\n"
+          },
+          {
+            "block_index": 16,
+            "source_quote_id": "s9:b16:p0",
+            "assessment": "Du 等 2023 的多智能体辩论提升事实性与推理，arXiv 2305.14325。初稿“核心方法来源之一”无据，已删归因。",
+            "source_quote": "Yilun Du, Shuang Li, Antonio Torralba, Joshua B Tenenbaum, and Igor Mordatch. Improving factuality and reasoning in language models through multiagent debate. arXiv preprint arXiv:2305.14325, 2023.\n\n"
+          },
+          {
+            "block_index": 17,
+            "source_quote_id": "s9:b17:p0",
+            "assessment": "Hearsay-II（ACM Computing Surveys 12(2):213–253, 1980）为语音理解系统，原文 OCR 作 speechunderstanding。初稿“提供理论渊源”是推断，已改为系统本身定位。",
+            "source_quote": "Lee D. Erman, Frederick Hayes-Roth, Victor R. Lesser, and D. Raj Reddy. The Hearsay-II speechunderstanding system: Integrating knowledge to resolve uncertainty. ACM Computing Surveys, 12 (2):213–253, 1980. doi: 10.1145/356810.356816.\n\n"
+          },
+          {
+            "block_index": 18,
+            "source_quote_id": "s9:b18:p0",
+            "assessment": "AgentSwing 题名含 adaptive parallel context management routing for long-horizon web agents。初稿“具有直接参考价值”为评价，已删。",
+            "source_quote": "Zhaopeng Feng, Liangcai Su, Zhen Zhang, Xinyu Wang, Xiaotian Zhang, Xiaobin Wang, Runnan Fang, Qi Zhang, Baixuan Li, Shihao Cai, et al. Agentswing: Adaptive parallel context management routing for long-horizon web agents. arXiv preprint arXiv:2603.27490, 2026.\n\n"
+          },
+          {
+            "block_index": 19,
+            "source_quote_id": "s9:b19:p0",
+            "assessment": "Han & Zhang 2025 探索基于黑板的 LLM 多智能体系统，arXiv 2507.01701。初稿“支撑本文架构选择”超出证据，已改为描述被引工作。",
+            "source_quote": "Bochen Han and Songmao Zhang. Exploring advanced llm multi-agent systems based on blackboard architecture. arXiv preprint arXiv:2507.01701, 2025.\n\n"
+          },
+          {
+            "block_index": 20,
+            "source_quote_id": "s9:b20:p0",
+            "assessment": "MetaGPT 为 ICLR 2023 的元编程多智能体协作框架。初稿“常用于复杂任务分解”是泛化推断，已弱化为框架自身功能描述。",
+            "source_quote": "Sirui Hong, Mingchen Zhuge, Jonathan Chen, Xiawu Zheng, Yuheng Cheng, Jinlin Wang, Ceyao Zhang, Zili Wang, Steven Ka Shing Yau, Zijuan Lin, et al. Metagpt: Meta programming for a multiagent collaborative framework. In The twelfth international conference on learning representations, 2023.\n\n"
+          },
+          {
+            "block_index": 21,
+            "source_quote_id": "s9:b21:p0",
+            "assessment": "DeepSWE v1.1 自述为 cleaner, more reproducible benchmark，以 GitHub 仓库 URL 给出。初稿“用于严格评估”为推断，已删。",
+            "source_quote": "Wenqi Huang and Peter Jiang. Deepswe v1.1: a cleaner, more reproducible benchmark for frontier coding agents, 2026. URL https://github.com/datacurve-ai/deep-swe.\n\n"
+          },
+          {
+            "block_index": 22,
+            "source_quote_id": "s9:b22:p0",
+            "assessment": "GPipe 是训练侧流水线并行（NeurIPS 32, 2019）。初稿“并行思想相通”为类比推断，已标注为训练效率定位，不做类比断言。",
+            "source_quote": "Yanping Huang, Youlong Cheng, Ankur Bapna, Orhan Firat, Dehao Chen, Mia Chen, HyoukJoong Lee, Jiquan Ngiam, Quoc V Le, Yonghui Wu, et al. Gpipe: Efficient training of giant neural networks using pipeline parallelism. Advances in neural information processing systems, 32, 2019.\n\n"
+          },
+          {
+            "block_index": 23,
+            "source_quote_id": "s9:b23:p0",
+            "assessment": "SWE-bench，ICLR 2024，以真实 GitHub issue 为任务。初稿“衡量实用性的关键标准”为评价，已改为任务描述。",
+            "source_quote": "Carlos E Jimenez, John Yang, Alexander Wettig, Shunyu Yao, Kexin Pei, Ofir Press, and Karthik R Narasimhan. SWE-bench: Can language models resolve real-world github issues? In The Twelfth International Conference on Learning Representations, 2024. URL https://openreview.net/ forum?id=VTF8yNQM66.\n\n"
+          },
+          {
+            "block_index": 24,
+            "source_quote_id": "s9:b24:p0",
+            "assessment": "Kimi K2.5 题名为 Visual agentic intelligence。初稿“表明研究可能涵盖多模态或界面交互”属无据推断，已删，仅保留题名含义。",
+            "source_quote": "Kimi, Tongtong Bai, Yifan Bai, Yiping Bao, SH Cai, Yuan Cao, Y Charles, HS Che, Cheng Chen, Guanduo Chen, et al. Kimi k2.5: Visual agentic intelligence. arXiv preprint arXiv:2602.02276, 2026.\n\n"
+          },
+          {
+            "block_index": 25,
+            "source_quote_id": "s9:b25:p0",
+            "assessment": "Lee 等 2024 的 human-inspired reading agent with gist memory of very long contexts。初稿“内存管理思路”为类比，已改为该 agent 的记忆机制描述。",
+            "source_quote": "Kuang-Huei Lee, Xinyun Chen, Hiroki Furuta, John Canny, and Ian Fischer. A human-inspired reading agent with gist memory of very long contexts. arXiv preprint arXiv:2402.09727, 2024.\n\n"
+          },
+          {
+            "block_index": 26,
+            "source_quote_id": "s9:b26:p0",
+            "assessment": "CAMEL（NeurIPS 36:51991–52008, 2023）以角色扮演让 agent 交流。初稿“探索大模型社会协作行为”与题名一致，保留并精简。",
+            "source_quote": "Guohao Li, Hasan Hammoud, Hani Itani, Dmitrii Khizbullin, and Bernard Ghanem. Camel: Communicative agents for \"mind\" exploration of large language model society. Advances in neural information processing systems, 36:51991–52008, 2023.\n\n"
+          },
+          {
+            "block_index": 27,
+            "source_quote_id": "s9:b27:p0",
+            "assessment": "Combee 题名为 Scaling prompt learning for self-improving language model agents。初稿“关联长期演化能力”为推断，已改为可验证的题名信息。",
+            "source_quote": "Hanchen Li, Runyuan He, Qizheng Zhang, Changxiu Ji, Qiuyang Mang, Xiaokun Chen, Lakshya A Agrawal, Wei-Liang Liao, Eric Yang, Alvin Cheung, et al. Combee: Scaling prompt learning for self-improving language model agents. arXiv preprint arXiv:2604.04247, 2026.\n\n"
+          },
+          {
+            "block_index": 28,
+            "source_quote_id": "s9:b28:p0",
+            "assessment": "Liang 等 2023 通过多智能体辩论鼓励发散性思考。初稿“突破单一模型推理局限”为评价性推断，已删。",
+            "source_quote": "Tian Liang, Zhiwei He, Wenxiang Jiao, Xing Wang, Yan Wang, Rui Wang, Yujiu Yang, Zhaopeng Tu, and Shuming Shi. Encouraging divergent thinking in large language models through multi-agent debate. arXiv preprint arXiv:2305.19118, 10, 2023.\n\n"
+          },
+          {
+            "block_index": 29,
+            "source_quote_id": "s9:b29:p0",
+            "assessment": "Lightman 等 Let's Verify Step by Step 为 ICLR 2024 的过程监督工作，“步骤验证”表述准确。初稿“对确保推理链条正确性至关重要”是价值判断，已改为方法定位。",
+            "source_quote": "Hunter Lightman, Vineet Kosaraju, Yuri Burda, Harrison Edwards, Bowen Baker, Teddy Lee, Jan Leike, John Schulman, Ilya Sutskever, and Karl Cobbe. Let’s verify step by step. In International Conference on Learning Representations, volume 2024, pages 39578–39601, 2024.\n\n"
+          },
+          {
+            "block_index": 30,
+            "source_quote_id": "s9:b30:p0",
+            "assessment": "Squeeze Evolve 题名含 unified multi-model orchestration for verifier-free evolution。初稿“可能启发新迭代策略”为推测，已删，仅述其无验证器编排机制。",
+            "source_quote": "Monishwaran Maheswaran, Leon Lakhani, Zhongzhu Zhou, Shijia Yang, Junxiong Wang, Coleman Hooper, Yuezhou Hu, Rishabh Tiwari, Jue Wang, Harman Singh, et al. Squeeze evolve: Unified multi-model orchestration for verifier-free evolution. arXiv preprint arXiv:2604.07725, 2026.\n\n"
+          },
+          {
+            "block_index": 31,
+            "source_quote_id": "s9:b31:p0",
+            "assessment": "Terminal-Bench 为 ICLR 2026，评测命令行界面中的困难真实任务。初稿“贴近实际开发环境”是推断，已改为任务描述。",
+            "source_quote": "Mike Merrill, Alexander Shaw, Nicholas Carlini, Boxuan Li, Harsh Raj, Ivan Bercovich, Lin Shi, Jeong Shin, Thomas Walshe, E Kelly Buchanan, et al. Terminal-bench: Benchmarking agents on hard, realistic tasks in command line interfaces. In International Conference on Learning Representations, volume 2026, pages 40903–40986, 2026.\n\n"
+          },
+          {
+            "block_index": 32,
+            "source_quote_id": "s9:b32:p0",
+            "assessment": "Nii 1986 的 AI Magazine 7(2):38–53 综述黑板模型及架构演化。初稿“确立共享工作区在 AI 系统中的地位”属评价，已改为文献定位。",
+            "source_quote": "H Penny Nii. Part one: The blackboard model of problem solving and the evolution of blackboard architectures. AI magazine, 7(2):38–53, 1986.\n\n"
+          }
+        ],
+        "summary_check": "摘要已重写：按厂商模型、评测基准、推理/多智能体方法、经典系统架构、验证与采样五类归纳文献，并明确说明仅凭文献条目无法判定本文实际采用哪些模型或方法；初稿中“本文提出的系统结合并行处理、多智能体辩论和黑板架构”一句缺乏正文证据，已删除。",
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 9,
+        "part": 2,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 33,
+            "source_quote_id": "s9:b33:p0",
+            "assessment": "原文标题为 Skeleton-of-Thought: Prompting LLMs for efficient parallel generation，会议 ICLR 2024。原批注说“通过结构化骨架实现高效并行输出”，与标题一致，仅补充会议信息后保留，无事实错误。",
+            "source_quote": "Xuefei Ning, Zinan Lin, Zixuan Zhou, Zifu Wang, Huazhong Yang, and Yu Wang. Skeleton-ofthought: Prompting llms for efficient parallel generation. In International Conference on Learning Representations, volume 2024, pages 917–967, 2024.\n\n"
+          },
+          {
+            "block_index": 34,
+            "source_quote_id": "s9:b34:p0",
+            "assessment": "原文只有“OpenAI. Codex. https://openai.com/codex/, 2025.”，未提供任何实验设置或使用方式。原批注“作为代码辅助生成的基准或对比对象”属无据推断，已改为只陈述这是编程方向工具引用、用途需查正文。",
+            "source_quote": "OpenAI. Codex. https://openai.com/codex/, 2025.\n\n"
+          },
+          {
+            "block_index": 35,
+            "source_quote_id": "s9:b35:p0",
+            "assessment": "原文为 OpenAI 2026a 发布页，访问日期 2026-05-06。原批注“可能作为实验中的基线模型或能力参考”是推测，参考文献条目不承担该信息，已删去推测并保留可核实的时间信息。",
+            "source_quote": "OpenAI. Introducing GPT-5.4. https://openai.com/index/introducing-gpt-5-4/, 2026a. Accessed: 2026-05-06.\n\n"
+          },
+          {
+            "block_index": 36,
+            "source_quote_id": "s9:b36:p0",
+            "assessment": "原文为 GPT-6 Astra 发布页，标注 September 2026b、访问 2026-09-25。原批注“代表当时最新一代大语言模型的技术状态”超出条目所能支持的范围（无法从条目判断代际地位），已改为限定性表述。",
+            "source_quote": "OpenAI. GPT-6 Astra: A new generation of intelligence. https://openai.com/index/ gpt-6-astra/, September 2026b. Accessed: 2026-09-25.\n\n"
+          },
+          {
+            "block_index": 37,
+            "source_quote_id": "s9:b37:p0",
+            "assessment": "核对作者、标题 ChatDev: Communicative agents for software development、ACL 第 62 届年会、页码 15174–15186、年份 2024，均与原文一致。原批注概括准确，补页码后保留。",
+            "source_quote": "Chen Qian, Wei Liu, Hongzhang Liu, Nuo Chen, Yufan Dang, Jiahao Li, Cheng Yang, Weize Chen, Yusheng Su, Xin Cong, et al. Chatdev: Communicative agents for software development. In Proceedings of the 62nd annual meeting of the association for computational linguistics (volume 1: Long papers), pages 15174–15186, 2024.\n\n"
+          },
+          {
+            "block_index": 38,
+            "source_quote_id": "s9:b38:p0",
+            "assessment": "原文标题 Aorchestra: Automating sub-agent creation for agentic orchestration，arXiv:2602.03786, 2026。原批注“自动化子代理创建以优化代理编排”与标题吻合，补充 arXiv 号后保留。",
+            "source_quote": "Jianhao Ruan, Zhihao Xu, Yiran Peng, Fashen Ren, Zhaoyang Yu, Xinbing Liang, Jinyu Xiang, Yongru Chen, Bang Liu, Chenglin Wu, et al. Aorchestra: Automating sub-agent creation for agentic orchestration. arXiv preprint arXiv:2602.03786, 2026.\n\n"
+          },
+          {
+            "block_index": 39,
+            "source_quote_id": "s9:b39:p0",
+            "assessment": "原文标题 LLM-based multi-agent blackboard system for information discovery in data science，arXiv:2510.01285, 2025。原批注表述与标题一致，补充编号年份后保留。",
+            "source_quote": "Alireza Salemi, Mihir Parmar, Palash Goyal, Yiwen Song, Jinsung Yoon, Hamed Zamani, Tomas Pfister, and Hamid Palangi. Llm-based multi-agent blackboard system for information discovery in data science. arXiv preprint arXiv:2510.01285, 2025.\n\n"
+          },
+          {
+            "block_index": 40,
+            "source_quote_id": "s9:b40:p0",
+            "assessment": "原文标题 Toolorchestra: Elevating intelligence via efficient model and tool orchestration，arXiv:2511.21689, 2025。原批注“模型与工具的高效编排”准确，补充编号后保留。",
+            "source_quote": "Hongjin Su, Shizhe Diao, Ximing Lu, Mingjie Liu, Jiacheng Xu, Xin Dong, Yonggan Fu, Peter Belcak, Hanrong Ye, Hongxu Yin, et al. Toolorchestra: Elevating intelligence via efficient model and tool orchestration. arXiv preprint arXiv:2511.21689, 2025.\n\n"
+          },
+          {
+            "block_index": 41,
+            "source_quote_id": "s9:b41:p0",
+            "assessment": "原文 Leslie G Valiant, A bridging model for parallel computation, Communications of the ACM, 33(8):103–111, 1990。原批注把 BSP 解释为“批量同步并行”正确，另补 Bulk Synchronous Parallel 全称，卷期页核对无误。",
+            "source_quote": "Leslie G Valiant. A bridging model for parallel computation. Communications of the ACM, 33(8): 103–111, 1990.\n\n"
+          },
+          {
+            "block_index": 42,
+            "source_quote_id": "s9:b42:p0",
+            "assessment": "原文为 Wang 等 Self-consistency improves chain of thought reasoning in language models, arXiv:2203.11171, 2022。原批注只说了“改进思维链推理”，补上“多链采样投票”的机制说明，符合论文标题内容，年份无误。",
+            "source_quote": "Xuezhi Wang, Jason Wei, Dale Schuurmans, Quoc Le, Ed Chi, Sharan Narang, Aakanksha Chowdhery, and Denny Zhou. Self-consistency improves chain of thought reasoning in language models. arXiv preprint arXiv:2203.11171, 2022.\n\n"
+          },
+          {
+            "block_index": 43,
+            "source_quote_id": "s9:b43:p0",
+            "assessment": "原文标题 SWE-agent: Agent-computer interfaces enable automated software engineering，第三十八届 NeurIPS（2024），arXiv:2405.15793。原批注说“通过代理—计算机接口实现自动软件工程”准确，补充会议与编号后保留。",
+            "source_quote": "John Yang, Carlos E Jimenez, Alexander Wettig, Kilian Lieret, Shunyu Yao, Karthik R Narasimhan, and Ofir Press. SWE-agent: Agent-computer interfaces enable automated software engineering. In The Thirty-eighth Annual Conference on Neural Information Processing Systems, 2024. URL https: //arxiv.org/abs/2405.15793.\n\n"
+          },
+          {
+            "block_index": 44,
+            "source_quote_id": "s9:b44:p0",
+            "assessment": "原文标题 Programbench: Can language models rebuild programs from scratch?, 2026a, arXiv:2605.03546。原批注“评估从零重建程序的能力”与标题一致，年份写作 2026a 已补正。",
+            "source_quote": "John Yang, Kilian Lieret, Jeffrey Ma, Parth Thakkar, Dmitrii Pedchenko, Sten Sootla, Emily McMilin, Pengcheng Yin, Rui Hou, Gabriel Synnaeve, Diyi Yang, and Ofir Press. Programbench: Can language models rebuild programs from scratch?, 2026a. URL https://arxiv.org/abs/ 2605.03546.\n\n"
+          },
+          {
+            "block_index": 45,
+            "source_quote_id": "s9:b45:p0",
+            "assessment": "原文标题 Recursive multi-agent systems，arXiv:2604.25917, 2026b。原批注“层级化或递归结构的代理协作”属对标题的合理展开，已明确标为结构描述而非论文结论。",
+            "source_quote": "Xiyuan Yang, Jiaru Zou, Rui Pan, Ruizhong Qiu, Pan Lu, Shizhe Diao, Jindong Jiang, Hanghang Tong, Tong Zhang, Markus J Buehler, et al. Recursive multi-agent systems. arXiv preprint arXiv:2604.25917, 2026b.\n\n"
+          },
+          {
+            "block_index": 46,
+            "source_quote_id": "s9:b46:p0",
+            "assessment": "原文作者 Yao 等，Tree of thoughts: Deliberate problem solving with large language models，NeurIPS 36:11809–11822, 2023。原批注“树状思维解决复杂问题”正确，补充卷页码。",
+            "source_quote": "Shunyu Yao, Dian Yu, Jeffrey Zhao, Izhak Shafran, Tom Griffiths, Yuan Cao, and Karthik Narasimhan. Tree of thoughts: Deliberate problem solving with large language models. Advances in neural information processing systems, 36:11809–11822, 2023.\n\n"
+          },
+          {
+            "block_index": 47,
+            "source_quote_id": "s9:b47:p0",
+            "assessment": "原文 Alex L Zhang, Tim Kraska, Omar Khattab, Recursive language models, arXiv:2512.24601, 2025。原批注仅说“递归结构在语言建模中的应用”，改为“模型内部递归调用/分解式求解”更贴近标题且不越界，编号年份无误。",
+            "source_quote": "Alex L Zhang, Tim Kraska, and Omar Khattab. Recursive language models. arXiv preprint arXiv:2512.24601, 2025.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 10,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s10:b1:p0",
+            "assessment": "原批注对块 1 的机制描述与原文一致：并行、共享上下文 C 与队列 T、发布中间结果供复用、按需更新队列、独立返回解，均可在原文逐句对应，故基本保留。仅把“强调动态更新而非静态分工”这一略带推断色彩的对比改为“并不预先固定划分任务”，避免超出原文表述。",
+            "source_quote": "Algorithm 1 DELM pipeline. Agents coordinate concurrent work through a shared context C and task queue T. They publish intermediate results for others to reuse, update the queue as needed, and return their solutions independently.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s10:b2:p0",
+            "assessment": "核对伪代码逐行：Input 为任务 D 与智能体数 n，Output 为 {Y_i}；第 1 行 C←∅、T←{T_i}（n 个子任务）；第 5 行 CONTINUEWORK(D,r_i,T,C)；第 6–9 行条件发布，第 8 行 PUBLISH(C,G_i) 注释为“references to shared files”，初稿写成“写入共享库”会让人误以为发布摘要全文，已按注释改为发布指向共享文件的引用；第 10 行 UPDATESUBTASKS 注释为 complete or add work；第 11 行 READYTOSUBMIT；第 12 行 FINALIZE(D,r_i,C)→Y_i。初稿“生成独立解”无误。原批注未提发布内容仅为引用，属关键信息缺失，已补。",
+            "source_quote": "Input: Task $D ;$ number of agents n   \nOutput: Agent solutions $\\{ Y _ { i } \\} _ { i = 1 } ^ { n }$   \n1: $\\begin{array} { r l } { { \\mathcal { C } } \\gets \\emptyset ; } & { { } { \\mathcal { T } } \\gets \\{ T _ { i } \\} _ { i = 1 } ^ { n } } \\end{array}$   \n2: for all agents $i = 1 , \\ldots , n$ in parallel do   \n3: $r _ { i } \\gets \\emptyset$ ▷ accumulated local work   \n4: repeat   \n5: r<sub>i</sub> ← CONTINUEWORK(D, r<sub>i</sub>, T, C) 2   \n6: if useful intermediate results or corrections are available then   \n7: $G _ { i }  \\mathsf { S } \\mathrm { { L } }$ MMARIZE(r<sub>i</sub>) 3   \n8: PUBLISH $( \\mathcal { C } , G _ { i } )$ ▷ references to sharedfiles   \n9: end if   \n10: UPDATESUBTASKS $( T , r _ { i } , { \\mathcal { C } } )$ ▷ complete or add work 4   \n11: until READYTOSUBMIT $( D , r _ { i } , \\mathcal { C } )$   \n12: Y<sub>i</sub> ← FINALIZE(D, r<sub>i</sub>, C) 5   \n13: end for   \n14: return $\\{ Y _ { i } \\} _ { i = 1 } ^ { n }$\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s10:b2:p0",
+            "assessment": "初稿摘要把 DELM 展开为“Distributed Ensemble Learning with Memory?”属推测，本节文本无此依据，已删除并注明全称未出现；初稿“动态负载均衡”“隐式协作”是对 UPDATESUBTASKS 与共享上下文的作用加码，原文只说 complete or add work 与 publish for others to reuse，已改为原文口径；初稿提到“LLM 提示工程细节”亦属外部推断，改为笼统的“内部实现未展开”。数字 n、$\\emptyset$、{T_i}_{i=1}^n、$Y_i$ 均与原文一致，予以保留。",
+            "source_quote": "Input: Task $D ;$ number of agents n   \nOutput: Agent solutions $\\{ Y _ { i } \\} _ { i = 1 } ^ { n }$   \n1: $\\begin{array} { r l } { { \\mathcal { C } } \\gets \\emptyset ; } & { { } { \\mathcal { T } } \\gets \\{ T _ { i } \\} _ { i = 1 } ^ { n } } \\end{array}$   \n2: for all agents $i = 1 , \\ldots , n$ in parallel do   \n3: $r _ { i } \\gets \\emptyset$ ▷ accumulated local work   \n4: repeat   \n5: r<sub>i</sub> ← CONTINUEWORK(D, r<sub>i</sub>, T, C) 2   \n6: if useful intermediate results or corrections are available then   \n7: $G _ { i }  \\mathsf { S } \\mathrm { { L } }$ MMARIZE(r<sub>i</sub>) 3   \n8: PUBLISH $( \\mathcal { C } , G _ { i } )$ ▷ references to sharedfiles   \n9: end if   \n10: UPDATESUBTASKS $( T , r _ { i } , { \\mathcal { C } } )$ ▷ complete or add work 4   \n11: until READYTOSUBMIT $( D , r _ { i } , \\mathcal { C } )$   \n12: Y<sub>i</sub> ← FINALIZE(D, r<sub>i</sub>, C) 5   \n13: end for   \n14: return $\\{ Y _ { i } \\} _ { i = 1 } ^ { n }$\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 11,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s11:b1:p0",
+            "assessment": "原文只说明 $G_i$ 引用发布时捕获的文件、贡献者继续编辑时文件仍可用，以及 expand/apply 两个操作把“检查”与“并入本地方案”分开；初稿称其“避免多智能体协作时的上下文污染”，这是原文未在此处给出的推断，已删去推断表述，改为原文明确的“不让附件正文占据共享上下文”的机制描述。$G_i$ 与 C 的符号保留。",
+            "source_quote": "A compact entry $G _ { i }$ in the shared context C can reference files captured at publication time. These files remain available under the publication’s identifier, even as the contributing agent continues editing its own workspace. Agents access them through two operations, expand and apply, which separate inspection from incorporation into a local solution.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s11:b2:p0",
+            "assessment": "核对：expand 返回附件为工具输出、不改工作区、默认给差异、--only 可选文件看全文，均与原文一致。初稿漏了“新文件或原件不可用时给全文”这一默认行为条件，已补；标题由泛化的“功能说明”改为指向操作名，避免无信息量标题。",
+            "source_quote": "Expansion (expand). The expand operation returns a publication’s attached files as tool output without changing the agent’s workspace. By default, it shows differences against the original task files, with full contents for new files or files whose originals are unavailable. Using --only, the agent can select particular files and view them in full, allowing it to examine the implementation details or supporting evidence relevant to its current work.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s11:b3:p0",
+            "assessment": "核对：复制全部或选定附件、传完整文件而非合并 patch、写入前对照 task originals 与 published versions、无法解释的本地改动则拒绝导入并由 agent 调和、expand 可选可直接 apply，均与原文相符。初稿“校验冲突”略含糊，已明确为“对照两版内容”，未改变原意；因果关系未超出原文。",
+            "source_quote": "Application (apply). The apply operation copies all or selected attachments into the receiving agent’s workspace. It transfers complete files rather than merging patches, checking local contents against the task originals and published versions before writing. If a selected file contains local changes it cannot account for, the import is refused and the agent must reconcile those changes. Expansion is optional: an agent can inspect a contribution before incorporating it or apply selected files directly.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s11:b4:p0",
+            "assessment": "原文只说展开内容进入请求方 session、应用文件进入其 local workspace，二者都不插入紧凑共享上下文视图；初稿写成“会话内存”“磁盘工作区”，把 session/workspace 具体化为存储介质，属超出原文的推断，已改回 session 与本地工作区的原文表述。末句“其他 agent 不必读”有原文支撑，保留。",
+            "source_quote": "Expanded content enters the requesting agent’s session, while applied files become part of its local workspace. Neither operation inserts file contents into the compact shared-context view, so agents can inspect and reuse detailed contributions without requiring every other agent to read them.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 12,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s12:b1:p0",
+            "assessment": "数字与条件核对通过：Terminal-Bench 4.0 为 10 个 15 分钟至 1 小时任务，DeepSWE v1.1 为 10 个至少 10 分钟任务，基线为 Codex + GPT-6-Astra（xhigh），记录的是墙钟延迟，筛选仅依据基线延迟——均与原文一致。初稿末句“确保评估可行性”把上下限动机混为一谈：下限是为了让协作有收益空间，上限才是为了评估可重复；已改写并把“筛选不依赖 DELM 结果”这一原文事实写明。",
+            "source_quote": "DELM is designed for long-horizon tasks, where multiple agents have enough time to share progress and split up the remaining work. On short tasks, a single agent often finishes before any coordination can pay off. We therefore evaluate on a subset of long-running tasks from Terminal-Bench 4.0 and DeepSWE v1.1. We first ran the Codex baseline with GPT-6-Astra (xhigh reasoning effort) on each benchmark and recorded the wall-clock latency of every task. From Terminal-Bench 4.0, we selected 10 tasks whose latency fell between 15 minutes and 1 hour. The upper bound excludes tasks that run so long that repeated evaluation would be impractical. From DeepSWE v1.1, we selected 10 tasks with latency of at least 10 minutes. The selection criterion is based only on the baseline’s latency. Table 7 lists the selected tasks together with their Codex latencies.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s12:b2:p0",
+            "assessment": "重算 10 个延迟之和 269.09 min，除以 10 得 26.91 min，与表中 Average 一致；表中极值 18.67 与 39.34 min 也核对无误；15–60 分钟区间表述正确。初稿把 vf2-speedup-networkx 归为“网络优化”属于从任务名误读，已改为图算法加速一带，并补充极值使读者能直接判断区间；任务方向标注为从任务名推断。",
+            "source_quote": "Table 7: Selected tasks from Terminal-Bench 4.0 and DeepSWE v1.1. Baseline latency is the average execution time of the Codex baseline using GPT-6-Astra at xhigh reasoning effort.  \nTerminal-Bench 4.0\n<table><tr><td>Task</td><td>Codex Latency</td></tr><tr><td>ks-solver-cpp</td><td>21.00 min</td></tr><tr><td>telecom-entity-resolution</td><td>24.23 min</td></tr><tr><td>vf2-speedup-networkx</td><td>23.42 min</td></tr><tr><td>biped-contact-dynamics</td><td>21.56 min</td></tr><tr><td>cumulative-layout-shift</td><td>39.34 min</td></tr><tr><td>retro-console-soc</td><td>27.28 min</td></tr><tr><td>rs-archive-clone</td><td>21.92 min</td></tr><tr><td>wdm-design</td><td>39.27 min</td></tr><tr><td>lake-temp-glm</td><td>32.40 min</td></tr><tr><td>payments-pipeline-fix</td><td>18.67 min</td></tr><tr><td>Average</td><td>26.91 min</td></tr></table>\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s12:b3:p0",
+            "assessment": "重算 10 个延迟之和 165.66 min，平均 16.57 min，与表中 Average 一致；最小值 12.52 min，全部满足至少 10 分钟门槛；DeepSWE 一侧原文确未设上限。初稿“验证了数据集的长时程特性”超出证据：延迟本就是唯一入选标准，平均值只是筛选产物，已改为提示这一循环性，并把与 Terminal-Bench 侧约 10 分钟的平均差写明。",
+            "source_quote": "DeepSWE v1.1\n<table><tr><td>Task</td><td>Codex Latency</td></tr><tr><td>oxvg-structural-selector-preservation</td><td>19.71 min</td></tr><tr><td>wasmi-trap-coredumps</td><td>14.55 min</td></tr><tr><td>happy-dom-abort-pending-body-reads</td><td>12.52 min</td></tr><tr><td>scriggo-method-declarations</td><td>17.35 min</td></tr><tr><td>dynamodb-toolbox-lazy-recursive-schemas</td><td>22.19 min</td></tr><tr><td>dynamodb-toolbox-conditional-attribute</td><td>16.78 min</td></tr><tr><td>opa-template-string-reconstruction</td><td>13.99 min</td></tr><tr><td>boa-hierarchical-evaluation-cancellation</td><td>13.28 min</td></tr><tr><td>numba-stencil-boundary-modes</td><td>15.91 min</td></tr><tr><td>pebble-durability-wait-apis</td><td>19.38 min</td></tr><tr><td>Average</td><td>16.57 min</td></tr></table>\n\n"
+          },
+          {
+            "block_index": 1,
+            "source_quote_id": "s12:b1:p0",
+            "assessment": "摘要核对：动机（短任务单智能体先完成）、方法条件（GPT-6-Astra、xhigh、墙钟延迟）、两套筛选阈值、10+10 任务清单及平均 26.91 / 16.57 min 均与原文和 Table 7 逐项对齐；已补入“筛选仅依据基线延迟、未用 DELM 结果”和“原文未交代延迟以外的难度/领域考量”两条事实，删除初稿中“验证长时程特性”的过度推断。",
+            "source_quote": "DELM is designed for long-horizon tasks, where multiple agents have enough time to share progress and split up the remaining work. On short tasks, a single agent often finishes before any coordination can pay off. We therefore evaluate on a subset of long-running tasks from Terminal-Bench 4.0 and DeepSWE v1.1. We first ran the Codex baseline with GPT-6-Astra (xhigh reasoning effort) on each benchmark and recorded the wall-clock latency of every task. From Terminal-Bench 4.0, we selected 10 tasks whose latency fell between 15 minutes and 1 hour. The upper bound excludes tasks that run so long that repeated evaluation would be impractical. From DeepSWE v1.1, we selected 10 tasks with latency of at least 10 minutes. The selection criterion is based only on the baseline’s latency. Table 7 lists the selected tasks together with their Codex latencies.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 13,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s13:b1:p0",
+            "assessment": "核对样本数与分领域数字：总数 125，Fin. 15 + Govern. 23 + MNews 23 + Legal 14 + Acad. 50 = 125，一致。'multi-hop reasoning ... rather than extracting a single local span' 与批注表述一致，未超出原文。原批注准确清晰，逐字保留。",
+            "source_quote": "LongBench-v2 (Bai et al., 2025) is a long-context benchmark designed to evaluate deep understanding and reasoning over realistic tasks. We focus on its multi-document QA setting, which contains 125 samples across diverse domains: Financial (15 samples), Government (23 samples), Multi-News (23 samples), Legal (14 samples), and Academic (50 samples). This setting is also suitable for our evaluation because its questions require multi-hop reasoning over evidence distributed across long contexts, rather than extracting a single local span.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s13:b2:p0",
+            "assessment": "原文只列出 ReadAgent 的机制与四个底座模型名称，未说明为何选这四个底座。初稿末尾“以验证 DELM 在不同架构上的泛化性”属推断却未标注，已改为显式“推断：”并注明原文未说明选型理由；ReadAgent 机制描述（gist 记忆 + 回查原文）与原文字面一致，保留。",
+            "source_quote": "For the compared baselines, we additionally pick ReadAgent (Lee et al., 2024) which is an agentic long-context baseline that compresses the input into short gist memories and looks up the original passages when a subtask needs details the gists omit. For base models, we use GPT-5.4 (OpenAI, 2026a), Claude Sonnet 4.6 (Anthropic, 2025), Gemini 3 Flash (Doshi, 2025), and DeepSeek-V4- Pro (DeepSeek-AI, 2026a) for the LongBench-v2 experiments.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s13:b3:p0",
+            "assessment": "四组平均分 60.1/59.8/61.5/67.5 与增益 5.7/5.3/4.4/3.6 逐个复核：GPT-5.4 最强基线 Claude Code 54.4→60.1 差 5.7 ✓；Claude Sonnet 最强基线 ReadAgent 54.5→59.8 差 5.3 ✓；Gemini 最强基线 Base 57.1→61.5 差 4.4 ✓；DeepSeek Base 63.9→67.5 差 3.6 ✓。初稿把作者的 'rather than from a single model or domain' 说成“而非特定场景过拟合”，措辞外扩，已改回“而非某一模型或领域”。补充表内可见的边界事实：Gemini Legal 上 DELM 与 Base 同为 71.4%（并列最优而非超越），提示“最高平均”不等于每格都赢。",
+            "source_quote": "As shown in Table 8, DELM achieves the highest average accuracy across all four model families: 60.1% with GPT-5.4, 59.8% with Claude Sonnet 4.6, 61.5% with Gemini 3 Flash, and 67.5% with DeepSeek-V4-Pro. Compared with the strongest baseline for each model family, these correspond to gains of 5.7, 5.3, 4.4, and 3.6 percentage points, respectively. DELM also achieves the best or tied-best result in most domain-model combinations, suggesting that the benefit comes from a general improvement in evidence selection and reuse rather than from a single model or domain.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s13:b4:p0",
+            "assessment": "caption 三要素（% 精度、3 次独立运行 mean±std、括号为各领域样本数）核对无误。初稿称“尤其在 Multi-News 和 Academic 领域表现稳健”，与表内数据冲突：Academic 是增益最小的一列（GPT-5.4：Base 56.0、Claude Code 60.7、DELM 56.0，DELM 反而低于 Claude Code；Claude Sonnet：DELM 64.7 与 ReadAgent 并列），已更正为 Multi-News 增益最大、Academic 最弱。初稿举例的 OCR 噪声 'bot' 在原文中不存在，已删除；改举原文确实可见的 'today'（DeepSeek 行标题）、'±9.5'（Claude Sonnet Legal）、'±9.4±4.4'（DeepSeek MNews）、'65.32.0.9'（DeepSeek Acad.）等残缺单元格。具体数字（65.2/59.4）取自 b4 片段，属表内可见内容，未跨表外推。",
+            "source_quote": "Table 8: Accuracy (%) comparison on LongBench-v2 Multi-Doc QA across four base models. Results are mean±std over 3 independent runs. Numbers in parentheses denote the number of samples in each domain. Best values are bolded.\n<table><tr><td>Method</td><td></td><td>Fin. (15) Govern. (23) MNews (23) Legal (14) Acad. (50)</td><td></td><td></td><td></td><td> $\\mathbf { A v } \\mathbf { g } .$ </td></tr><tr><td colspan=\"7\">GPT-5.4</td></tr><tr><td>Base</td><td> $6 2 . 2 { \\scriptstyle \\pm 9 . 3 }$ </td><td> $3 9 . 1 { \\scriptstyle \\pm 1 . 7 }$ </td><td> $5 0 . 5 { \\scriptstyle \\pm 8 . 6 }$ </td><td> $6 2 . 0 { \\scriptstyle \\pm 4 . 4 }$ </td><td> $5 6 . 0 { \\scriptstyle \\pm 1 . 2 }$ </td><td> $5 3 . 9 { \\scriptstyle \\pm 4 . 9 }$ </td></tr><tr><td>Claude Code</td><td> $6 5 . 0 { \\scriptstyle \\pm 8 . 3 }$ </td><td> $3 6 . 2 { \\scriptstyle \\pm 2 . 0 }$ </td><td> $5 0 . 7 { \\scriptstyle \\pm 2 . 0 }$ </td><td> $5 9 . 5 { \\scriptstyle \\pm 3 . 4 }$ </td><td> ${ \\bf 6 0 . 7 \\bot 0 . 9 }$ </td><td> $5 "
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s13:b4:p5",
+            "assessment": "末段含 DeepSeek 行：Base 63.9、Claude Code 58.0、ReadAgent 46.8、DELM 67.5，与正文 67.5% 及 3.6 点增益吻合；该行标签被 OCR 成 'today'，行内 MNews 与 Acad. 单元格数值残缺，摘要中已如实注明需要回查原表，未据此编造分领域数字。",
+            "source_quote": "style \\pm 2 . 0 }$ </td><td> ${ \\pm 9 . 4 \\pm 4 . 4 }$ </td><td> $7 3 . 8 { \\scriptstyle \\pm 3 . 4 }$ </td><td> ${ \\bf 6 5 . 3 2 . 0 . 9 }$ </td><td> $6 7 . 5 { \\scriptstyle \\pm 1 . 2 }$ </td></tr></table>\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 14,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s14:b1:p0",
+            "assessment": "核对RLM机制描述：原文称其递归选择片段、发起子调用并组合部分答案，且通过REPL把长输入存为外部变量供模型检查、解析、编程聚合，批注表述与之一致；OOLONG被描述为“aggregation-heavy”、样本为带时间戳的条目、答题常需先分类再算分布，批注的“分类和聚合大量时间戳条目”没有超出原文，予以逐字保留。",
+            "source_quote": "Recursive Language Models (RLMs) (Zhang et al., 2025) process long contexts by recursively selecting context segments, issuing sub-calls, and composing the resulting partial answers. Crucially, RLM performs this process through a code-mediated Read-Eval-Print Loop (REPL): the long input is stored as an external variable that the model can inspect, parse, and aggregate programmatically. This makes RLM a natural fit for OOLONG (Bertsch et al., 2025), an aggregation-heavy benchmark where each sample consists of timestamped, user-attributed entries and answering a question often requires classifying many entries before computing a distributional answer.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s14:b2:p0",
+            "assessment": "原批注只写方向性优劣而未给条件与数字，读者无法判断可比性，故改正：补入实验条件（GPT-5 medium reasoning；RLM子调用用GPT-5-mini、递归深度1）与Table 9数字（LongBench-v2 DELM 57.9% vs RLM 55.8%，成本$0.30 vs $0.29；OOLONG RLM 56.0%/$0.43 vs DELM 53.3%/$0.47），均与block 3表格核对一致。另将“中心化聚合限制多文档推理”标为作者的解释性归因（原文“helping explain”），避免写成已证结论；原文未提供对应消融，已注明。",
+            "source_quote": "We first evaluate DELM and RLM separately on both LongBench-v2 Multi-Doc QA and OOLONG using GPT-5 with medium reasoning (RLM uses GPT-5-mini for sub-calls and recursion depth=1). As shown in Table 9, the two methods have complementary strengths. On LongBench-v2, DELM achieves higher average accuracy than RLM at roughly the same cost per task. On OOLONG, however, DELM underperforms RLM in both average accuracy and cost. This is because OOLONG is closer to a structured data-processing benchmark than a conversational reasoning benchmark (such as LongBench-v2): many questions require exact counting, filtering, comparison, and tie handling. In this setting, the natural-language shared context used by DELM is not reliable. RLM performs better because its core interface is code-mediated: through a REPL environment, the model can inspect, parse, transform, and aggregate the input using executable programs and programmatic sub-calls. However, RLM still relies on centralized coordination, where"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s14:b3:p0",
+            "assessment": "逐项核对Table 9：OOLONG行RLM 56.0%/$0.43、DELM 53.3%/$0.47、DELM+RLM 64.0%/$0.40；LongBench-v2行RLM 55.8%/$0.29、DELM 57.9%/$0.30、DELM+RLM 60.3%/$0.24。批注引用的64.0%、$0.40、60.3%、$0.24均准确，“两个基准均最佳”也与六个数字一致，予以逐字保留；caption中的“using GPT-5”与block 2的条件描述相符。",
+            "source_quote": "Table 9: Comparison of RLM, DELM, and their hybrid on LongBench-v2 Multi-Doc QA and OOLONG using GPT-5.\n<table><tr><td>Method</td><td>Acc.</td><td>Cost/Task</td></tr><tr><td>OOLONG</td><td></td><td></td></tr><tr><td>RLM</td><td>56.0%</td><td>$0.43</td></tr><tr><td>DELM</td><td>53.3%</td><td>$0.47</td></tr><tr><td>DELM+RLM</td><td>64.0%</td><td>$0.40</td></tr><tr><td>LongBench-v2 Multi-Doc QA</td><td></td><td></td></tr><tr><td>RLM</td><td>55.8%</td><td>$0.29</td></tr><tr><td>DELM</td><td>57.9%</td><td>$0.30</td></tr><tr><td>DELM+RLM</td><td>60.3%</td><td>$0.24</td></tr></table>\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s14:b4:p0",
+            "assessment": "核对混合架构描述：原文明确无main-agent/sub-agent层级、所有agent为平级RLM实例、通过共享状态协调；流程为初始RLM调用产出工作计划→子任务入队由并行worker认领→输出进入共享上下文→据当前问题状态生成新增子任务→无新子任务时从共享上下文计算最终答案。批注“摒弃主从层级、平等实例、初始规划、并行节点、结果汇入共享状态”均可在原文找到；其对“保留RLM执行精度+引入DELM协调”的概括与原文末句一致，予以逐字保留。",
+            "source_quote": "We therefore combine the two methods by retaining RLM as the underlying reasoner while adding two DELM components: a shared context and a decentralized task queue. In this hybrid setting, there is no main-agent/sub-agent hierarchy; all agents are equally ranked RLM instances that coordinate through shared state. An initial RLM call produces a compact work plan, after which subtasks are placed into the task queue and claimed by parallel RLM workers. Each worker’s output is admitted into the shared context, and the system then generates any additional subtasks from the current problem state, and computes the final answer from the shared context once no further subtasks are needed. This design preserves RLM’s strength in precise code-mediated execution while adding DELM’s decentralized coordination. As shown in Table 9, the combined method achieves the best accuracy and lowest cost on both benchmarks, indicating that RLM and DELM are complementary rather than competing approaches.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 15,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s15:b1:p0",
+            "assessment": "核对机制数量为三个、每条记录带 thread id 与 FACT/FAIL/PATCH_SUMMARY 类型，批注与原文一致，保留。",
+            "source_quote": "Three trace-level mechanisms explain why DELM improves both accuracy and cost efficiency. In the DELM traces below, each shared entry is one thread’s note, tagged with its thread id (t0, t1, . . . ) and a type such as FACT, FAIL, or PATCH\\_SUMMARY.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s15:b2:p0",
+            "assessment": "原文为“negative result remains local … spend their own budget rediscovering the same failure”及“treat it as a constraint and redirect their search”，批注转述准确，未加因果强度，保留。",
+            "source_quote": "(1) Parallel agents complement each other by sharing failures. The first mechanism is that failed hypotheses become reusable state rather than private dead ends. In isolated forks, a negative result remains local to one trajectory, so other attempts may spend their own budget rediscovering the same failure. In DELM, once such a failure is admitted to the shared context, later agents can treat it as a constraint and redirect their search.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s15:b3:p0",
+            "assessment": "printer 层为 red herring、真实缺陷在 sympy/utilities/lambdify.py 的独立元组构建路径，均与原文逐句对应，保留。",
+            "source_quote": "This mechanism appears in the trace below. The task fixes lambdify for single-element tuples. The natural guess, the Python printer layer, is a red herring; the real bug is on a separate tuple-building path in sympy/utilities/lambdify.py:\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s15:b4:p0",
+            "assessment": "逐条核对 trace 三行：t0 的 printer 无效（FACT）、t1 的 _recursive_to_string 绕过 printer（FACT）、t0 的缺尾逗号（FACT），“三条 FACT”计数正确，归属线程正确，保留。",
+            "source_quote": "```ini\n[t0/FACT] AbstractPythonCodePrinter change did not affect lambdify output\n[t1/FACT] sympy/utilities/lambdify.py:964 _recursive_to_string manual tuple join\nbypasses printer fix\n[t0/FACT] sympy/utilities/lambdify.py:964 manual join for tuples lacks trailing comma\nlogic\n```\n\n"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s15:b5:p0",
+            "assessment": "原文明确“decisive update is the negative result in the first line”，批注把转折归于 t0 负面结果、t1 据此定位 bypass，与原文一致，保留。",
+            "source_quote": "The decisive update is the negative result in the first line: thread t0 shows that changing the printer does not affect the output. After reading this failure, t1 avoids repeating the same detour and localizes the actual bypass in \\_recursive\\_to\\_string; t0 then records the concrete defect, the missing trailing comma. Thus, DELM turns a failed hypothesis into shared progress, improving later agents’ search efficiency.\n\n"
+          },
+          {
+            "block_index": 6,
+            "source_quote_id": "s15:b6:p0",
+            "assessment": "原文称集中协调下主代理可能 soften, omit, or reopen 子代理发现的约束，批注“软化或遗漏”覆盖两种，未引入新论断，保留。",
+            "source_quote": "(2) Admitted constraints remain binding shared state. The second mechanism is that DELM preserves important constraints as shared state rather than routing them through a central controller. In centralized coordination, a main agent may soften, omit, or reopen constraints discovered by sub-agents before they can guide later work.\n\n"
+          },
+          {
+            "block_index": 7,
+            "source_quote_id": "s15:b7:p0",
+            "assessment": "本段给出 .filter(A).filter(B) 与 .filter(A, B) 在多值关系上不同，以及 AOrchestra 主代理把约束软化为“for many use cases”的权衡并导致 run fails。批注的 Django ORM 归属由紧随其后的 trace（block 8 中 django/contrib/admin/options.py）支持，失败归因与原文相符，保留。",
+            "source_quote": "This mechanism appears in the trace below. Folding multiple search filters into one .filter() call is unsafe for multi-valued relations, where .filter(A).filter(B) and .filter(A, B) differ. In AOrchestra, a sub-agent finds exactly this danger, but the constraint must pass through the main agent, which reopens the optimization and softens it into a tradeoff about reducing joins “for many use cases”; the run fails. The relevant fact was found, but not preserved as binding state. In contrast, DELM keeps the constraint explicit and reusable:\n\n"
+          },
+          {
+            "block_index": 8,
+            "source_quote_id": "s15:b8:p0",
+            "assessment": "trace 中 t3 记 FAIL、t3 记语义差异、t3 记 lookup_spawns_duplicates 判定、t1 记在保留 M2M 语义下优化 FK，批注四项归属与顺序均正确，保留。",
+            "source_quote": "```ini\n[t3/FAIL] django/contrib/admin/options.py:1041 single .filter() breaks M2M multi-term\nsearch\n[t3/FACT] Django ORM .filter(Q1, Q2) vs .filter(Q1).filter(Q2) differs for multi\nvalued relations\n[t3/FACT] lookup_spawns_duplicates determines if single .filter() is safe\n[t1/FACT] lookup_spawns_duplicates preserves M2M search semantics while optimizing\nFKs\n```  \nThread t3 records the unsafe case (FAIL), the semantic reason, and the predicate lookup\\_spawns\\_duplicates, which determines when the optimization is valid. Thread t1 then builds on this state to preserve M2M semantics while still optimizing foreign-key cases. Thus, later threads inherit the binding constraint rather than reopening a globally invalid simplification.\n\n"
+          },
+          {
+            "block_index": 9,
+            "source_quote_id": "s15:b9:p0",
+            "assessment": "原文列出的 raw trace 暴露内容包括 command history、file dumps、failed edits、intermediate reasoning，批注概括为“冗长命令历史与中间推理”，方向正确、无数字，保留。",
+            "source_quote": "(3) Compact patch summaries carry discoveries. The third mechanism is compact sharing, which lowers cost by preventing peer communication from becoming another long raw transcript. Sharing full traces would preserve information, but would also expose every worker to command history, file dumps, failed edits, and intermediate reasoning. DELM instead shares a compressed version of the useful discovery, so later workers can reuse the result without reading the entire trajectory.\n\n"
+          },
+          {
+            "block_index": 10,
+            "source_quote_id": "s15:b10:p0",
+            "assessment": "数字核对：$0.399 → $0.125 与原文一致，且原文强调两种设置都解出任务、差异在共享的是压缩结果而非更多上下文，批注表述吻合，保留。",
+            "source_quote": "This mechanism appears in the trace below. Both the shared and no-share settings solve the task, but compact sharing reduces the cost from \\$0.399 to \\$0.125. The difference is not that DELM shares more context; rather, it shares a compressed version of the useful search result (labeled as\n\n"
+          },
+          {
+            "block_index": 11,
+            "source_quote_id": "s15:b11:p0",
+            "assessment": "原文只说“One thread first rules out the ordinary tuple-printer path and localizes the actual bypass in lambdify.py”，未点名 t1，也未提及前文小节编号。原批注用“block 3”指代位置属于读者不可见的流程性指代，且把 t1 写死略超原文；改为指向“lambdify 单元素元组这一任务”并保留“某个线程”，事实与措辞均不越界。",
+            "source_quote": "PATCH\\_SUMMARY). One thread first rules out the ordinary tuple-printer path and localizes the actual bypass in lambdify.py:\n\n"
+          },
+          {
+            "block_index": 12,
+            "source_quote_id": "s15:b12:p0",
+            "assessment": "trace 的 PATCH_SUMMARY 行确实含 files=sympy/utilities/lambdify.py、idea=修改 _recursive_to_string 加尾逗号、evidence=reproduce_issue.py PASSED，批注三字段与“测试通过证据”均准确，保留。",
+            "source_quote": "```ini\n[t1/FACT] StrPrinter._print_tuple at sympy/printing/str.py:868 already includes\ntrailing comma logic\n[t1/FACT] sympy/utilities/lambdify.py:964 lacks trailing comma for single-element\ntuples\n[t1/PATCH_SUMMARY] files=sympy/utilities/lambdify.py | idea=Modify\n_recursive_to_string to add a trailing comma for single-element tuples | evidence=\nreproduce_issue.py PASSED\n```\n\n"
+          },
+          {
+            "block_index": 13,
+            "source_quote_id": "s15:b13:p0",
+            "assessment": "原文“preserves the reusable discovery while avoiding the cost of exposing every peer to the raw trace”，批注的“保留可复用发现—避免全 peer 暴露 raw trace—降低成本”链条与之一致，保留。",
+            "source_quote": "This patch summary turns a multi-step debugging trajectory into a short, evidence-backed handoff. Later workers do not need the full command history, file dumps, failed edits, or intermediate reasoning. Thus, compact sharing preserves the reusable discovery while avoiding the cost of exposing every peer to the raw trace, explaining why DELM solves the task at much lower cost.\n\n"
+          },
+          {
+            "block_index": 14,
+            "source_quote_id": "s15:b14:p0",
+            "assessment": "原文指向 Table 5，并列出 facts/failures/constraints/patch summaries 可见、规避 redundant isolated search 与 raw trace 高 token 成本、提升 per-thread success 并降成本；批注逐项对应，未夸大，保留。",
+            "source_quote": "Together, these examples explain the trend in Table 5: DELM keeps reusable facts, failures, constraints, and patch summaries visible to all peers, while avoiding both redundant isolated search and the high token cost of raw trace sharing. This improves per-thread success while reducing cost.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 16,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s16:b1:p0",
+            "assessment": "核对提示模板内容：workspace、角色（两个并行 agent 之一）、目标（最小化到正确完整提交的耗时）、以及 board 是 worker 之间唯一连接、各自独立容器、各自提交完整解法，均与原文一致，未发现数字或因果错误，故逐字保留。该段后半（先手建初始队列、交接规则、原任务具权威性、保留全部可观察效果）在 s16:b1:p1，批注未覆盖属取舍而非错误，保留原批注以免为凑内容改写正确文字。",
+            "source_quote": "DeLM Prompt (n = 2, Part 1): Initial Instructions   \n[DeLM AGENT A]   \nWorkspace.   \nYour task workspace is {workspace}. Do not spawn extra agents.   \nRole.   \nYou are {worker}, one of two agents solving this task in parallel. Roster: {roster}.   \nObjective.   \nMinimize elapsed time to a correct, complete submission. Start useful work promptly, unblock   \nyour peer with usable results, and reuse applicable evidence.   \nCoordination.   \n• Divide work and exchange findings and text files through the board. It is the only connection   \nbetween workers. Each worker has a separate container, so edits and installs are local. Every   \nworker submits a complete solution from its own workspace.   \n• The board is ready immediately. The first worker creates the initial queue: it reserves its own   \nscope, then publishes actionable peer work or states the concrete dependency preventing a   \nsplit. After that handoff, both can publish, reserve, and claim distinct work. If the first worker   \nends b"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s16:b2:p0",
+            "assessment": "原文是“performance-constrained work”，原批注写成“高开销任务”，把性能受限偷换成计算开销大，范围偏了，已改为“性能受限任务”。原文条件“Retained state is not directly usable if that invocation must rebuild another representation”是限制条件，原批注写成“确保保留状态在首次调用时可直接复用，避免重建开销”，读起来像保证可复用，语气反了，已改为条件句。另补入原文明确要求的 fresh-start、mutation、lifetime 生命周期语义，这是方法条件，原批注漏掉。",
+            "source_quote": "consumer receives directly, and what substantial work remains on the first required invocation. Retained state is not directly usable if that invocation must rebuild another representation. Design preparation and updates within the task’s required lifecycle, preserving fresh-start, mutation and lifetime semantics.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s16:b3:p0",
+            "assessment": "逐项比对：廉价充分条件用于精确接受与拒绝、早期答案须满足全部必需条件、启发式或必要条件不够、无此条件时用完整方法——四条均在原文中，批注未添加推理或数字，未超出证据，逐字保留。",
+            "source_quote": "• For decision or search operations, consider cheap sufficient conditions for exact acceptance and rejection before general preparation or search. An early answer must satisfy every required condition; a heuristic or necessary condition is not enough. Use the complete method when no such condition establishes an answer.\n\n"
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s16:b4:p0",
+            "assessment": "原批注漏掉原文“with existing evidence or a small probe”中的“已有证据”，把解决接口成本的两种手段写成只有探针；且“而非盲目扩大昂贵比较范围”中的“盲目”是原文没有的评价性推断，已删去，改为“先处理已实测的那一个、再扩大昂贵的比较”，与“Address a measured bottleneck before extending an expensive comparison”对齐。“复用兼容组件”“不受影响的工作继续推进”保留。",
+            "source_quote": "• Share the interface early and implement independent parts in parallel. When a specific interface cost could prevent a required target, resolve that concern with existing evidence or a small probe before expanding code dependent on that choice. Keep unaffected work moving. Address a measured bottleneck before extending an expensive comparison; reuse compatible components.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 17,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s17:b1:p0",
+            "assessment": "逐句对照原文：最简方案、检查现有文件、吸收 board 上的同伴发现、发布非重叠工作并附输入/接口/首个可用依赖、不等整体计划、同一次会话内实现自己部分、无独立任务时声明范围与未决依赖——这些要点初稿基本覆盖，无数字或因果需要核对。需要修改之处有三：其一，初稿“强调并行执行”在原文中没有对应措辞，原文只说“your peer”与“in this same session”，属推断，已改为“同一轮内边发布边实现”并去掉并行断言；其二，“发布可复用接口”把原文的 reusable implementation outputs 与 interfaces 两项合并，已分开表述；其三，初稿以复述为主，未说明这段是操作指令而非研究发现，已按读者视角重写并控制在 1–3 句。摘要方面，初稿“多智能体或协作编程场景”中的“编程”原文未提，属过度推断，已删去；初稿评价性表述“高效、低耦合的并行协作机制”也已改为中性的要求列举，并注明 peer 指协作者、适用范围未限定。",
+            "source_quote": "Inspect the task and existing files to choose the simplest approach that can satisfy all stated requirements and identify complementary, reusable implementation outputs. Read the board and incorporate useful peer findings. Establish the initial split: reserve your scope and publish actionable, nonoverlapping work for your peer, with available inputs, interfaces and the first usable dependency. Do not wait to complete a whole-task plan before publishing useful work and implementing your part in this same session. If no independent item is clear yet, state your scope and the unresolved dependency so your peer can help resolve it. Add remaining work only as needed.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 20,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s20:b1:p0",
+            "assessment": "原文只说通过这些命令经由 ordinary shell tool 执行，未称其为“所有交互的唯一入口”，也未出现“上下文系统通信”的说法，属超出证据的推断，已改写为“统一走普通 shell 工具执行、不经专用 API”的表述。数字与命令形式 `sh /tools/context.sh ACTION ...` 与原文一致。",
+            "source_quote": "\\`sh /tools/context.sh ACTION ...\\` through your ordinary shell tool.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s20:b2:p0",
+            "assessment": "该行仅给出 `read` 与三个参数名；`--all` 的含义由下一段界定为“older entries / missed response”，初稿释为“全量”不准确，已改为“读取更早条目或补取遗漏响应”。`--wait SECONDS` 为阻塞等待、`--for ID` 为指定条目或发布，与原文一致。",
+            "source_quote": "• read [--all] [--wait SECONDS] [--for ID]\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s20:b3:p0",
+            "assessment": "核对数字：等待上限为 at most 25 seconds，一致；“A session ending does not establish task correctness” 译为“会话结束不等于任务正确”，准确；“Status changes do not end a wait” 与初稿“仅在发布或结束时中断”相符。改动点：初稿把首次视图说成“全量数据”并推断后续仅返回变更“以节省开销”，原文只称 first view is complete，未陈述省开销动机，已改为“首次读取是完整的”并删去目的推断；未变化的活跃项显示标识与所有者、会话状态始终显示等事实保留。",
+            "source_quote": "The first view is complete. Later views show active work, new publications and changed statuses since your last served view. Unchanged active items show their identity and owner. Session states (starting/running/ended) are always shown. A session ending does not establish task correctness. Use read --all for older entries or a missed response. A waiting read returns on a peer publication or a peer ending, otherwise after at most 25 seconds. Status changes do not end a wait. --for names a needed item or publication and returns if it is available already.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 21,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s21:b1:p0",
+            "assessment": "逐句比对原文：'a list of objects with subject and detail'、'does not claim ownership'、'Matching subjects reuse existing items without changing their owner, detail, or completion state' 均与原意一致。两处需修正：(1) 原文 'Subject target: 80, detail: 300 characters' 中的 target 表示推荐长度，初稿写成'字符上限'，会引入原文没有的硬上限含义，已改为推荐长度并保留英文 target；(2) 初稿漏掉 'following the startup roles above' 这一执行条件，已补入批注与摘要。摘要补充了原文未说明的两点(超长处理、匹配判定方式)，明确标为原文未给出，未越出证据。",
+            "source_quote": "Publish open items as a list of objects with subject and detail, following the startup roles above. Publishing does not claim ownership. Matching subjects reuse existing items without changing their owner, detail, or completion state. Subject target: 80, detail: 300 characters.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 22,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s22:b1:p0",
+            "assessment": "原文仅一句三条款：'First claim wins; a loss names the owner. One unfinished claim per worker.' 初稿把它解释为“分布式锁语义”，并称该规则用于“防止死锁或竞争条件”；但原文中没有出现锁、死锁、竞争条件等概念，这一解释超出了原文提供的证据。另外，'a loss names the owner' 被初稿理解为“失败方需明确归属权”，但更贴近原文字面意思的是“失败（结果）报出所有者”。初稿摘要还补入了“确保状态一致性与系统稳定性”，这同样没有原文依据，而且把一句话的规则扩写成“协议”。我已把批注改为只陈述三条判定，并把“claim 命令语义”明确标为推断；摘要也压缩为陈述原文三条规则，并注明原文未交代实现与超时细节。标题块 block 0 是纯标题，按要求略过。",
+            "source_quote": "First claim wins; a loss names the owner. One unfinished claim per worker.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 23,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s23:b1:p0",
+            "assessment": "核对三处。一、原文 \"if your claim slot is free\" 是条件从句，初稿\"前提是当前用户的 claim slot 为空\"可接受但不够准，改为\"当 claim slot 空闲时\"更贴近 free 的含义。二、原文 \"Matches reuse open items, report claimed owners, or remain done\" 的主语是 Matches（与已有项匹配时），初稿写成\"它支持……\"，把匹配后的三种去向误挂到命令本身；已改为\"若与已有项匹配，则……\"，并将 remain done 译为保持已完成状态。三、原文 \"Subjects match ignoring case and extra whitespace\" 说的是 subject 而非标题，初稿写成\"标题匹配忽略大小写和多余空格\"属概念混用；改为 subject 匹配忽略大小写与多余空白，与下一句 \"Different titles can still overlap\"(标题不同仍可能重叠) 区分开。末句\"尊重可见的 scope 范围\"对应 respect visible scopes，未超出原文。推断部分：无新增推断，仅按原文措辞校正。",
+            "source_quote": "Atomically create and claim one scope if your claim slot is free. Matches reuse open items, report claimed owners, or remain done. Subjects match ignoring case and extra whitespace. Different titles can still overlap, so respect visible scopes.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 24,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s24:b1:p0",
+            "assessment": "对照原文核对：结果、文件/函数、局限性、已取得的检查结果、800 字符、工作区或 /tmp 的附件、返回不可变 ID 均属实。需要澄清两处：原文 'summary target: 800 characters' 是目标值，原批注写成“限800字符”，把它当成了硬性上限，已改为“目标长度”；原文 'Attach reusable text files from your workspace or /tmp' 只说明可取来源，并未限定“仅”，已相应改写。'check outcomes already obtained' 译为“已取得的检查结果”更贴切。",
+            "source_quote": "Finish your claim with results, affected files/functions, limitations, and check outcomes already obtained (summary target: 800 characters). Attach reusable text files from your workspace or /tmp. Publication returns its immutable ID.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s24:b2:p0",
+            "assessment": "核对结果：FACT/FAIL 定义、可复现证据要素、测量所需字段均属实。原批注有两处需要修正：(1) 漏掉原文 'Identify unfinished parts'（指出未完成部分），已补上；(2) 'Targets in characters: text 400, scope 120, basis 200' 是目标值，原批注写成“各字段字符上限”，并把具体数字省略了，已改为“字符目标”并补出 400/120/200。原批注把 200,000 bytes 写成“200KB”，约等但不精确，已按原文数值写为 200,000 字节。",
+            "source_quote": "FACT means a finding supported by observations. FAIL means a contradicted approach or hypothesis. State scope and reproducible evidence, including the inputs, conditions and actual results behind measurements. Identify unfinished parts. For measurements, include the input construction, sample count, starting state, metric and aggregation. Attach the runnable command or script when sharing its result. Targets in characters: text 400, scope 120, basis 200. Keep attachments focused (target: 20 files and 200,000 bytes per bundle).\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 25,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s25:b1:p0",
+            "assessment": "核对三点。①覆盖行为：原文 “Copy attachments over original or registered peer versions” 表明是覆盖写入原始或对等版本；初稿写作“同步附件”，方向含糊（可能被读成双向同步），已改为“复制覆盖”。②拒绝范围：原文 “Unknown local edits refuse the selected batch”，被拒绝的是被选中的 batch；初稿写“操作将中止”，扩大到整条命令，与标题中 `--only PATH` 的可选子集语义不符，已改为“整个 selected batch 被拒绝，可配合 --only 分选子集”。③保留条件：原文 “Identical files and newer peer versions are kept”，初稿“保留相同或更新的版本”意思正确，但未点明“保留＝不被覆盖、不回退”，已补足。初稿的“保守合并”是推断性措辞，且“合并”与原文纯覆盖行为不符，已删除。推断边界：原文未给错误码、退出状态和 `--only` 的匹配规则，摘要中已注明，未替作者补充。",
+            "source_quote": "Copy attachments over original or registered peer versions. Unknown local edits refuse the selected batch; inspect and reconcile locally. Identical files and newer peer versions are kept.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 26,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s26:b1:p0",
+            "assessment": "核对两项事实：(1) 比对对象为“attachment diffs against task originals, not your current files”；(2) 整份展示的对象为“New files and --only paths”。草稿对这两点表述正确，含“而非当前本地文件”。改动两处：其一，草稿把比较基准写成“附件与任务原始文件”，补出“当前工作目录文件”以对应原文 your current files；其二，草稿“便于确认变更范围”是作者未明说的目的，按规范标为“推断：”，并把“指定路径”精确为 `--only` 指定的路径。原文未提及 diff 的可视化形式或退出码，批注未扩展，因此这些内容没有超出证据边界。",
+            "source_quote": "Show attachment diffs against task originals, not your current files. New files and --only paths are shown in full.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 27,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s27:b1:p0",
+            "assessment": "对照原文：初稿把 “(target: 200 characters)” 说成“限制文本在 200 字符内”，把目标值误读为硬限制，已改为“目标长度、非硬性截断”。初稿“无需额外调用此命令”是原文未明说的因果，已改为标注“推断”的表述。原文 “Claim, reserve and done already set work status” 保留为作者陈述，与推断分开。初稿标题“状态变更定义”与内容（用法说明）不够贴合，改为“status 用法”。摘要同步修正 target 语义，并删去“通常不需要通过 status 来重复声明”这一未标注的断言，改为推断句。",
+            "source_quote": "State a changed question, configuration, dependency or scope (target: 200 characters). Claim, reserve and done already set work status.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 30,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s30:b1:p0",
+            "assessment": "对照原文核对：读板节点四处（startup、new implementation subproblem 或 substantial diagnostic hypothesis、final integration、submitting）与初稿一致；但初稿写“避免重复已解决项”时漏掉原文的例外条件“unless changed conditions or contradictory evidence justify repetition”，且未提“choose a new diagnostic after receiving the view, not in the invocation that first requests it”的时序约束，也未提“command responses already include fresh board views”可替代单独读取以及“routine local checks do not each require a read, status, or reservation”的豁免。初稿“新子问题”丢了 implementation 限定，“提交前”正确。以上补充均出自本段，无外部推断；改后批注仅陈述原文条件，未加入评价。标题 block 0 为纯标题，略过。",
+            "source_quote": "Read the board at startup, before a new implementation subproblem or substantial diagnostic hypothesis, before final integration, and before submitting. Choose a new diagnostic after receiving the view, not in the invocation that first requests it. If a peer owns or answered that question, choose a distinct unresolved one unless changed conditions or contradictory evidence justify repetition. Command responses already include fresh board views, which replace a separate read at those boundaries. Routine local checks do not each require a read, status, or reservation.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 31,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s31:b1:p0",
+            "assessment": "逐句比对：原文共 9 句，初稿批注抓住了“及时共享、披露未完成部分与限制、可复现需精确命令与输入、不为共享加检查或文档”四点，方向无误，但漏掉“接口（interfaces）和已有检查证据（existing check evidence）”这一共享内容清单，也未写入“关闭子任务不等于完整方案满足需求”这条重要边界；后者是本节最容易被误读的一条规则，属删改造成的含糊而非单纯精简，故补入。初稿将“Do not hold reusable work until unrelated work is finished”表述为“禁止因无关工作延迟可复用成果”，与原文一致，保留其意。初稿“反对为共享而过度增加检查或文档开销”对应原文两句（New checks are not required merely to share partial work… 与 Do not add documentation…），不构成因果夸大。批注中未出现流程或署名用语，符合格式。",
+            "source_quote": "Share usable changes promptly when they can unblock a peer. State unfinished parts, known limitations, interfaces, and existing check evidence. New checks are not required merely to share partial work or close a subtask. Closing a subtask does not establish that the complete solution meets the requirements. Do not hold reusable work until unrelated work is finished. When outputs or service state cannot be attached, share the generating or replay code and exact command and inputs to reproduce them locally. When no decision depends on a returned view, combine a board publication and the next local command in one shell call. Avoid repeating evidence across board fields and the final answer. Do not add documentation or a new build wrapper unless the task requires it or it is needed to produce or check the submitted output.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 32,
+        "part": 1,
+        "verdict": "pass",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s32:b1:p0",
+            "assessment": "原文的核心是条件式等待：只有在具体必要输入缺失、且没有可做的独立实现、集成或诊断工作时才等待。批注把“仅在缺失特定输入时等待”和“先命名缺失项、检查 board view”都写到了，与原文一致；指令顺序（status 中命名缺失输入 → 检查返回视图 → 再决定等待）没有颠倒。“禁止 sleep、轮询、冗余检查”对应原文 Never use sleep, repeated polling, duplicate probes, redundant checks or paperwork。“推荐使用带 yield_time_ms 的 read --wait 命令并每次重新评估视图”概括了原文的 If still needed, use read --wait 25 (--for ID when known) with yield_time_ms: 30000, reassessing each returned view；批注没有抄具体数值，但也没有把数值写错。原文还要求不把该响应与阻塞等待批量处理、不等待已结束的同伴或非必要附加项；批注未提这些，属未覆盖而非错误，在 1–3 句的篇幅内可以接受。摘要中的过程描述、命令参数 `--wait 25`、`yield_time_ms: 30000` 和“每次返回后重新评估”都逐项与原文对得上；摘要未加入原文没有的数字或因果。",
+            "source_quote": "do useful independent implementation, integration or diagnosis when available. Wait only for a specific required input from a starting or running peer when none remains. Name the missing input in status and inspect the returned board view before deciding to wait. Do not batch that response with a blocking wait that hides it. If still needed, use read --wait 25 (--for ID when known) with yield\\_time\\_ms: 30000, reassessing each returned view before waiting again. Never use sleep, repeated polling, duplicate probes, redundant checks or paperwork to fill the gap. Never wait for an ended peer or a nonrequired addition.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 33,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s33:b1:p0",
+            "assessment": "逐句对照原文：六条准则在初稿批注中均有覆盖，但初稿把 “If a peer update could make a tool wait unnecessary, read the board before blocking” 的目的写成“防止重复计算或资源竞争”，原文目的仅是避免不必要的阻塞等待；而“竞争性负载”是另一条独立要求（Avoid competing workload during timing measurements），初稿把这两点合并表述，因果对应有误。另外，初稿未单独点出末句 “Wait only for evidence still required for completion”，而这是独立的收尾原则。已改写批注：拆分阻塞前查板与计时隔离两条，补上“只等完成仍必需的证据”，并明确“结果只对保存的输入/代码版本成立”这一条件。原文未给出任何数字、时长或实现方式，批注未添加此类内容。",
+            "source_quote": "Run necessary long diagnostics asynchronously when useful independent work remains, exposing intermediate results. Preserve their inputs and code; results apply to those versions. Read new output when it can change a decision instead of repeatedly polling. If a peer update could make a tool wait unnecessary, read the board before blocking, not after the wait in the same call. Avoid competing workload during timing measurements. Wait only for evidence still required for completion.\n\n"
+          },
+          {
+            "block_index": 1,
+            "source_quote_id": "s33:b1:p0",
+            "assessment": "摘要核对：初稿六条与原文一一对应，数字与条件无出入；但初稿将 “peer” 直接译为“其他代理”而未标明这是推断，已改为“同伴（peer）”并注明原文未定义 peer 与 board，推断其指多智能体协作环境中的同伴与共享状态板。补充说明本节无实验、图表与计时数据，属行为规范，避免读者误以为有实证支撑。条目编号与原文顺序一致。",
+            "source_quote": "Run necessary long diagnostics asynchronously when useful independent work remains, exposing intermediate results. Preserve their inputs and code; results apply to those versions. Read new output when it can change a decision instead of repeatedly polling. If a peer update could make a tool wait unnecessary, read the board before blocking, not after the wait in the same call. Avoid competing workload during timing measurements. Wait only for evidence still required for completion.\n\n"
+          },
+          {
+            "block_index": 1,
+            "source_quote_id": "s33:b1:p0",
+            "assessment": "推断边界检查：原文 “useful independent work remains” 的条件限定被保留在批注与摘要中；未从 “exposing intermediate results” 外推出具体日志格式；“异步”执行与“阻塞”等待的关系依原文表述，未补充调度机制细节。",
+            "source_quote": "Run necessary long diagnostics asynchronously when useful independent work remains, exposing intermediate results. Preserve their inputs and code; results apply to those versions. Read new output when it can change a decision instead of repeatedly polling. If a peer update could make a tool wait unnecessary, read the board before blocking, not after the wait in the same call. Avoid competing workload during timing measurements. Wait only for evidence still required for completion.\n\n"
+          }
+        ],
+        "correction_attempts": 0
+      },
+      {
+        "section_index": 34,
+        "part": 1,
+        "verdict": "corrected",
+        "checks": [
+          {
+            "block_index": 1,
+            "source_quote_id": "s34:b1:p0",
+            "assessment": "初稿把“repair of a demonstrated defect”简化为“缺陷修复”，丢掉了“已证实/已演示”这一准入限定；禁止清单也只列了验证与测试，漏了 review、reproduction、solution-checker，且未提“包括应同伴要求”和该规则对 publish/reserve 同样生效。诊断与测量豁免、“检查器本身即产品”算实现两点初稿正确，保留。已改写为更贴合原文的三类准入与完整禁止清单。",
+            "source_quote": "• Queue items are for required implementation, repair of a demonstrated defect, or a concrete unanswered question needed to implement the solution. Do not create separate verification, testing, review, reproduction, or solution-checker assignments, including at a peer’s request. This rule applies to queue items created with publish or reserve. Diagnosis and measurements needed to choose or repair an implementation remain allowed. A checker that is itself the requested product is implementation.\n\n"
+          },
+          {
+            "block_index": 2,
+            "source_quote_id": "s34:b2:p0",
+            "assessment": "初稿的“保持接口兼容”弱化了原文的 preserve required public behavior, interfaces and side effects（公共行为、接口、副作用三者都要保留），且漏掉“遇到具体限制可换不同方法但共享兼容部分”这条允许偏离的策略。条目须写明输出/输入/共享接口/首个可用依赖，以及反对造任务，初稿表述准确，予以保留并补齐。",
+            "source_quote": "• Name each item’s output, available inputs, shared interface and first usable dependency. Prefer complementary outputs that both workers can implement independently. Preserve required public behavior, interfaces and side effects. Reuse compatible components. Pursue a different approach to resolve a concrete limitation, sharing compatible parts. Keep related shared-file edits together. Do not invent work just to occupy a peer.\n\n"
+          },
+          {
+            "block_index": 3,
+            "source_quote_id": "s34:b3:p0",
+            "assessment": "初稿方向正确（所有权绑定输出而非算法、本地调整不立新条目、关闭 claim 交接、禁止用 notes 派验证角色），但漏掉两条实质机制：同伴能独立实现时发布组件并声明接口/输入/不重叠范围；以及结尾明确“没有全局计划收尾步骤”“初始规划不产生永久协调者或检查者”。另外原文有“已结束 worker 的 claim 不能阻止你完成必需工作”，初稿未提。已补入，未加入原文没有的规则；s34:b3:p1 为同段末句，核对一致。",
+            "source_quote": "• After the initial handoff, claim an existing item when it fits; otherwise reserve a distinct required implementation scope. Respect the returned owner. Ownership covers an output, not a fixed algorithm. Publish a needed component when a peer can implement it independently, stating its interface, inputs and nonoverlapping scope while continuing your part. Keep small local adjustments under the current claim. Routine local integration and necessary checking need no separate item or active claim. Respect ownership and interfaces while the owner is running. Report concrete defects through scoped FAIL notes. To hand off incomplete work, close the claim with its remaining scope and reusable files. An ended worker’s claim stays with it, but cannot block you from completing required work. Keep completed items closed. Do not assign verification roles through notes or status. Requests for existing evidence and interface clarification remain useful. Initial planning does not make either worker "
+          },
+          {
+            "block_index": 4,
+            "source_quote_id": "s34:b4:p0",
+            "assessment": "表格 OCR 顺序错乱，按 caption（DeLM Prompt, n = 2, Part 4）与 s34:b4:p0–p2 拼合核对：初稿“基于原始任务推导检查项”“证据匹配最终代码与环境”“FAIL 需附条件并保持未解决”“改样本/平均无关案例不算修复”均正确。遗漏三点较重要：只对相应需求套用例外并保留测量域；新比较须先取匹配的候选与参考观测、参考测量仅在条件匹配时复用；无真值时用参考/收敛性/不变量并声明未测量部分，不得声称已测成功。最后一点是作者明写的诚实性约束，已补入；同时补了“已有适用结果可直接复用”。未据此描述任何图像信息。",
+            "source_quote": "<table><tr><td>DeLM Prompt (n = 2, Part 4): Validation and Completion</td></tr><tr><td>[DeLM AGENT A] Validation and completion:</td></tr><tr><td>• Derive necessary checks from the original task, not the queue summary or the current im- plementation. Preserve its measurement domain and apply each stated exception only to the requirement it modifies. Assess your own and peer evidence against those requirements. Reuse applicable results; adoption alone does not require repeating a check. Evidence must</td></tr><tr><td>match the relevant code, inputs, configuration and environment of the final local output. • For a new comparison, obtain matched candidate and reference observations before collecting repeats. Repeat as required by the task or where uncertainty could change the implementation or acceptance decision, preserving the required starting conditions. Preserve inputs, expected results and reference measurements. After candidate-only changes, rerun affected candi-</td></tr><tr><td>d"
+          },
+          {
+            "block_index": 5,
+            "source_quote_id": "s34:b5:p0",
+            "assessment": "初稿“随后转向实现”是对 “These directions yield to available implementation work” 的误读：原文意为这些探索方向要让位于（优先让路给）可用的实现工作，并非阶段性地转为实现角色，已改正。另初稿漏了“共享说明与前两个启动提示词也有措辞改动”及“测量间隔”，已补；跨作者冲突、资源限制、状态/产物复用的转述准确。",
+            "source_quote": "Four-agent configuration. For n = 4, the two additional agents initially identify reusable components and interfaces, and resolve a concrete design uncertainty. These directions yield to available implementation work. The prompt also clarifies cross-author file conflicts, interface changes, local state and artifact reuse, container resource limits, and measurement intervals. Shared instructions and the first two startup prompts also contain wording changes."
+          }
+        ],
+        "correction_attempts": 0
+      }
+    ],
+    "final": {
+      "verdict": "corrected",
+      "checks": [
+        {
+          "target": "readme",
+          "claim": "DELM 比最强基线准确率高最多 17.5 点（DeepSWE v1.1，Claude Opus 5.5，n=4）",
+          "section_index": 4,
+          "block_index": 12,
+          "source_quote_id": "s4:b12:p0",
+          "assessment": "原文写 “DELM (n=4) reaches 90.83%, 17.5 points above the strongest baseline, AOrchestra (73.33%)”，可见 17.5 点出自 DeepSWE v1.1 + Claude Opus 5.5 的 n=4 设置。初稿把该数字挂在 n=2 名下、横跨两个基准，已改为限定 n=4 与 DeepSWE。",
+          "source_quote": "We evaluate on the 10 long-horizon DeepSWE v1.1 tasks listed in Appendix B. Table 3 shows that DELM again achieves the best accuracy and latency under both base models. With GPT-6-Astra, DELM (n=2) reaches 98.33% accuracy, 8.3 points above the strongest baseline, Codex with subagents (90.00%), and runs 1.25× faster than Codex. It also costs less per task than Codex with subagents (\\$16.83 vs. \\$24.97). With Claude Opus 5.5, the gains are larger: DELM (n=4) reaches 90.83%, 17.5 points above the strongest baseline, AOrchestra (73.33%), and runs 1.57× faster than Claude Code. DELM $\\scriptstyle ( n = 2 )$ reaches 88.33% at roughly the same Cost/Task as Claude Code (\\$12.15 vs. \\$12.01).\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "比所基于的 harness 快最多 2.49×（Terminal-Bench 4.0，Claude Opus 5.5，n=4）",
+          "section_index": 4,
+          "block_index": 8,
+          "source_quote_id": "s4:b8:p0",
+          "assessment": "原文 “Increasing to n=4 gives the largest speedups (2.05× and 2.49×)”，对应 Table 2 中 Claude Opus 5.5 下 130.75→52.51 分钟；Abstract 也写明是相对 “the harness it builds on”。把 2.49× 与 17.5 点分开绑定各自条件，符合原文。",
+          "source_quote": "Increasing to n=4 gives the largest speedups (2.05× and 2.49×): more work proceeds in parallel, and findings reach peers earlier. It also gives the lowest Cost/Submission, since each agent does a smaller share of the work and total cost grows more slowly than the number of submissions. Accuracy drops by 3–4 points relative to $n { = } 2 ,$ , because each agent still submits a complete solution while building less of it itself. More of each solution is assembled from peers’ components, which raises the risk of integration errors and lets a defect in one shared result affect several submissions. n=4 nonetheless remains above every baseline.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "比 AOrchestra 高 10.8 点、比 Claude Code 快 2.12×",
+          "section_index": 4,
+          "block_index": 20,
+          "source_quote_id": "s4:b20:p0",
+          "assessment": "原文：66.08% 比 AOrchestra 的 55.26% 高 10.8 点，2.12× 是相对 Claude Code，1.47× 才相对 AOrchestra。初稿的“比 AOrchestra 高 10.8 点、快 2.12×”容易被读成同一参照，已拆分。",
+          "source_quote": "SWE-bench Verified tests whether DELM still helps on a widely used software-engineering benchmark with a lightweight base model. We build DELM based on AOrchestra’s harness and compare it with Claude Code, mini-SWE-agent, and AOrchestra, all using Gemini 3 Flash. Table 5 shows that DELM outperforms all baselines in both accuracy and latency. With n = 4, DELM reaches 66.08% accuracy, 10.8 points higher than the strongest baseline, AOrchestra (55.26%). It is also 2.12× faster than Claude Code and 1.47× faster than AOrchestra. With n = 2, DELM still improves accuracy by 8.5 points over AOrchestra at the same Cost/Task (\\$0.24), which halves the cost per submission. Going from n = 2 to n = 4 roughly doubles Cost/Task but leaves Cost/Submission unchanged at \\$0.12, and it further improves both accuracy and latency.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "DELM (n=4) 测试通过率比 Claude Code 高最多 19.91 点（pandoc；ctags 为 18.96 点）",
+          "section_index": 4,
+          "block_index": 26,
+          "source_quote_id": "s4:b26:p0",
+          "assessment": "原文 “With n = 4, the gains grow to 18.96 and 19.91 points (53.28% and 50.00%)”，分别对应 ctags 与 pandoc；19.91 是两任务中的较大值，需标明是 pandoc。",
+          "source_quote": "Higher pass rates under the same budget. At the end of the budget, DELM (n=2) improves over Claude Code by 6.73 points on ctags (41.05% vs. 34.32%) and by 8.17 points on pandoc (38.26% vs. 30.09%). With $n { = } 4 ,$ the gains grow to 18.96 and 19.91 points (53.28% and 50.00%). Each DELM agent runs the same Claude Code harness and model as the baseline. The gains therefore come from the coordination layer, not from a stronger individual agent.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "两 agent 的加速比都降到 0.82–1.09×",
+          "section_index": 4,
+          "block_index": 31,
+          "source_quote_id": "s4:b31:p0",
+          "assessment": "原文 “every ablation falls to 0.82–1.09×”，与完整系统的 1.54×/2.02× 对比；该消融只在 Terminal-Bench 4.0、n=2 上做，README 已注明条件。",
+          "source_quote": "0.82–1.09×. Two parallel agents are thus no faster than one unless they coordinate effectively, so the speedup of DELM comes from coordination rather than from parallelism alone.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "Terminal-Bench 上 n=4 的准确率较 n=2 降 3–4 点",
+          "section_index": 4,
+          "block_index": 8,
+          "source_quote_id": "s4:b8:p0",
+          "assessment": "原文限于 Terminal-Bench 的 Table 2 写 “Accuracy drops by 3–4 points relative to n=2”。初稿把这个降幅泛化为所有设置，与 Table 3 不符（GPT-6-Astra 下 DeepSWE 从 98.33% 降到 90.00%，Claude Opus 5.5 下反而从 88.33% 升到 90.83%），因此限定了范围。",
+          "source_quote": "Increasing to n=4 gives the largest speedups (2.05× and 2.49×): more work proceeds in parallel, and findings reach peers earlier. It also gives the lowest Cost/Submission, since each agent does a smaller share of the work and total cost grows more slowly than the number of submissions. Accuracy drops by 3–4 points relative to $n { = } 2 ,$ , because each agent still submits a complete solution while building less of it itself. More of each solution is assembled from peers’ components, which raises the risk of integration errors and lets a defect in one shared result affect several submissions. n=4 nonetheless remains above every baseline.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "GPT-6-Astra 下 n=4 90.00% 低于 n=2 98.33%",
+          "section_index": 4,
+          "block_index": 14,
+          "source_quote_id": "s4:b14:p1",
+          "assessment": "Table 3 的 GPT-6-Astra 面板同时列出 DELM (n=2) 98.33 与 DELM (n=4) 90.00，支持“DeepSWE 上该关系随模型而异”的后半句；Claude 侧的上半句由 §3.2 正文支持。",
+          "source_quote": "0 . 9 1 \\times ) }$ </td><td> $\\$ 10.74\\pm \\$ 90.97$ </td><td> $\\$ 10.74\\pm \\$ 90.97$ </td></tr><tr><td>DELM (n = 2)</td><td> ${ \\bf 9 8 . 3 3 \\pm 2 . 8 9 }$ </td><td> $1 3 . 2 9 \\pm 0 . 9 8 \\operatorname* { m i n } { \\left( 1 . 2 5 \\times \\right) }$ </td><td> $\\$ 16.83\\pm \\$ 1.65$ </td><td> $\\$ 8.42\\pm \\$ 82$ </td></tr><tr><td>DELM (n = 4)</td><td> $9 0 . 0 0 \\pm 1 0 . 0 0$ </td><td> ${ \\bf 1 2 . 3 7 \\pm 0 . 6 6 \\operatorname* { m i n } { ( { \\bf 1 . 3 4 } \\times ) } }$ </td><td> $\\$ 30.87\\pm \\$ 51.09$ </td><td> $\\$ 72$ </td></tr><tr><td colspan=\"5\">Claude Opus 5.5</td></tr><tr><td>Claude Code</td><td> $7 1 . 6 7 \\pm 2 . 8 9$ </td><td> $4 9 . 5 8 \\pm 3 . 1 1 \\mathrm { m i n } \\left( 1 . 0 0 \\times \\right)$ </td><td> $\\$ 123,456,7$ </td><td> $\\$ 12.01\\pm \\$ 90.60$ </td></tr><tr><td>Claude Code (subagent)</td><td> $5 0 . 0 0 \\pm 1 0 . 0 0$ </td><td> $5 7 . 4 6 \\pm 2 . 1 6 \\operatorname* { m i n } { ( 0 . 8 6 \\times ) }$ </td><td> $\\$ 19.83\\pm \\ S 0.99$ </td><td> $\\$ 19.83\\pm \\$ 80.99$ <"
+        },
+        {
+          "target": "readme",
+          "claim": "任务完成时平均 <15K tokens",
+          "section_index": 5,
+          "block_index": 17,
+          "source_quote_id": "s5:b17:p0",
+          "assessment": "原文 “the shared context averages under 15K tokens at task completion (Table 6)”，并归因于短摘要 + 附件按引用存放。初稿把体积控制说成“增量读取”的结果，因果方向不对，已改为增量读取只降低单次读取开销。",
+          "source_quote": "This reuse is inexpensive. Because agents publish short summaries and attach files by reference (§2.1), the shared context averages under 15K tokens at task completion (Table 6). Each read also returns only what is new since the agent’s last read, so most of this content enters an agent’s session once. Accounting for all reads by all agents, including this cached reuse, reading the shared context accounts for 1.7–3.7% of total task cost with Claude Opus 5.5 and 7.7–17.7% with GPT-6-Astra.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "四个 DELM agent 只有 2% 时间在等待，而 Claude Code 原生子代理的全部 agent 时间有 44% 花在等待上（Figure 3）",
+          "section_index": 2,
+          "block_index": 5,
+          "source_quote_id": "s2:b5:p0",
+          "assessment": "Figure 3 caption 给出 73%（主 agent 等待占比）、44%（全部 agent 时间等待占比）与 DELM 的 2%，任务为 retro-console-soc、Claude Opus 5.5、四个 agent。该数字来自单一任务，README 已限定场景。",
+          "source_quote": "![](images/b7a6c1db33458737a3598cd04040c763f94c1e4b05a891fa8740f360169d6d56.jpg)  \nFigure 3: Centralized orchestration creates bubbles; DELM squeezes them out. Execution timelines on Terminal-Bench 4.0’s retro-console-soc task with Claude Opus 5.5 and four agents. With Claude Code’s centralized native subagents, the main agent spends 73% of its time waiting on delegated work (yellow), and 44% of all agent time is spent waiting. DELM agents build on one another’s intermediate results, spend 2% of their time waiting, and finish 5.5× sooner.\n\n"
+        },
+        {
+          "target": "readme",
+          "claim": "Cost/Task 是一次运行所有 agent 的总 API 费用；Cost/Submission 再除以 agent 数",
+          "section_index": 4,
+          "block_index": 14,
+          "source_quote_id": "s4:b14:p0",
+          "assessment": "Table 3 caption 明确 “Cost/Task sums the costs of all agents in a single run. Cost/Submission divides this total by the number of agents, as each agent produces one submission that is scored independently”，与 Q&A 表述一致。",
+          "source_quote": "Table 3: Comparison on DeepSWE v1.1 across two base models. Best mean values within each model are bolded. Cost/Task sums the costs of all agents in a single run. Cost/Submission divides this total by the number of agents, as each agent produces one submission that is scored independently.\n<table><tr><td>Method</td><td>Avg. Acc (%)</td><td>Avg. Latency</td><td>Cost/Task</td><td>Cost/Submission</td></tr><tr><td colspan=\"5\">GPT-6-Astra</td></tr><tr><td>Codex</td><td> $8 8 . 3 3 \\pm 2 . 8 9$ </td><td> $1 6 . 5 7 \\pm 0 . 3 9 \\operatorname* { m i n } { \\left( 1 . 0 0 \\times \\right) }$ </td><td> $\\$ 9.40\\pm \\$ 90.18$ </td><td> $\\$ 9.40\\pm \\$ 90.18$ </td></tr><tr><td>Codex (subagent)</td><td> $9 0 . 0 0 \\pm 0 . 0 0$ </td><td> $1 5 . 7 6 \\pm 2 . 0 5 \\operatorname* { m i n } { \\left( 1 . 0 5 \\times \\right) }$ </td><td> $\\$ 24.97\\pm \\$ 3.15$ </td><td> $\\$ 24.97\\pm \\$ 3.15$ </td></tr><tr><td>AOrchestra</td><td> $8 3 . 3 3 \\pm 7 . 6 4$ </td><td> $1 8 . 3 1 \\pm 1 . 0 8 \\operatorname* { m i n } { ( "
+        },
+        {
+          "target": "readme",
+          "claim": "队列条目仅用于“必需实现”“已证实缺陷修复”“实现所需的未决问题”三类",
+          "section_index": 34,
+          "block_index": 1,
+          "source_quote_id": "s34:b1:p0",
+          "assessment": "Prompt 原文列出三类准入（required implementation、repair of a demonstrated defect、a concrete unanswered question needed to implement the solution），并禁止验证/测试/审查类条目；README 的转述与之一致。",
+          "source_quote": "• Queue items are for required implementation, repair of a demonstrated defect, or a concrete unanswered question needed to implement the solution. Do not create separate verification, testing, review, reproduction, or solution-checker assignments, including at a peer’s request. This rule applies to queue items created with publish or reserve. Diagnosis and measurements needed to choose or repair an implementation remain allowed. A checker that is itself the requested product is implementation.\n\n"
+        },
+        {
+          "target": "insight.method",
+          "claim": "n 个并行 agent 各自维护会话与工作区",
+          "section_index": 3,
+          "block_index": 1,
+          "source_quote_id": "s3:b1:p0",
+          "assessment": "§2 首段 “DELM runs n agents concurrently, each with its own persistent session and workspace”，直接支持该句。",
+          "source_quote": "Given a task D, DELM runs n agents concurrently, each with its own persistent session and workspace. Agents coordinate through two shared structures, a shared context C and a task queue T, and each agent produces its own complete solution.\n\n"
+        },
+        {
+          "target": "insight.method",
+          "claim": "通过只追加的共享上下文（FACT/FAIL 条目）",
+          "section_index": 3,
+          "block_index": 4,
+          "source_quote_id": "s3:b4:p0",
+          "assessment": "§2.1 称共享上下文是 “append-only log”，条目类型含 FACT、FAIL 与完成摘要，并带 scope 与 evidence 字段，支持该表述。",
+          "source_quote": "The shared context C is an append-only log of reusable findings and contributions from all agents. Agents write to it through compact entries $G _ { i }$ of a declared type: a FACT records a finding supported by observations, a FAIL records an approach or hypothesis that was contradicted, and a completion summary records the result of a finished subtask. FACT and FAIL entries carry explicit scope and evidence fields; agents are instructed to keep entries brief and to state unfinished parts and known limitations, so that other agents can judge whether an entry applies to their own work. Any entry may attach files, which peers can inspect as diffs or merge into their own workspaces with conflict protection. Agents publish an entry as soon as a result is usable and then continue with their own work.\n\n"
+        },
+        {
+          "target": "insight.method",
+          "claim": "排他认领的任务队列",
+          "section_index": 3,
+          "block_index": 9,
+          "source_quote_id": "s3:b9:p0",
+          "assessment": "§2.2 “The queue enforces exclusive claims: the first claim wins, and each agent holds at most one unfinished claim”，支持“排他认领”；异步性另由 §2 第二段与 Algorithm 1 支持。",
+          "source_quote": "Claims and status. The queue enforces exclusive claims: the first claim wins, and each agent holds at most one unfinished claim. Every item is marked open, claimed, or done, together with its owner, so each agent can see who is responsible for what and how much remains. Each read also shows every agent’s session state (starting, running, or ended), tracked by the framework rather than reported by the agents. Agents use this state to choose complementary work and to handle dependencies. If a dependency’s owner is starting or running, an agent continues with independent work and waits only when nothing else remains, using a bounded wait that returns as soon as a peer publishes or ends. If the owner of an item has ended without completing it, this does not block progress: an agent that needs the result builds it in its own workspace, reusing anything the owner already shared, instead of waiting.\n\n"
+        },
+        {
+          "target": "insight.findings",
+          "claim": "准确率最多高 17.5 点（DeepSWE，Claude Opus 5.5，n=4）",
+          "section_index": 4,
+          "block_index": 12,
+          "source_quote_id": "s4:b12:p0",
+          "assessment": "与 §3.2 的 90.83% vs AOrchestra 73.33% 一致；初稿把该增益写成 n=2 的结果，属于设置与数值错配，已按原文限定。",
+          "source_quote": "We evaluate on the 10 long-horizon DeepSWE v1.1 tasks listed in Appendix B. Table 3 shows that DELM again achieves the best accuracy and latency under both base models. With GPT-6-Astra, DELM (n=2) reaches 98.33% accuracy, 8.3 points above the strongest baseline, Codex with subagents (90.00%), and runs 1.25× faster than Codex. It also costs less per task than Codex with subagents (\\$16.83 vs. \\$24.97). With Claude Opus 5.5, the gains are larger: DELM (n=4) reaches 90.83%, 17.5 points above the strongest baseline, AOrchestra (73.33%), and runs 1.57× faster than Claude Code. DELM $\\scriptstyle ( n = 2 )$ reaches 88.33% at roughly the same Cost/Task as Claude Code (\\$12.15 vs. \\$12.01).\n\n"
+        },
+        {
+          "target": "insight.findings",
+          "claim": "SWE-bench Verified 上 DELM (n=4) 达 66.08%（+10.8 点，比 Claude Code 快 2.12×）",
+          "section_index": 4,
+          "block_index": 20,
+          "source_quote_id": "s4:b20:p0",
+          "assessment": "66.08%、+10.8 点与 2.12× 均可在该段逐字对上；2.12× 的参照是 Claude Code，已在卡片中写明，避免与相对 AOrchestra 的 1.47× 混淆。",
+          "source_quote": "SWE-bench Verified tests whether DELM still helps on a widely used software-engineering benchmark with a lightweight base model. We build DELM based on AOrchestra’s harness and compare it with Claude Code, mini-SWE-agent, and AOrchestra, all using Gemini 3 Flash. Table 5 shows that DELM outperforms all baselines in both accuracy and latency. With n = 4, DELM reaches 66.08% accuracy, 10.8 points higher than the strongest baseline, AOrchestra (55.26%). It is also 2.12× faster than Claude Code and 1.47× faster than AOrchestra. With n = 2, DELM still improves accuracy by 8.5 points over AOrchestra at the same Cost/Task (\\$0.24), which halves the cost per submission. Going from n = 2 to n = 4 roughly doubles Cost/Task but leaves Cost/Submission unchanged at \\$0.12, and it further improves both accuracy and latency.\n\n"
+        },
+        {
+          "target": "insight.findings",
+          "claim": "双 agent 即退回单 agent 速度（0.82–1.09×）",
+          "section_index": 4,
+          "block_index": 31,
+          "source_quote_id": "s4:b31:p0",
+          "assessment": "原文 “Two parallel agents are thus no faster than one unless they coordinate effectively”，配合 0.82–1.09× 的区间；结论仅限 Terminal-Bench 4.0 的消融。",
+          "source_quote": "0.82–1.09×. Two parallel agents are thus no faster than one unless they coordinate effectively, so the speedup of DELM comes from coordination rather than from parallelism alone.\n\n"
+        },
+        {
+          "target": "insight.limitations",
+          "claim": "Terminal-Bench 上 n=4 准确率较 n=2 降 3–4 点",
+          "section_index": 4,
+          "block_index": 8,
+          "source_quote_id": "s4:b8:p0",
+          "assessment": "作者在 §3.1 就 Terminal-Bench 给出该降幅及其解释（每个 agent 仍提交完整方案、集成错误与缺陷扩散）。初稿未限定基准，与 DeepSWE 的 Table 3 数据冲突，已加限定。",
+          "source_quote": "Increasing to n=4 gives the largest speedups (2.05× and 2.49×): more work proceeds in parallel, and findings reach peers earlier. It also gives the lowest Cost/Submission, since each agent does a smaller share of the work and total cost grows more slowly than the number of submissions. Accuracy drops by 3–4 points relative to $n { = } 2 ,$ , because each agent still submits a complete solution while building less of it itself. More of each solution is assembled from peers’ components, which raises the risk of integration errors and lets a defect in one shared result affect several submissions. n=4 nonetheless remains above every baseline.\n\n"
+        },
+        {
+          "target": "insight.limitations",
+          "claim": "OOLONG 上单独 DELM 53.3% 低于 RLM 56.0%",
+          "section_index": 14,
+          "block_index": 3,
+          "source_quote_id": "s14:b3:p0",
+          "assessment": "Table 9 的 OOLONG 面板列出 RLM 56.0%、DELM 53.3%，与该句一致；作者的机理归因（自然语言共享上下文不适合精确聚合）是解释而非实验证明。",
+          "source_quote": "Table 9: Comparison of RLM, DELM, and their hybrid on LongBench-v2 Multi-Doc QA and OOLONG using GPT-5.\n<table><tr><td>Method</td><td>Acc.</td><td>Cost/Task</td></tr><tr><td>OOLONG</td><td></td><td></td></tr><tr><td>RLM</td><td>56.0%</td><td>$0.43</td></tr><tr><td>DELM</td><td>53.3%</td><td>$0.47</td></tr><tr><td>DELM+RLM</td><td>64.0%</td><td>$0.40</td></tr><tr><td>LongBench-v2 Multi-Doc QA</td><td></td><td></td></tr><tr><td>RLM</td><td>55.8%</td><td>$0.29</td></tr><tr><td>DELM</td><td>57.9%</td><td>$0.30</td></tr><tr><td>DELM+RLM</td><td>60.3%</td><td>$0.24</td></tr></table>\n\n"
+        },
+        {
+          "target": "insight.limitations",
+          "claim": "部分设置下更低的延迟与 Cost/Submission 以更高 Cost/Task 为代价",
+          "section_index": 7,
+          "block_index": 2,
+          "source_quote_id": "s7:b2:p0",
+          "assessment": "§6 Limitations 原文 “In certain settings, lower latency and Cost/Submission for DELM come with higher Cost/Task”，限定词保留为“部分设置下”，未扩大为普遍结论。",
+          "source_quote": "Limitations. In certain settings, lower latency and Cost/Submission for DELM come with higher Cost/Task. A natural-language shared context is also less suited to exact aggregation over structured data, where DELM can be enhanced when combined with code-mediated execution (Appendix C.1).\n\n"
+        },
+        {
+          "target": "insight.data",
+          "claim": "Terminal-Bench 4.0 与 DeepSWE v1.1 各 10 个长时程任务",
+          "section_index": 4,
+          "block_index": 2,
+          "source_quote_id": "s4:b2:p0",
+          "assessment": "§3 与附录 B 均说明两个基准各选 10 个长时程任务，筛选仅依据 Codex+GPT-6-Astra 的墙钟延迟，卡片与之一致。",
+          "source_quote": "Because DELM targets long-horizon tasks where coordination matters, we evaluate on a subset of long-running tasks from Terminal-Bench 4.0 and DeepSWE v1.1. We select tasks based on the wall-clock latency of Codex with GPT-6-Astra: for Terminal-Bench 4.0, we select 10 tasks with latency between 15 minutes and 1 hour; for DeepSWE v1.1, we select 10 tasks with latency of at least 10 minutes. The full list of selected tasks is provided in Appendix B.\n\n"
+        }
+      ],
+      "correction_attempts": 0
+    }
+  },
+  "source_sha256": "0a536a09c3bf9f08a1d03ade6965504668ea43a82954e38e8618a509f0081f6b",
+  "source_chars": 96829,
+  "read_chars": 96829,
+  "sections": [
+    {
+      "title": "Decentralized Multi-Agent Systems with Shared Context",
+      "path": "sections/00-section.md"
+    },
+    {
+      "title": "Abstract",
+      "path": "sections/01-section.md"
+    },
+    {
+      "title": "1 Introduction",
+      "path": "sections/02-section.md"
+    },
+    {
+      "title": "2 Decentralized Language Models (DELM)",
+      "path": "sections/03-section.md"
+    },
+    {
+      "title": "3 Experiments",
+      "path": "sections/04-section.md"
+    },
+    {
+      "title": "4 Trace Analysis: How Does Decentralized Coordination Help?",
+      "path": "sections/05-section.md"
+    },
+    {
+      "title": "5 Related Work",
+      "path": "sections/06-section.md"
+    },
+    {
+      "title": "6 Discussion and Limitations",
+      "path": "sections/07-section.md"
+    },
+    {
+      "title": "7 Acknowledgements",
+      "path": "sections/08-section.md"
+    },
+    {
+      "title": "References",
+      "path": "sections/09-section.md"
+    },
+    {
+      "title": "A Method Details",
+      "path": "sections/10-section.md"
+    },
+    {
+      "title": "A.1 Selective Retrieval and Reuse",
+      "path": "sections/11-section.md"
+    },
+    {
+      "title": "B Selected Tasks",
+      "path": "sections/12-section.md"
+    },
+    {
+      "title": "C Experiments on LongBench-v2 Multi-Doc QA",
+      "path": "sections/13-section.md"
+    },
+    {
+      "title": "C.1 Combining DELM with RLM",
+      "path": "sections/14-section.md"
+    },
+    {
+      "title": "D Why DELM Is Both Accurate and Cost-Efficient on SWE-bench",
+      "path": "sections/15-section.md"
+    },
+    {
+      "title": "E Prompts",
+      "path": "sections/16-section.md"
+    },
+    {
+      "title": "Your initial work:",
+      "path": "sections/17-section.md"
+    },
+    {
+      "title": "DeLM Prompt (n = 2, Part 2): Board Commands",
+      "path": "sections/18-section.md"
+    },
+    {
+      "title": "[DeLM AGENT A]",
+      "path": "sections/19-section.md"
+    },
+    {
+      "title": "Board commands:",
+      "path": "sections/20-section.md"
+    },
+    {
+      "title": "• publish --items JSON",
+      "path": "sections/21-section.md"
+    },
+    {
+      "title": "• claim --item ID",
+      "path": "sections/22-section.md"
+    },
+    {
+      "title": "• reserve --subject TEXT --detail TEXT",
+      "path": "sections/23-section.md"
+    },
+    {
+      "title": "• done --item ID --summary TEXT [--attach PATH...]",
+      "path": "sections/24-section.md"
+    },
+    {
+      "title": "• apply --id ID [--only PATH...]",
+      "path": "sections/25-section.md"
+    },
+    {
+      "title": "• expand --id ID [--only PATH...]",
+      "path": "sections/26-section.md"
+    },
+    {
+      "title": "• status --text TEXT",
+      "path": "sections/27-section.md"
+    },
+    {
+      "title": "DeLM Prompt (n = 2, Part 3): Coordination",
+      "path": "sections/28-section.md"
+    },
+    {
+      "title": "[DeLM AGENT A]",
+      "path": "sections/29-section.md"
+    },
+    {
+      "title": "Reading the board.",
+      "path": "sections/30-section.md"
+    },
+    {
+      "title": "Sharing results.",
+      "path": "sections/31-section.md"
+    },
+    {
+      "title": "Waiting:",
+      "path": "sections/32-section.md"
+    },
+    {
+      "title": "Long commands.",
+      "path": "sections/33-section.md"
+    },
+    {
+      "title": "The queue:",
+      "path": "sections/34-section.md"
+    }
+  ],
+  "skill_sha256": "98afec5114549df90ffec1aa60a6ba484b19700b0741b15f2a14a92b546674b7",
+  "extracted_metadata": {
+    "title": "Decentralized Multi-Agent Systems with Shared Context",
+    "year": "2026"
+  },
+  "input_metadata": {
+    "arxiv_id": "2606.10662",
+    "authors": "",
+    "source_url": "https://arxiv.org/abs/2606.10662",
+    "title": "(AI 精读中…)",
+    "year": ""
+  },
+  "pipeline_version": 4,
+  "reading_fingerprint": "0331c0fa5244f6b306d88f011f8aaecf001f61851e8dbaab71acfcc90e0789b0"
+}
